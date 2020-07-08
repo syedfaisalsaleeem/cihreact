@@ -1,0 +1,265 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+.logincontainer{
+    display: flex;
+    flex-direction: column;
+    width:100vw;
+    
+    height: 100vh;
+    
+}
+.logod{
+    display: flex;
+    flex-direction: column;
+    height:22vh;
+    width: 100vw;
+    
+    justify-content: flex-end;
+    align-items: center;
+}
+.logod1{
+    display: flex;
+    
+    
+}
+.logind{
+    display: flex;
+    flex-direction: column;
+    height:78vh;
+    width: 100vw;;
+    
+}
+.logincard{
+    display:flex;
+    height:71%;
+    width: 100vw;
+    
+    align-items: flex-end;
+
+
+}
+.footercard{
+    margin-bottom: 0px;
+    display:flex;
+    height:29%;
+    width: 100vw;
+    
+}
+.logincardh{
+    display:flex;
+    flex-direction: row;
+    height:90%;
+    width: 100%;
+    
+
+    justify-content: center;
+    
+}
+.logincardh1{
+    display:flex;
+    height:100%;
+    width: 29vw;
+    
+    
+}
+.footercardh{
+    display:flex;
+    flex-direction: column;
+    height:100%;
+    width: 100%;
+    
+}
+.footercardh1{
+    display:flex;
+    height:100%;
+    width: 29%;
+    
+    justify-content: center;
+    align-items: flex-end;
+    
+}
+.footercardh1 img{
+    height: 369.96px;
+    width: 100%;
+  /* even more control with max-width */
+    max-width: auto;
+}
+.logod img{
+    height: auto;
+    width: 100%;
+  /* even more control with max-width */
+    max-width: auto;
+}
+.footercardc{
+    
+display: flex;
+flex-direction: column;
+height: 65%;
+
+}
+.footercardc1{
+    display: flex;
+    flex-direction: row;
+    height:35%;
+    
+}
+.footercardc11{
+    display: flex;
+    width:6%;
+    
+}
+.footercardc12{
+    display: flex;
+    flex-direction: row;
+    width:94%;
+
+    border: white;
+    border-top: gray;
+    border-style: solid;
+    border-width: 1px;
+    
+}
+.footercardc121{
+    display: flex;
+    flex-direction: row;
+    width:65%;
+    
+    align-items: center;
+    justify-content: flex-start;
+
+}
+.footercardc121 >div{
+    margin-left: 2%;
+    font-family:"Poppins" ;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 0.9vw;
+    color:#255398;
+    
+}
+.footercardc121 p{
+    color:blue;
+}
+.footercardc121 p:hover{
+    
+    cursor:pointer;
+}
+.footercardc122{
+    display: flex;
+    width:35%;
+    align-items: center;
+}
+.footercardc122 p{
+font-family:"Poppins" ;
+font-style: normal;
+font-weight: normal;
+font-size: 1.1vw;
+
+}
+.logincardhi1{
+    display: flex;
+    
+    flex-basis: 48%;
+    
+    
+
+}
+.logincardhi2{
+    display: flex;
+    flex-basis: 28%;
+    min-width: 28%;
+    border: solid;
+    border-color: whitesmoke;
+    border-width: 1px;
+    box-shadow: 0px 0px 20px rgba(92, 111, 139, 0.12);
+    
+
+}
+.logincardhi3{
+    display: flex;
+    flex-basis: 4%;
+    
+
+}
+@media only screen and (max-width: 1200px) {
+    /* For mobile phones: */
+
+    .logincardhi2{
+        
+        display: flex;
+        
+        flex-basis: 20%;
+        height:80%;
+        justify-content: center;
+    
+    }
+    
+    .footercardh1 img{
+        height: auto;
+        width: 100%;
+      /* even more control with max-width */
+        max-width: auto;
+    }
+    .logod img{
+        margin-left: 20%;
+        height: auto;
+        width: 65%;
+      /* even more control with max-width */
+        max-width: auto;
+    }
+
+}
+@media only screen and (max-width: 600px){
+    .logincardhi2{
+        display: flex;
+        
+        flex-basis: 80%;
+        width:20%;
+        height:100%;
+        justify-content: center;
+    
+    }
+        .footercard{
+        margin-top: 5vh;
+
+        
+    }
+}
+@media only screen and (max-height: 600px){
+    .logincardhi2{
+        
+        display: flex;
+        
+        flex-basis: 28%;
+        width:20%;
+        height:140%;
+        justify-content: center;
+        
+        
+    
+    }
+    .footercard{
+        margin-top: 35vh;
+
+        
+    }
+}
+@media only screen and (max-height: 400px){
+    .logincardhi2{
+        
+        display: flex;
+        
+        flex-basis: 28%;
+        width:20%;
+        height:220%;
+        justify-content: center;
+
+        
+        
+    
+    }
+    .footercard{
+        margin-top: 55vh;
+
+        
+    }
+}

@@ -1,0 +1,124 @@
+.footercard{
+    
+    display:flex;
+    height:5%;
+    width: 90%;
+    
+    
+    margin-left: 150px;
+    background:#E5E5E5;
+    justify-content: center;
+    
+
+}
+
+.footercardc1{
+    display: flex;
+    flex-direction: row;
+    height:100%;
+    width: 95%;
+
+    justify-content: center;
+
+    
+}
+
+.footercardc12{
+    display: flex;
+    flex-direction: row;
+    width:80%;
+
+    border: #E5E5E5;
+    border-top: gray;
+    border-style: solid;
+    border-width: 1px;
+    
+}
+.footercardc121{
+    display: flex;
+    flex-direction: row;
+    width:45%;
+    
+    align-items: center;
+    justify-content: flex-start;
+
+}
+.footercardc121 >div{
+    margin-left: 2%;
+    font-family:"Roboto" ;
+    font-style: normal;
+    font-weight: normal;
+    
+    color:#255398;
+    
+}
+.footercardc122{
+    display: flex;
+    width:55%;
+    
+    align-items: center;
+    justify-content: flex-end;
+
+}
+.footercardc122 p{
+font-family:"Roboto" ;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+color:#255398;
+
+
+}
+.footercardc121 p{
+    font-size: 15px;
+    color:blue;
+
+    
+    
+    }
+.footercardc121 p:hover{
+    cursor:pointer;
+    
+
+    
+    
+    }
+
+@media only screen and (max-width: 1600px){
+.footercardc12{
+    width:70%;
+}
+.footercardc121 p{
+    font-size: 13px;
+}
+.footercardc122 p{
+    font-size: 14px;
+}
+    }
+    @media only screen and (max-width: 900px){
+        .footercardc12{
+            width:70%;
+        }
+        .footercardc122 p{
+            font-size: 12px;
+        }
+        .footercardc121 p{
+            font-size: 11px;
+        }
+        
+            }
+            
+            @media only screen and (max-width: 600px){
+                .footercardc12{
+                    width:100%;
+                }
+                .footercard{
+                    margin-left: 50px;
+                }
+                .footercardc122 p{
+                    font-size: 10px;
+                }
+                .footercardc121 p{
+                    font-size: 8px;
+                }
+                    }

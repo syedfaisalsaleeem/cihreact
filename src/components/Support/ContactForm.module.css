@@ -1,0 +1,25 @@
+.up {
+    border:black solid 1px ;
+    height: px;
+    position: relative;
+}
+.sec {
+    margin-left: 10%;
+}
+.down {
+    margin-left: 70%;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  border: purple solid 1px;
+  background-color: honeydew;
+}
+.uplode {
+    margin-left: 2%;
+    
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}

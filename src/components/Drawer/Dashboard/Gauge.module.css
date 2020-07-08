@@ -1,0 +1,54 @@
+.mkheight{
+    
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+.gauge{
+    height:40%;
+    margin-top: 10px;
+    min-height:200px;
+    
+   
+    width:100%
+    
+}
+.ingauge{
+    height:100%;
+    width:100%;
+    min-width: 530px;
+}
+@media only screen and (max-width: 1600px) {
+    .mkheight{
+        margin-top: 0px;
+        margin-bottom: 40px;
+        
+    }
+    .gauge{
+        
+        
+    }
+    .ingauge{
+        height:100%;
+        width:100%;
+        min-width: 400px;
+    }
+}
+@media only screen and (max-width: 1200px){
+    .gauge{
+        
+    }
+    .ingauge{
+        height:100%;
+        width:100%;
+        min-width: 300px;
+    }
+}
+@media only screen and (max-width: 600px){
+    .gauge{
+        min-width: 150px;
+    }
+    .ingauge{
+        
+        min-width: 150px;
+    }
+}

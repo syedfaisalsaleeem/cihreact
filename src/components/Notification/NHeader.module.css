@@ -1,0 +1,12 @@
+.icon1{
+
+    height: auto;
+    width: 100%;
+  /* even more control with max-width */
+    max-width: auto;
+}
+@media only screen and (max-width: 600px){
+.icon1{
+    display: none;
+}
+}
