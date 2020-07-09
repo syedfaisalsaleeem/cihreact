@@ -27,12 +27,12 @@ import Settings from "../../Links/images/settings.png"
 import Support from "../../Links/images/support.png"
 import Dcontent from "./Dashboard/Dcontent";
 
-const drawerWidth = 280;
+const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    background:"#E5E5E5",
+    background:"#F2F3F7",
   },
   ltext:{
     

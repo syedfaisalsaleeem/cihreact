@@ -24,16 +24,22 @@ class Exposed extends React.Component {
 render(){  
   return (
     <div  style={{height:"100%"}}>
-      
+      <head>
+      <meta
+        name="viewport"
+        content="minimum-scale=1, initial-scale=1, width=device-width"
+        />
 
-      <main style={{background:"#E5E5E5"}}>
+      </head>
+
+      <main style={{background:"#F2F3F7"}}>
       <Header call={this.handledrawer}/>
         <ExDrawer call={this.state.drawer}/>
        
        
       </main>
 
-      <footer style={{display:"flex",marginTop:"0vh",background:"#E5E5E5"}}>
+      <footer style={{display:"flex",marginTop:"0vh",background:"#F2F3F7"}}>
       
       <Footer />
          

@@ -26,9 +26,9 @@ render(){
     <div  style={{height:"100%"}}>
      
 
-      <main style={{background:"#E5E5E5"}}>
+      <main style={{background:"#F2F3F7"}}>
       <NHeader />
-      <NContent style={{background:"#E5E5E5"}}/>  
+      <NContent style={{background:"#F2F3F7"}}/>  
        
        
       </main>

@@ -18,14 +18,14 @@ const App1=()=>{
     <div  style={{height:"100%"}}>
         
   
-        <main style={{background:"#E5E5E5"}}>
+        <main style={{background:"#F2F3F7"}}>
         
         <Header call={handledrawer}/>
           <ContactDrawer call={value}/>
          
         </main>
   
-        <footer style={{display:"flex",background:"#E5E5E5"}}>
+        <footer style={{display:"flex",background:"#F2F3F7"}}>
         
         <Footer />
            

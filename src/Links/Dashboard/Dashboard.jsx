@@ -27,14 +27,14 @@ render(){
     <div  style={{height:"100%"}}>
       
 
-      <main style={{background:"#E5E5E5"}}>
+      <main style={{background:"#F2F3F7"}}>
       <Header call={this.handledrawer}/>
         <CyberDrawer call={this.state.drawer}/>
        
        
       </main>
 
-      <footer style={{display:"flex",marginTop:"0vh",background:"#E5E5E5"}}>
+      <footer style={{display:"flex",marginTop:"0vh",background:"#F2F3F7"}}>
       
       <Footer />
          

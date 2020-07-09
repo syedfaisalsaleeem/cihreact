@@ -6,7 +6,7 @@
     
     
     margin-left: 150px;
-    background:#E5E5E5;
+    background:#F2F3F7;
     justify-content: center;
     
 
@@ -28,7 +28,7 @@
     flex-direction: row;
     width:80%;
 
-    border: #E5E5E5;
+    border: #F2F3F7;
     border-top: gray;
     border-style: solid;
     border-width: 1px;

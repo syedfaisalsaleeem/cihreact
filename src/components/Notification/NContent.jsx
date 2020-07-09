@@ -27,20 +27,20 @@ const useStyles = makeStyles((theme) => ({
 export default function NContent (){
     const classes = useStyles();
     return(
-        <div style={{background:"#E5E5E5",width:"98vw"}}>
+        <div style={{background:"#F2F3F7",width:"98vw"}}>
             <Grid container   justify="center" spacing={2}>
                 <Grid item xs={11} style={{marginTop:"70px"}}>
 
                 </Grid>
                 <Grid item xs={11}  className={classes.root}>
                 <Link to="./ServiceUpdates">
-                <Chip size="Large" label="Service Updates" variant="outlined" className={classes.chipborder}  style={{padding:"10px",background:"#E5E5E5",fontSize:"16px",color:"black",border: "0.6px solid #000000"}}/>
+                <Chip size="Large" label="Service Updates" variant="outlined" className={classes.chipborder}  style={{padding:"10px",background:"#F2F3F7",fontSize:"16px",color:"black",border: "0.6px solid #000000"}}/>
                 </Link>
                 <Link to="./LatestAlerts">
-                <Chip size="Large" label="Latest Alerts" variant="outlined" className={classes.chipborder} style={{padding:"10px",background:"#E5E5E5",fontSize:"16px",color:"black",border: "0.6px solid #000000"}}/>
+                <Chip size="Large" label="Latest Alerts" variant="outlined" className={classes.chipborder} style={{padding:"10px",background:"#F2F3F7",fontSize:"16px",color:"black",border: "0.6px solid #000000"}}/>
                 </Link>
                 <Link to="./SupportUpdates">
-                <Chip size="Large" label="Support Updates" variant="outlined" className={classes.chipborder} style={{padding:"10px",background:"#E5E5E5",fontSize:"16px",color:"black",border: "0.6px solid #000000"}}/>
+                <Chip size="Large" label="Support Updates" variant="outlined" className={classes.chipborder} style={{padding:"10px",background:"#F2F3F7",fontSize:"16px",color:"black",border: "0.6px solid #000000"}}/>
                 </Link>
                 </Grid>
             

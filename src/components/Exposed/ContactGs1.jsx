@@ -24,8 +24,8 @@ const searchClient = algoliasearch(
       padding: '2px 4px',
       display: 'flex',
       alignItems: 'center',
-      width: "600px",
-      height:"60px",
+      width: "95%",
+      height:"50.61px",
       border: "1px solid #000000",
       borderRadius: "4px"
     },
@@ -36,8 +36,14 @@ const searchClient = algoliasearch(
     iconButton: {
       paddingTop: 5,
       paddingBottom:5,
-      paddingLeft:10,
-      paddingRight:10,
+      paddingLeft:15,
+      paddingRight:2,
+      marginRight:10
+    },
+    iconButton1: {
+      
+      paddingLeft:"20px",
+      paddingRight:"20px",
       marginRight:10
     },
     divider: {
@@ -54,18 +60,18 @@ export default function ContactGs1(){
       <div>
                 <Paper  className={classes.root}>
                     <IconButton className={classes.iconButton} aria-label="menu">
-                      <SearchIcon />
+                      <SearchIcon  />
                     </IconButton>
                     <InputBase
                       className={classes.input}
                       type="search"
                       value={currentRefinement}
-                      placeholder="Ask a question ?"
+                      placeholder="Enter Query"
                       inputProps={{ 'aria-label': 'search google maps' }}
                       onChange={event => refine(event.currentTarget.value)}
                     />
                     
-                      <Button variant="contained" color="primary" onClick={hits} className={classes.iconButton}> Search</Button>
+                      <Button variant="contained" color="primary" onClick={hits} className={classes.iconButton1}> Search</Button>
                     
                     
                     

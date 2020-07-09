@@ -29,13 +29,13 @@ render(){
     <div className="container">
       
 
-      <main style={{background:"#E5E5E5"}}>
+      <main style={{background:"#F2F3F7"}}>
         <Header call={this.handledrawer}/>
         <CyberDrawer call={this.state.drawer}/>
         
       </main>
 
-      <footer style={{display:"flex",marginBottom:"-65vh",background:"#E5E5E5"}}>
+      <footer style={{display:"flex",marginBottom:"-65vh",background:"#F2F3F7"}}>
       
       <Footer />
          
