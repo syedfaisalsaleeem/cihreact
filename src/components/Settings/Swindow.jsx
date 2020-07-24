@@ -42,6 +42,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import InputBase from '@material-ui/core/InputBase';
+import axios from 'axios';
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -65,6 +66,25 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: "bold",
       fontSize: "13px",
   },
+  email1:{
+    
+    marginLeft:"1px",
+    display:"flex",
+    width:"140px",
+    height:"40px",
+    marginTop: "10px",
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
+    border: "10px solid #FFFFFF",
+    boxSizing: "border-box",
+    boxShadow: "0px 0px 20px rgba(92, 111, 139, 0.12)",
+    borderRadius: "9px",
+    
+    fontStyle: "normal",
+    fontWeight: "bold",
+    fontSize: "11px",
+},
   emailtextfield:{
     width:"18vw",
     marginTop:"10px",
@@ -73,6 +93,17 @@ const useStyles = makeStyles((theme) => ({
     borderRight:"white",
     background:"#F3F6F9",
     height:"40px"
+    
+  },
+  emailtextfield1:{
+    width:"45ch",
+    marginTop:"10px",
+    paddingLeft:theme.spacing(1),
+    border: "0.1px solid #F3F6F9",
+    borderRight:"white",
+    background:"#F3F6F9",
+    height:"40px",
+    
     
   },
   logowithtextfield:{
@@ -198,6 +229,7 @@ export default function Swindow(){
     const [open1, setOpen1] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
     const [opens, setOpens] = React.useState(false);
+    const [data,setdata]=React.useState([]);
     const [state, setState] = React.useState({
         checkedA: true,
         checkedB: true,
@@ -206,6 +238,16 @@ export default function Swindow(){
         checkedE:false,
         
       });
+      const [account , setaccount] = React.useState({
+        companyname: "",
+        companyindustry : "",
+        companyaddress:"",
+        contactperson:"",
+        contactpersonposition:"",
+        contactpersonemail:"",
+        contactpersonnumber:""
+        
+    })
       const [error,seterror]=React.useState([""]);
     const [st1,set]=React.useState([""]);
     const [primaryemail,primaryemailfunction]=React.useState([""]);
@@ -216,9 +258,161 @@ export default function Swindow(){
       const [age, setAge] = React.useState('');
       const [fullWidth, setFullWidth] = React.useState(true);
       const [maxWidth, setMaxWidth] = React.useState('sm');
+      const [checking,setchecking]=React.useState(false)
+      const [checkingcompanyname,setcheckingcompanyname]=React.useState(false)
+      const [checkingcontactpersonposition,setcontactpersonposition]=React.useState(false)
+      const [accountauthenticate,setaccountauthenticate]=React.useState(false)
+      const [security , setsecurity] = React.useState({
+        correctpassword: "",
+        newpassword : "",
+        reenternewpassword:"",
+    })
+    const [checksecurity , setchecksecurity] = React.useState(false)
+    const [checknewpassword , setchecknewpassword] = React.useState(false)
+    const [securityauthenticate,setsecurityauthenticate]=React.useState(false)
+    const submitsecuritydialog=()=>{
+      
+        console.log(security)
+        const fetchData=async() => {
+          const token=localStorage.getItem("token")
+          const result=await axios.put('/changepassword/',{security,"email":token,"password":security.correctpassword})
+          console.log(result)
+          console.log(result.data)
+          if(result.data.sucess==="false"){
+            setchecksecurity(true)
+            setsecurityauthenticate(false)
+          }
+          else{
+            setsecurityauthenticate(false)
+            setOpen1(false)
+          }
+          // console.log(result.data[0])
+          // let y=result.data[0].fields
+          // console.log(y)
+          // setdata(y)
+        
+        }
+          // console.log(result.data)
+          // console.log(result.data[0])
+          // let y=result.data[0].fields
+          // console.log(y)
+          // setdata(y)}
+          fetchData();
+          // setchecksecurity(true)
+          // // setOpen(false);
+          // setsecurityauthenticate(false);
+       
+    }
+    const submitsecurity=()=>{
+      if(security.correctpassword===""){
+        console.log("working")
+        setchecksecurity(true)
+        setsecurityauthenticate(false)
+        setchecknewpassword(false)
+      }
+      else if(security.reenternewpassword==="" || security.newpassword==="" || security.newpassword!==security.reenternewpassword)
+      { console.log("working2")
+        setchecknewpassword(true)
+        setchecksecurity(false)
+        setsecurityauthenticate(false)
+      }
+      else{
+        setsecurityauthenticate(true)
+        setchecknewpassword(false)
+        setchecksecurity(false)
+      }
+      
+    }
+  const handlesecurity=(e)=>{
+        
+        
+    const {id , value} = e.target   
+    setsecurity(prevState => ({
+        ...prevState,
+        [id] : value
+    }))
+    
+     console.log({id,value})
+
+}
+const closesecuritydialog=()=>{
+  setsecurityauthenticate(false)
+}
     // const addprimaryemail=(event)=>{
       
     // };
+    const checkaccount=()=>{
+      console.log("working",account.companyname,account.contactpersonemail)
+        if(account.companyname==="" ){
+          setcheckingcompanyname(true)
+          setaccountauthenticate(false)
+        }
+        else if(account.contactpersonemail===""){
+          setcontactpersonposition(true)
+          setcheckingcompanyname(false)
+          setaccountauthenticate(false)
+        }
+        else if (account.contactpersonemail!==""){
+          console.log("working",account.companyname,account.contactpersonemail)
+          var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+          // let x=account.contactpersonemail.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)
+          let x=pattern.test(account.contactpersonemail)
+          console.log(x)
+          if(x===false){
+            console.log(x)
+            setcontactpersonposition(true)
+            setcheckingcompanyname(false)
+            setaccountauthenticate(false)
+          }
+          else{
+            console.log(accountauthenticate)
+            setaccountauthenticate(true)
+            setcontactpersonposition(false)
+            setcheckingcompanyname(false)
+          }
+          
+          // var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+          // if (!pattern.test(input["email"])) {
+          //   isValid = false;
+          //   errors["email"] = "Please enter valid email address.";
+          // }
+        }
+        else{
+          console.log(accountauthenticate)
+          setaccountauthenticate(true)
+          setcontactpersonposition(false)
+          setcheckingcompanyname(false)
+        }
+    }
+    const handleaccountform=()=>{
+      setaccountauthenticate(false)
+      setOpen(false);
+    }
+    const handleaccountsubmitform=()=>{
+      console.log(account)
+      const fetchData=async() => {
+        const token=localStorage.getItem("token")
+        const result=await axios.put('/settingsdata/',{account,"email":token})
+        console.log(result.data)
+        console.log(result.data[0])
+        let y=result.data[0].fields
+        console.log(y)
+        setdata(y)
+        setaccount({["companyname"]:y.company_name,["companyindustry"]:y.company_industry,
+        ["companyaddress"]:y.company_address1,
+        ["contactperson"]:y.company_person,
+        ["contactpersonposition"]:y.company_person_position,
+        ["contactpersonemail"]:y.company_person_email
+      })}
+        // console.log(result.data)
+        // console.log(result.data[0])
+        // let y=result.data[0].fields
+        // console.log(y)
+        // setdata(y)}
+        fetchData();
+        setOpen(false);
+        setaccountauthenticate(false);
+    }
     function addprimaryemail(event){
       console.log("working")
       if(primaryemail.length===1){
@@ -366,6 +560,63 @@ export default function Swindow(){
     
         primaryemailfunction(newArr);
       }
+      // useEffect(() => {
+      //   const fetchData = async () => {
+      //     const result = await axios(
+      //       'https://hn.algolia.com/api/v1/search?query=redux',
+      //     );
+     
+      //     setData(result.data);
+      //   };
+     
+      //   fetchData();
+      // }, []);
+
+     
+      const handleaccount=(e)=>{
+        
+        
+          const {id , value} = e.target   
+          setaccount(prevState => ({
+              ...prevState,
+              [id] : value
+          }))
+          // console.log({name,value})
+      
+      }
+      React.useEffect( ()=>{
+        const fetchData=async() => {
+        const token=localStorage.getItem("token")
+        const result=await axios.post('/settingsdata/',{"email":token})
+        console.log(result.data)
+        console.log(result.data[0])
+        let y=result.data[0].fields
+        console.log(y)
+        setdata(y)
+        setaccount({["companyname"]:y.company_name,["companyindustry"]:y.company_industry,
+        ["companyaddress"]:y.company_address1,
+        ["contactperson"]:y.company_person,
+        ["contactpersonposition"]:y.company_person_position,
+        ["contactpersonemail"]:y.company_person_email
+      })
+        // setaccount({["companyindustry"]:y.company_industry})
+        // setaccount({["companyaddress"]:y.company_address1})
+      }
+        // setaccount({["companyname"]:y.company_name})}
+        // setaccount({["companyname"]:y.company_name})}
+        // setaccount({["companyname"]:y.company_name})}
+        // setaccount({["companyname"]:y.company_name})}
+        const token=localStorage.getItem("token")
+        console.log(token,"token")
+        fetchData();
+          // .then(res => {
+          //     console.log(res.data,"response")
+          // })
+          // .catch(err => {
+          //     setError(err.message);
+          //     setLoad(true)
+          // })
+  }, []);
       
       
     return(
@@ -401,29 +652,29 @@ export default function Swindow(){
                 <Grid items md={5}>
                 <ListItem className={classes.Typofont}  >
               
-                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Company Name</Typography>} secondary={<Typography className={classes.TypoSecondFont}>Name goes Here</Typography>} />
+                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Company Name</Typography>} secondary={<Typography className={classes.TypoSecondFont}>{data.company_name}</Typography>} />
                 </ListItem>
                 <ListItem>
 
-                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Industry Name</Typography>} secondary={<Typography className={classes.TypoSecondFont}>Name goes Here</Typography>} />
+                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Industry Name</Typography>} secondary={<Typography className={classes.TypoSecondFont}>{data.company_industry}</Typography>} />
                 </ListItem>
                 <ListItem style={{display:"flex",flexDirection:"column" ,alignItems:"flex-start"}} >
-                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Company Address</Typography>} secondary={<Typography className={classes.TypoSecondFont}>Address goes Here(line1)</Typography>} />
-                <ListItemText secondary={<Typography className={classes.TypoSecondFont}>Address goes Here (line2)</Typography>} />
+                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Company Address</Typography>} secondary={<Typography className={classes.TypoSecondFont}>{data.company_address1}</Typography>} />
+                <ListItemText secondary={<Typography className={classes.TypoSecondFont}></Typography>} />
                 </ListItem> 
                 </Grid>
                 <Divider orientation="vertical" flexItem />
                 <Grid items md={5}>
                 <ListItem>
-                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Company Person</Typography>} secondary={<Typography className={classes.TypoSecondFont}>Name goes Here</Typography>} />
+                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Company Person</Typography>} secondary={<Typography className={classes.TypoSecondFont}>{data.company_person}</Typography>} />
                 
                 
                 </ListItem>
                 <ListItem>
-                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Contact Person Position</Typography>} secondary={<Typography className={classes.TypoSecondFont}>Industry goes here</Typography>} />
+                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Contact Person Position</Typography>} secondary={<Typography className={classes.TypoSecondFont}>{data.company_person_position}</Typography>} />
                 </ListItem>
                 <ListItem style={{display:"flex",flexDirection:"column" ,alignItems:"flex-start"}} >
-                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Contact Person Email</Typography>} secondary={<Typography className={classes.TypoSecondFont}>Email Address Goes Here</Typography>} />
+                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Contact Person Email</Typography>} secondary={<Typography className={classes.TypoSecondFont}>{data.company_person_email}</Typography>} />
                 
                 
                 
@@ -468,7 +719,7 @@ export default function Swindow(){
                
                                     
                 <ListItem>
-                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Account User Name</Typography>} secondary={<Typography className={classes.TypoSecondFont}>User Name goes here</Typography>} />
+                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Account User Name</Typography>} secondary={<Typography className={classes.TypoSecondFont}>{data.company_address2}</Typography>} />
                 
                 
                 </ListItem>
@@ -603,7 +854,7 @@ export default function Swindow(){
             
         </Container>
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={fullWidth}
-        maxWidth={maxWidth}>
+        maxWidth={maxWidth} style={{paddingBottom:"10px"}}>
                                     
                                     
                                     <DialogTitle>
@@ -649,110 +900,194 @@ export default function Swindow(){
                                     <Typography >
                                         Company Name
                                     </Typography>
-                                    <TextField
-                                        autoFocus
-                                        margin="dense"
-                                        id="name"
-                                        label="Company Name"
-                                        type="email"
-                                        variant="outlined"
-                                        fullWidth
-                                        
-                                    />
+                                    <Grid item >
+                                      <Grid container alignItems="center" spacing={1}>
+                                        <Grid item>
+                                        <InputBase
+                                          placeholder="Company Name"
+                                          id="companyname"
+                                          value={account.companyname}
+                                          onChange={handleaccount}
+                                          className={classes.emailtextfield1}
+                                          size="Large"
+                                          inputProps={{ 'aria-label': 'naked' }}
+                                          style={{border:checkingcompanyname?"1px solid #8FADFC":"none"}}
+                                          />
+                                        </Grid>
+                                        <Grid item>
+                                        <div className={classes.email1} style={{display:checkingcompanyname?"flex":"none"}}>
+                                          
+                                          <p> Required Field</p>
+                                                         
+                                        </div>
+                                        </Grid>
+                                      </Grid>
+                                    </Grid>
+                                   
                                     
                                     <Typography style={{marginTop:"15px"}} gutterBottom>
                                         Company Industry
                                     </Typography>
-                                    <FormControl className={classes.formControl}>
+                                    <InputBase
+                                          placeholder="Company Industry"
+                                          id="companyindustry"
+                                          value={account.companyindustry}
+                                          onChange={handleaccount}
+                                          className={classes.emailtextfield1}
+                                          size="Large"
+                                          inputProps={{ 'aria-label': 'naked' }}
+                                          />
                                     
-                                    <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={age}
-                                    onChange={handleChange}
-                                    variant="outlined"
-                                    fullWidth
-                                    style={{height:"40px"}}
-                                    displayEmpty
-                                    
-          
-                                    
-                                    >
-                                    <MenuItem value="">
-                                        <em>Select Industry</em>
-                                    </MenuItem>
-                                    <MenuItem value={10}>Ten</MenuItem>
-                                    <MenuItem value={20}>Twenty</MenuItem>
-                                    <MenuItem value={30}>Thirty</MenuItem>
-                                    </Select>
-                                    </FormControl>
                                     <Typography style={{marginTop:"15px"}}>
                                         Company Address
                                     </Typography>
-                                    <TextField
-                                        autoFocus
-                                        margin="dense"
-                                        id="name"
-                                        label="Company Address"
-                                        type="email"
-                                        variant="outlined"
-                                        fullWidth
-                                    />
+                                    <Grid item >
+                                      <Grid container alignItems="center" spacing={1}>
+                                        <Grid item>
+                                        <InputBase
+                                          placeholder="Company Address"
+                                          id="companyaddress"
+                                          value={account.companyaddress}
+                                          onChange={handleaccount}
+                                          className={classes.emailtextfield1}
+                                          size="Large"
+                                          inputProps={{ 'aria-label': 'naked' }}
+                                          />
+                                        </Grid>
+                                        <Grid item>
+                                        
+                                        </Grid>
+                                      </Grid>
+                                    </Grid>
+                                    
                                     <Typography style={{marginTop:"15px"}}>
                                         Contact Person
                                     </Typography>
-                                    <TextField
-                                        autoFocus
-                                        margin="dense"
-                                        id="name"
-                                        label="Contact Person"
-                                        type="email"
-                                        variant="outlined"
-                                        fullWidth
-                                    />
+                                    <InputBase
+                                          placeholder="Contact Person"
+                                          id="contactperson"
+                                          value={account.contactperson}
+                                          onChange={handleaccount}
+                                          className={classes.emailtextfield1}
+                                          size="Large"
+                                          inputProps={{ 'aria-label': 'naked' }}
+                                          />
                                     <Typography style={{marginTop:"15px"}}>
                                         Contact Person Position
                                     </Typography>
-                                    <TextField
-                                        autoFocus
-                                        margin="dense"
-                                        id="name"
-                                        label="Contact Person Position"
-                                        type="email"
-                                        variant="outlined"
-                                        fullWidth
-                                    />
+                                    <InputBase
+                                          placeholder="Contact Person Position"
+                                          id="contactpersonposition"
+                                          value={account.contactpersonposition}
+                                          onChange={handleaccount}
+                                          className={classes.emailtextfield1}
+                                          size="Large"
+                                          inputProps={{ 'aria-label': 'naked' }}
+                                          />
                                     <Typography style={{marginTop:"15px"}}>
                                         Contact Person Email
                                     </Typography>
-                                    <TextField
-                                        autoFocus
-                                        margin="dense"
-                                        id="name"
-                                        label="Contact Person Email"
-                                        type="email"
-                                        variant="outlined"
-                                        fullWidth
-                                    />
+                                      <Grid item >
+                                        <Grid container alignItems="center" spacing={1}>
+                                          <Grid item>
+                                          <InputBase
+                                            placeholder="Contact Person Email"
+                                            id="contactpersonemail"
+                                            value={account.contactpersonemail}
+                                            onChange={handleaccount}
+                                            className={classes.emailtextfield1}
+                                            size="Large"
+                                            inputProps={{ 'aria-label': 'naked' }}
+                                            style={{border:checkingcontactpersonposition?"1px solid #8FADFC":"none"}}
+                                            />
+                                          </Grid>
+                                          <Grid item>
+            
+                                          <div className={classes.email1} style={{display:checkingcontactpersonposition?"flex":"none"}}>
+                                            
+                                            <p> Invalid Email</p>
+                                                          
+                                          </div>
+                                          </Grid>
+                                        </Grid>
+                                      </Grid>
                                     <Typography style={{marginTop:"15px"}}>
                                         Contact Person Number
                                     </Typography>
-                                    <TextField
-                                        autoFocus
-                                        margin="dense"
-                                        id="name"
-                                        label="Contact Person Number"
-                                        type="email"
-                                        variant="outlined"
-                                        fullWidth
-                                    />
-                                    <Typography component="div" style={{display:"flex",width:"100",justifyContent:"center",marginTop:"15px"}}>
-                                    <Button color="primary" variant="contained" onClick={handleSubmission}> Update Information</Button>
-                                    </Typography>
-                                    
+                                    <InputBase
+                                          placeholder="Contact Person Number"
+                                          id="contactpersonnumber"
+                                          value={account.contactpersonnumber}
+                                          onChange={handleaccount}
+                                          className={classes.emailtextfield1}
+                                          size="Large"
+                                          inputProps={{ 'aria-label': 'naked' }}
+                                      />
+                                    <div style={{display:"flex",justifyContent:"center",marginTop:"25px"}}>
+                                    <Button color="primary" variant="contained" onClick={checkaccount}> Update Information</Button>
+                                    </div>
+                                    <Divider style={{marginTop:"15px"}}/>
                                     </DialogContent>
 
                                 </Dialog>
+                                <Dialog
+                                        open={accountauthenticate}
+                                        onClose={handleaccountform}
+                                        aria-labelledby="alert-dialog-title"
+                                        aria-describedby="alert-dialog-description"
+                                        
+                                        
+                                    >
+                                        <DialogTitle>
+                                        <Grid container style={{height:"6vh",display:"flex"}} >
+                                            <Grid items xs={11} style={{height:"6vh",display:"flex"}}>
+                                                <Grid container spacing={2}>
+                                                <Grid item>
+                                                </Grid>
+                                                <Grid item>
+                                                    <Typography component="div" style={{display:"flex",height:"6vh",justifyContent:"flex-start",alignItems:"center"}}>
+                                                    
+                                                    
+                                                    </Typography>
+                                                
+                                                </Grid>
+                                                <Grid item xs={5}>
+                                                    <Typography style={{display:"flex",height:"6vh",justifyContent:"flex-start",alignItems:"center",marginLeft:"-5px"}}>Authorize Change </Typography>
+                                                
+                                                </Grid>
+                                                </Grid>
+                                            
+                                            </Grid>
+                                            
+                                            <Grid items xs={1} style={{height:"6vh",display:"flex",justifyContent:"center",alignItems:"center"}}>
+                                            
+                                            <CloseIcon onClick={handleaccountform} />
+                                            
+                                                
+                                            </Grid>
+                                            
+                                            
+                                            
+                                        </Grid>
+                                        </DialogTitle>
+                                        <Divider/>
+                                        <DialogContent style={{width:"22vw"}}>
+                                        <DialogContentText id="alert-dialog-description">
+                                        You are about to make permanent changes to your account settings. Do you want to continue?
+                                        </DialogContentText>
+                                        </DialogContent>
+                                        <Divider/>
+                                        <Typography style={{marginTop:"15px", display:"flex",justifyContent:"space-evenly",alignItems:"center" ,marginBottom:"20px"}}>
+                                        <Button onClick={handleaccountsubmitform} color="primary" variant="contained">
+                                            Continue
+                                        </Button>
+                                        <Button onClick={handleaccountform} color="primary" variant="outlined" autoFocus>
+                                            Close
+                                        </Button>
+                                        </Typography>
+  
+                                        
+                                    </Dialog>
                                 <Dialog open={open1} onClose={handleClose1} aria-labelledby="form-dialog-title" fullWidth={fullWidth} maxWidth={maxWidth} >
                                         <DialogTitle>
                                         <Grid container style={{height:"6vh",display:"flex"}} >
@@ -795,49 +1130,75 @@ export default function Swindow(){
                                         <Typography >
                                             Enter Current Password
                                         </Typography>
-                                        <TextField
-                                            autoFocus
-                                            margin="dense"
-                                            id="name"
-                                            label="Enter Password"
-                                            type="email"
-                                            variant="outlined"
-                                            fullWidth
-                                            
-                                        />
+                                        <Grid container>
+                                        <Grid item>
+                                        <InputBase
+                                          placeholder="Enter Current Password"
+                                          type="password"
+                                          id="correctpassword"
+                                          value={security.correctpassword}
+                                          onChange={handlesecurity}
+                                          className={classes.emailtextfield1}
+                                          size="Large"
+                                          inputProps={{ 'aria-label': 'naked' }}
+                                          style={{border:checksecurity?"1px solid #8FADFC":"none"}}
+                                      />
+                                        </Grid>
+                                        <Grid item>
+                                        <div className={classes.email1} style={{display:checksecurity?"flex":"none"}}>
+                                          
+                                          <p> Incorrect Password</p>
+                                                         
+                                        </div>
+                                        </Grid>
+                                        </Grid>
                                         <Typography style={{marginTop:"15px"}}>
                                         Enter New Password
                                         </Typography>
-                                        <TextField
-                                            autoFocus
-                                            margin="dense"
-                                            id="name"
-                                            label="Enter Password"
-                                            type="email"
-                                            variant="outlined"
-                                            fullWidth
-                                        />
+                                        <InputBase
+                                          placeholder="Enter New Password"
+                                          type="password"
+                                          id="newpassword"
+                                          value={security.newpassword}
+                                          onChange={handlesecurity}
+                                          className={classes.emailtextfield1}
+                                          size="Large"
+                                          inputProps={{ 'aria-label': 'naked' }}
+                                      />
                                         <Typography style={{marginTop:"15px"}}>
                                         Renter New Password
                                         </Typography>
-                                        <TextField
-                                            autoFocus
-                                            margin="dense"
-                                            id="name"
-                                            label="Enter Password"
-                                            type="email"
-                                            variant="outlined"
-                                            fullWidth
-                                        />
-                                        <Typography component="div" style={{display:"flex",width:"100",justifyContent:"center",marginTop:"15px"}}>
-                                        <Button color="primary" variant="contained" onClick={handleSubmission}> Update Password</Button>
-                                        </Typography>
+                                        <Grid container>
+                                          <Grid item>
+                                        <InputBase
+                                          placeholder="Renter New Password"
+                                          type="password"
+                                          id="reenternewpassword"
+                                          value={security.reenternewpassword}
+                                          onChange={handlesecurity}
+                                          className={classes.emailtextfield1}
+                                          size="Large"
+                                          inputProps={{ 'aria-label': 'naked' }}
+                                          style={{border:checknewpassword?"1px solid #8FADFC":"none"}}
+                                      />
+                                      </Grid>
+                                      <Grid item>
+                                        <div className={classes.email1} style={{display:checknewpassword?"flex":"none"}}>
+                                          
+                                          <p>Password does not match</p>
+                                                         
+                                        </div>
+                                        </Grid>
+                                        </Grid>
+                                        <div style={{display:"flex",justifyContent:"center",marginTop:"25px"}}>
+                                        <Button color="primary" variant="contained" onClick={submitsecurity}> Update Password</Button>
+                                        </div>
                                         <Divider style={{marginTop:"15px"}}/>
                                         </DialogContent>
                                     </Dialog>
                                     <Dialog
-                                        open={opens}
-                                        onClose={handleSubmissionClose}
+                                        open={securityauthenticate}
+                                        onClose={closesecuritydialog}
                                         aria-labelledby="alert-dialog-title"
                                         aria-describedby="alert-dialog-description"
                                         
@@ -866,7 +1227,7 @@ export default function Swindow(){
                                             
                                             <Grid items xs={1} style={{height:"6vh",display:"flex",justifyContent:"center",alignItems:"center"}}>
                                             
-                                            <CloseIcon onClick={handleSubmissionClose} />
+                                            <CloseIcon onClick={closesecuritydialog} />
                                             
                                                 
                                             </Grid>
@@ -883,10 +1244,10 @@ export default function Swindow(){
                                         </DialogContent>
                                         <Divider/>
                                         <Typography style={{marginTop:"15px", display:"flex",justifyContent:"space-evenly",alignItems:"center" ,marginBottom:"20px"}}>
-                                        <Button onClick={handleSubmissionClose} color="primary" variant="contained">
+                                        <Button onClick={submitsecuritydialog} color="primary" variant="contained">
                                             Continue
                                         </Button>
-                                        <Button onClick={handleSubmissionClose} color="primary" variant="outlined" autoFocus>
+                                        <Button onClick={closesecuritydialog} color="primary" variant="outlined" autoFocus>
                                             Close
                                         </Button>
                                         </Typography>
@@ -966,7 +1327,7 @@ export default function Swindow(){
                                           inputProps={{ 'aria-label': 'naked' }}
                                           
                                           />
-                                          <i className={classes.logowithtextfield}><img type="button" width="24px" height="24px"  src="fav.png"></img></i>
+                                          <i className={classes.logowithtextfield}><CloseIcon type="button"   /></i>
                                           <IOSSwitch checked={state.checkedE} onChange={handleChange4} name="checkedE" />
                                           </div>
                                        
@@ -1058,7 +1419,7 @@ export default function Swindow(){
                                           size="Large"
                                           inputProps={{ 'aria-label': 'naked' }}
                                           />
-                                          <i className={classes.logowithtextfield}><img type="button" onClick={subcount} id={index} width="24px" height="24px"  src="fav.png"></img></i>
+                                          <i className={classes.logowithtextfield}><CloseIcon type="button" onClick={subcount} id={index} width="24px" height="24px"  /></i>
                                                                     
                                           
                                            
@@ -1117,9 +1478,9 @@ export default function Swindow(){
                                         
                                         </Typography>
                                         <Divider style={{marginTop:"15px"}}/>
-                                        <Typography component="div" style={{display:"flex",width:"100",justifyContent:"center",marginTop:"15px"}}>
+                                        <div style={{display:"flex",justifyContent:"center",marginTop:"15px"}}>
                                         <Button color="primary" variant="contained"  onClick={handleformsubmit}> Update Settings</Button>
-                                        </Typography>
+                                        </div>
                                         </DialogContent>
                                         </form>
                                 </Dialog>

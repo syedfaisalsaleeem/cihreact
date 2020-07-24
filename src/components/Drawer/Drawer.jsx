@@ -157,10 +157,12 @@ export default function CyberDrawer(props) {
                 <ListItemText primary={"Exposed Information"}/>
             </ListItem>
             </Link>
+            <Link to="/Monitored">
             <ListItem className={classes.ltext1}>
                 <ListItemIcon><img src={Monitored} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText  primary={"Monitored Systems"}/>
             </ListItem>
+            </Link>
             <Link to="./Settings">
             <ListItem className={classes.ltext1}>
                 <ListItemIcon><img src={Settings} width="28px" height="28px" />  </ListItemIcon>

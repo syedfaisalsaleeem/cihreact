@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme)=>({
 export default function Login(){
     const classes = useStyles();
     return(
-        <div style={{display:"flex",flexDirection:"column"}}>
+        <div style={{display:"flex",flexDirection:"column",background:"white"}}>
         
         <main style={{display: "flex", flexDirection:"column"}}>
             

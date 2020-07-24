@@ -12,6 +12,7 @@ import LatestAlerts from "./Links/Notification/LatestAlerts";
 import ServiceUpdates from "./Links/Notification/ServiceUpdates";
 import SupportUpdates from "./Links/Notification/SupportUpdates";
 import Exposed from "./Links/Exposed/";
+import Monitor from "./Links/Monitored/";
 import { MuiThemeProvider } from '@material-ui/core';
 import theme from './theme';
 function App() {
@@ -40,6 +41,7 @@ function App() {
         <Route path="/SupportUpdates" component={SupportUpdates} exact/>
         <Route path="/Contact" component={Contact} exact/>
         <Route path="/ExposedInformation" component={Exposed} exact/>
+        <Route path="/Monitored" component={Monitor} exact/>
       
       </BrowserRouter>
       <style jsx global>{`

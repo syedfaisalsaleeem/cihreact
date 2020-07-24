@@ -25,7 +25,7 @@ const searchClient = algoliasearch(
       display: 'flex',
       alignItems: 'center',
       width: "95%",
-      height:"50.61px",
+      height:"58px",
       border: "1px solid #000000",
       borderRadius: "4px"
     },

@@ -25,7 +25,8 @@ import Exposed from "../../Links/images/information.png"
 import Monitored from "../../Links/images/exposedsystems.png"
 import Settings from "../../Links/images/settings.png"
 import Support from "../../Links/images/support.png"
-import ContactC from "./ContactC"
+import MContent from "./MContent";
+
 const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
@@ -94,7 +95,8 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(0),
+    
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -111,7 +113,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SDrawer(props) {
+export default function MDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
@@ -140,8 +142,7 @@ export default function SDrawer(props) {
 
         <Divider/>
         <List className={classes.ltext}>
-        
-            <Link to="/Dashboard">
+            <Link to="./Dashboard">
             <ListItem  className={classes.ltext1} >
                 <ListItemIcon><img src={Home} width="28px" height="28px"  /> </ListItemIcon>
                 <ListItemText  primary={"Home"}/>
@@ -151,31 +152,30 @@ export default function SDrawer(props) {
                 <ListItemIcon><img src={Discover} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText  primary={"Discover"}/>
             </ListItem>
-            <Link to="/ExposedInformation">
-            <ListItem className={classes.ltext1}>
+            <Link Link to="./ExposedInformation" >
+            <ListItem className={classes.ltext1} >
                 <ListItemIcon><img src={Exposed} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText primary={"Exposed Information"}/>
             </ListItem>
             </Link>
-            <Link to="/Monitored">
+            
+              <ListItem className={classes.ltext1} style={{backgroundColor:"rgba(108, 114, 147, 0.3)"}}>
+                  <ListItemIcon><img src={Monitored} width="28px" height="28px" /> </ListItemIcon>
+                  <ListItemText  primary={"Monitored Systems"}/>
+              </ListItem>
+            
+            <Link to="./Settings">
             <ListItem className={classes.ltext1}>
-                <ListItemIcon><img src={Monitored} width="28px" height="28px" /> </ListItemIcon>
-                <ListItemText  primary={"Monitored Systems"}/>
-            </ListItem>
-            </Link>
-            <Link to="/Settings">
-            <ListItem className={classes.ltext1} >
                 <ListItemIcon><img src={Settings} width="28px" height="28px" />  </ListItemIcon>
                 <ListItemText   primary={"Settings"}/>
             </ListItem>
             </Link>
-            
-            <ListItem className={classes.ltext1} style={{backgroundColor:"rgba(108, 114, 147, 0.3)"}}>
+            <Link to="./Support">
+            <ListItem className={classes.ltext1}>
                 <ListItemIcon><img src={Support} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText  primary={"Support"}/>
             </ListItem>
-            
-            
+            </Link>
         </List>
 
       </Drawer>
@@ -186,7 +186,7 @@ export default function SDrawer(props) {
         })} 
       >
         <div className={classes.drawerHeader} />
-        <ContactC call={props.call}/>
+            <MContent/>
         
       </main>
       <footer>

@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme)=>({
 export default function CantLogin(){
     const classes = useStyles();
     return(
-        <div style={{minHeight: "100vh",display:"flex",flexDirection:"column"}}>
+        <div style={{minHeight: "100vh",display:"flex",flexDirection:"column",background:"white"}}>
         
         <main style={{display: "flex", flexDirection:"column"}}>
             

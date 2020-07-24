@@ -25,7 +25,7 @@ import Monitored from "../../Links/images/exposedsystems.png"
 import Settings from "../../Links/images/settings.png"
 import Support from "../../Links/images/support.png"
 import ContactC from "./Contactemail";
-const drawerWidth = 280;
+const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -144,25 +144,29 @@ export default function ContactDrawer(props) {
                 <ListItemIcon><img src={Home} width="28px" height="28px"  /> </ListItemIcon>
                 <ListItemText  primary={"Home"}/>
             </ListItem>
-            </Link> 
+            </Link>
             <ListItem className={classes.ltext1}>
                 <ListItemIcon><img src={Discover} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText  primary={"Discover"}/>
             </ListItem>
+            <Link to="/ExposedInformation">
             <ListItem className={classes.ltext1}>
                 <ListItemIcon><img src={Exposed} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText primary={"Exposed Information"}/>
             </ListItem>
+            </Link>
+            <Link to="/Monitored">
             <ListItem className={classes.ltext1}>
                 <ListItemIcon><img src={Monitored} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText  primary={"Monitored Systems"}/>
             </ListItem>
-            
+            </Link>
+            <Link to="/Settings">
             <ListItem className={classes.ltext1} >
                 <ListItemIcon><img src={Settings} width="28px" height="28px" />  </ListItemIcon>
                 <ListItemText   primary={"Settings"}/>
             </ListItem>
-            
+            </Link>
             
             <ListItem className={classes.ltext1} style={{backgroundColor:"rgba(108, 114, 147, 0.3)"}}>
                 <ListItemIcon><img src={Support} width="28px" height="28px" /> </ListItemIcon>

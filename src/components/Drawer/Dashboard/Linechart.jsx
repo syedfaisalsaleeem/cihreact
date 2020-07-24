@@ -88,7 +88,6 @@ export default function Linechart () {
                 value={age1}
                 onChange={handleChange}
                 style={{height:30}}
-                
                 variant="outlined"
                 displayEmpty
                 >

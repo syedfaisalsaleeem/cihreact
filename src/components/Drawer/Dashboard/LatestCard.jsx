@@ -127,6 +127,41 @@ const useStyles = makeStyles((theme) => ({
     control: {
       padding: theme.spacing(2),
     },
+    chip: {
+        margin: theme.spacing(0.5),
+        padding:theme.spacing(0.5),
+        fontStyle: "normal",
+         fontWeight: "normal",
+          fontSize: "12px",
+          background:"white",
+          border: "1px solid #000000"
+      },
+      chip1: {
+          margin: theme.spacing(0.5),
+          paddingLeft:theme.spacing(0.5),
+          paddingRight:theme.spacing(0.5),
+          paddingTop:theme.spacing(0.3),
+          paddingBottom:theme.spacing(0.3),
+          fontStyle: "normal",
+           fontWeight: "normal",
+            fontSize: "10px",
+            height:"15px",
+            border: "0.4px solid #000000",
+            borderRadius:"2px"
+  
+        },
+      tag:{
+          
+          fontStyle: "normal",
+          fontWeight: "600",
+          fontSize: "22px",
+          color: "#000000"
+      },
+      fontp:{
+        fontStyle: "normal",
+        fontWeight: "normal",
+        fontSize: "18px",
+      },
   }));
 export default function LatestCard(){
     const [fullWidth, setFullWidth] = React.useState(true);
@@ -482,51 +517,26 @@ export default function LatestCard(){
         </div>
 
 
-        <div className={styles.main2}>
-            <div className={styles.tagged} >
-                <h2>Key Word</h2>
-            </div>
 
-            <div className={styles.keys} >
+        <div className={styles.main4} >
+        <Grid item xs={12}>
+            <Grid container justify="center">
+                    <Grid item xs={12}>
+                        <Grid container direction="column"  style={{paddingTop:"10px",paddingLeft:"25px",paddingBottom:"10px"}} >
+                            <Grid item className={classes.tag} >
+                                Tagged
+                            </Grid>
+                            <Grid item style={{paddingTop:"4px"}}>
+                            <Chip size="small" className={classes.chip} label="Key Word" variant="outlined"/>       
+                            <Chip  size="small" className={classes.chip}   label="Key Word" variant="outlined"/> 
+                            <Chip  size="small" className={classes.chip} label="Key Word" variant="outlined"/>   
+                            <Chip  size="small" className={classes.chip}   label="Key Word" variant="outlined"/>   
+                            </Grid>
+                        </Grid>
+                    </Grid>
 
-            <div className={styles.key1} >
-                key word
-            </div>
-            <div className={styles.key2} >
-                key word
-            </div>
-
-            <div className={styles.key3} >
-                key word
-            </div>
-
-            <div className={styles.key4} >
-                key word
-            </div>
-            </div>
-        </div>
-        <div className={styles.main2}>
-            <div className={styles.tagged1} >
-                <h2>Tags</h2>
-            </div>
-
-            <div className={styles.keys1} >
-
-            <div className={styles.key11} >
-                Tag
-            </div>
-            <div className={styles.key12} >
-                Tag
-            </div>
-
-            <div className={styles.key13} >
-                Tag
-            </div>
-
-            <div className={styles.key14} >
-                Tag
-            </div>
-            </div>
+            </Grid>
+        </Grid>
         </div>
 
         <div className={styles.main3} >
@@ -545,14 +555,29 @@ export default function LatestCard(){
 
 
         <div className={styles.main4} >
+        <Grid item xs={12}>
+            <Grid container justify="center">
+                    <Grid item xs={12}>
+                        <Grid container direction="column"  style={{paddingTop:"10px",paddingLeft:"25px",paddingBottom:"10px"}} >
+                            <Grid item className={classes.tag} >
+                                Remedition Suggestion
+                            </Grid>
+                            <Grid item className={classes.fontp}style={{paddingTop:"4px"}}>
+                             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati, possimus delectus, 
+                             veritatis, saepe minus excepturi tempore cupiditate aperiam vitae sequi inventore pariatur numquam 
+                             accusantium neque necessitatibus deserunt exercitationem unde? Odio iste hic iusto id veniam provident a 
+                             laboriosam non? Laudantium quos nisi excepturi corrupti natus tempora commodi, optio ad culpa eius hic sint ipsa 
+                             maxime nemo magni architecto tenetur facere praesentium eligendi molestiae aspernatur. Deleniti nemo dicta, 
+                             similique totam corporis facilis sint ipsa autem est distinctio minima tempore id placeat, nostrum iusto neque ratione ad. 
+                             Voluptatem libero numquam saepe, quas, fuga placeat, minus amet officiis dolores possimus eum? Exercitationem, in
+             
+                            </Grid>
+                        </Grid>
+                    </Grid>
 
-            <div className={styles.remedition} >
-            <h2>Remedition Suggestion</h2>
-            </div>
+            </Grid>
+        </Grid>
 
-            <div className={styles.para2} >
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati, possimus delectus, veritatis, saepe minus excepturi tempore cupiditate aperiam vitae sequi inventore pariatur numquam accusantium neque necessitatibus deserunt exercitationem unde? Odio iste hic iusto id veniam provident a laboriosam non? Laudantium quos nisi excepturi corrupti natus tempora commodi, optio ad culpa eius hic sint ipsa maxime nemo magni architecto tenetur facere praesentium eligendi molestiae aspernatur. Deleniti nemo dicta, similique totam corporis facilis sint ipsa autem est distinctio minima tempore id placeat, nostrum iusto neque ratione ad. Voluptatem libero numquam saepe, quas, fuga placeat, minus amet officiis dolores possimus eum? Exercitationem, in</p>
-            </div>
         </div>
 
 

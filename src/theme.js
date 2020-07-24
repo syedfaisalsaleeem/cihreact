@@ -9,7 +9,7 @@ const theme = createMuiTheme({
       main: '#8950FC',
     },
     secondary: {
-      main: '#19857b',
+      main: '#000000',
     },
     error: {
       main: red.A400,
@@ -18,6 +18,7 @@ const theme = createMuiTheme({
       default: '#fff',
     },
   },
+
 });
 
 export default theme;

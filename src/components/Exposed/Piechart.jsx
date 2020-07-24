@@ -56,10 +56,10 @@ render(){
             
                 <Doughnut
             data= {{
-                labels:['Label (8668)',"Label (8668)","Label (8668)","Label (8668)"],
+                labels:['Label (00%)',"Label (00%)","Label (00%)","Label (00%)","Label (00%)","Label (00%)"],
         datasets: [{
-            data: [26, 14, 27, 33],
-            backgroundColor:  ['#D0021B','#50E3C2','#F5A623',"#03BD5B"],
+            data: [13, 15, 4, 9,27,33],
+            backgroundColor:  ['#D0021B','#464E5F','#F5A623',"#50E3C2","#8950FC","#03BD5B"],
             
             borderColor: 'white'
         }]
@@ -70,11 +70,13 @@ render(){
         legend: {
             display: true,
             position: 'right',
+              align:'start',
+              
             labels: {
                 boxWidth: 15,
-                fontColor: '#8D9AA9',
-                padding: 25,
-                fontSize: 18,
+                fontColor: '#506883',
+                padding: 24,
+                fontSize: 17,
                 usePointStyle: true ,
                 
             }

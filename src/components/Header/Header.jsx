@@ -16,7 +16,7 @@ import {Effect} from 'react-notification-badge';
 import styles from "./Header.module.css"
 
 import {Avatar} from "@material-ui/core"
-import {Link} from "react-router-dom"
+import {BrowserRouter,Link,Redirect,useHistory,withRouter} from 'react-router-dom';
 import cyber from "../../Links/images/cyber.png"
 
 const useStyles = makeStyles((theme) => ({
@@ -79,9 +79,9 @@ user:{
 }
 }));
 
-export default function Header(props) {
+function Header(props) {
   const classes = useStyles();
-
+  let history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [drawer,opendrawer]=React.useState(false)
@@ -96,6 +96,10 @@ export default function Header(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const loggedout=()=>{
+    localStorage.removeItem("token")
+    history.push("/");
+  }
   const count=16;
   return (
     <div className={classes.root}>
@@ -151,7 +155,9 @@ export default function Header(props) {
                 onClose={handleClose}
             >
                 <MenuItem onClick={handleClose}>Activity Log</MenuItem>
-                <MenuItem onClick={handleClose}>Log Out</MenuItem>
+                
+                <MenuItem onClick={loggedout}>Log Out</MenuItem>
+                
               </Menu>
             </div>
           
@@ -161,3 +167,4 @@ export default function Header(props) {
     </div>
   );
 }
+export default withRouter(Header);

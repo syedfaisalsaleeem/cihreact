@@ -95,7 +95,10 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(0),
+    paddingRight:theme.spacing(1.5),
+    paddingLeft:theme.spacing(1.5),
+    
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -155,10 +158,12 @@ export default function CyberDrawer(props) {
                 <ListItemIcon><img src={Exposed} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText primary={"Exposed Information"}/>
             </ListItem>
-            <ListItem className={classes.ltext1}>
-                <ListItemIcon><img src={Monitored} width="28px" height="28px" /> </ListItemIcon>
-                <ListItemText  primary={"Monitored Systems"}/>
-            </ListItem>
+            <Link to="./Monitored">
+              <ListItem className={classes.ltext1}>
+                  <ListItemIcon><img src={Monitored} width="28px" height="28px" /> </ListItemIcon>
+                  <ListItemText  primary={"Monitored Systems"}/>
+              </ListItem>
+            </Link>
             <Link to="./Settings">
             <ListItem className={classes.ltext1}>
                 <ListItemIcon><img src={Settings} width="28px" height="28px" />  </ListItemIcon>

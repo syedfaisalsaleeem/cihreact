@@ -26,7 +26,7 @@ import Monitored from "../../Links/images/exposedsystems.png"
 import Settings from "../../Links/images/settings.png"
 import Support from "../../Links/images/support.png"
 import Swindow from "./Swindow"
-const drawerWidth = 280;
+const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight:"normal",
     fontSize:"17px",
     height:"60px",
+    color:"white",
     '&:hover': {
        cursor:"pointer",
        background:"rgba(108, 114, 147, 0.3)",
@@ -139,36 +140,39 @@ export default function CyberDrawer(props) {
 
         <Divider/>
         <List className={classes.ltext}>
-          
+            <Link to="/Dashboard">
             <ListItem  className={classes.ltext1} >
                 <ListItemIcon><img src={Home} width="28px" height="28px"  /> </ListItemIcon>
                 <ListItemText  primary={"Home"}/>
             </ListItem>
-            
+            </Link>
             <ListItem className={classes.ltext1}>
                 <ListItemIcon><img src={Discover} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText  primary={"Discover"}/>
             </ListItem>
+            <Link to="/ExposedInformation">
             <ListItem className={classes.ltext1}>
                 <ListItemIcon><img src={Exposed} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText primary={"Exposed Information"}/>
             </ListItem>
+            </Link>
+            <Link to="/Monitored">
             <ListItem className={classes.ltext1}>
                 <ListItemIcon><img src={Monitored} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText  primary={"Monitored Systems"}/>
             </ListItem>
-            
+            </Link>
             <ListItem className={classes.ltext1} style={{backgroundColor:"rgba(108, 114, 147, 0.3)"}}>
                 <ListItemIcon><img src={Settings} width="28px" height="28px" />  </ListItemIcon>
                 <ListItemText   primary={"Settings"}/>
             </ListItem>
             
-            
+            <Link to="/Support">
             <ListItem className={classes.ltext1}>
                 <ListItemIcon><img src={Support} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText  primary={"Support"}/>
             </ListItem>
-            
+            </Link>
         </List>
 
       </Drawer>
