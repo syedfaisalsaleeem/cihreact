@@ -218,8 +218,9 @@ export default function Dropdown(props){
                                                     </div>
                                                     
                                                 </Grid>
-                                                <Grid item >
-                                                    <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",width:"40%",height:"100%",border: "0.6px solid #8950FC",borderRadius: "2px",fontStyle: "normal",
+                                                <Grid item xs={1}>
+                                                    <Button style={{width:"46%",height:"100%",minWidth:"45px",borderRadius: "2px",border:props.filtervalue?"0.6px solid #000000":"0.6px solid #8950FC"}} variant="outlined" onClick={props.filter}>
+                                                    <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",width:"60%",height:"100%",fontStyle: "normal",
                                                     fontWeight: "normal",
                                                     fontSize: "13px",
                                                     minWidth:"45px",
@@ -231,7 +232,136 @@ export default function Dropdown(props){
                                                         </div>
                                                             
                                                     </div>
-                                                </Grid> 
+                                                    </Button>
+                                                </Grid>
+                                                {props.filtervalue?
+                                                <div>
+
+                                                </div>
+                                                :
+                                    <div>
+                                    <Grid item xs={12} style={{marginTop:"26px"}}>
+                                    <Grid container justify="center">
+                                        <Grid item xs={10}>
+                                            <div style={{fontStyle: "normal",fontWeight: "500",fontSize: "15px",color: "#000000"}}>
+                                                Severity Level 
+                                            </div>
+
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={12} style={{marginTop:"10px"}}>
+                                    <Grid container justify="center">
+                                        <Grid item xs={10}>
+                                            <div style={{display:"flex",width:"50%",height:"23px"}}>
+                                                <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #8950FC",borderRadius: "2px",width:"81px",height:"23px",
+                                                            fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
+                                                    Low
+                                                </div>
+                                                <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"81px",height:"23px",
+                                                marginLeft:"16px",fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
+                                                    Medium
+                                                </div>
+                                                <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"81px",height:"23px",marginLeft:"16px",
+                                            fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
+                                                    High
+                                                </div>
+                                            </div>
+                                            
+
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+
+                                <Grid item xs={12} style={{marginTop:"26px"}}>
+                                    <Grid container justify="center">
+                                        <Grid item xs={10}>
+                                            <div style={{fontStyle: "normal",fontWeight: "500",fontSize: "15px",color: "#000000"}}>
+                                                Severity Type 
+                                            </div>
+
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+
+
+                                <Grid item xs={12} style={{marginTop:"20px"}}>
+                                    <Grid container justify="center">
+                                        <Grid item xs={10}>
+                                            <Grid container >
+                                                <Grid item xs={10}>
+                                                <Grid container spacing={2}>
+                                                
+                                                <Grid item>
+                                                    <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"157px",height:"25px",
+                                                                fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
+                                                        Sensitive Information
+                                                    </div>
+                                                </Grid>
+                                                <Grid item>
+                                                    <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"101px",height:"25px",
+                                                    marginLeft:"0px",fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
+                                                        Discussions
+                                                    </div>
+                                                </Grid>
+                                                <Grid item>
+                                                    <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"116px",height:"25px",marginLeft:"0px",
+                                                fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
+                                                        Black Markets
+                                                    </div>
+                                                </Grid>
+                                                <Grid item>
+                                                    <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"81px",height:"25px",marginLeft:"0px",
+                                                fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
+                                                        Financial
+                                                    </div>
+                                                </Grid>
+                                                <Grid item>
+                                                    <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"157px",height:"25px",marginLeft:"0px",
+                                                fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
+                                                        Exposed Credentials
+                                                    </div>
+                                                </Grid>
+                                                <Grid item>
+                                                    <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"157px",height:"25px",marginLeft:"0px",
+                                                fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
+                                                        Personal Information
+                                                    </div>
+                                                </Grid>
+                                                <Grid item>
+                                                    <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"175px",height:"25px",marginLeft:"0px",
+                                                fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
+                                                        Hacker Group Targeting
+                                                    </div>
+                                                </Grid>
+                                                <Grid item>
+                                                    <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"76px",height:"25px",marginLeft:"0px",
+                                                fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
+                                                        Attacks
+                                                    </div>
+                                                </Grid>
+                                                <Grid item>
+                                                    <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"117px",height:"25px",marginLeft:"0px",
+                                                fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
+                                                        Compromises
+                                                    </div>
+                                                </Grid>
+                                                <Grid item>
+                                                    <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"117px",height:"25px",marginLeft:"0px",
+                                                fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
+                                                        Under Analysis
+                                                    </div>
+                                                </Grid>
+
+                                                </Grid>
+                                                </Grid>
+                                            </Grid>
+
+                                        </Grid>
+                                    </Grid>
+                                    </Grid>
+                                    </div>
+                                                } 
                                             </Grid>
                                         </Grid>
                                         

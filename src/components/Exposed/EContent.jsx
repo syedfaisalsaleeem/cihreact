@@ -138,6 +138,7 @@ export default function EContent(){
     const [count,setcount]=useState();
     const [view,setview]=useState(true);
     const [dropc,setdrop]=useState(true);
+    const [filter,setfilter]=useState(true);
     const handleview=()=>{
             setview(true)
     }
@@ -160,6 +161,9 @@ export default function EContent(){
         setcount(calculate)
         
 
+    }
+    const changefilter=()=>{
+        setfilter(!filter)
     }
     useEffect(() => {
         calculate();
@@ -445,11 +449,11 @@ export default function EContent(){
 
 
 </Grid>
-                <Dropup/>
+                <Dropup filter={changefilter} filtervalue={filter}/>
                 </div>
                 :
                 <div>
-                    <Dropdown call={handledrop}/>
+                    <Dropdown call={handledrop} filter={changefilter} filtervalue={filter}/>
                 </div>
                 
                 

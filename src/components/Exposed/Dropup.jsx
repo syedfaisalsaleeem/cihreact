@@ -116,8 +116,8 @@ const useStyles = makeStyles((theme) => ({
         background: "#FFFFFF",
         boxShadow: "0px 0px 35px rgba(181, 181, 195, 0.15)",
         borderRadius: "6px", 
+        paddingBottom:"40px"
         
-        height: "405px",
         
      },
      f3:{
@@ -131,7 +131,7 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(2),
     },
   }));
-export default function Dropup(){
+export default function Dropup(props){
     const classes=useStyles();
     const [view,setview]=useState(true);
     const [dropc,setdrop]=useState(true);
@@ -213,7 +213,8 @@ export default function Dropup(){
                                                     
                                                 </Grid>
                                                 <Grid item xs={1}>
-                                                    <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",width:"60%",height:"100%",border: "0.6px solid #8950FC",borderRadius: "2px",fontStyle: "normal",
+                                                    <Button style={{width:"60%",height:"100%",minWidth:"45px",borderRadius: "2px",border:props.filtervalue?"0.6px solid #000000":"0.6px solid #8950FC"}} variant="outlined" onClick={props.filter}>
+                                                    <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",width:"60%",height:"100%",fontStyle: "normal",
                                                     fontWeight: "normal",
                                                     fontSize: "13px",
                                                     minWidth:"45px",
@@ -225,13 +226,19 @@ export default function Dropup(){
                                                         </div>
                                                             
                                                     </div>
+                                                    </Button>
                                                 </Grid> 
                                             </Grid>
                                         </Grid>
 
                                     </Grid>
                                 </Grid>
-                                <Grid item xs={12} style={{marginTop:"26px"}}>
+                                {props.filtervalue?
+                                    <div>
+
+                                    </div>:
+                                    <div>
+                                    <Grid item xs={12} style={{marginTop:"26px"}}>
                                     <Grid container justify="center">
                                         <Grid item xs={11}>
                                             <div style={{fontStyle: "normal",fontWeight: "500",fontSize: "15px",color: "#000000"}}>
@@ -245,18 +252,24 @@ export default function Dropup(){
                                     <Grid container justify="center">
                                         <Grid item xs={11}>
                                             <div style={{display:"flex",width:"50%",height:"23px"}}>
-                                                <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #8950FC",borderRadius: "2px",width:"81px",height:"23px",
+                                                <Button variant="outlined" style={{border: "0.6px solid #8950FC",borderRadius: "2px",width:"81px",height:"23px",textTransform:"capitalize"}}>
+                                                <div style={{display:"flex",alignItems:"center",justifyContent:"center",
                                                             fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
                                                     Low
                                                 </div>
-                                                <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"81px",height:"23px",
-                                                marginLeft:"16px",fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
+                                                </Button>
+                                                <Button variant="outlined" style={{border: "0.6px solid #000000",borderRadius: "2px",width:"81px",height:"23px",textTransform:"capitalize",marginLeft:"16px"}}>
+                                                <div style={{display:"flex",alignItems:"center",justifyContent:"center",
+                                                fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
                                                     Medium
                                                 </div>
-                                                <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"81px",height:"23px",marginLeft:"16px",
+                                                </Button>
+                                                <Button variant="outlined" style={{border: "0.6px solid #000000",borderRadius: "2px",width:"81px",height:"23px",textTransform:"capitalize",marginLeft:"16px"}}>
+                                                <div style={{display:"flex",alignItems:"center",justifyContent:"center",
                                             fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
                                                     High
                                                 </div>
+                                                </Button>
                                             </div>
                                             
 
@@ -350,7 +363,13 @@ export default function Dropup(){
 
                                         </Grid>
                                     </Grid>
-                                </Grid>
+                                    </Grid>
+                                    </div>
+
+
+                                }
+                                
+                                
                         
                         </Card>
                     </Grid>
