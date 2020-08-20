@@ -1,0 +1,30 @@
+.body{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height:100vh;
+    width: 80vw;
+    background: rgba(255, 255, 255, 0.2); 
+    backdrop-filter: blur(2px); 
+      
+}
+.container {
+    display: grid;
+    width: 30em;
+  }
+
+.imgbg {
+    background: url('http://www.planwallpaper.com/static/assets/img/header.jpg');
+    background-size: cover;
+    grid-column: 1/-1;
+    grid-row: 1/-1;
+    filter: blur(4px);
+  }
+
+
+ .container h2 {
+    text-transform: uppercase;
+    grid-column: 1/-1;
+    grid-row: 1/-1;
+    z-index: 2;
+  }

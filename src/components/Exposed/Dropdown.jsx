@@ -254,14 +254,19 @@ export default function Dropdown(props){
                                     <Grid container justify="center">
                                         <Grid item xs={10}>
                                             <div style={{display:"flex",width:"50%",height:"23px"}}>
-                                                <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #8950FC",borderRadius: "2px",width:"81px",height:"23px",
-                                                            fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
-                                                    Low
-                                                </div>
-                                                <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"81px",height:"23px",
-                                                marginLeft:"16px",fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
+                                                <Button style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"81px",height:"23px"}} onClick={props.slow}>
+                                                    <div style={{
+                                                                fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)",textTransform:"capitalize"}}>
+                                                        Low
+                                                    </div>
+                                                </Button>
+                                                <Button style={{display:"flex",marginLeft:"16px",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"81px",height:"23px"}}>
+                                                <div style={{
+                                                fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)",textTransform:"capitalize"}}>
                                                     Medium
                                                 </div>
+                                                </Button>
+                                                
                                                 <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"81px",height:"23px",marginLeft:"16px",
                                             fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
                                                     High

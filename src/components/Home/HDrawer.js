@@ -1,5 +1,6 @@
 import React from 'react';
-import {Link} from "react-router-dom"
+import {BrowserRouter,Link,Switch,Route,Redirect} from 'react-router-dom';
+
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -24,7 +25,7 @@ import Exposed from "../../Links/images/information.png"
 import Monitored from "../../Links/images/exposedsystems.png"
 import Settings from "../../Links/images/settings.png"
 import Support from "../../Links/images/support.png"
-import ContactC from "./Contactemail";
+import HContent from "./HContent.jsx"
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 const drawerWidth = 250;
 
@@ -60,7 +61,6 @@ const useStyles = makeStyles((theme) => ({
        
     },
   },
-
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
@@ -105,7 +105,8 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(0),
+    
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -122,7 +123,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ContactDrawer(props) {
+export default function MDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
@@ -138,6 +139,7 @@ export default function ContactDrawer(props) {
  const changeopen=()=>{
    setopen1(!open1)
  }
+
   return (
     <div className={classes.root}>
      
@@ -155,7 +157,7 @@ export default function ContactDrawer(props) {
         <Divider/>
         <List className={classes.ltext}>
           <Link to="/Home">
-            <ListItem  className={classes.ltext1} >
+            <ListItem  className={classes.ltext1} style={{backgroundColor:"rgba(108, 114, 147, 0.3)"}}>
                 <ListItemIcon><img src={Home} width="25px" height="25px"  /> </ListItemIcon>
                 <ListItemText  primary={<Typography style={{fontSize:"14px"}}>Home</Typography>}/>
             </ListItem>
@@ -196,7 +198,7 @@ export default function ContactDrawer(props) {
             </ListItem>
             </Link>
             <Link to="./Support">
-            <ListItem className={classes.ltext1} style={{backgroundColor:"rgba(108, 114, 147, 0.3)"}}>
+            <ListItem className={classes.ltext1}>
                 <ListItemIcon><img src={Support} width="25px" height="25px" /> </ListItemIcon>
                 <ListItemText primary={<Typography style={{fontSize:"14px"}}>Support</Typography>}  />
             </ListItem>
@@ -211,8 +213,13 @@ export default function ContactDrawer(props) {
         })} 
       >
         <div className={classes.drawerHeader} />
-        
-        <ContactC/>
+        <HContent/>
+        {/* <div style={{height:"100vh"}}>
+        <h3>
+                This page is under building process
+            </h3>
+        </div> */}
+
         
       </main>
       <footer>

@@ -19,36 +19,59 @@ export default function Piechart() {
 
     })
     const calculate=()=>{
-       console.log(piedata,"calculate")
+       let by={
+        "sensitivedisclosure":0,
+        "discussions":0,
+        "blackmarkets":0,
+        "financialinformation":0,
+        "exposedcredentials":0,
+        "personalinformation":0,
+        "hackergrouptargeting":0,
+        "attacksandcompromises":0,
+        "unidentified":0
+       }
        for(var key in piedata) {
         var value = piedata[key];
-        var count=5;
+        var count=0;
         for(var key1 in value){
                 var value1=value[key1]
                 count=count+value1
             }
-        console.log(value,count,key)
+        // console.log(value,count,key,by)
+        by[key]=count
+        // setby_category(prevState => ({
+        //     ...prevState,
+        //     [key] : count
+        // }))
+         
+    }
+
+    // let promise=new Promise(function(resolve,reject){
+        
+        let total=0;
+        // console.log(by,"val2");
+        for (var i in by){
+            var val=by[i];
+            // console.log(val,"val");
+            total=total+val
+        }
+    // });
+    // callback("Food is ready")
+    //   let total=0;
+    //   console.log(by_category,"val");
+    //   for (var i in by_category){
+    //       var val=by_category[i];
+    //       console.log(val,"val");
+    //       total=total+val
+    //   }
+      for (var y in by){
+        var val=by[y];
+        // console.log(y,"y",total,"total",((val/total)*100),"val3",by_category);
         setby_category(prevState => ({
             ...prevState,
-            [key] : count
+            [y] : Math.round(((val/total)*100))
         }))
-        console.log(by_category,"val231");  
-    }
-      let total=0;
-      console.log(by_category,"val");
-      for (var i in by_category){
-          var val=by_category[i];
-          console.log(val,"val");
-          total=total+val
       }
-    //   for (var y in by_category){
-    //     var val=by_category[i];
-    //     console.log(y,"y",total,"total",val,"val");
-    //     setby_category(prevState => ({
-    //         ...prevState,
-    //         [y] : (val/total)
-    //     }))
-    //   }
     
     
       //   setby_category(prevState => ({
@@ -72,6 +95,15 @@ export default function Piechart() {
     // }))
     
     }
+    // function calculation(){
+    //     let promise=new Promise(function(resolve,reject){
+    //         setTimeout(()=>{
+    //             calculate();
+    //         },10)
+    //         resolve("x")
+    // })
+    // return promise;
+    // }
     useDeepCompareEffect( ()=>{
         const fetchData=async() => {
             
@@ -81,12 +113,25 @@ export default function Piechart() {
                   }
             }).then((response)=>{
             
-                console.log(response,"result")
+                // console.log(response,"result")
                 setpiedata(response.data.by_category)
+                calculate()
+                // async function startProcess(){
+                //     let x= await calculation();
+                //     if(x=="x"){
+                //         console.log(by_category,"bb")
+                //     }
+                // }
+                // startProcess()
+
                 
-                calculate();
+
+                // calculate();
                 // setpiedata(result.data.by_category)
             })
+            .then(
+                console.log(by_category)
+            )
             .catch((error)=>{
                 console.log(error)
             })
@@ -137,7 +182,15 @@ export default function Piechart() {
             
                 <Doughnut
             data= {{
-                labels:['Sensitive disclosure (00%)',"discussions (00%)","black markets (00%)","financial information (00%)","exposed credentials (00%)","personal information (00%)"," hacker group targeting (00%)", "attacks and compromises (00%)", "unidentified (00%)"],
+                labels:['Sensitive disclosure '.concat(String(by_category["sensitivedisclosure"]).concat(" %")),
+                "discussions ".concat(String(by_category["discussions"]).concat(" %")),
+                "black markets ".concat(String(by_category["blackmarkets"]).concat(" %")),
+                "financial information ".concat(String(by_category["financialinformation"]).concat(" %")),
+                "exposed credentials ".concat(String(by_category["exposedcredentials"]).concat(" %")),
+                "personal information ".concat(String(by_category["personalinformation"]).concat(" %")),
+                "hacker group targeting ".concat(String(by_category["hackergrouptargeting"]).concat(" %")),
+                 "attacks and compromises ".concat(String(by_category["attacksandcompromises"]).concat(" %")), 
+                 "unidentified ".concat(String(by_category["unidentified"]).concat(" %"))],
         datasets: [{
             data: [by_category["sensitivedisclosure"],by_category["discussions"] ,by_category["blackmarkets"],by_category["financialinformation"],by_category["exposedcredentials"],by_category["personalinformation"],by_category["hackergrouptargeting"],by_category["attacksandcompromises"],by_category["unidentified"]],
             backgroundColor:  ['#1F77B4','#AEC7E8','#FF7F0E',"#FFBB78","#2CA02C","#98DF8A","#D62728","#FF9896","#9467BD"],

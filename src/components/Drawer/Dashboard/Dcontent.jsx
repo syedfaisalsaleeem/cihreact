@@ -97,7 +97,7 @@ export default function Dcontent (){
                     <Grid container justify="center">
                         <Grid item xs={11}>
                         <Typography className={classes.h}>
-                        Security Overview
+                        Exposed Information
                         </Typography>
                         </Grid>
                     </Grid>
@@ -247,10 +247,10 @@ export default function Dcontent (){
                                                 
                                             }
                                             
-                                            title="Label"      
+                                            title="By Risk "      
                                             />
                                             <Divider/>
-                                            <Linechart/>
+                                            <BarGroup/>
                                             
                                                 
                                             
@@ -278,11 +278,11 @@ export default function Dcontent (){
                                     
                                 }
                                 
-                                title="By Risk"      
+                                title="EXPOSURE TRENDS (LAST 24 MONTHS)"      
                                 />
                                 <Divider/>
-                                <BarGroup/>
-                                    
+                                
+                                <Linechart/>   
                                 
                             
                             </Card>

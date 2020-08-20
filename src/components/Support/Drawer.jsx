@@ -25,7 +25,8 @@ import Exposed from "../../Links/images/information.png"
 import Monitored from "../../Links/images/exposedsystems.png"
 import Settings from "../../Links/images/settings.png"
 import Support from "../../Links/images/support.png"
-import ContactC from "./ContactC"
+import ContactC from "./ContactC";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Roboto",
     fontStyle: "normal",
     fontWeight:"normal",
-    fontSize:"17px",
+    fontSize:"12px",
     height:"60px",
     color:"white",
     '&:hover': {
@@ -49,7 +50,17 @@ const useStyles = makeStyles((theme) => ({
        background:"rgba(108, 114, 147, 0.3)",
     },
   },
-
+  ltext2:{
+    fontFamily: "Roboto",
+    fontStyle: "normal",
+    fontWeight:"normal",
+    fontSize:"14px",
+    color:"white",
+    '&:hover': {
+       cursor:"pointer",
+       
+    },
+  },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
@@ -115,6 +126,7 @@ export default function SDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
+  const [open1, setopen1] = React.useState(false);
   console.log(props.call)
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -123,6 +135,9 @@ export default function SDrawer(props) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+ const changeopen=()=>{
+   setopen1(!open1)
+ }
 
   return (
     <div className={classes.root}>
@@ -140,42 +155,53 @@ export default function SDrawer(props) {
 
         <Divider/>
         <List className={classes.ltext}>
-        
-            <Link to="/Dashboard">
+          <Link to="/Home">
             <ListItem  className={classes.ltext1} >
-                <ListItemIcon><img src={Home} width="28px" height="28px"  /> </ListItemIcon>
-                <ListItemText  primary={"Home"}/>
+                <ListItemIcon><img src={Home} width="25px" height="25px"  /> </ListItemIcon>
+                <ListItemText  primary={<Typography style={{fontSize:"14px"}}>Home</Typography>}/>
             </ListItem>
+          </Link>
+            <ListItem className={classes.ltext1}>
+                <ListItemIcon><img src={Discover} width="25px" height="25px" /> </ListItemIcon>
+                <ListItemText  primary={<Typography style={{fontSize:"14px"}}>Discover</Typography>}/>
+            </ListItem>
+            
+            <ListItem className={classes.ltext1} >
+            <ListItemIcon><img src={Exposed} width="25px" height="25px" /> </ListItemIcon>
+            <Link to="/Dashboard">
+            <Typography className={classes.ltext2}>Exposed Information</Typography> 
+                {/* <ListItem className={classes.ltext2}>
+                
+                  <ListItemText primary={<Typography style={{fontSize:"13px"}}>Exposed Information</Typography> } />
+                </ListItem> */}
             </Link>
-            <ListItem className={classes.ltext1}>
-                <ListItemIcon><img src={Discover} width="28px" height="28px" /> </ListItemIcon>
-                <ListItemText  primary={"Discover"}/>
+            <ExpandMoreIcon onClick={changeopen} style={{marginLeft:"5px"}}> </ExpandMoreIcon >     
             </ListItem>
-            <Link to="/ExposedInformation">
-            <ListItem className={classes.ltext1}>
-                <ListItemIcon><img src={Exposed} width="28px" height="28px" /> </ListItemIcon>
-                <ListItemText primary={"Exposed Information"}/>
+
+            <Link to="/Exposedinformation">
+            <ListItem className={classes.ltext1} style={{display:open1?"block":"none"}}>
+                
+                <ListItemText primary={<Typography style={{fontSize:"14px"}}>All Alerts</Typography>}  style={{marginLeft:"80px",paddingTop:"5px"}}/>
             </ListItem>
             </Link>
             <Link to="/Monitored">
-            <ListItem className={classes.ltext1}>
-                <ListItemIcon><img src={Monitored} width="28px" height="28px" /> </ListItemIcon>
-                <ListItemText  primary={"Monitored Systems"}/>
-            </ListItem>
-            </Link>
-            <Link to="/Settings">
             <ListItem className={classes.ltext1} >
-                <ListItemIcon><img src={Settings} width="28px" height="28px" />  </ListItemIcon>
-                <ListItemText   primary={"Settings"}/>
+                <ListItemIcon><img src={Monitored} width="25px" height="25px" /> </ListItemIcon>
+                <ListItemText primary={<Typography style={{fontSize:"14px"}}>Monitored Systems</Typography>} />
             </ListItem>
             </Link>
-            
-            <ListItem className={classes.ltext1} style={{backgroundColor:"rgba(108, 114, 147, 0.3)"}}>
-                <ListItemIcon><img src={Support} width="28px" height="28px" /> </ListItemIcon>
-                <ListItemText  primary={"Support"}/>
+            <Link to="./Settings">
+            <ListItem className={classes.ltext1}>
+                <ListItemIcon><img src={Settings} width="25px" height="25px" />  </ListItemIcon>
+                <ListItemText  primary={<Typography style={{fontSize:"14px"}}>Settings</Typography>} />
             </ListItem>
-            
-            
+            </Link>
+            <Link to="./Support">
+            <ListItem className={classes.ltext1} style={{backgroundColor:"rgba(108, 114, 147, 0.3)"}}>
+                <ListItemIcon><img src={Support} width="25px" height="25px" /> </ListItemIcon>
+                <ListItemText primary={<Typography style={{fontSize:"14px"}}>Support</Typography>}  />
+            </ListItem>
+            </Link>
         </List>
 
       </Drawer>

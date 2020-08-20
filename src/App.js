@@ -4,6 +4,7 @@ import Login from "./Links/Login/Login"
 import {BrowserRouter,Link,Switch,Route} from 'react-router-dom';
 import CantLogin from './Links/CantLogin/CantLogin';
 import Home from './Links/Dashboard/Dashboard';
+import Home1 from './Links/Home/index.js';
 import Setting from './Links/Settings/Setting';
 import Support from './Links/Support/Support';
 import Contact from "./Links/Support/Contact";
@@ -32,6 +33,7 @@ function App() {
         
         <Route path="/" component={Login} exact />
         <Route path="/CantLogin" component={CantLogin} exact/>
+        <Route path="/Home" component={Home1} exact/>
         <Route path="/DashBoard" component={Home} exact/>
         <Route path="/Settings" component={Setting} exact/>
         <Route path="/Support" component={Support} exact/>

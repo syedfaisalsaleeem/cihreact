@@ -10,7 +10,9 @@ import Piechart from "./Piechart";
 import Progressbar from "./progressbar";
 import drop from "../../Links/images/drop.png";
 import Dropup from "./Dropup.jsx";
-import Dropdown from "./Dropdown.jsx"
+import Dropdown from "./Dropdown.jsx";
+import useDeepCompareEffect from 'use-deep-compare-effect';
+import axios from 'axios';
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -139,6 +141,22 @@ export default function EContent(){
     const [view,setview]=useState(true);
     const [dropc,setdrop]=useState(true);
     const [filter,setfilter]=useState(true);
+    const [progress1,setprogress1]=useState({
+        "darkweb":0,
+        "databreach":0,
+        "deepweb":0
+    });
+    const [progressdata,setprogressdata]=React.useState({
+        "darkweb":0,
+        "databreach":0,
+        "deepweb":0,
+        "totalalerts":0,
+        "newalerts":0,
+        "mostactivecategory":"",
+        "mostactivesource":""
+
+    })
+    const [piedata,setpiedata]=React.useState({});
     const handleview=()=>{
             setview(true)
     }
@@ -165,9 +183,97 @@ export default function EContent(){
     const changefilter=()=>{
         setfilter(!filter)
     }
-    useEffect(() => {
+    // useEffect(() => {
+    //     calculate();
+    //   },[]);
+      function calculate1(arr){
+        let piedata1=arr
+          
+        let by={
+            "darkweb":0,
+            "databreach":0,
+            "deepweb":0
+           }
+           
+           for(var key in piedata1["by_source"]) {
+            var value = piedata1["by_source"][key];
+            var count=0;
+            for(var key1 in value){
+                    var value1=value[key1]
+                    count=count+value1
+                }
+
+            by[key]=count
+            
+            setprogressdata(prevState => ({
+                ...prevState,
+                [key] : count
+                
+            }))    
+             
+        }
+    
+        
+            
+            let total=0;
+
+            for (var i in by){
+                var val=by[i];
+
+                total=total+val
+            }
+
+          for (var y in by){
+            var val=by[y];
+           
+            setprogress1(prevState => ({
+                ...prevState,
+                [y] : ((val/total)*100).toFixed(1)
+                
+            }))
+          }
+          setprogressdata(prevState => ({
+            ...prevState,
+            ["totalalerts"] : piedata1["total_alerts"]
+            
+        }))
+             
+        }
+    const severitylow=()=>{
+        const fetchdata=()=>{
+        const reult= axios.get("https://if.cyberintelligencehouse.com/api/alerts?filter_op=AND&filter_tags=severitylow",{
+            headers: {
+                'X-Api-Key': '1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2'
+              }
+        }).then((response)=>{
+            console.log(response,"result")
+        }).catch((error)=>{
+            console.log("err",error)
+        })
+        }
+        fetchdata()
+    }  
+    useDeepCompareEffect(()=>{
         calculate();
-      });
+        const fetchData=async() => {
+            
+            const result= await axios.get("https://if.cyberintelligencehouse.com/api/exposure",{
+                headers: {
+                    'X-Api-Key': '1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2'
+                  }
+            }).then((response)=>{
+            
+                console.log(response,"result")
+                // setpiedata(response.data)
+                calculate1(response.data)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+      }
+
+        fetchData()
+    },[piedata])
     return(
         <div style={{marginTop:"36px"}}>
                 {dropc?
@@ -180,7 +286,7 @@ export default function EContent(){
             <Grid container alignItems="center">
                 <Grid item xs={4} lg={4} >
                 <Typography className={classes.h}>
-                    Latest Updates
+                    All Alerts
                 </Typography>
                 </Grid>
                 <Grid item xs={8} lg={8}>
@@ -221,7 +327,7 @@ export default function EContent(){
                         
                             <img src={warning}></img>
                             <Typography style={{fontStyle:"normal",fontWeight:"bold",fontSize:"40px",color:"#464E5F"}}>
-                                158
+                                {progressdata.totalalerts}
                             </Typography>
                             <Typography className={classes.fontin}>
                                 Total Alerts Found
@@ -331,7 +437,11 @@ export default function EContent(){
                                             <Grid item xs={6}>
                                                 <Grid container justify="flex-end">
                                                 <div className={classes.progressfont} style={{paddingRight:"10px"}}>
-                                                    22 Alerts
+                                                    
+                                                    {String(progressdata.darkweb).concat(" Alerts")}
+                                                    
+                                                    
+                                                
                                                 </div>
                                                 </Grid>
                                                 
@@ -341,7 +451,7 @@ export default function EContent(){
                             
                                     </Grid>
                                     <Grid item xs={11} style={{marginTop:"10px"}}>
-                                    <Progressbar color={"black"} values={count}/>
+                                    <Progressbar color={"black"} values={String(progress1["darkweb"]).concat("%")}/>
                             
                             
                                     </Grid>
@@ -349,13 +459,13 @@ export default function EContent(){
                                         <Grid container >
                                             <Grid item xs={6}>
                                                 <div className={classes.progressfont} style={{paddingLeft:"10px"}}>
-                                                    Dark Breach
+                                                    Data Breach
                                                 </div>
                                             </Grid>
                                             <Grid item xs={6}>
                                                 <Grid container justify="flex-end">
                                                 <div className={classes.progressfont} style={{paddingRight:"10px"}}>
-                                                    43 Alerts
+                                                {String(progressdata.databreach).concat(" Alerts")}
                                                 </div>
                                                 </Grid>
                                                 
@@ -367,7 +477,7 @@ export default function EContent(){
 
                                     <Grid item xs={11} style={{marginTop:"10px"}}>
                                     
-                                        <Progressbar color={"#8950FC"} values={count}/>
+                                        <Progressbar color={"#8950FC"} values={String(progress1["databreach"]).concat("%")}/>
                             
                                     </Grid>
 
@@ -381,7 +491,7 @@ export default function EContent(){
                                             <Grid item xs={6}>
                                                 <Grid container justify="flex-end">
                                                 <div className={classes.progressfont} style={{paddingRight:"10px"}}>
-                                                    9 Alerts
+                                                {String(progressdata.deepweb).concat(" Alerts")}
                                                 </div>
                                                 </Grid>
                                                 
@@ -393,7 +503,7 @@ export default function EContent(){
 
                                     <Grid item xs={11} style={{marginTop:"10px"}}>
                                     
-                                    <Progressbar color={"#313742"} values={count}/>
+                                    <Progressbar color={"#313742"} values={String(progress1["deepweb"]).concat("%")}/>
                             
                                     </Grid>
 
@@ -449,11 +559,11 @@ export default function EContent(){
 
 
 </Grid>
-                <Dropup filter={changefilter} filtervalue={filter}/>
+                <Dropup filter={changefilter} filtervalue={filter} />
                 </div>
                 :
                 <div>
-                    <Dropdown call={handledrop} filter={changefilter} filtervalue={filter}/>
+                    <Dropdown call={handledrop} filter={changefilter} filtervalue={filter} slow={severitylow}/>
                 </div>
                 
                 

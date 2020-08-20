@@ -10,24 +10,92 @@ const statelinechart = {
            'April', 'May'],
   datasets: [
     {
-      label: 'labelA',
+      label: ' label A',
       fill: false,
       lineTension: 0.5,
-      backgroundColor: 'grey',
-      borderColor: 'grey',
+      backgroundColor: '#1F77B4',
+      borderColor: '#1F77B4',
       borderWidth: 2,
       data: [65, 59, 80, 81, 56]
     },
     {
-        label: 'labelB',
+        label: ' label B',
         fill: false,
         lineTension: 0.5,
-        backgroundColor: 'red',
-        color:"red",
-        borderColor: 'red',
+        backgroundColor: '#AEC7E8',
+        color:'#AEC7E8',
+        borderColor: '#AEC7E8',
         borderWidth: 2,
         data: [75, 69, 60, 71, 66]
-      }
+      },
+      {
+        label: ' label C',
+        fill: false,
+        lineTension: 0.5,
+        backgroundColor: '#FF7F0E',
+        borderColor: '#FF7F0E',
+        borderWidth: 2,
+        data: [65, 59, 80, 81, 56]
+      },
+      {
+          label: ' label D',
+          fill: false,
+          lineTension: 0.5,
+          backgroundColor: "#FFBB78",
+          color:"#FFBB78",
+          borderColor: "#FFBB78",
+          borderWidth: 2,
+          data: [75, 69, 60, 71, 66]
+        },
+        {
+          label: ' label E',
+          fill: false,
+          lineTension: 0.5,
+          backgroundColor: "#2CA02C",
+          borderColor: "#2CA02C",
+          borderWidth: 2,
+          data: [65, 59, 80, 81, 56]
+        },
+        {
+            label: ' label F',
+            fill: false,
+            lineTension: 0.5,
+            backgroundColor: "#98DF8A",
+            color:"#98DF8A",
+            borderColor: "#98DF8A",
+            borderWidth: 2,
+            data: [75, 69, 60, 71, 66]
+          },
+          {
+            label: ' label G',
+            fill: false,
+            lineTension: 0.5,
+            backgroundColor: "#D62728",
+            color:"#D62728",
+            borderColor: "#D62728",
+            borderWidth: 2,
+            data: [75, 69, 60, 71, 66]
+          },
+          {
+            label: ' label H',
+            fill: false,
+            lineTension: 0.5,
+            backgroundColor: "#FF9896",
+            color:"#FF9896",
+            borderColor: "#FF9896",
+            borderWidth: 2,
+            data: [75, 69, 60, 71, 66]
+          },
+          {
+            label: ' label I',
+            fill: false,
+            lineTension: 0.5,
+            backgroundColor: 'red',
+            color:"red",
+            borderColor: 'red',
+            borderWidth: 2,
+            data: [75, 69, 60, 71, 66]
+          }
   ]
 }
 const useStyles = makeStyles((theme) => ({
@@ -100,7 +168,7 @@ export default function Linechart () {
                 </Select>
             </FormControl>
         </div>
-        <div style={{marginTop:"-48px",height:"48%",maxHeight:"350px",minHeight:"350px",marginLeft:"20px",width:"88%"}}>
+        <div style={{marginTop:"-48px",height:"48%",maxHeight:"350px",minHeight:"350px",marginLeft:"20px",width:"95%"}}>
         <Line
           data={statelinechart}
           
@@ -120,7 +188,7 @@ export default function Linechart () {
 
               labels: {
                 
-                padding: 25,
+                padding: 30,
                 usePointStyle: true ,
                 fontFamily:"Roboto",
                 fontStyle:"bold",
