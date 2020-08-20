@@ -10,7 +10,8 @@ import Piechart from "./Piechart";
 import Progressbar from "./progressbar";
 import drop from "../../Links/images/drop.png";
 import Dropup from "./Dropup.jsx";
-import Dropdown from "./Dropdown.jsx"
+import Dropdown from "./Dropdown.jsx";
+import GetAppIcon from '@material-ui/icons/GetApp';
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -180,7 +181,7 @@ export default function EContent(){
             <Grid container alignItems="center">
                 <Grid item xs={4} lg={4} >
                 <Typography className={classes.h}>
-                    Latest Updates
+                    All Alerts
                 </Typography>
                 </Grid>
                 <Grid item xs={8} lg={8}>
@@ -188,12 +189,13 @@ export default function EContent(){
                         
                         
                         <div style={{display:"flex",alignItems:'center',padding:"5px"}}>
-                            <img src={refresh}>
-                            </img>
+                            Download
                             </div>
                             <div>
                             <Typography style={{display:"flex",fontSize:"12px",fontWeight:"600",padding:"6px"}}>
-                                Update 00:00 PM 18/9/2022
+                                        <IconButton>
+                                            <GetAppIcon/>
+                                        </IconButton>
                             </Typography>
                             </div>
                         

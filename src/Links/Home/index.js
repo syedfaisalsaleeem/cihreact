@@ -2,8 +2,8 @@
 import React from 'react';
 import Header from "../../components/Header/Header.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
-import MDrawer from "../../components/Monitored/MDrawer.jsx";
-class Monitor extends React.Component {
+import HDrawer from "../../components/Home/HDrawer.jsx";
+class Home1 extends React.Component {
   constructor(props){
     super(props)
     this.state={
@@ -34,7 +34,7 @@ render(){
 
       <main style={{background:"#F2F3F7"}}>
       <Header call={this.handledrawer}/>
-        <MDrawer call={this.state.drawer}/>
+        <HDrawer call={this.state.drawer}/>
        
        
       </main>
@@ -66,4 +66,4 @@ render(){
   )
       }
 }
-export default Monitor;
+export default Home1;

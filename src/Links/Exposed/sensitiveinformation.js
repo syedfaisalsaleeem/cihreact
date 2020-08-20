@@ -2,8 +2,8 @@
 import React from 'react';
 import Header from "../../components/Header/Header.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
-import MDrawer from "../../components/Monitored/MDrawer.jsx";
-class Monitor extends React.Component {
+import SIDrawer from "../../components/sensitiveinformation/SIDrawer.jsx";
+export default class Sensitive extends React.Component {
   constructor(props){
     super(props)
     this.state={
@@ -25,16 +25,16 @@ render(){
   return (
     <div  className="container">
       <head>
-      <meta
+      {/* <meta
         name="viewport"
         content="minimum-scale=1, initial-scale=1, width=device-width"
-        />
+        /> */}
 
       </head>
 
       <main style={{background:"#F2F3F7"}}>
       <Header call={this.handledrawer}/>
-        <MDrawer call={this.state.drawer}/>
+        <SIDrawer call={this.state.drawer}/>
        
        
       </main>
@@ -66,4 +66,4 @@ render(){
   )
       }
 }
-export default Monitor;
+

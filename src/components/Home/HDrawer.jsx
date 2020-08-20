@@ -1,6 +1,3 @@
-import MContent from "./MContent.jsx";
-
-
 import React from 'react';
 import {BrowserRouter,Link,Switch,Route,Redirect} from 'react-router-dom';
 
@@ -28,6 +25,7 @@ import Monitored from "../../Links/images/exposedsystems.png"
 import Settings from "../../Links/images/settings.png"
 import Support from "../../Links/images/support.png";
 import Network from "../../Links/images/network.png"
+import HContent from "./HContent.jsx";
 import Side from "../../Links/images/side.png"
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 const drawerWidth = 245;
@@ -125,7 +123,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MDrawer(props) {
+export default function HDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
@@ -159,7 +157,7 @@ export default function MDrawer(props) {
         <Divider/>
         <List className={classes.ltext}>
             <Link to="/Home">
-                <ListItem  className={classes.ltext1} >
+                <ListItem  className={classes.ltext1} style={{backgroundColor:"rgba(108, 114, 147, 0.3)"}}>
                     <ListItemIcon style={{marginLeft:"-5px"}}><img src={Home} width="28px" height="28px"  /> </ListItemIcon>
                     <ListItemText primary={
                     <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
@@ -243,7 +241,7 @@ export default function MDrawer(props) {
             </Link>
             </div>
             <Link to="/Monitored">
-            <ListItem className={classes.ltext1} style={{backgroundColor:"rgba(108, 114, 147, 0.3)"}}>
+            <ListItem className={classes.ltext1}>
                 <ListItemIcon style={{marginLeft:"-10px"}}><img src={Monitored} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText primary={
                     <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
@@ -270,7 +268,7 @@ export default function MDrawer(props) {
             </ListItem>
             </Link>
             <Link to="./Support">
-            <ListItem className={classes.ltext1} >
+            <ListItem className={classes.ltext1}>
                 <ListItemIcon style={{marginLeft:"-10px"}}><img src={Support} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText primary={
                     <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
@@ -288,7 +286,7 @@ export default function MDrawer(props) {
         })} 
       >
         <div className={classes.drawerHeader} />
-            <MContent/>
+            <HContent/>
         
       </main>
       <footer>

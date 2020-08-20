@@ -313,7 +313,7 @@ export default function LatestCard(){
                     <Grid item xs={12}>
                         <Grid container direction="column"  style={{paddingTop:"10px",paddingLeft:"25px",paddingBottom:"10px"}} >
                             <Grid item className={classes.tag} >
-                                Tagged
+                                Tags
                             </Grid>
                             <Grid item style={{paddingTop:"4px"}}>
                             <Chip size="small" className={classes.chip} label="Key Word" variant="outlined"/>       

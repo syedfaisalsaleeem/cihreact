@@ -33,11 +33,11 @@ const statelinechart = {
 const useStyles = makeStyles((theme) => ({
   formControl: {
         
-    minWidth: 120,
+    minWidth: 200,
     
     background:"white",
     marginTop:"20px",
-    marginLeft:"20px",
+    marginLeft:"50px",
     
     '& fieldset': {
       border: "0.3px solid #000000",
@@ -73,34 +73,16 @@ export default function Linechart () {
                 displayEmpty
                 >
                <MenuItem value="" >
-              <em style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>Select Month</em>
+              <em style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>Select Category</em>
               </MenuItem>  
               <MenuItem value={10} style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>Ten</MenuItem>
               <MenuItem value={20} style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>Twenty</MenuItem>
               <MenuItem value={30} style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>Thirty</MenuItem>
                 </Select>
             </FormControl>
-            <FormControl className={classes.formControl} size="small" >
-                
-                <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={age1}
-                onChange={handleChange}
-                style={{height:30}}
-                variant="outlined"
-                displayEmpty
-                >
-               <MenuItem value="">
-              <em style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal',fontFamily:"Roboto"}}>Select Week Range</em>
-              </MenuItem> 
-              <MenuItem value={10} style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>Ten</MenuItem>
-              <MenuItem value={20} style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>Twenty</MenuItem>
-              <MenuItem value={30} style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>Thirty</MenuItem>
-                </Select>
-            </FormControl>
+
         </div>
-        <div style={{marginTop:"-48px",height:"48%",maxHeight:"350px",minHeight:"350px",marginLeft:"20px",width:"88%"}}>
+        <div style={{marginTop:"-5px",height:"48%",maxHeight:"350px",minHeight:"300px",marginLeft:"20px",width:"88%"}}>
         <Line
           data={statelinechart}
           
@@ -113,7 +95,7 @@ export default function Linechart () {
               
             },
             legend:{
-              display:true,
+              display:false,
               position:'top',
               align:'end',
               

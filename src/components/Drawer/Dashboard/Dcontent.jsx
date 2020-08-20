@@ -17,7 +17,8 @@ import Piechart from "./Piechart.jsx";
 import Linechart from "./Linechart.jsx";
 import BarGroup from "./BarGroup.jsx";
 import Gauge from "./Gauge.jsx"
-
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import GetAppIcon from '@material-ui/icons/GetApp';
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     fontheader:{
 
     },
-    
+
     f1:{
        width:"100%",
        boxShadow: "0px 0px 19.9579px rgba(56, 71, 109, 0.03)",
@@ -96,9 +97,24 @@ export default function Dcontent (){
                 <Grid item xs={12} md={12}>
                     <Grid container justify="center">
                         <Grid item xs={11}>
-                        <Typography className={classes.h}>
-                        Security Overview
-                        </Typography>
+                            <Grid container>
+                                <Grid item xs={6}>
+                                    <Typography className={classes.h}>
+                                    Security Overview
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Grid container justify="flex-end">
+                                        <Grid item>
+                                        <IconButton>
+                                            <GetAppIcon/>
+                                        </IconButton>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+
+                            </Grid>
+
                         </Grid>
                     </Grid>
                 
@@ -120,7 +136,11 @@ export default function Dcontent (){
                                                     
                                                 }
                                                 
-                                                title="Exposure Meter"      
+                                            title={<div style={{display:"flex"}}><Typography>Exposure Meter </Typography>
+                                                <Grid item style={{marginLeft:"10px"}}>
+                                                    <InfoOutlinedIcon />
+                                                </Grid>
+                                        </div>}      
                                                 />
                                             <Divider/>
                                             
@@ -146,7 +166,11 @@ export default function Dcontent (){
                                                 
                                             }
                                             
-                                            title="Exposed Information"      
+                                            title={<div style={{display:"flex"}}><Typography>Finding vs Risks </Typography>
+                                            <Grid item style={{marginLeft:"10px"}}>
+                                                <InfoOutlinedIcon />
+                                            </Grid>
+                                    </div>}        
                                             />
                                             <Divider/>
                                             
@@ -161,6 +185,45 @@ export default function Dcontent (){
                     </Grid>
                 </Grid>
                 
+
+                
+                
+
+                
+                <Grid item  xs={12} md={12} >
+                    <Grid container justify="center" maxWidth="xl" style={{background:"transparent"}} >
+                        <Grid items xs={12} md={11}>
+                            <Card className={classes.f5}>
+                                <CardHeader
+                                className={classes.HeaderFont}
+                            
+                                disableTypography="true" 
+                                action={
+                                    
+                                    <IconButton color="primary"  >
+                                        <ChevronRightIcon style={{fontSize:"25px"}} />
+                                        </IconButton>
+                                    
+                                }
+                                
+                                title={<div style={{display:"flex"}}><Typography>Exposure Trend </Typography>
+                                <Grid item style={{marginLeft:"10px"}}>
+                                    <InfoOutlinedIcon />
+                                </Grid>
+                        </div>}      
+                                />
+                                <Divider/>
+                                <Linechart/>
+                                
+                                    
+                                
+                            
+                            </Card>
+                        </Grid>
+                        
+                    </Grid>
+
+                </Grid>
                 <Grid item xs={12} md={12}>
                     <Grid container justify="center" style={{background:"transparent"}}>
                         <Grid items md={11}>
@@ -185,107 +248,6 @@ export default function Dcontent (){
                             </CardContent>
                             
                         </Card>
-                        </Grid>
-                        
-                    </Grid>
-
-                </Grid>
-                
-                
-                <Grid item xs={12} md={12}>
-                    <Grid container justify="center">
-                    
-                        <Grid item xs={11}>
-                        <Divider style={{marginTop:"20px",marginBottom:"20px",height:"0.5px",color:"black"}}/>
-                        <Typography className={classes.h}>
-                        Security Overview
-                        </Typography>
-                        </Grid>
-                    </Grid>
-                
-                </Grid>
-                <Grid item xs={12} md={12}>
-                    <Grid container justify="center" spacing={2} >
-                        <Grid item xs={12} md={5} >
-                                    <Grid container justify="center"  >
-                                        <Card className={classes.f3} >
-                                            <CardHeader
-                                                className={classes.HeaderFont}
-                                            
-                                                disableTypography="true" 
-                                                action={
-                                                    
-                                                    <IconButton color="primary" >
-                                                    <ChevronRightIcon style={{fontSize:"25px"}}/>
-                                                    </IconButton>
-                                                    
-                                                }
-                                                
-                                                title="By Category "      
-                                                />
-                                            <Divider/>
-                                            <Piechart/>
-                                                
-                                            
-                                            
-                                        </Card>
-                                    </Grid>
-                                
-                        </Grid>
-                        <Grid item  xs={12} md={6}>
-                                    <Grid container justify="center" maxWidth="xl"  >
-                                        <Card className={classes.f3}>
-                                            <CardHeader
-                                            className={classes.HeaderFont}
-                                        
-                                            disableTypography="true" 
-                                            action={
-                                                
-                                                <IconButton color="primary"  >
-                                                    <ChevronRightIcon style={{fontSize:"25px"}} />
-                                                    </IconButton>
-                                                
-                                            }
-                                            
-                                            title="Label"      
-                                            />
-                                            <Divider/>
-                                            <Linechart/>
-                                            
-                                                
-                                            
-                                        
-                                        </Card>
-                                    </Grid>
-                                
-                            
-                        </Grid>
-                    </Grid>
-                </Grid>
-                <Grid item  xs={12} md={12} >
-                    <Grid container justify="center" maxWidth="xl" style={{background:"transparent"}} >
-                        <Grid items xs={12} md={11}>
-                            <Card className={classes.f5}>
-                                <CardHeader
-                                className={classes.HeaderFont}
-                            
-                                disableTypography="true" 
-                                action={
-                                    
-                                    <IconButton color="primary"  >
-                                        <ChevronRightIcon style={{fontSize:"25px"}} />
-                                        </IconButton>
-                                    
-                                }
-                                
-                                title="By Risk"      
-                                />
-                                <Divider/>
-                                <BarGroup/>
-                                    
-                                
-                            
-                            </Card>
                         </Grid>
                         
                     </Grid>

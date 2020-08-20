@@ -1,20 +1,24 @@
 import React from 'react';
-import Login from "./Links/Login/Login"
-
+import Login from "./Links/Login/Login.jsx"
+import Home1 from "./Links/Home/index.js"
 import {BrowserRouter,Link,Switch,Route} from 'react-router-dom';
-import CantLogin from './Links/CantLogin/CantLogin';
-import Home from './Links/Dashboard/Dashboard';
-import Setting from './Links/Settings/Setting';
-import Support from './Links/Support/Support';
-import Contact from "./Links/Support/Contact";
-import Notification from "./Links/Notification/index";
-import LatestAlerts from "./Links/Notification/LatestAlerts";
-import ServiceUpdates from "./Links/Notification/ServiceUpdates";
-import SupportUpdates from "./Links/Notification/SupportUpdates";
-import Exposed from "./Links/Exposed/";
-import Monitor from "./Links/Monitored/";
+import CantLogin from './Links/CantLogin/CantLogin.jsx';
+import Home from './Links/Dashboard/Dashboard.jsx';
+import Setting from './Links/Settings/Setting.jsx';
+import Support from './Links/Support/Support.jsx';
+import Contact from "./Links/Support/Contact.jsx";
+import Notification from "./Links/Notification/index.js";
+import LatestAlerts from "./Links/Notification/LatestAlerts.jsx";
+import ServiceUpdates from "./Links/Notification/ServiceUpdates.js";
+import SupportUpdates from "./Links/Notification/SupportUpdates.js";
+import Exposed from "./Links/Exposed/index.js";
+import Monitor from "./Links/Monitored/index.js";
 import { MuiThemeProvider } from '@material-ui/core';
 import theme from './theme';
+import BlackMarket from './Links/Exposed/blackmarket.js';
+import Discussion from './Links/Exposed/discussions.js';
+import Sensitive from './Links/Exposed/sensitiveinformation.js';
+import Financial from './Links/Exposed/financial.js';
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
@@ -32,6 +36,7 @@ function App() {
         
         <Route path="/" component={Login} exact />
         <Route path="/CantLogin" component={CantLogin} exact/>
+        <Route path="/Home" component={Home1} exact/>
         <Route path="/DashBoard" component={Home} exact/>
         <Route path="/Settings" component={Setting} exact/>
         <Route path="/Support" component={Support} exact/>
@@ -41,6 +46,10 @@ function App() {
         <Route path="/SupportUpdates" component={SupportUpdates} exact/>
         <Route path="/Contact" component={Contact} exact/>
         <Route path="/ExposedInformation" component={Exposed} exact/>
+        <Route path="/BlackMarket" component={BlackMarket} exact/>
+        <Route path="/Discussion" component={Discussion} exact/>
+        <Route path="/SensitiveInformation" component={Sensitive} exact/>
+        <Route path="/Financial" component={Financial} exact/>
         <Route path="/Monitored" component={Monitor} exact/>
       
       </BrowserRouter>

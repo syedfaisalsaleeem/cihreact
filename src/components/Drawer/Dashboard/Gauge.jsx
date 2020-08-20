@@ -2,7 +2,7 @@ import React from 'react';
 import GaugeChart from './Assets';
 import {Typography,Grid} from '@material-ui/core';
 import CountUp from 'react-countup';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+
 import { makeStyles } from '@material-ui/core/styles';
 import styles from "./Gauge.module.css"
 const useStyles = makeStyles((theme) => ({
@@ -51,9 +51,7 @@ export default function Gauge(){
         <Typography className={classes.fontgauge}> <CountUp start={0} end={300} duration={2.5} separator=","/></Typography>
         </Grid>
 
-        <Grid item style={{marginLeft:"10px"}}>
-            <InfoOutlinedIcon />
-        </Grid>
+
             
 
             

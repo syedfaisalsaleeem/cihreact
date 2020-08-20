@@ -1,15 +1,19 @@
 
-import ContactGs1 from "./ContactGs1";
+import ContactGs1 from "./ContactGs1.jsx";
 import list from "../../Links/images/list.png";
 import grid from "../../Links/images/grid.png";
 import filter from "../../Links/images/filter.png";
-import LatestCard from "./LatestCard";
-import LatestCardH from "./LatestCardhigh";
+import LatestCard from "./LatestCard.jsx";
+import LatestCardH from "./LatestCardhigh.jsx";
 import CardGrid from "./CardGrid.jsx";
 import React,{useEffect, useState} from 'react';
 import {Grid,Typography,Card,Paper,CardHeader,Divider,Button, IconButton} from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import drop1 from "../../Links/images/drop1.png";
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -22,6 +26,28 @@ const useStyles = makeStyles((theme) => ({
         minWidth:"100px",
         color: "rgba(0, 0, 0, 0.6)"
     },
+    formControl: {
+        
+        minWidth: 200,
+        
+        background:"white",
+        
+        '& fieldset': {
+          border: "0.3px solid #000000",
+        }
+        
+      },
+    formControl1: {
+        
+        minWidth: 150,
+        
+        background:"white",
+        
+        '& fieldset': {
+          border: "0.3px solid #000000",
+        }
+        
+      },
     h:{
         fontStyle: "normal",
         fontWeight: "normal",
@@ -142,6 +168,17 @@ export default function Dropdown(props){
     const handleview1=()=>{
         setview(false)
 }
+const [age1, setAge1] = React.useState('');
+const [open,handleopen]=React.useState(false)
+const funcopen=()=>{
+  handleopen(true)
+}
+const funcclose=()=>{
+  handleopen(false)
+}
+const handleChange = (event) => {
+    setAge1(event.target.value);
+};
 
      return(
          
@@ -359,6 +396,89 @@ export default function Dropdown(props){
 
                                         </Grid>
                                     </Grid>
+                                    </Grid>
+                                    <Grid item xs={12} style={{marginTop:"26px"}}>
+                                        <Grid container justify="center">
+                                            <Grid item xs={10}>
+                                                <div style={{fontStyle: "normal",fontWeight: "500",fontSize: "15px",color: "#000000"}}>
+                                                    Time
+                                                </div>
+
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid item xs={12} style={{marginTop:"20px"}}>
+                                        <Grid container justify="center">
+                                            <Grid item xs={10}>
+                                            <FormControl className={classes.formControl} size="small" >
+                                                <Select
+                                                labelId="demo-simple-select-label"
+                                                id="demo-simple-select"
+                                                value={age1}
+                                                onChange={handleChange}
+                                                style={{height:30}}
+                                                variant="outlined"
+                                                displayEmpty
+                                                >
+                                            <MenuItem value="" >
+                                            <em style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>All History</em>
+                                            </MenuItem>  
+                                            <MenuItem value={10} style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>Ten</MenuItem>
+                                            <MenuItem value={20} style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>Twenty</MenuItem>
+                                            <MenuItem value={30} style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>Thirty</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid item xs={12} style={{marginTop:"20px"}}>
+                                        <Grid container justify="center">
+                                            <Grid item xs={10}>
+                                                <Grid container>
+                                                    <Grid item>
+                                                    <FormControl className={classes.formControl1}>
+                                                        <Select
+                                                        labelId="demo-simple-select-label"
+                                                        id="demo-simple-select"
+                                                        value={age1}
+                                                        onChange={handleChange}
+                                                        style={{height:30}}
+                                                        variant="outlined"
+                                                        displayEmpty
+                                                        >
+                                                    <MenuItem value="" >
+                                                    <em style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>From</em>
+                                                    </MenuItem>  
+                                                    <MenuItem value={10} style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>Ten</MenuItem>
+                                                    <MenuItem value={20} style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>Twenty</MenuItem>
+                                                    <MenuItem value={30} style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>Thirty</MenuItem>
+                                                        </Select>
+                                                    </FormControl>
+                                                    </Grid>
+                                                    <Grid item>
+                                                    <FormControl className={classes.formControl1} style={{marginLeft:"20px"}}>
+                                                        <Select
+                                                        labelId="demo-simple-select-label"
+                                                        id="demo-simple-select"
+                                                        value={age1}
+                                                        onChange={handleChange}
+                                                        style={{height:30}}
+                                                        variant="outlined"
+                                                        displayEmpty
+                                                        >
+                                                    <MenuItem value="" >
+                                                    <em style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>To</em>
+                                                    </MenuItem>  
+                                                    <MenuItem value={10} style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>Ten</MenuItem>
+                                                    <MenuItem value={20} style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>Twenty</MenuItem>
+                                                    <MenuItem value={30} style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>Thirty</MenuItem>
+                                                        </Select>
+                                                    </FormControl>
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+
                                     </Grid>
                                     </div>
                                                 } 

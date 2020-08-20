@@ -1,6 +1,3 @@
-import MContent from "./MContent.jsx";
-
-
 import React from 'react';
 import {BrowserRouter,Link,Switch,Route,Redirect} from 'react-router-dom';
 
@@ -26,7 +23,7 @@ import Discover from "../../Links/images/discovery.png"
 import Exposed from "../../Links/images/information.png"
 import Monitored from "../../Links/images/exposedsystems.png"
 import Settings from "../../Links/images/settings.png"
-import Support from "../../Links/images/support.png";
+import Support from "../../Links/images/support.png"
 import Network from "../../Links/images/network.png"
 import Side from "../../Links/images/side.png"
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -125,11 +122,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MDrawer(props) {
+export default function SIDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
-  const [open1,setOpen1]=React.useState(false);
+  const [open1,setOpen1]=React.useState(true);
   console.log(props.call)
   const control=()=>{
       setOpen1(!open1)
@@ -159,7 +156,7 @@ export default function MDrawer(props) {
         <Divider/>
         <List className={classes.ltext}>
             <Link to="/Home">
-                <ListItem  className={classes.ltext1} >
+                <ListItem  className={classes.ltext1} style={{backgroundColor:"rgba(108, 114, 147, 0.3)"}}>
                     <ListItemIcon style={{marginLeft:"-5px"}}><img src={Home} width="28px" height="28px"  /> </ListItemIcon>
                     <ListItemText primary={
                     <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
@@ -202,7 +199,7 @@ export default function MDrawer(props) {
             </Link>
             <Link to="/SensitiveInformation">
             <ListItem className={classes.ltext2}>
-                
+            <ListItemIcon style={{marginLeft:"-20px"}}><img src={Side}  /> </ListItemIcon>
                     <ListItemText style={{marginLeft:"20px"}} primary={
                         <Typography style={{color:"white",fontSize:"14px"}}>
                             Sensitive Information
@@ -243,7 +240,7 @@ export default function MDrawer(props) {
             </Link>
             </div>
             <Link to="/Monitored">
-            <ListItem className={classes.ltext1} style={{backgroundColor:"rgba(108, 114, 147, 0.3)"}}>
+            <ListItem className={classes.ltext1}>
                 <ListItemIcon style={{marginLeft:"-10px"}}><img src={Monitored} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText primary={
                     <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
@@ -251,7 +248,7 @@ export default function MDrawer(props) {
                     </Typography>}/>
             </ListItem>
             </Link>
-            
+            <Link>
             <ListItem className={classes.ltext1}>
                 <ListItemIcon style={{marginLeft:"-10px"}}><img src={Network} width="28px" height="28px" />  </ListItemIcon>
                 <ListItemText primary={
@@ -259,7 +256,7 @@ export default function MDrawer(props) {
                     Exposed Personal
                     </Typography>}/>
             </ListItem>
-            
+            </Link>
             <Link to="./Settings">
             <ListItem className={classes.ltext1}>
                 <ListItemIcon style={{marginLeft:"-10px"}}><img src={Settings} width="28px" height="28px" />  </ListItemIcon>
@@ -270,7 +267,7 @@ export default function MDrawer(props) {
             </ListItem>
             </Link>
             <Link to="./Support">
-            <ListItem className={classes.ltext1} >
+            <ListItem className={classes.ltext1}>
                 <ListItemIcon style={{marginLeft:"-10px"}}><img src={Support} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText primary={
                     <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
@@ -288,7 +285,7 @@ export default function MDrawer(props) {
         })} 
       >
         <div className={classes.drawerHeader} />
-            <MContent/>
+            
         
       </main>
       <footer>

@@ -1,8 +1,8 @@
 
 import React from 'react';
-import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
-import ExDrawer from "../../components/Exposed/ExDrawer";
+import Header from "../../components/Header/Header.jsx";
+import Footer from "../../components/Footer/Footer.jsx";
+import ExDrawer from "../../components/Exposed/ExDrawer.jsx";
 class Exposed extends React.Component {
   constructor(props){
     super(props)

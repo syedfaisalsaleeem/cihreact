@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {BrowserRouter,Link,Switch,Route,Redirect} from 'react-router-dom';
 
@@ -12,8 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -24,10 +24,13 @@ import Discover from "../../Links/images/discovery.png"
 import Exposed from "../../Links/images/information.png"
 import Monitored from "../../Links/images/exposedsystems.png"
 import Settings from "../../Links/images/settings.png"
-import Support from "../../Links/images/support.png"
-import Dcontent from "./Dashboard/Dcontent";
+import Support from "../../Links/images/support.png";
+import Network from "../../Links/images/network.png"
 
-const drawerWidth = 250;
+import Side from "../../Links/images/side.png"
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Dcontent from "./Dashboard/Dcontent";
+const drawerWidth = 245;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,15 +45,25 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Roboto",
     fontStyle: "normal",
     fontWeight:"normal",
-    fontSize:"17px",
-    height:"60px",
+    fontSize:"16px",
+    height:"55px",
     color:"white",
     '&:hover': {
        cursor:"pointer",
        background:"rgba(108, 114, 147, 0.3)",
     },
   },
-
+  ltext2:{
+    fontFamily: "Roboto",
+    fontStyle: "normal",
+    fontWeight:"normal",
+    fontSize:"16px",
+    color:"white",
+    '&:hover': {
+       cursor:"pointer",
+       background:"rgba(108, 114, 147, 0.3)",
+    },
+  },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
@@ -116,7 +129,11 @@ export default function CyberDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
+  const [open1,setOpen1]=React.useState(false);
   console.log(props.call)
+  const control=()=>{
+      setOpen1(!open1)
+  }
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -141,38 +158,124 @@ export default function CyberDrawer(props) {
 
         <Divider/>
         <List className={classes.ltext}>
-          
-            <ListItem  className={classes.ltext1} style={{backgroundColor:"rgba(108, 114, 147, 0.3)"}}>
-                <ListItemIcon><img src={Home} width="28px" height="28px"  /> </ListItemIcon>
-                <ListItemText  primary={"Home"}/>
-            </ListItem>
+            <Link to="/Home">
+                <ListItem  className={classes.ltext1} >
+                    <ListItemIcon style={{marginLeft:"-5px"}}><img src={Home} width="28px" height="28px"  /> </ListItemIcon>
+                    <ListItemText primary={
+                    <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
+                    Home
+                    </Typography>}/>
+                </ListItem>
+            </Link>
             
             <ListItem className={classes.ltext1}>
-                <ListItemIcon><img src={Discover} width="28px" height="28px" /> </ListItemIcon>
-                <ListItemText  primary={"Discover"}/>
+                <ListItemIcon style={{marginLeft:"-5px"}}><img src={Discover} width="28px" height="28px" /> </ListItemIcon>
+                <ListItemText primary={
+                    <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
+                    Discovery
+                    </Typography>}
+                        />
             </ListItem>
+            
+            
+            <ListItem className={classes.ltext1} style={{backgroundColor:"rgba(108, 114, 147, 0.3)"}}>
+                <ListItemIcon style={{marginLeft:"-5px"}}><img src={Exposed} width="28px" height="28px" /> </ListItemIcon>
+                <ListItemText primary={
+                    <div style={{display:"flex"}}>
+                        <Link to="/Dashboard">
+                        <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"14px"}}>Exposed Information</Typography>
+                        </Link>
+                        <IconButton style={{color:"white"}} onClick={control}><ExpandMoreIcon/></IconButton>
+                        
+                    </div>}/>
+            </ListItem>
+            <div style={{display:open1?"block":"none"}}>
             <Link to="/ExposedInformation">
-            <ListItem className={classes.ltext1}>
-                <ListItemIcon><img src={Exposed} width="28px" height="28px" /> </ListItemIcon>
-                <ListItemText primary={"Exposed Information"}/>
-            </ListItem>
+                <ListItem className={classes.ltext2}>
+                
+                    <ListItemText style={{marginLeft:"20px"}} primary={
+                        <Typography style={{color:"white",fontSize:"14px"}}>
+                            All Alerts
+                            </Typography>
+                }/>
+                </ListItem>
             </Link>
+            <Link to="/SensitiveInformation">
+            <ListItem className={classes.ltext2}>
+                
+                    <ListItemText style={{marginLeft:"20px"}} primary={
+                        <Typography style={{color:"white",fontSize:"14px"}}>
+                            Sensitive Information
+                            </Typography>
+
+             }/>
+                </ListItem>
+            </Link>
+            <Link to="/Discussion">
+                <ListItem className={classes.ltext2}>
+                
+                    <ListItemText style={{marginLeft:"20px"}} primary={
+                        <Typography style={{color:"white",fontSize:"14px"}}>
+                            Discussions
+                            </Typography>
+                }/>
+                </ListItem>
+            </Link>
+            <Link to="/BlackMarket">
+                <ListItem className={classes.ltext2}>
+                
+                    <ListItemText style={{marginLeft:"20px"}} primary={
+                        <Typography style={{color:"white",fontSize:"14px"}}>
+                            Black Markets
+                            </Typography>
+                }/>
+                </ListItem>
+            </Link>
+            <Link to="/Financial">
+                <ListItem className={classes.ltext2}>
+                    
+                    <ListItemText style={{marginLeft:"20px"}} primary={
+                        <Typography style={{color:"white",fontSize:"14px"}}>
+                            Financial
+                            </Typography>
+                }/>
+                </ListItem>
+            </Link>
+            </div>
             <Link to="/Monitored">
             <ListItem className={classes.ltext1}>
-                <ListItemIcon><img src={Monitored} width="28px" height="28px" /> </ListItemIcon>
-                <ListItemText  primary={"Monitored Systems"}/>
+                <ListItemIcon style={{marginLeft:"-10px"}}><img src={Monitored} width="28px" height="28px" /> </ListItemIcon>
+                <ListItemText primary={
+                    <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
+                    Monitored Systems
+                    </Typography>}/>
             </ListItem>
             </Link>
+            
+            <ListItem className={classes.ltext1}>
+                <ListItemIcon style={{marginLeft:"-10px"}}><img src={Network} width="28px" height="28px" />  </ListItemIcon>
+                <ListItemText primary={
+                    <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
+                    Exposed Personal
+                    </Typography>}/>
+            </ListItem>
+            
             <Link to="./Settings">
             <ListItem className={classes.ltext1}>
-                <ListItemIcon><img src={Settings} width="28px" height="28px" />  </ListItemIcon>
-                <ListItemText   primary={"Settings"}/>
+                <ListItemIcon style={{marginLeft:"-10px"}}><img src={Settings} width="28px" height="28px" />  </ListItemIcon>
+                <ListItemText primary={
+                    <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
+                    Settings
+                    </Typography>}/>
             </ListItem>
             </Link>
             <Link to="./Support">
             <ListItem className={classes.ltext1}>
-                <ListItemIcon><img src={Support} width="28px" height="28px" /> </ListItemIcon>
-                <ListItemText  primary={"Support"}/>
+                <ListItemIcon style={{marginLeft:"-10px"}}><img src={Support} width="28px" height="28px" /> </ListItemIcon>
+                <ListItemText primary={
+                    <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
+                    Support
+                    </Typography>}/>
             </ListItem>
             </Link>
         </List>
