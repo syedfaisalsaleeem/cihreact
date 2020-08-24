@@ -1,68 +1,29 @@
 import React from 'react'
+import {Card,Grid,Button,Chip,Dialog,DialogTitle,IconButton,Typography,Divider,DialogContent,DialogActions} from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
-import IconButton from '@material-ui/core/IconButton';
-import Box from '@material-ui/core/Box';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
-import Container from '@material-ui/core/Container';
-import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
-import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
-import Chip from '@material-ui/core/Chip';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import styles from "./LatestCard.module.css";
 import CloseIcon from '@material-ui/icons/Close';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
+import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
 const useStyles = makeStyles((theme) => ({
+    f5:{
+        
+           
+            boxShadow: "0px 0px 35px rgba(181, 181, 195, 0.15)",
+            borderRadius: "6px",
+            
+        
+    },
+    chipborder:{
+        border: "1px solid #000000",
+        fontSize:"12px",
+        fontColor:"black"
+    },
     Buttons:{
         marginTop:"5px",
         fontSize:'12px !important',
-        
-    },
-    root1: {
-        marginBottom:"-50px",
-        
-      },
-    HeaderFont:{
-        fontFamily: 'Roboto', 
-        
-          fontSize:"21px",
-          fontWeight:"600px",
-          fontStyle:"normal"
-      },
-    paper: {
-      height: 140,
-      width: 100,
-    },
-    f1:{
-        width:"100%",
-        boxShadow: "0px 0px 35px rgba(181, 181, 195, 0.15)",
-        background: "#FFFFFF",
-        borderRadius: "2px",
-        border: "0.1px solid #000000",
-        boxSizing: "border-box",
-        borderRadius: "2px"
-        
-        
-    },
-    f2:{
-        width:"100%",
-        boxShadow: "0px 0px 0px rgba(181, 181, 195, 0.15)",
-        background: "#FFFFFF",
-        borderRadius: "2px",
-        
         
     },
     f3:{
@@ -72,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
         border: "0.1px solid #000000",
         boxSizing: "border-box",
         borderRadius: "2px",
-        marginTop:"-16px"
+        marginTop:"1px"
         
         
     },
@@ -117,16 +78,6 @@ const useStyles = makeStyles((theme) => ({
         
         height:"35px"
     },
-    chipborder:{
-        border:"solid",
-        borderColor:"black",
-        borderWidth:"0.1px",
-        fontSize:"12px",
-        fontColor:"black"
-    },
-    control: {
-      padding: theme.spacing(2),
-    },
     chip: {
         margin: theme.spacing(0.5),
         padding:theme.spacing(0.5),
@@ -162,10 +113,11 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: "normal",
         fontSize: "18px",
       },
-  }));
+    
+}))
 export default function LatestCard(){
     const [fullWidth, setFullWidth] = React.useState(true);
-    const classes = useStyles();
+    
     const [st1,set]=React.useState([""]);
     const [click,setclick]=React.useState(false);
     const addcount=()=>{
@@ -180,204 +132,132 @@ export default function LatestCard(){
     const handleClose = () => {
       setOpen(false);
     };
+    const classes=useStyles()
     return(
-    <div>
-        <Grid container spacing={2}>
-        <Grid item xs={12} md={12}>
+        <div>
+            <Grid item xs={12} style={{marginBottom:"20px"}}>
+            <Card className={classes.f5}>
+                <Grid item xs={12}>
+                    <Grid container justify="flex-start" spacing={2}>
+                        <Grid item xs={2} lg={2} >
+                            <div style={{display:"flex",flexDirection:"column",width:"130px",height:"140px",background:"white",borderRight:"0.2px solid #000000"}}>
+                                <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"50%",fontStyle: "normal",fontWeight: "500",
+                                    fontSize: "12px",color: "#000000",opacity:"0.5"}}>
+                                    DD - MM - YYYY
+                                </div>
+                                <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"50%",fontStyle: "normal",fontWeight: "600",
+                                    fontSize: "16px",color: "white",background:"#F5A623"}}>
+                                                    Medium
+                                </div>
+                            </div>
+                        </Grid>
+                        <Grid item xs={8} lg={8} >
+                            <div style={{display:"flex",height:"140px"}}>
+                                <Grid container justify="space-between">
+                                <Grid item>
+                                    <div style={{display:"flex",width:"22vw",height:"70px",alignItems:"center"}}>
+                                        <div style={{display:"flex",flexDirection:"column",width:"100%",height:"75%",borderRight:"1px solid #000000"}}>
+                                            <div style={{fontStyle: "normal",fontWeight: "600",fontSize: "14px"}}>
+                                                Title
+                                            </div>
+                                            <div style={{paddingTop:"5px",fontStyle: "normal",fontWeight: "normal",fontSize: "12px"}}>
+                                                Title goes here
+                                            </div>
+                                        </div>
 
-            <Grid container justify="flex-start"  >
-                        <Card className={classes.f1}>
-                            
-                            
-                            
-                                
-                            <Grid container justify="flex-start" direction="row" maxWidth="xl" style={{background:"white"}} spacing={0} >
-                                
-                                <Grid item xs={12} lg={2}>
-                                    <Grid container direction="row">
-                                    <Grid item xs={12} style={{background:"white"}}>
-                                        <div style={{display:"flex",flexDirection:"column",width:"170px",borderStyle:"solid",borderWidth:"0.1px",borderTop:"white",borderLeft:"white",borderBottom:"white"}} >
-                                            
-                                                <div style={{display:"flex",justifyContent:"center",padding:"30px",alignItems:"center",fontSize:"14px"}} >
-                                                DD-MM-YYYY
-                                                </div>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                
-                                                <div container style={{display:"flex",fontSize:"18px",fontWeight:"600",padding:"30px",justifyContent:"center",alignItems:"center",background:"#66BB6A",color:"white"}} >
-                                                Low
-                                                </div>
-                                            
-                                            
-                                            
-                                            
+                                    </div>
                                         
-                                        </div>
-
-                                    </Grid>
                                 </Grid>
-                                </Grid>
-                                <Grid item xs={12} lg={8}>
-                                    <Grid container direction="column">
-                                    <Grid item xs={12} lg={12}>
-                                    <Grid container>
-                                        <Grid item xs={12} lg={4} >
-                                        <div style={{display:"flex",flexDirection:"column",paddingLeft:"20px"}} >
-                                                
-                                                <div className={classes.top} >
-                                                Type
-                                                </div>
-
-                                                <div className={classes.bottom} >
-                                                Type goes here
-                                                </div>
-
-                                        </div>
-                                            
-
-                                        </Grid>
-
-                                        <Grid item xs={12} lg={4}>
-                                            <div style={{display:"flex",flexDirection:"column"}} >
-                                                
-                                                <div className={classes.top} >
+                                <Grid item>
+                                    <div style={{display:"flex",width:"20.5vw",height:"70px",alignItems:"center"}}>
+                                        <div style={{display:"flex",flexDirection:"column",width:"100%",height:"75%"}}>
+                                            <div style={{fontStyle: "normal",fontWeight: "600",fontSize: "14px"}}>
                                                 Source
-                                                </div>
-
-                                                <div className={classes.bottom} >
+                                            </div>
+                                            <div style={{paddingTop:"5px",fontStyle: "normal",fontWeight: "normal",fontSize: "12px"}}>
                                                 https://Type-Goes-Here.com
-                                                </div>
-
                                             </div>
-
-                                        </Grid>
-
-                                        <Grid item xs={12} lg={4}>
-                                            <Grid container justify="flex-start" >
-                                                
-                                            <div style={{display:"flex",flexDirection:"column"}} >
-                                                
-                                                <div className={classes.top} >
-                                                Key Words
-                                                </div>
-
-                                                <div className={classes.bottom} >
-                                                    
-                                                    <div style={{display:"flex",justifyContent:"center",alignItems:"center",marginRight:"5px"}}>
-                                                    <Chip  size="small" label="KeyWord" variant="outlined" className={classes.chipborder}/>
-                                                    </div>
-                                                    <div style={{display:"flex",justifyContent:"center",alignItems:"center",marginRight:"5px"}}>
-                                                    <Chip  size="small" label="KeyWord" variant="outlined" className={classes.chipborder}/>
-                                                    </div>
-                                                    <div style={{display:"flex",justifyContent:"center",alignItems:"center",marginRight:"5px"}}>
-                                                    <Chip  size="small" label="KeyWord" variant="outlined" className={classes.chipborder}/>
-                                                    </div>
-                                                    
-                                                    
-                                                    
-                                                    
-
-                                            </div>
-                                            </div>
-                                                
-                                            
-                                            </Grid>
-
-                                        </Grid>
-                                    </Grid>                                        
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Grid Container>
-                                        <Grid item xs={12} lg={12} >
-                                            <Grid container justify="flex-start" >
-                                                
-                                            <div style={{display:"flex",flexDirection:"column",paddingLeft:"20px"}} >
-                                                
-                                                <div className={classes.top} >
-                                                Tags
-                                                </div>
-
-                                                <div className={classes.bottom} >
-                                                    
-                                                    <div style={{display:"flex",justifyContent:"center",alignItems:"center",marginRight:"5px"}}>
-                                                    <Chip  size="small" label="Tags" variant="outlined" className={classes.chipborder}/>
-                                                    </div>
-                                                    <div style={{display:"flex",justifyContent:"center",alignItems:"center",marginRight:"5px"}}>
-                                                    <Chip  size="small" label="Tags" variant="outlined" className={classes.chipborder}/>
-                                                    </div>
-                                                    <div style={{display:"flex",justifyContent:"center",alignItems:"center",marginRight:"5px"}}>
-                                                    <Chip  size="small" label="Tags" variant="outlined" className={classes.chipborder}/>
-                                                    </div>
-                                                    
-                                                    
-
-                                            </div>
-                                            </div>
-                                                
-                                            
-                                            </Grid>
-
-                                        </Grid>
-
-
-                                        </Grid>
-
-                                    </Grid>
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    </Grid>
-
-                                    
-
-
+                                        </div>
+                                    </div>
                                 </Grid>
-                                
-                                <Grid item xs={12} lg={2}>
-                                    <Grid container alignItems="flex-end" justify="flex-end" direction="column" >
-                                        <Grid item xs={12} style={{paddingTop:"54px"}}>
-
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                        <div style={{display:"flex",alignItems:"center",justifyContent:"flex-end"}}>
-                                            <div>
-                                            <Button color="primary" variant="contained" className={classes.Buttons} onClick={handleClickOpen}>
-                                                View Details
-                                            </Button>
+                                <Grid item>
+                                    <div style={{display:"flex",width:"22vw",height:"70px",background:"white",alignItems:"center"}}>
+                                        <div style={{display:"flex",flexDirection:"column",width:"100%",height:"75%",borderRight:"1px solid #000000"}}>
+                                            <div style={{fontStyle: "normal",fontWeight: "600",fontSize: "14px"}}>
+                                                Keywords
                                             </div>
-                                            <div>
-                                            <Grid container justify="flex-end" style={{marginTop:"5px"}}>
+                                            <div style={{display:"flex",paddingTop:"5px",justifyContent:"flex-start"}}>
+                                                    <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+                                                    <Chip  size="small" label="KeyWord" variant="outlined" className={classes.chipborder}/>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Grid>
+                                <Grid item>
+                                            <div style={{display:"flex",width:"20.5vw",height:"70px",alignItems:"center"}}>
+                                                <div style={{display:"flex",flexDirection:"column",width:"100%",height:"75%"}}>
+                                                <div style={{fontStyle: "normal",fontWeight: "600",fontSize: "14px"}}>
+                                                    Tags
+                                                </div>
+                                                <div style={{display:"flex",paddingTop:"5px",justifyContent:"flex-start"}}>
+                                                        <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+                                                        <Chip  size="small" label="Tag Here" variant="outlined" className={classes.chipborder}/>
+                                                        </div>
+                                                        <div style={{display:"flex",justifyContent:"center",alignItems:"center",paddingLeft:"5px"}}>
+                                                        <Chip  size="small" label="Tag Here" variant="outlined" className={classes.chipborder}/>
+                                                        </div>
+                                                        <div style={{display:"flex",justifyContent:"center",alignItems:"center",paddingLeft:"5px"}}>
+                                                        <Chip  size="small" label="Tag Here" variant="outlined" className={classes.chipborder}/>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                            
+                                            
+                                            </div>
+                                </Grid>
+                                </Grid>
+                            </div>
+                        </Grid>
+                        <Grid item xs={2} lg={2} >
+                                <Grid container alignItems="center" justify="flex-start" >
+                                <Grid item>
+                                    <div style={{display:"flex",height:"140px"}}>
+                                        <div style={{display:"flex",paddingLeft:"0px",alignItems:"center",justifyContent:"flex-start"}}>
+                                        <Button variant="contained" color="primary" className={classes.Buttons} onClick={handleClickOpen}>
+                                            View Details
+                                        </Button>
+                                        </div>
+
+                                        
+                                    </div>
+                                    </Grid>
+                                <Grid item>
+                                    <Grid container alignItems="center">
+                                        <Grid item>
+                                    <div>
+                                        
+                                        <Grid item xs={12} >
                                                 <IconButton aria-label="settings" onClick={addcount} >
                                                     <AddOutlinedIcon  style={{display:click?"none":"block",fontSize:"32px"}}/>
                                                     <RemoveRoundedIcon  style={{display:click?"block":"none",fontSize:"32px"}} />
                                                 </IconButton>
                                                 
-                                            </Grid>
-                                            </div>
-                                            
-                                        </div>
                                         </Grid>
                                         
-                                        
+                                        </div>
+                                        </Grid>
+                                        </Grid>
+                                        </Grid>
                                     </Grid>
-                                    
-                                    
-                                </Grid>
-                            </Grid>
+                                
                             
-                        </Card>
-            </Grid>            
-        </Grid>
-        <Grid item xs={12} md={12} style={{display:click?"block":"none"}}>
+
+                        </Grid>
+
+                    </Grid>
+                </Grid>
+                <Grid item xs={12} md={12} style={{display:click?"block":"none"}}>
                     <Grid container justify="flex-start" maxWidth="xl" >
                         <Card className={classes.f3}>
                             <Grid item md={12} lg={12}>
@@ -422,7 +302,10 @@ export default function LatestCard(){
                         </Card>
                     </Grid>
                 </Grid>
-    </Grid>
+            </Card>
+            </Grid>
+
+
 
             <Dialog
                 open={open}
@@ -439,11 +322,11 @@ export default function LatestCard(){
                                             <Grid container direction="row">
                                             <Grid item xs={2} style={{backgroundColor:"white"}}>
                                                 <Grid container direction="row">
-                                                    <Grid item xs={10} style={{background:"#66BB6A",height:"75px"}}>
+                                                    <Grid item xs={10} style={{background:"#F5A623",height:"75px"}}>
                                                     <Grid container justify="center">
                                                         <Grid item>
                                                             <Typography component="div" style={{marginTop:"30px",color:"white"}}>
-                                                                LOW
+                                                                Medium
                                                     
                                                             </Typography>
                                                         </Grid>
@@ -458,11 +341,11 @@ export default function LatestCard(){
                                             <div style={{display:"flex",flexDirection:"column",marginTop:"10px",minHeight:"60px",marginLeft:"1.5vw"}} >
                                             
                                             <div style={{paddingTop:'2px'}}>
-                                            Type
+                                            Title
                                             </div>
 
                                             <div className={classes.bottom1} >
-                                            Type Goes Here
+                                            Title Goes Here
                                             </div>
 
                                             </div>
@@ -516,7 +399,22 @@ export default function LatestCard(){
             </div>
         </div>
 
-
+        <div className={styles.main4}>
+        <Grid item xs={12}>
+            <Grid container justify="center">
+                <Grid item xs={12}>
+                            <Grid container direction="column"  style={{paddingTop:"10px",paddingLeft:"25px",paddingBottom:"10px"}} >
+                                <Grid item className={classes.tag} >
+                                    KeyWord
+                                </Grid>
+                                <Grid item style={{paddingTop:"4px"}}>
+                                    <Chip size="small" className={classes.chip} label="KeyWord" variant="outlined"/>         
+                                </Grid>
+                            </Grid>
+                        </Grid>
+            </Grid>
+        </Grid>
+    </div>
 
         <div className={styles.main4} >
         <Grid item xs={12}>
@@ -524,7 +422,7 @@ export default function LatestCard(){
                     <Grid item xs={12}>
                         <Grid container direction="column"  style={{paddingTop:"10px",paddingLeft:"25px",paddingBottom:"10px"}} >
                             <Grid item className={classes.tag} >
-                                Tagged
+                                Tags
                             </Grid>
                             <Grid item style={{paddingTop:"4px"}}>
                             <Chip size="small" className={classes.chip} label="Key Word" variant="outlined"/>       
@@ -593,8 +491,6 @@ export default function LatestCard(){
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
-    
+        </div>
     )
-    
 }

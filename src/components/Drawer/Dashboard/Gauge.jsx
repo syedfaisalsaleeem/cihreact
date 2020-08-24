@@ -38,7 +38,7 @@ export default function Gauge(){
         </Grid>
     </Grid>
    
-    <Grid container direction="row" alignItems="center" justify="center" className={styles.mkheight} >
+    <Grid container direction="row" alignItems="center" justify="center" className={styles.mkheight}  >
         <Grid item  >
         <Typography className={classes.fontgauge}> <CountUp start={0} end={143} duration={2.5} separator=","/></Typography>
         

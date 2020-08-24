@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react';
 import {Grid,Typography,Card,Paper,CardHeader,Divider,Button, IconButton} from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles,withStyles } from '@material-ui/core/styles';
 import refresh from "../../Links/images/refresh.png";
 import warning from "../../Links/images/warning.png";
 import active from "../../Links/images/active.png";
@@ -12,6 +12,16 @@ import drop from "../../Links/images/drop.png";
 import Dropup from "./Dropup.jsx";
 import Dropdown from "./Dropdown.jsx";
 import GetAppIcon from '@material-ui/icons/GetApp';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import Tooltip from '@material-ui/core/Tooltip';
+const LightTooltip = withStyles((theme) => ({
+    tooltip: {
+      backgroundColor: theme.palette.common.white,
+      color: 'rgba(0, 0, 0, 0.87)',
+      boxShadow: theme.shadows[1],
+      fontSize: 11,
+    },
+  }))(Tooltip);
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -178,35 +188,38 @@ export default function EContent(){
 <Grid item xs={12} md={12}>
     <Grid container justify="center">
         <Grid item xs={11} lg={10}>
-            <Grid container alignItems="center">
-                <Grid item xs={4} lg={4} >
-                <Typography className={classes.h}>
-                    All Alerts
-                </Typography>
-                </Grid>
-                <Grid item xs={8} lg={8}>
-                    <Grid container justify="flex-end" alignItems="center" alignContent="flex-end">
-                        
-                        
-                        <div style={{display:"flex",alignItems:'center',padding:"5px"}}>
-                            Download
-                            </div>
-                            <div>
-                            <Typography style={{display:"flex",fontSize:"12px",fontWeight:"600",padding:"6px"}}>
-                                        <IconButton>
-                                            <GetAppIcon/>
-                                        </IconButton>
-                            </Typography>
-                            </div>
-                        
-                        
-                       
-                    
-                    
+        <Grid container>
+            <Grid item xs={6}>
+                <Grid container spacing={2}>
+                    <Grid item>
+                        <Typography variant="h5">
+                            All Alerts
+                        </Typography>
                     </Grid>
-                    
+                    <Grid item>
+                    <LightTooltip title="Alerts are generated based on the keywords you’ve added. Any of your exposure within the dark web, deep web and data breaches are presented below in the form of alerts. Review the alert details for a better understanding of the root causes of your cyber security risks. Remediation advice explains how to mitigate the risks.">
+
+                    <InfoOutlinedIcon />
+                    </LightTooltip >
+                    </Grid>
                 </Grid>
             </Grid>
+            <Grid item xs={6}>
+                <Grid container justify="flex-end" >
+                    <Grid item xs={6}>
+                    <Grid container justify="flex-end">
+                    <IconButton>
+                        <GetAppIcon/>
+                    </IconButton>
+                    </Grid>
+
+                    </Grid>
+
+                    
+                </Grid>
+
+            </Grid>
+        </Grid>
         
         </Grid>                    
     </Grid>
@@ -288,7 +301,7 @@ export default function EContent(){
     <Grid container justify="center" spacing={3} >
         <Grid item xs={11} lg={10}  >
         <Grid container justify="space-between" spacing={2} >
-                <Grid item >
+                {/* <Grid item >
                     <Grid container  >
                         <Card className={classes.f3} >
                             <CardHeader
@@ -307,9 +320,9 @@ export default function EContent(){
                         </Card>
                     </Grid>
                 
-                </Grid>
+                </Grid> */}
 
-                <Grid item  >
+                {/* <Grid item  >
                     <Grid container  >
                         <Card className={classes.f4} >
                             <CardHeader
@@ -407,7 +420,7 @@ export default function EContent(){
                         </Card>
                     </Grid>
                 
-                </Grid>
+                </Grid> */}
         
         
         

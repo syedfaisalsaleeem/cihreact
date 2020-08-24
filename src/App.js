@@ -19,6 +19,12 @@ import BlackMarket from './Links/Exposed/blackmarket.js';
 import Discussion from './Links/Exposed/discussions.js';
 import Sensitive from './Links/Exposed/sensitiveinformation.js';
 import Financial from './Links/Exposed/financial.js';
+import ExposedCredentials from './Links/Exposed/exposedcredentials.js';
+import PersonalInformation from './Links/Exposed/personalinformation.js';
+import HackerGroupTargeting from './Links/Exposed/hackergrouptargeting.js';
+import AttacksAndCompromises from './Links/Exposed/attacksandcompromises.js';
+import UnderAnalysis from './Links/Exposed/underanalysis.js';
+import Remediation from './Links/Exposed/remediation.js';
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
@@ -51,7 +57,13 @@ function App() {
         <Route path="/SensitiveInformation" component={Sensitive} exact/>
         <Route path="/Financial" component={Financial} exact/>
         <Route path="/Monitored" component={Monitor} exact/>
-      
+        <Route path="/ExposedCredentials" component={ExposedCredentials} exact/>
+        <Route path="/PersonalInformation" component={PersonalInformation} exact/>
+        <Route path="/HackerGroupTargeting" component={HackerGroupTargeting} exact/>
+        <Route path="/AttackandCompromises" component={AttacksAndCompromises}  exact/>
+        <Route path="/UnderAnalysis" component={UnderAnalysis}  exact/>
+        <Route path="/Remediation" component={Remediation} exact/>
+        
       </BrowserRouter>
       <style jsx global>{`
           html,

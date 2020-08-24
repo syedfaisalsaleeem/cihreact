@@ -1,6 +1,7 @@
 import MContent from "./MContent.jsx";
 
 
+
 import React from 'react';
 import {BrowserRouter,Link,Switch,Route,Redirect} from 'react-router-dom';
 
@@ -28,9 +29,11 @@ import Monitored from "../../Links/images/exposedsystems.png"
 import Settings from "../../Links/images/settings.png"
 import Support from "../../Links/images/support.png";
 import Network from "../../Links/images/network.png"
+
 import Side from "../../Links/images/side.png"
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-const drawerWidth = 245;
+
+const drawerWidth = 255;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: "normal",
     fontWeight:"normal",
     fontSize:"16px",
-    height:"55px",
+    height:"58px",
     color:"white",
     '&:hover': {
        cursor:"pointer",
@@ -95,7 +98,8 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     marginTop:"70px",
     backgroundColor:"#1E1E2D",
-    color:"white"
+    color:"white",
+    paddingBottom:"70px"
   },
   drawerHeader: {
     display: 'flex',
@@ -172,7 +176,7 @@ export default function MDrawer(props) {
                 <ListItemIcon style={{marginLeft:"-5px"}}><img src={Discover} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText primary={
                     <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
-                    Discovery
+                    Discover
                     </Typography>}
                         />
             </ListItem>
@@ -181,11 +185,16 @@ export default function MDrawer(props) {
             <ListItem className={classes.ltext1} >
                 <ListItemIcon style={{marginLeft:"-5px"}}><img src={Exposed} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText primary={
-                    <div style={{display:"flex"}}>
+                    <div style={{display:"flex",width:"100%"}}>
+                        <div>
                         <Link to="/Dashboard">
-                        <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"14px"}}>Exposed Information</Typography>
+                        <pre style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"14px",fontFamily:"Roboto"}}>Exposed Information</pre>
                         </Link>
-                        <IconButton style={{color:"white"}} onClick={control}><ExpandMoreIcon/></IconButton>
+                        </div>
+                        <div style={{paddingLeft:"10px"}} >  
+                        <IconButton style={{color:"white"}}onClick={control}><ExpandMoreIcon/></IconButton>
+                        </div>
+                        
                         
                     </div>}/>
             </ListItem>
@@ -241,28 +250,88 @@ export default function MDrawer(props) {
                 }/>
                 </ListItem>
             </Link>
+            <Link to="/ExposedCredentials">
+                <ListItem className={classes.ltext2}>
+                    
+                    <ListItemText style={{marginLeft:"20px"}} primary={
+                        <Typography style={{color:"white",fontSize:"14px"}}>
+                            Exposed Credentials
+                            </Typography>
+                }/>
+                </ListItem>
+            </Link>
+            <Link to="/PersonalInformation">
+                <ListItem className={classes.ltext2}>
+                    
+                    <ListItemText style={{marginLeft:"20px"}} primary={
+                        <Typography style={{color:"white",fontSize:"14px"}}>
+                            Personal Information
+                            </Typography>
+                }/>
+                </ListItem>
+            </Link>
+            <Link to="/HackerGroupTargeting">
+                <ListItem className={classes.ltext2}>
+                    
+                    <ListItemText style={{marginLeft:"20px"}} primary={
+                        <Typography style={{color:"white",fontSize:"14px"}}>
+                            Hacker Group Targeting
+                            </Typography>
+                }/>
+                </ListItem>
+            </Link>
+            <Link to="/AttackandCompromises">
+                <ListItem className={classes.ltext2}>
+                    
+                    <ListItemText style={{marginLeft:"20px"}} primary={
+                        <Typography style={{color:"white",fontSize:"14px"}}>
+                            Attacks & Compromises
+                            </Typography>
+                }/>
+                </ListItem>
+            </Link>
+            <Link to="/UnderAnalysis">
+                <ListItem className={classes.ltext2}>
+                    
+                    <ListItemText style={{marginLeft:"20px"}} primary={
+                        <Typography style={{color:"white",fontSize:"14px"}}>
+                            Under Analysis
+                            </Typography>
+                }/>
+                </ListItem>
+            </Link>
+            <Link to="/Remediation">
+                <ListItem className={classes.ltext2}>
+                    
+                    <ListItemText style={{marginLeft:"20px"}} primary={
+                        <Typography style={{color:"white",fontSize:"14px"}}>
+                            Remediation
+                            </Typography>
+                }/>
+                </ListItem>
+            </Link>
             </div>
             <Link to="/Monitored">
             <ListItem className={classes.ltext1} style={{backgroundColor:"rgba(108, 114, 147, 0.3)"}}>
-                <ListItemIcon style={{marginLeft:"-10px"}}><img src={Monitored} width="28px" height="28px" /> </ListItemIcon>
+                <ListItemIcon style={{marginLeft:"-5px"}}><img src={Monitored} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText primary={
                     <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
-                    Monitored Systems
+                    Exposed Systems
                     </Typography>}/>
             </ListItem>
             </Link>
             
             <ListItem className={classes.ltext1}>
-                <ListItemIcon style={{marginLeft:"-10px"}}><img src={Network} width="28px" height="28px" />  </ListItemIcon>
+                <ListItemIcon style={{marginLeft:"-5px"}}><img src={Network} width="28px" height="28px" />  </ListItemIcon>
                 <ListItemText primary={
                     <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
-                    Exposed Personal
+                    Exposed Persons
                     </Typography>}/>
             </ListItem>
             
             <Link to="./Settings">
             <ListItem className={classes.ltext1}>
-                <ListItemIcon style={{marginLeft:"-10px"}}><img src={Settings} width="28px" height="28px" />  </ListItemIcon>
+                <ListItemIcon style={{marginLeft:"-5px"}}><img src={Settings} width="28px" height="28px" />  </ListItemIcon>
                 <ListItemText primary={
                     <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
                     Settings
@@ -270,8 +339,8 @@ export default function MDrawer(props) {
             </ListItem>
             </Link>
             <Link to="./Support">
-            <ListItem className={classes.ltext1} >
-                <ListItemIcon style={{marginLeft:"-10px"}}><img src={Support} width="28px" height="28px" /> </ListItemIcon>
+            <ListItem className={classes.ltext1}>
+                <ListItemIcon style={{marginLeft:"-5px"}}><img src={Support} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText primary={
                     <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
                     Support

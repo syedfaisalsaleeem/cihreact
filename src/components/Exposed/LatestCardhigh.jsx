@@ -1,8 +1,12 @@
 import React from 'react'
-import {Card,Grid,Button,Chip,Dialog,DialogTitle,Typography,Divider,DialogContent,DialogActions} from "@material-ui/core";
+import {Card,Grid,Button,Chip,Dialog,DialogTitle,IconButton,Typography,Divider,DialogContent,DialogActions} from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import styles from "../Drawer/Dashboard/LatestCard.module.css";
 import CloseIcon from '@material-ui/icons/Close';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
+import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
 const useStyles = makeStyles((theme) => ({
     f5:{
         
@@ -20,6 +24,29 @@ const useStyles = makeStyles((theme) => ({
     Buttons:{
         marginTop:"5px",
         fontSize:'12px !important',
+        
+    },
+    f3:{
+        width:"100%",
+        background: "#FFFFFF",
+        borderRadius: "2px",
+        border: "0.1px solid #000000",
+        boxSizing: "border-box",
+        borderRadius: "2px",
+        marginTop:"1px"
+        
+        
+    },
+    f4:{
+        width:"100%",
+        boxShadow: "0px 0px 35px rgba(181, 181, 195, 0.15)",
+        background: "black",
+        color:"white",
+        borderRadius: "2px",
+        border: "0.1px solid #000000",
+        boxSizing: "border-box",
+        borderRadius: "2px"
+        
         
     },
     top:{
@@ -88,7 +115,14 @@ const useStyles = makeStyles((theme) => ({
       },
     
 }))
-export default function LatestCardH(){
+export default function LatestCard(){
+    const [fullWidth, setFullWidth] = React.useState(true);
+    
+    const [st1,set]=React.useState([""]);
+    const [click,setclick]=React.useState(false);
+    const addcount=()=>{
+        setclick(!click)
+    }
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -112,8 +146,8 @@ export default function LatestCardH(){
                                     DD - MM - YYYY
                                 </div>
                                 <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"50%",fontStyle: "normal",fontWeight: "600",
-                                    fontSize: "16px",color: "white",background:"#D0021B"}}>
-                                                    High
+                                    fontSize: "16px",color: "white",background:"#F5A623"}}>
+                                                    Medium
                                 </div>
                             </div>
                         </Grid>
@@ -121,13 +155,13 @@ export default function LatestCardH(){
                             <div style={{display:"flex",height:"140px"}}>
                                 <Grid container justify="space-between">
                                 <Grid item>
-                                    <div style={{display:"flex",width:"12vw",height:"70px",alignItems:"center"}}>
+                                    <div style={{display:"flex",width:"22vw",height:"70px",alignItems:"center"}}>
                                         <div style={{display:"flex",flexDirection:"column",width:"100%",height:"75%",borderRight:"1px solid #000000"}}>
                                             <div style={{fontStyle: "normal",fontWeight: "600",fontSize: "14px"}}>
-                                                Type
+                                                Title
                                             </div>
                                             <div style={{paddingTop:"5px",fontStyle: "normal",fontWeight: "normal",fontSize: "12px"}}>
-                                                Type goes here
+                                                Title goes here
                                             </div>
                                         </div>
 
@@ -135,8 +169,8 @@ export default function LatestCardH(){
                                         
                                 </Grid>
                                 <Grid item>
-                                    <div style={{display:"flex",width:"13.5vw",height:"70px",alignItems:"center"}}>
-                                        <div style={{display:"flex",flexDirection:"column",width:"100%",height:"75%",borderRight:"1px solid #000000"}}>
+                                    <div style={{display:"flex",width:"20.5vw",height:"70px",alignItems:"center"}}>
+                                        <div style={{display:"flex",flexDirection:"column",width:"100%",height:"75%"}}>
                                             <div style={{fontStyle: "normal",fontWeight: "600",fontSize: "14px"}}>
                                                 Source
                                             </div>
@@ -147,8 +181,8 @@ export default function LatestCardH(){
                                     </div>
                                 </Grid>
                                 <Grid item>
-                                    <div style={{display:"flex",width:"16vw",height:"70px",background:"white",alignItems:"center"}}>
-                                        <div style={{display:"flex",flexDirection:"column",width:"100%",height:"75%"}}>
+                                    <div style={{display:"flex",width:"22vw",height:"70px",background:"white",alignItems:"center"}}>
+                                        <div style={{display:"flex",flexDirection:"column",width:"100%",height:"75%",borderRight:"1px solid #000000"}}>
                                             <div style={{fontStyle: "normal",fontWeight: "600",fontSize: "14px"}}>
                                                 Keywords
                                             </div>
@@ -156,18 +190,12 @@ export default function LatestCardH(){
                                                     <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
                                                     <Chip  size="small" label="KeyWord" variant="outlined" className={classes.chipborder}/>
                                                     </div>
-                                                    <div style={{display:"flex",justifyContent:"center",alignItems:"center",paddingLeft:"5px"}}>
-                                                    <Chip  size="small" label="KeyWord" variant="outlined" className={classes.chipborder}/>
-                                                    </div>
-                                                    <div style={{display:"flex",justifyContent:"center",alignItems:"center",paddingLeft:"5px"}}>
-                                                    <Chip  size="small" label="KeyWord" variant="outlined" className={classes.chipborder}/>
-                                                    </div>
                                             </div>
                                         </div>
                                     </div>
                                 </Grid>
                                 <Grid item>
-                                            <div style={{display:"flex",width:"15vw",height:"70px"}}>
+                                            <div style={{display:"flex",width:"20.5vw",height:"70px",alignItems:"center"}}>
                                                 <div style={{display:"flex",flexDirection:"column",width:"100%",height:"75%"}}>
                                                 <div style={{fontStyle: "normal",fontWeight: "600",fontSize: "14px"}}>
                                                     Tags
@@ -191,16 +219,37 @@ export default function LatestCardH(){
                                 </Grid>
                             </div>
                         </Grid>
-                        <Grid item xs={2} lg={1} >
-                            
-                                    <div style={{display:"flex",width:"140px",height:"140px"}}>
-                                        <div style={{display:"flex",paddingLeft:"4px",alignItems:"center",justifyContent:"flex-end"}}>
+                        <Grid item xs={2} lg={2} >
+                                <Grid container alignItems="center" justify="flex-start" >
+                                <Grid item>
+                                    <div style={{display:"flex",height:"140px"}}>
+                                        <div style={{display:"flex",paddingLeft:"0px",alignItems:"center",justifyContent:"flex-start"}}>
                                         <Button variant="contained" color="primary" className={classes.Buttons} onClick={handleClickOpen}>
                                             View Details
                                         </Button>
                                         </div>
+
                                         
                                     </div>
+                                    </Grid>
+                                <Grid item>
+                                    <Grid container alignItems="center">
+                                        <Grid item>
+                                    <div>
+                                        
+                                        <Grid item xs={12} >
+                                                <IconButton aria-label="settings" onClick={addcount} >
+                                                    <AddOutlinedIcon  style={{display:click?"none":"block",fontSize:"32px"}}/>
+                                                    <RemoveRoundedIcon  style={{display:click?"block":"none",fontSize:"32px"}} />
+                                                </IconButton>
+                                                
+                                        </Grid>
+                                        
+                                        </div>
+                                        </Grid>
+                                        </Grid>
+                                        </Grid>
+                                    </Grid>
                                 
                             
 
@@ -208,11 +257,56 @@ export default function LatestCardH(){
 
                     </Grid>
                 </Grid>
+                <Grid item xs={12} md={12} style={{display:click?"block":"none"}}>
+                    <Grid container justify="flex-start" maxWidth="xl" >
+                        <Card className={classes.f3}>
+                            <Grid item md={12} lg={12}>
+                                <div style={{display:"flex",flexDirection:"column",minWidth:"70px",height:"4vh",minHeight:"40px",margin:"0.3vw",justifyContent:"center",alignItems:"center"}} >
+                                <Card className={classes.f4}>
+                                <Grid container alignItems="center" direction="row" >
+                                    
+                                    <div style={{padding:"10px"}}>
+                                        8 :
+                                    </div>
+                                    <Divider orientation="vertical" flexItem />
+                                    <div style={{padding:"10px",color:"white"}}>
+                                    Woody
+                                    </div>
+                                    <Divider orientation="vertical" style={{background:"white"}} flexItem />
+                                    <div style={{padding:"10px"}}>
+                                    McGibbon
+                                    </div>
+                                    <Divider orientation="vertical" style={{background:"white"}} flexItem />
+                                    <div style={{padding:"10px"}}>
+                                    woodymcgibbon@dempcompany.com
+                                    </div>
+                                    <Divider orientation="vertical" style={{background:"white"}} flexItem />
+                                    <div style={{padding:"10px"}}>
+                                    woodymcgibbon@dempcompany.com
+                                    </div>
+                                    <Divider orientation="vertical" style={{background:"white"}} flexItem />
+                                    <div style={{padding:"10px"}}>
+                                    1963-04-12
+                                    </div>
+                                    <Divider orientation="vertical" style={{background:"white"}} flexItem />
+                                    <div style={{padding:"10px"}}>
+                                    2017-04-08 23:25:41
+                                    </div>
+                                    
+                                </Grid>
+                                </Card>
+                                </div>
+                            </Grid>
+                                 
+                        
+                        </Card>
+                    </Grid>
+                </Grid>
             </Card>
             </Grid>
 
 
-            {/*  */}
+
             <Dialog
                 open={open}
                 onClose={handleClose}
@@ -228,11 +322,11 @@ export default function LatestCardH(){
                                             <Grid container direction="row">
                                             <Grid item xs={2} style={{backgroundColor:"white"}}>
                                                 <Grid container direction="row">
-                                                    <Grid item xs={10} style={{background:"#D0021B",height:"75px"}}>
+                                                    <Grid item xs={10} style={{background:"#F5A623",height:"75px"}}>
                                                     <Grid container justify="center">
                                                         <Grid item>
                                                             <Typography component="div" style={{marginTop:"30px",color:"white"}}>
-                                                                High
+                                                                Medium
                                                     
                                                             </Typography>
                                                         </Grid>
@@ -247,11 +341,11 @@ export default function LatestCardH(){
                                             <div style={{display:"flex",flexDirection:"column",marginTop:"10px",minHeight:"60px",marginLeft:"1.5vw"}} >
                                             
                                             <div style={{paddingTop:'2px'}}>
-                                            Type
+                                            Title
                                             </div>
 
                                             <div className={classes.bottom1} >
-                                            Type Goes Here
+                                            Title Goes Here
                                             </div>
 
                                             </div>
@@ -305,7 +399,22 @@ export default function LatestCardH(){
             </div>
         </div>
 
-
+        <div className={styles.main4}>
+        <Grid item xs={12}>
+            <Grid container justify="center">
+                <Grid item xs={12}>
+                            <Grid container direction="column"  style={{paddingTop:"10px",paddingLeft:"25px",paddingBottom:"10px"}} >
+                                <Grid item className={classes.tag} >
+                                    KeyWord
+                                </Grid>
+                                <Grid item style={{paddingTop:"4px"}}>
+                                    <Chip size="small" className={classes.chip} label="KeyWord" variant="outlined"/>         
+                                </Grid>
+                            </Grid>
+                        </Grid>
+            </Grid>
+        </Grid>
+    </div>
 
         <div className={styles.main4} >
         <Grid item xs={12}>

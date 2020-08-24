@@ -1,3 +1,5 @@
+
+import DDContent from "./DDContent.jsx"
 import React from 'react';
 import {BrowserRouter,Link,Switch,Route,Redirect} from 'react-router-dom';
 
@@ -23,11 +25,13 @@ import Discover from "../../Links/images/discovery.png"
 import Exposed from "../../Links/images/information.png"
 import Monitored from "../../Links/images/exposedsystems.png"
 import Settings from "../../Links/images/settings.png"
-import Support from "../../Links/images/support.png"
+import Support from "../../Links/images/support.png";
 import Network from "../../Links/images/network.png"
+
 import Side from "../../Links/images/side.png"
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-const drawerWidth = 245;
+
+const drawerWidth = 255;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: "normal",
     fontWeight:"normal",
     fontSize:"16px",
-    height:"55px",
+    height:"58px",
     color:"white",
     '&:hover': {
        cursor:"pointer",
@@ -92,7 +96,8 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     marginTop:"70px",
     backgroundColor:"#1E1E2D",
-    color:"white"
+    color:"white",
+    paddingBottom:"70px"
   },
   drawerHeader: {
     display: 'flex',
@@ -122,7 +127,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DDrawer(props) {
+export default function HDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
@@ -156,7 +161,7 @@ export default function DDrawer(props) {
         <Divider/>
         <List className={classes.ltext}>
             <Link to="/Home">
-                <ListItem  className={classes.ltext1} style={{backgroundColor:"rgba(108, 114, 147, 0.3)"}}>
+                <ListItem  className={classes.ltext1} >
                     <ListItemIcon style={{marginLeft:"-5px"}}><img src={Home} width="28px" height="28px"  /> </ListItemIcon>
                     <ListItemText primary={
                     <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
@@ -169,7 +174,7 @@ export default function DDrawer(props) {
                 <ListItemIcon style={{marginLeft:"-5px"}}><img src={Discover} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText primary={
                     <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
-                    Discovery
+                    Discover
                     </Typography>}
                         />
             </ListItem>
@@ -178,18 +183,23 @@ export default function DDrawer(props) {
             <ListItem className={classes.ltext1} >
                 <ListItemIcon style={{marginLeft:"-5px"}}><img src={Exposed} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText primary={
-                    <div style={{display:"flex"}}>
+                    <div style={{display:"flex",width:"100%"}}>
+                        <div>
                         <Link to="/Dashboard">
-                        <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"14px"}}>Exposed Information</Typography>
+                        <pre style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"14px",fontFamily:"Roboto"}}>Exposed Information</pre>
                         </Link>
-                        <IconButton style={{color:"white"}} onClick={control}><ExpandMoreIcon/></IconButton>
+                        </div>
+                        <div style={{paddingLeft:"10px"}} >  
+                        <IconButton style={{color:"white"}}onClick={control}><ExpandMoreIcon/></IconButton>
+                        </div>
+                        
                         
                     </div>}/>
             </ListItem>
             <div style={{display:open1?"block":"none"}}>
             <Link to="/ExposedInformation">
-                <ListItem className={classes.ltext2}>
-                
+                  <ListItem className={classes.ltext2}>
+                    
                     <ListItemText style={{marginLeft:"20px"}} primary={
                         <Typography style={{color:"white",fontSize:"14px"}}>
                             All Alerts
@@ -199,7 +209,7 @@ export default function DDrawer(props) {
             </Link>
             <Link to="/SensitiveInformation">
             <ListItem className={classes.ltext2}>
-                
+            
                     <ListItemText style={{marginLeft:"20px"}} primary={
                         <Typography style={{color:"white",fontSize:"14px"}}>
                             Sensitive Information
@@ -210,7 +220,7 @@ export default function DDrawer(props) {
             </Link>
             <Link to="/Discussion">
                 <ListItem className={classes.ltext2}>
-                <ListItemIcon style={{marginLeft:"-20px"}}><img src={Side}  /> </ListItemIcon>
+                    <ListItemIcon style={{marginLeft:"-20px"}}><img src={Side}  /> </ListItemIcon>
                     <ListItemText style={{marginLeft:"20px"}} primary={
                         <Typography style={{color:"white",fontSize:"14px"}}>
                             Discussions
@@ -220,7 +230,7 @@ export default function DDrawer(props) {
             </Link>
             <Link to="/BlackMarket">
                 <ListItem className={classes.ltext2}>
-                
+                    
                     <ListItemText style={{marginLeft:"20px"}} primary={
                         <Typography style={{color:"white",fontSize:"14px"}}>
                             Black Markets
@@ -229,7 +239,7 @@ export default function DDrawer(props) {
                 </ListItem>
             </Link>
             <Link to="/Financial">
-                <ListItem className={classes.ltext2}>
+            <ListItem className={classes.ltext2}>
                     
                     <ListItemText style={{marginLeft:"20px"}} primary={
                         <Typography style={{color:"white",fontSize:"14px"}}>
@@ -238,28 +248,88 @@ export default function DDrawer(props) {
                 }/>
                 </ListItem>
             </Link>
+            <Link to="/ExposedCredentials">
+                <ListItem className={classes.ltext2}>
+                    
+                    <ListItemText style={{marginLeft:"20px"}} primary={
+                        <Typography style={{color:"white",fontSize:"14px"}}>
+                            Exposed Credentials
+                            </Typography>
+                }/>
+                </ListItem>
+            </Link>
+            <Link to="/PersonalInformation">
+                <ListItem className={classes.ltext2}>
+                    
+                    <ListItemText style={{marginLeft:"20px"}} primary={
+                        <Typography style={{color:"white",fontSize:"14px"}}>
+                            Personal Information
+                            </Typography>
+                }/>
+                </ListItem>
+            </Link>
+            <Link to="/HackerGroupTargeting">
+                <ListItem className={classes.ltext2}>
+                    
+                    <ListItemText style={{marginLeft:"20px"}} primary={
+                        <Typography style={{color:"white",fontSize:"14px"}}>
+                            Hacker Group Targeting
+                            </Typography>
+                }/>
+                </ListItem>
+            </Link>
+            <Link to="/AttackandCompromises">
+                <ListItem className={classes.ltext2}>
+                    
+                    <ListItemText style={{marginLeft:"20px"}} primary={
+                        <Typography style={{color:"white",fontSize:"14px"}}>
+                            Attacks & Compromises
+                            </Typography>
+                }/>
+                </ListItem>
+            </Link>
+            <Link to="/UnderAnalysis">
+                <ListItem className={classes.ltext2}>
+                    
+                    <ListItemText style={{marginLeft:"20px"}} primary={
+                        <Typography style={{color:"white",fontSize:"14px"}}>
+                            Under Analysis
+                            </Typography>
+                }/>
+                </ListItem>
+            </Link>
+            <Link to="/Remediation">
+                <ListItem className={classes.ltext2}>
+                    
+                    <ListItemText style={{marginLeft:"20px"}} primary={
+                        <Typography style={{color:"white",fontSize:"14px"}}>
+                            Remediation
+                            </Typography>
+                }/>
+                </ListItem>
+            </Link>
             </div>
             <Link to="/Monitored">
             <ListItem className={classes.ltext1}>
-                <ListItemIcon style={{marginLeft:"-10px"}}><img src={Monitored} width="28px" height="28px" /> </ListItemIcon>
+                <ListItemIcon style={{marginLeft:"-5px"}}><img src={Monitored} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText primary={
                     <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
-                    Monitored Systems
+                    Exposed Systems
                     </Typography>}/>
             </ListItem>
             </Link>
-            <Link>
+            
             <ListItem className={classes.ltext1}>
-                <ListItemIcon style={{marginLeft:"-10px"}}><img src={Network} width="28px" height="28px" />  </ListItemIcon>
+                <ListItemIcon style={{marginLeft:"-5px"}}><img src={Network} width="28px" height="28px" />  </ListItemIcon>
                 <ListItemText primary={
                     <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
-                    Exposed Personal
+                    Exposed Persons
                     </Typography>}/>
             </ListItem>
-            </Link>
+            
             <Link to="./Settings">
             <ListItem className={classes.ltext1}>
-                <ListItemIcon style={{marginLeft:"-10px"}}><img src={Settings} width="28px" height="28px" />  </ListItemIcon>
+                <ListItemIcon style={{marginLeft:"-5px"}}><img src={Settings} width="28px" height="28px" />  </ListItemIcon>
                 <ListItemText primary={
                     <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
                     Settings
@@ -268,7 +338,7 @@ export default function DDrawer(props) {
             </Link>
             <Link to="./Support">
             <ListItem className={classes.ltext1}>
-                <ListItemIcon style={{marginLeft:"-10px"}}><img src={Support} width="28px" height="28px" /> </ListItemIcon>
+                <ListItemIcon style={{marginLeft:"-5px"}}><img src={Support} width="28px" height="28px" /> </ListItemIcon>
                 <ListItemText primary={
                     <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
                     Support
@@ -285,7 +355,7 @@ export default function DDrawer(props) {
         })} 
       >
         <div className={classes.drawerHeader} />
-            
+            <DDContent/>
         
       </main>
       <footer>

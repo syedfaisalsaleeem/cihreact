@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles,withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -19,6 +19,16 @@ import BarGroup from "./BarGroup.jsx";
 import Gauge from "./Gauge.jsx"
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import Tooltip from '@material-ui/core/Tooltip';
+import SpiderWeb from './SpiderWeb.jsx';
+const LightTooltip = withStyles((theme) => ({
+    tooltip: {
+      backgroundColor: theme.palette.common.white,
+      color: 'rgba(0, 0, 0, 0.87)',
+      boxShadow: theme.shadows[1],
+      fontSize: 11,
+    },
+  }))(Tooltip);
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -100,7 +110,7 @@ export default function Dcontent (){
                             <Grid container>
                                 <Grid item xs={6}>
                                     <Typography className={classes.h}>
-                                    Security Overview
+                                    Exposed Information
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={6}>
@@ -128,17 +138,14 @@ export default function Dcontent (){
                                                 className={classes.HeaderFont}
                                             
                                                 disableTypography="true" 
-                                                action={
-                                                    
-                                                    <IconButton color="primary" >
-                                                    <ChevronRightIcon style={{fontSize:"25px"}}/>
-                                                    </IconButton>
-                                                    
-                                                }
+
                                                 
                                             title={<div style={{display:"flex"}}><Typography>Exposure Meter </Typography>
                                                 <Grid item style={{marginLeft:"10px"}}>
+                                                <LightTooltip title=" Companies are given their exposure score based on identified risk in the last 12 months divided by employee count. The score ranges from 0 to 300+. Companies without exposure in the past 12 months score 0. Companies that have the score 300+ represent the top 10% most exposed companies.">
+
                                                     <InfoOutlinedIcon />
+                                                    </LightTooltip >
                                                 </Grid>
                                         </div>}      
                                                 />
@@ -158,13 +165,7 @@ export default function Dcontent (){
                                             className={classes.HeaderFont}
                                         
                                             disableTypography="true" 
-                                            action={
-                                                
-                                                <IconButton color="primary"  >
-                                                    <ChevronRightIcon style={{fontSize:"25px"}} />
-                                                    </IconButton>
-                                                
-                                            }
+
                                             
                                             title={<div style={{display:"flex"}}><Typography>Finding vs Risks </Typography>
                                             <Grid item style={{marginLeft:"10px"}}>
@@ -175,7 +176,7 @@ export default function Dcontent (){
                                             <Divider/>
                                             
                                                 
-                                            <Graph/>
+                                            <SpiderWeb/>
                                         
                                         </Card>
                                     </Grid>
@@ -198,13 +199,6 @@ export default function Dcontent (){
                                 className={classes.HeaderFont}
                             
                                 disableTypography="true" 
-                                action={
-                                    
-                                    <IconButton color="primary"  >
-                                        <ChevronRightIcon style={{fontSize:"25px"}} />
-                                        </IconButton>
-                                    
-                                }
                                 
                                 title={<div style={{display:"flex"}}><Typography>Exposure Trend </Typography>
                                 <Grid item style={{marginLeft:"10px"}}>
