@@ -1,7 +1,7 @@
 import React from 'react';
 import {Container,Grid,Chip,Divider,Typography} from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
-import LatestCard from "../Drawer/Dashboard/LatestCard";
+import LatestCard from "../Drawer/Dashboard/LatestCard.jsx";
 import {Link} from "react-router-dom";
 import styles from "../Notification/NContent.module.css"
 const useStyles = makeStyles((theme) => ({

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Grid,Typography,Divider,Card} from "@material-ui/core";
-import ContactGs1 from "./ContactGs1";
+import ContactGs1 from "./ContactGs1.jsx";
 import styles from "./ContactC.module.css";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
@@ -9,7 +9,7 @@ import FlagIcon from '@material-ui/icons/Flag';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import ContactMailIcon from '@material-ui/icons/ContactMail';
 import {Link} from "react-router-dom";
-import ContactForm from "./ContactForm";
+import ContactForm from "./ContactForm.jsx";
 export default function ContactC (){
     return(
         <div>

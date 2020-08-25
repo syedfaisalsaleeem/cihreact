@@ -14,7 +14,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import DatePicker from "react-datepicker";
- 
+import Time from "./Time.jsx"; 
 import "react-datepicker/dist/react-datepicker.css";
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -409,80 +409,10 @@ export default function Dropup(props){
                                         </Grid>
                                     </Grid>
                                     </Grid>
-                                    <Grid item xs={12} style={{marginTop:"26px"}}>
-                                        <Grid container justify="center">
-                                            <Grid item xs={11}>
-                                                <div style={{fontStyle: "normal",fontWeight: "500",fontSize: "15px",color: "#000000"}}>
-                                                    Time
-                                                </div>
 
-                                            </Grid>
-                                        </Grid>
+                                    <Grid>
+                                        <Time/>
                                     </Grid>
-                                    <Grid item xs={12} style={{marginTop:"20px"}}>
-                                        <Grid container justify="center">
-                                            <Grid item xs={11}>
-                                            <FormControl className={classes.formControl} size="small" >
-                                                    
-                                                    <Select
-                                                    labelId="demo-simple-select-label"
-                                                    id="demo-simple-select"
-                                                    value={age1}
-                                                    onChange={handleChange}
-                                                    style={{height:30}}
-                                                    variant="outlined"
-                                                    displayEmpty
-                                                    >
-                                                <MenuItem value="" >
-                                                <em style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>All History</em>
-                                                </MenuItem>  
-
-                                                    </Select>
-                                                </FormControl>
-                                            </Grid>
-                                        </Grid>
-
-
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Grid container style={{marginTop:"20px"}} justify="center">
-                                            <Grid item xs={11}>
-                                                <Grid container spacing={4}>
-                                                    <Grid item style={{width:"210px"}}>
-                                                        From
-                                                    </Grid>
-                                                    <Grid item>
-                                                        To
-                                                    </Grid>
-                                                </Grid>
-
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Grid container style={{marginTop:"10px"}} justify="center">
-                                            <Grid item xs={11}>
-                                                    <Grid container spacing={4}>
-                                                        <Grid item>
-                                                        <DatePicker
-                                                        selected={startDate}
-                                                        onChange={handleChange3}
-                                                        />
-                                                        </Grid>
-                                                        <Grid item>
-                                                        <DatePicker
-                                                        selected={startDate1}
-                                                        onChange={handleChange4}
-                                                        />
-                                                        </Grid>
-
-                                                    </Grid>
-                                                
-                                            </Grid>
-
-                                        </Grid>
-                                    </Grid>
-
 
                                     </div>
 
@@ -524,21 +454,32 @@ export default function Dropup(props){
             <Grid item xs={12} style={{marginTop:"35px"}}>
                 <Grid container justify="center">
                     <Grid item xs={11} lg={11}>
-                        <Grid container justify="space-evenly" spacing={2}>
-                            <Grid item >
+                        
+                           <Grid container justify="space-around">
+                               
+                               <CardGrid/>
                                 <CardGrid/>
-                            </Grid>
-                            <Grid item >
                                 <CardGrid/>
-                            </Grid>
-                            <Grid item >
                                 <CardGrid/>
-                            </Grid>
-                            <Grid item >
-                                <CardGrid/>
-                            </Grid>
+                               
+
+                           </Grid>
+
                             
-                        </Grid>
+                            {/* <Grid item >
+                                <CardGrid/>
+                            </Grid>
+                            <Grid item >
+                                <CardGrid/>
+                            </Grid>
+                            <Grid item >
+                                <CardGrid/>
+                            </Grid>
+                            <Grid item >
+                                <CardGrid/>
+                            </Grid> */}
+                            
+                       
                         
 
                     </Grid>

@@ -99,7 +99,7 @@ export default function DDContent(){
                                         </Typography>
                                     </Grid>
                                     <Grid item>
-                                    <LightTooltip title=" ">
+                                    <LightTooltip title=" Alerts found that cannot be categorised automatically. Our team of analysts can analyse them for you.">
 
                                     <InfoOutlinedIcon />
                                     </LightTooltip >

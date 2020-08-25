@@ -17,7 +17,7 @@ import Container from '@material-ui/core/Container';
 import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
 import Chip from '@material-ui/core/Chip';
-import LatestCard from "./LatestCard";
+import LatestCard from "./LatestCard.jsx";
 import React from 'react'
 const useStyles = makeStyles((theme) => ({
     root: {

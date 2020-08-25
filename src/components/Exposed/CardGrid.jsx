@@ -1,5 +1,5 @@
 import React from "react";
-import {Card,Grid,Button,Chip,Dialog,DialogTitle,IconButton,Typography,Divider,DialogContent,DialogActions} from "@material-ui/core";
+import {Card,Grid,Button,Chip,Dialog,DialogTitle,IconButton,Typography,Divider,DialogContent,DialogActions, CardHeader} from "@material-ui/core";
 import styles from "./EContent.module.css";
 import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
@@ -27,7 +27,7 @@ Buttons:{
     
 },
 f3:{
-    width:"100%",
+    
     background: "#FFFFFF",
     borderRadius: "2px",
     border: "0.1px solid #000000",
@@ -38,7 +38,7 @@ f3:{
     
 },
 f4:{
-    width:"100%",
+   
     boxShadow: "0px 0px 35px rgba(181, 181, 195, 0.15)",
     background: "black",
     color:"white",
@@ -144,6 +144,9 @@ export default function CardGrid(){
     const classes=useStyles()
     return(
         <div>
+            <Grid item style={{marginTop:"20px"}} >
+
+            
             <div className={styles.main}>
                     
                     <div className={styles.rowbox1}>
@@ -238,11 +241,11 @@ export default function CardGrid(){
                     </div>
     
                     </div>
-                    <Grid item xs={12} md={12} style={{display:click?"block":"none"}}>
-                    <Grid container justify="flex-start" maxWidth="xl" >
-                        <Card className={classes.f3}>
+                    <Grid  style={{display:click?"flex":"none"}}>
+                    <Grid container   >
+                        <Card className={styles.main1}>
                             <Grid item md={12} lg={12}>
-                                <div style={{display:"flex",flexDirection:"column",minWidth:"70px",height:"4vh",minHeight:"40px",margin:"0.3vw",justifyContent:"center",alignItems:"center"}} >
+                                <div style={{}} >
                                 <Card className={classes.f4}>
                                 <Grid container alignItems="center" direction="row" >
                                     
@@ -278,7 +281,7 @@ export default function CardGrid(){
                                 </Card>
                                 </div>
                             </Grid>
-                                 
+                                
                         
                         </Card>
                     </Grid>
@@ -314,7 +317,7 @@ export default function CardGrid(){
                                             
                                             </Grid>
                                             <Grid item xs={4}>
-                                            <div style={{display:"flex",flexDirection:"column",marginTop:"10px",minHeight:"60px",marginLeft:"1.5vw"}} >
+                                            <div style={{display:"flex",flexDirection:"column",marginTop:"10px",minHeight:"60px",marginLeft:"1vw"}} >
                                             
                                             <div style={{paddingTop:'2px'}}>
                                             Title
@@ -375,7 +378,7 @@ export default function CardGrid(){
                                 </Grid>
                                 <Grid item style={{paddingTop:"4px"}}>
                                 <p>DD-MM-YYYY</p>
-                                     </Grid>
+                                    </Grid>
                             </Grid>
                         </Grid>
             </Grid>
@@ -446,14 +449,14 @@ export default function CardGrid(){
                                 Remedition Suggestion
                             </Grid>
                             <Grid item className={classes.fontp}style={{paddingTop:"4px"}}>
-                             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati, possimus delectus, 
-                             veritatis, saepe minus excepturi tempore cupiditate aperiam vitae sequi inventore pariatur numquam 
-                             accusantium neque necessitatibus deserunt exercitationem unde? Odio iste hic iusto id veniam provident a 
-                             laboriosam non? Laudantium quos nisi excepturi corrupti natus tempora commodi, optio ad culpa eius hic sint ipsa 
-                             maxime nemo magni architecto tenetur facere praesentium eligendi molestiae aspernatur. Deleniti nemo dicta, 
-                             similique totam corporis facilis sint ipsa autem est distinctio minima tempore id placeat, nostrum iusto neque ratione ad. 
-                             Voluptatem libero numquam saepe, quas, fuga placeat, minus amet officiis dolores possimus eum? Exercitationem, in
-             
+                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati, possimus delectus, 
+                            veritatis, saepe minus excepturi tempore cupiditate aperiam vitae sequi inventore pariatur numquam 
+                            accusantium neque necessitatibus deserunt exercitationem unde? Odio iste hic iusto id veniam provident a 
+                            laboriosam non? Laudantium quos nisi excepturi corrupti natus tempora commodi, optio ad culpa eius hic sint ipsa 
+                            maxime nemo magni architecto tenetur facere praesentium eligendi molestiae aspernatur. Deleniti nemo dicta, 
+                            similique totam corporis facilis sint ipsa autem est distinctio minima tempore id placeat, nostrum iusto neque ratione ad. 
+                            Voluptatem libero numquam saepe, quas, fuga placeat, minus amet officiis dolores possimus eum? Exercitationem, in
+            
                             </Grid>
                         </Grid>
                     </Grid>
@@ -468,14 +471,15 @@ export default function CardGrid(){
     
         </DialogContent>
         <DialogActions style={{marginRight:"15px",marginBottom:"20px"}}>
-          <Button onClick={handleClose} color="primary" style={{border:"0.8px solid #000000",color:"black",padding:"12px",marginRight:"10px",fontSize:"15px"}}>
+        <Button onClick={handleClose} color="primary" style={{border:"0.8px solid #000000",color:"black",padding:"12px",marginRight:"10px",fontSize:"15px"}}>
             Track Remedition
-          </Button>
-          <Button onClick={handleClose} color="primary" variant="contained" style={{padding:"12px",fontSize:"15px"}} autoFocus>
+        </Button>
+        <Button onClick={handleClose} color="primary" variant="contained" style={{padding:"12px",fontSize:"15px"}} autoFocus>
             Analyst Support
-          </Button>
+        </Button>
         </DialogActions>
-      </Dialog>
+    </Dialog>
+    </Grid>
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import Swindow from "./Swindow"
+import Swindow from "./Swindow.jsx"
 import React from 'react';
 import {BrowserRouter,Link,Switch,Route,Redirect} from 'react-router-dom';
 
@@ -322,7 +322,7 @@ export default function MDrawer(props) {
                 <ListItemIcon style={{marginLeft:"-5px"}}><img src={Network} width="28px" height="28px" />  </ListItemIcon>
                 <ListItemText primary={
                     <Typography style={{fontSize:"13px",marginLeft:"-14px",color:'white',marginTop:"0px"}}>
-                    Exposed Persons
+                    Exposed People
                     </Typography>}/>
             </ListItem>
             

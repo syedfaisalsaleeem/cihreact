@@ -6,7 +6,6 @@ import warning from "../../Links/images/warning.png";
 import active from "../../Links/images/active.png";
 import new1 from "../../Links/images/new.png";
 import activesource from "../../Links/images/activesource.png"
-import Piechart from "./Piechart";
 import Progressbar from "./progressbar";
 import drop from "../../Links/images/drop.png";
 import Dropup from "./Dropup.jsx";

@@ -184,7 +184,7 @@ export default function LatestCard(){
                                     <div style={{display:"flex",width:"22vw",height:"70px",background:"white",alignItems:"center"}}>
                                         <div style={{display:"flex",flexDirection:"column",width:"100%",height:"75%",borderRight:"1px solid #000000"}}>
                                             <div style={{fontStyle: "normal",fontWeight: "600",fontSize: "14px"}}>
-                                                Keywords
+                                                Keyword
                                             </div>
                                             <div style={{display:"flex",paddingTop:"5px",justifyContent:"flex-start"}}>
                                                     <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>

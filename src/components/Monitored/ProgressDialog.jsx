@@ -6,7 +6,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import radar from "../../Links/images/radar.png";
 import { makeStyles} from '@material-ui/core/styles';
 import Progressbar from './progressbar';
-import ShowAssets from './ShowAssets';
+import ShowAssets from './ShowAssets.jsx';
 const styles = makeStyles((theme) => ({
     root: {
       margin: 0,

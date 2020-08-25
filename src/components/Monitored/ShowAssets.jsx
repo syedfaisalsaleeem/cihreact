@@ -28,7 +28,7 @@ import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
 import SuggestAsset from "./SuggestAsset.jsx"
 import SuggestAsset1 from "./SuggestAsset1.jsx"
-import RejectAsset from './RejectAsset';
+import RejectAsset from './RejectAsset.jsx';
 function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
   }

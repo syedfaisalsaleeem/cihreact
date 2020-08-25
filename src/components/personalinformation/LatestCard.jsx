@@ -1,7 +1,7 @@
 import React from 'react'
 import {Card,Grid,Button,Chip,Dialog,DialogTitle,IconButton,Typography,Divider,DialogContent,DialogActions} from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
-import styles from "../Drawer/Dashboard//LatestCard.module.css";
+import styles from "../Drawer/Dashboard/LatestCard.module.css";
 import CloseIcon from '@material-ui/icons/Close';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -146,8 +146,8 @@ export default function LatestCard(){
                                     DD - MM - YYYY
                                 </div>
                                 <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"50%",fontStyle: "normal",fontWeight: "600",
-                                    fontSize: "16px",color: "white",background:"#D0021B"}}>
-                                                   High
+                                    fontSize: "16px",color: "white",background:"#F5A623"}}>
+                                                    Medium
                                 </div>
                             </div>
                         </Grid>
@@ -155,7 +155,7 @@ export default function LatestCard(){
                             <div style={{display:"flex",height:"140px"}}>
                                 <Grid container justify="space-between">
                                 <Grid item>
-                                    <div style={{display:"flex",width:"12vw",height:"70px",alignItems:"center"}}>
+                                    <div style={{display:"flex",width:"22vw",height:"70px",alignItems:"center"}}>
                                         <div style={{display:"flex",flexDirection:"column",width:"100%",height:"75%",borderRight:"1px solid #000000"}}>
                                             <div style={{fontStyle: "normal",fontWeight: "600",fontSize: "14px"}}>
                                                 Title
@@ -169,8 +169,8 @@ export default function LatestCard(){
                                         
                                 </Grid>
                                 <Grid item>
-                                    <div style={{display:"flex",width:"13.5vw",height:"70px",alignItems:"center"}}>
-                                        <div style={{display:"flex",flexDirection:"column",width:"100%",height:"75%",borderRight:"1px solid #000000"}}>
+                                    <div style={{display:"flex",width:"20.5vw",height:"70px",alignItems:"center"}}>
+                                        <div style={{display:"flex",flexDirection:"column",width:"100%",height:"75%"}}>
                                             <div style={{fontStyle: "normal",fontWeight: "600",fontSize: "14px"}}>
                                                 Source
                                             </div>
@@ -181,19 +181,13 @@ export default function LatestCard(){
                                     </div>
                                 </Grid>
                                 <Grid item>
-                                    <div style={{display:"flex",width:"16vw",height:"70px",background:"white",alignItems:"center"}}>
-                                        <div style={{display:"flex",flexDirection:"column",width:"100%",height:"75%"}}>
+                                    <div style={{display:"flex",width:"22vw",height:"70px",background:"white",alignItems:"center"}}>
+                                        <div style={{display:"flex",flexDirection:"column",width:"100%",height:"75%",borderRight:"1px solid #000000"}}>
                                             <div style={{fontStyle: "normal",fontWeight: "600",fontSize: "14px"}}>
-                                                Keywords
+                                                Keyword
                                             </div>
                                             <div style={{display:"flex",paddingTop:"5px",justifyContent:"flex-start"}}>
                                                     <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-                                                    <Chip  size="small" label="KeyWord" variant="outlined" className={classes.chipborder}/>
-                                                    </div>
-                                                    <div style={{display:"flex",justifyContent:"center",alignItems:"center",paddingLeft:"5px"}}>
-                                                    <Chip  size="small" label="KeyWord" variant="outlined" className={classes.chipborder}/>
-                                                    </div>
-                                                    <div style={{display:"flex",justifyContent:"center",alignItems:"center",paddingLeft:"5px"}}>
                                                     <Chip  size="small" label="KeyWord" variant="outlined" className={classes.chipborder}/>
                                                     </div>
                                             </div>
@@ -201,7 +195,7 @@ export default function LatestCard(){
                                     </div>
                                 </Grid>
                                 <Grid item>
-                                            <div style={{display:"flex",width:"15vw",height:"70px"}}>
+                                            <div style={{display:"flex",width:"20.5vw",height:"70px",alignItems:"center"}}>
                                                 <div style={{display:"flex",flexDirection:"column",width:"100%",height:"75%"}}>
                                                 <div style={{fontStyle: "normal",fontWeight: "600",fontSize: "14px"}}>
                                                     Tags
@@ -328,11 +322,11 @@ export default function LatestCard(){
                                             <Grid container direction="row">
                                             <Grid item xs={2} style={{backgroundColor:"white"}}>
                                                 <Grid container direction="row">
-                                                    <Grid item xs={10} style={{background:"#D0021B",height:"75px"}}>
+                                                    <Grid item xs={10} style={{background:"#F5A623",height:"75px"}}>
                                                     <Grid container justify="center">
                                                         <Grid item>
                                                             <Typography component="div" style={{marginTop:"30px",color:"white"}}>
-                                                                High
+                                                                Medium
                                                     
                                                             </Typography>
                                                         </Grid>

@@ -99,7 +99,7 @@ export default function BMContent(){
                                         </Typography>
                                     </Grid>
                                     <Grid item>
-                                    <LightTooltip title=" See if someone is selling your data or assets on the dark web or if people are bidding on, or offering to leak, confidential information relating to your organisation? ">
+                                    <LightTooltip title=" See hackers discussing your organisation or tools to enable hacking. It also includes any disgruntled employees or ex-employees spreading rumours.  ">
 
                                     <InfoOutlinedIcon />
                                     </LightTooltip >

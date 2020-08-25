@@ -1,6 +1,6 @@
 import React from 'react';
 import {Grid,Typography,Divider,Card} from "@material-ui/core";
-import ContactGs1 from "./ContactGs1";
+import ContactGs1 from "./ContactGs1.jsx";
 import styles from "./ContactC.module.css";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
