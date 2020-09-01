@@ -6,7 +6,7 @@ import filter from "../../Links/images/filter.png";
 import LatestCard from "./LatestCard.jsx";
 import LatestCardH from "./LatestCardhigh.jsx";
 import CardGrid from "./CardGrid.jsx";
-import React,{useEffect, useState} from 'react';
+import React,{useEffect, useState,useReducer} from 'react';
 import {Grid,Typography,Card,Paper,CardHeader,Divider,Button, IconButton,Chip} from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
@@ -18,6 +18,7 @@ import Time from "./Time.jsx";
 import "react-datepicker/dist/react-datepicker.css";
 import Menu from '@material-ui/core/Menu';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -172,9 +173,211 @@ const useStyles = makeStyles((theme) => ({
       },
   }));
 
-  const initialState = {count: 0};
+  const initialState = {
+      severitylevel:{
+          low:true,
+          medium:false,
+          high:false
+        },
+        source:{
+            darkweb:true,
+            deepweb:false,
+            databreach:false
+        },
+        exposurecategory:{
+            sensitiveinformation:{
+                all:true,
+                sourcecode:false
+            },
+            Discussions:{
+                all:false,
+                discussionforum:false,
+                discussion:false
+            },
+            blackmarket:{
+                all:false,
+                sales:false, 
+                marketplace:false, 
+                drugsales:false, 
+                weaponsales:false, 
+                credentialsales:false, 
+                hackingsales:false, 
+                malwaresales:false 
+
+            },
+            financial:{
+                all:false,
+                creditcards:false, 
+                ibannumbers:false,
+                cryptoaddresses:false, 
+                bitcoinaddresses:false, 
+                ethereumaddresses:false, 
+                zcashtaddresses:false, 
+                zcashzaddresses:false, 
+                rippleaddresses:false, 
+                litecoinaddresses:false, 
+                moneroaddresses:false, 
+                bitcoincashaddresses:false, 
+                dashaddresses:false, 
+                dogecoinaddresses:false, 
+                neoaddresses:false 
+            },
+            ExposedCredentials:{
+                all:false,
+                password:false, 
+                cleartextpassword:false, 
+                encryptedpassword:false, 
+                username:false 
+            },
+            personalinformation:{
+                all:false,
+                phonenumbers:false, 
+                passportnumbers:false, 
+                passportinformation:false, 
+                email:false, 
+                address:false, 
+                lastname:false, 
+                firstname:false, 
+                phonenumber:false 
+                
+            },
+            hackergrouptargeting:{
+                all:false,
+                iptargetlist:false, 
+                emailtargetlist:false, 
+                domaintargetlist:false, 
+                attackcampaign:false, 
+                targetedcompany:false, 
+                targetedindividual:false, 
+                informationleakingplatform:false, 
+                iplist:false, 
+                emaillist:false, 
+                domainlist:false, 
+                wordlist:false
+            },
+            attacksandcompromises:{
+                all:false,
+                sql:false,
+                reconnaissance:false,
+                exploitationtool:false,
+                nmap:false,
+                sqlmap:false,
+                wireshark:false,
+                traceroute:false, 
+                metasploit:false, 
+                johntheripper:false, 
+                md5hashes:false, 
+                sha1hashes:false, 
+                sha256hashes:false, 
+                sha512hashes:false, 
+                specialhashes:false, 
+                pgpkeys:false, 
+                pgpsignatures:false, 
+                ssh:false, 
+                telnet:false, 
+                ftp:false, 
+                sftp:false   
+            }
+        },
+            languages:{
+                control:{
+                    all:false,
+                    button:false,
+                },
+                value:{
+                afrikaans:false, 
+                arabic:false, 
+                bulgarian:false, 
+                bengali:false, 
+                catalan:false, 
+                czech:false, 
+                welsh:false, 
+                danish:false, 
+                german:false, 
+                greek:false, 
+                english:false, 
+                spanish:false, 
+                estonian:false, 
+                persian:false, 
+                finnish:false, 
+                french:false, 
+                gujarati:false, 
+                hebrew:false, 
+                hindi:false, 
+                croatian:false, 
+                hungarian:false, 
+                indonesian:false, 
+                italian:false, 
+                japanese:false, 
+                kannada:false, 
+                korean:false, 
+                lithuanian:false, 
+                latvian:false, 
+                macedonian:false, 
+                malayalam:false, 
+                marathi:false, 
+                nepali:false, 
+                dutch:false, 
+                norwegian:false, 
+                punjabi:false, 
+                polish:false, 
+                portuguese:false, 
+                romanian:false, russian:false, slovak:false, slovenian:false, somali:false, albanian:false, swedish:false, swahili:false, 
+                tamil:false, telugu:false, thai:false, tagalog:false, turkish:false, ukrainian:false, urdu:false, vietnamese:false, chinese:false 
+                }
+            }
+
+        
+};
+
+// function reducer(state, action) {
+//     switch (action.type) {
+//         case 'language':
+//             console.log(state)
+//         default:
+//             throw new Error();
+//     }
+//   }
+function reducer(state, action) {
+    switch (action.type) {
+      case 'language':
+        console.log(state.languages.control.button)
+        return{
+            ...state,
+            languages:{...state.languages,
+                control:{...state.languages.control,button:!action.payload}
+                }
+        }
+        // this.setState(prevState => ({
+        //     ...prevState,
+        //     someProperty: {
+        //         ...prevState.someProperty,
+        //         someOtherProperty: {
+        //             ...prevState.someProperty.someOtherProperty, 
+        //             anotherProperty: {
+        //                ...prevState.someProperty.someOtherProperty.anotherProperty,
+        //                flag: false
+        //             }
+        //         }
+        //     }
+        // })
+       
+            // ((state) => {
+            //     state.languages.control.button = true
+                
+            //     return state
+            //   })
+        
+        //  return {...state.languages.control,button:true}
+      case 'decrement':
+        return {count: state.count - 1};
+      default:
+        throw new Error();
+    }
+  }
 export default function Dropup(props){
     const classes=useStyles();
+    const [state, dispatch] = useReducer(reducer, initialState);
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
       };
@@ -567,11 +770,26 @@ export default function Dropup(props){
                                                     </Grid>
                                                     <Grid item>
 
-                                                            <IconButton>
-                                                                <ArrowRightIcon/>
+                                                            <IconButton onClick={() => dispatch({type: 'language',payload:state.languages.control.button})}>
+                                                                <ArrowRightIcon style={{display:state.languages.control.button?"none":"flex"}} />
+                                                                <ArrowDropDownIcon style={{display:state.languages.control.button?"flex":"none"}} />
                                                             </IconButton>
                                                     </Grid>
                                                 </Grid>
+                                                <Grid container spacing={1} style={{display:state.languages.control.button?"flex":"none"}}>
+
+                                                    {Object.keys(state.languages.value).map((value,index) => ( 
+                                                        <Grid item>
+                                                            {/* {console.log(value)} */}
+                                                            <Chip  size="small" className={classes.chip} label={value} variant="outlined"/> 
+                                                        
+                                                            </Grid>
+                                                       
+                                                            ))}
+                                                
+                                             
+                                            </Grid>
+
 
                                             </Grid>
                                         </Grid>
@@ -611,6 +829,29 @@ export default function Dropup(props){
                                                                 <ArrowRightIcon/>
                                                             </IconButton>
                                                     </Grid>
+                                                </Grid>
+                                                <Grid container spacing={1}>
+                                                    
+                                                        {/* {console.log(state.languages)} */}
+                                                                
+                                                        
+                                                        {Object.keys(state.languages.value).map((value,index) => ( 
+                                                            <Grid item>
+                                                                {/* {console.log(value)} */}
+                                                                <Chip  size="small" className={classes.chip} label={value} variant="outlined"/> 
+                                                            
+                                                                </Grid>
+                                                           
+                                                                ))}
+                                                    
+                                                    
+                                                {/* {state.map((value,index) => (        
+                                             
+                                             
+                                             <div style={{display:"flex"}}>                                
+                                                        {{value}}
+                                            </div>
+                                                 ))} */}
                                                 </Grid>
 
                                             </Grid>
