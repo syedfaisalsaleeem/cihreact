@@ -1,12 +1,23 @@
 import React from "react";
 import {Card,Grid,Button,Chip,Dialog,DialogTitle,IconButton,Typography,Divider,DialogContent,DialogActions, CardHeader} from "@material-ui/core";
 import styles from "./EContent.module.css";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles,withStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
+import GradeIcon from '@material-ui/icons/Grade';
+import TextField from '@material-ui/core/TextField';
+import Tooltip from '@material-ui/core/Tooltip';
+const LightTooltip = withStyles((theme) => ({
+    tooltip: {
+      backgroundColor: theme.palette.common.white,
+      color: 'rgba(0, 0, 0, 0.87)',
+      boxShadow: theme.shadows[1],
+      fontSize: 11,
+    },
+  }))(Tooltip);
 const useStyles = makeStyles((theme) => ({
     f5:{
         
@@ -128,11 +139,13 @@ export default function CardGrid(){
     const [fullWidth, setFullWidth] = React.useState(true);
     
     const [st1,set]=React.useState([""]);
-    const [click,setclick]=React.useState(false);
-    const addcount=()=>{
-        setclick(!click)
-    }
+    const [click,setclick]=React.useState(true);
+
+    const [star,selectstar]=React.useState(false)
     const [open, setOpen] = React.useState(false);
+    const addcount=()=>{
+        selectstar(!star)
+    }
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -164,10 +177,12 @@ export default function CardGrid(){
                     </Button>
                     </div>
                     <div>
-                    <IconButton aria-label="settings" onClick={addcount} >
-                                                    <AddOutlinedIcon  style={{display:click?"none":"block",fontSize:"32px"}}/>
-                                                    <RemoveRoundedIcon  style={{display:click?"block":"none",fontSize:"32px"}} />
-                    </IconButton>
+                    <LightTooltip title="Highlight alert">
+                                                        <IconButton aria-label="settings" onClick={addcount} >
+                                                            <GradeIcon style={{fontSize:'32px',color:star?"yellow":"gray"}}/>
+
+                                                        </IconButton>   
+                                                    </LightTooltip >
                     </div>
 
                     </div>
@@ -250,33 +265,38 @@ export default function CardGrid(){
                                 <Grid container alignItems="center" direction="row" >
                                     
                                     <div style={{padding:"10px"}}>
-                                        8 :
+                                        Alert data goes here. It is just a simple text field
                                     </div>
-                                    <Divider orientation="vertical" flexItem />
-                                    <div style={{padding:"10px",color:"white"}}>
-                                    Woody
-                                    </div>
-                                    <Divider orientation="vertical" style={{background:"white"}} flexItem />
-                                    <div style={{padding:"10px"}}>
-                                    McGibbon
-                                    </div>
-                                    <Divider orientation="vertical" style={{background:"white"}} flexItem />
-                                    <div style={{padding:"10px"}}>
-                                    woodymcgibbon@dempcompany.com
-                                    </div>
-                                    <Divider orientation="vertical" style={{background:"white"}} flexItem />
-                                    <div style={{padding:"10px"}}>
-                                    woodymcgibbon@dempcompany.com
-                                    </div>
-                                    <Divider orientation="vertical" style={{background:"white"}} flexItem />
-                                    <div style={{padding:"10px"}}>
-                                    1963-04-12
-                                    </div>
-                                    <Divider orientation="vertical" style={{background:"white"}} flexItem />
-                                    <div style={{padding:"10px"}}>
-                                    2017-04-08 23:25:41
-                                    </div>
+
                                     
+                                </Grid>
+                                </Card>
+                                </div>
+                            </Grid>
+                                
+                        
+                        </Card>
+                    </Grid>
+                </Grid>
+                <Grid  style={{display:click?"flex":"none"}}>
+                    <Grid container   >
+                        <Card className={styles.main1}>
+                            <Grid item md={12} lg={12}>
+                                <div  >
+                                <Card className={classes.f41} style={{padding:"20px"}}>
+                                <Grid container alignItems="center" direction="row" >
+                                    
+                                    <Grid item xs={12}>
+                                        <TextField
+                                        id="standard-multiline-flexible"
+                                        label="User can add notes here"
+                                        multiline
+                                        variant="outlined"
+                                        fullWidth
+
+                                        />
+                                    </Grid>
+
                                 </Grid>
                                 </Card>
                                 </div>
@@ -317,30 +337,45 @@ export default function CardGrid(){
                                             
                                             </Grid>
                                             <Grid item xs={4}>
-                                            <div style={{display:"flex",flexDirection:"column",marginTop:"10px",minHeight:"60px",marginLeft:"1vw"}} >
+                                            <div style={{display:"flex",flexDirection:"column",marginTop:"10px",minHeight:"60px",marginLeft:"1.5vw"}} >
                                             
                                             <div style={{paddingTop:'2px'}}>
-                                            Title
+                                                Title
                                             </div>
 
                                             <div className={classes.bottom1} >
-                                            Title Goes Here
+                                                Title Goes Here
                                             </div>
 
                                             </div>
                                             </Grid>
-                                            <Grid item xs={5}>
+                                            <Grid item xs={4}>
                                             <div style={{display:"flex",flexDirection:"column",marginTop:"10px",minHeight:"60px",marginLeft:"1vw"}} >
                                             
                                             <div style={{paddingTop:'2px'}} >
-                                            Source
+                                                Source
                                             </div>
 
                                             <div className={classes.bottom1} >
-                                            https://Type-Goes-Here.com
+                                                https://Type-Goes-Here.com
                                             </div>
 
                                             </div>
+                                            </Grid>
+                                            <Grid item xs={2}>
+                                                <Grid container justify="flex-end" alignItems="center" style={{height:"70px"}}>
+                                                    <Grid item>
+                                                    <LightTooltip title="Highlight alert">
+                                                        <IconButton aria-label="settings" onClick={addcount} >
+                                                            <GradeIcon style={{fontSize:'32px',color:star?"yellow":"gray"}}/>
+
+                                                        </IconButton>   
+                                                    </LightTooltip >
+
+                                                    </Grid>
+
+                                                </Grid>
+
                                             </Grid>
                                             </Grid>
                                         
@@ -359,38 +394,39 @@ export default function CardGrid(){
                 </DialogTitle>                  
                 <Divider/>
                 <DialogContent >
-                <div  >
-            <div className={styles.detect} >
-            <h2>Detect</h2>
-            
-            <div className={styles.date1} >
-                <p>DD-MM-YYYY</p>
-            </div>
-
-            </div>
-            <div className={styles.main4}>
-        <Grid item xs={12}>
-            <Grid container justify="center">
-                <Grid item xs={12}>
-                            <Grid container direction="column"  style={{paddingTop:"10px",paddingLeft:"25px",paddingBottom:"10px"}} >
-                                <Grid item className={classes.tag} >
-                                Alert Created
-                                </Grid>
-                                <Grid item style={{paddingTop:"4px"}}>
-                                <p>DD-MM-YYYY</p>
+               
+                    <Grid item xs={12}>
+                        <Grid container style={{marginBottom:"20px"}} >
+                            <Grid item xs={6}>
+                                <Grid container direction="column">
+                                    <Grid item style={{paddingLeft:"20px"}}>
+                                     <h2>Detect</h2> 
                                     </Grid>
+                                    <Grid item style={{paddingLeft:"20px"}}>
+                                      DD-MM-YYYY   
+                                    </Grid>
+                                </Grid>
                             </Grid>
-                        </Grid>
-            </Grid>
-        </Grid>
-    </div>
+                            <Grid item xs={6}>
+                                <Grid container direction="column">
+                                    <Grid item style={{paddingLeft:"20px"}}>
+                                    <h2>Alert Created</h2> 
+                                    </Grid>
+                                    <Grid item style={{paddingLeft:"20px"}}>
+                                        DD-MM-YYYY
+                                    </Grid>
+                                </Grid>
+                            </Grid>
 
-        </div>
+                        </Grid>
+                    </Grid>
+                <Divider />
+        
 
         <div className={styles.main4}>
         <Grid item xs={12}>
             <Grid container justify="center">
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                             <Grid container direction="column"  style={{paddingTop:"10px",paddingLeft:"25px",paddingBottom:"10px"}} >
                                 <Grid item className={classes.tag} >
                                     KeyWord
@@ -399,7 +435,20 @@ export default function CardGrid(){
                                     <Chip size="small" className={classes.chip} label="KeyWord" variant="outlined"/>         
                                 </Grid>
                             </Grid>
-                        </Grid>
+                </Grid>
+                <Grid item xs={6}>
+                            <Grid container direction="column"  style={{paddingTop:"10px",paddingLeft:"25px",paddingBottom:"10px"}} >
+                                <Grid item className={classes.tag} >
+                                    Tags
+                                </Grid>
+                                <Grid item style={{paddingTop:"4px"}}>
+                                    <Chip size="small" className={classes.chip} label="Tags" variant="outlined"/>       
+                                    <Chip  size="small" className={classes.chip}   label="Tags" variant="outlined"/> 
+                                    <Chip  size="small" className={classes.chip} label="Tags" variant="outlined"/>   
+                                    <Chip  size="small" className={classes.chip}   label="Tags" variant="outlined"/>      
+                                </Grid>
+                            </Grid>
+                </Grid>
             </Grid>
         </Grid>
     </div>
@@ -410,13 +459,17 @@ export default function CardGrid(){
                     <Grid item xs={12}>
                         <Grid container direction="column"  style={{paddingTop:"10px",paddingLeft:"25px",paddingBottom:"10px"}} >
                             <Grid item className={classes.tag} >
-                                Tags
+                                Notes
                             </Grid>
                             <Grid item style={{paddingTop:"4px"}}>
-                            <Chip size="small" className={classes.chip} label="Key Word" variant="outlined"/>       
-                            <Chip  size="small" className={classes.chip}   label="Key Word" variant="outlined"/> 
-                            <Chip  size="small" className={classes.chip} label="Key Word" variant="outlined"/>   
-                            <Chip  size="small" className={classes.chip}   label="Key Word" variant="outlined"/>   
+                                    <TextField
+                                        id="standard-multiline-flexible"
+                                        label="User can add notes here"
+                                        multiline
+                                        variant="outlined"
+                                        fullWidth
+
+                                        />
                             </Grid>
                         </Grid>
                     </Grid>
@@ -449,14 +502,14 @@ export default function CardGrid(){
                                 Remedition Suggestion
                             </Grid>
                             <Grid item className={classes.fontp}style={{paddingTop:"4px"}}>
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati, possimus delectus, 
-                            veritatis, saepe minus excepturi tempore cupiditate aperiam vitae sequi inventore pariatur numquam 
-                            accusantium neque necessitatibus deserunt exercitationem unde? Odio iste hic iusto id veniam provident a 
-                            laboriosam non? Laudantium quos nisi excepturi corrupti natus tempora commodi, optio ad culpa eius hic sint ipsa 
-                            maxime nemo magni architecto tenetur facere praesentium eligendi molestiae aspernatur. Deleniti nemo dicta, 
-                            similique totam corporis facilis sint ipsa autem est distinctio minima tempore id placeat, nostrum iusto neque ratione ad. 
-                            Voluptatem libero numquam saepe, quas, fuga placeat, minus amet officiis dolores possimus eum? Exercitationem, in
-            
+                             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati, possimus delectus, 
+                             veritatis, saepe minus excepturi tempore cupiditate aperiam vitae sequi inventore pariatur numquam 
+                             accusantium neque necessitatibus deserunt exercitationem unde? Odio iste hic iusto id veniam provident a 
+                             laboriosam non? Laudantium quos nisi excepturi corrupti natus tempora commodi, optio ad culpa eius hic sint ipsa 
+                             maxime nemo magni architecto tenetur facere praesentium eligendi molestiae aspernatur. Deleniti nemo dicta, 
+                             similique totam corporis facilis sint ipsa autem est distinctio minima tempore id placeat, nostrum iusto neque ratione ad. 
+                             Voluptatem libero numquam saepe, quas, fuga placeat, minus amet officiis dolores possimus eum? Exercitationem, in
+             
                             </Grid>
                         </Grid>
                     </Grid>
@@ -471,14 +524,15 @@ export default function CardGrid(){
     
         </DialogContent>
         <DialogActions style={{marginRight:"15px",marginBottom:"20px"}}>
-        <Button onClick={handleClose} color="primary" style={{border:"0.8px solid #000000",color:"black",padding:"12px",marginRight:"10px",fontSize:"15px"}}>
+          <Button onClick={handleClose} color="primary" style={{border:"0.8px solid #000000",color:"black",padding:"12px",marginRight:"10px",fontSize:"15px"}}>
             Track Remedition
-        </Button>
-        <Button onClick={handleClose} color="primary" variant="contained" style={{padding:"12px",fontSize:"15px"}} autoFocus>
+          </Button>
+          <Button onClick={handleClose} color="primary" variant="contained" style={{padding:"12px",fontSize:"15px"}} autoFocus>
             Analyst Support
-        </Button>
+          </Button>
         </DialogActions>
-    </Dialog>
+      </Dialog>
+
     </Grid>
         </div>
     )

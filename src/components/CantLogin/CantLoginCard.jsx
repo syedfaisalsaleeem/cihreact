@@ -87,9 +87,10 @@ class CantLoginCard extends React.Component{
                         <p className={styles.slink}> We'll send a recovery link to</p>
                         <div className={styles.email1}>
                         <TextField multiline size="small" variant="outlined"  fullWidth  id="name" name="name" label="Enter registered email"  value={this.state.name} onChange={this.handleChange('name')}/>
-                        <div className={styles.email} style={{display:this.state.emailvalidate?"none":"flex"}}>
-                            <p> Email is not registered</p>
+
                         </div>
+                        <div className={styles.email} style={{display:this.state.emailvalidate?"none":"flex"}}>
+                            <p> Account is not registered</p>
                         </div>
 
 
@@ -109,8 +110,8 @@ class CantLoginCard extends React.Component{
                                 
                             </div>
                             <div className={styles.loginfooter2}>
-                                <Link>
-                                <a> Contact Support</a>
+                                <Link to="/Contactus">
+                                    <a> Contact Support</a>
                                 </Link>
                                 
                             </div>

@@ -7,7 +7,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import { makeStyles,withStyles } from '@material-ui/core/styles';
 import Piechart from "./Piechart.jsx";
-import LatestCard from './LatestCard.jsx';
+import LatestCard from '../Drawer/Dashboard/LatestCard.jsx';
 import Tooltip from '@material-ui/core/Tooltip';
 const LightTooltip = withStyles((theme) => ({
     tooltip: {

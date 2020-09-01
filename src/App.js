@@ -25,6 +25,7 @@ import HackerGroupTargeting from './Links/Exposed/hackergrouptargeting.js';
 import AttacksAndCompromises from './Links/Exposed/attacksandcompromises.js';
 import UnderAnalysis from './Links/Exposed/underanalysis.js';
 import Remediation from './Links/Exposed/remediation.js';
+import Contact1 from './Links/Contact/Contact.js';
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
@@ -63,6 +64,7 @@ function App() {
         <Route path="/AttackandCompromises" component={AttacksAndCompromises}  exact/>
         <Route path="/UnderAnalysis" component={UnderAnalysis}  exact/>
         <Route path="/Remediation" component={Remediation} exact/>
+        <Route path="/Contactus" component={Contact1} exact/>
         
       </BrowserRouter>
       <style jsx global>{`

@@ -7,7 +7,7 @@ import LatestCard from "./LatestCard.jsx";
 import LatestCardH from "./LatestCardhigh.jsx";
 import CardGrid from "./CardGrid.jsx";
 import React,{useEffect, useState} from 'react';
-import {Grid,Typography,Card,Paper,CardHeader,Divider,Button, IconButton} from "@material-ui/core";
+import {Grid,Typography,Card,Paper,CardHeader,Divider,Button, IconButton,Chip} from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
@@ -16,6 +16,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import DatePicker from "react-datepicker";
 import Time from "./Time.jsx"; 
 import "react-datepicker/dist/react-datepicker.css";
+import Menu from '@material-ui/core/Menu';
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -45,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
         
       },
     button:{
-        display:"flex",alignItems:"center",width:"100%",height:"44%",border: "0.6px solid #000000",borderRadius: "2px",fontStyle: "normal",
+        display:"flex",alignItems:"center",width:"100%",height:"90%",border: "0.6px solid #000000",borderRadius: "2px",fontStyle: "normal",
         fontSize:"10px",                                            
                                                     
         minWidth:"100px",
@@ -160,9 +162,28 @@ const useStyles = makeStyles((theme) => ({
     control: {
       padding: theme.spacing(2),
     },
+    chip: {
+        padding:theme.spacing(0.5),
+        fontStyle: "normal",
+         fontWeight: "normal",
+          fontSize: "12px",
+          background:"white",
+          border: "1px solid #000000"
+      },
   }));
+
+  const initialState = {count: 0};
 export default function Dropup(props){
     const classes=useStyles();
+    const handleMenu = (event) => {
+        setAnchorEl(event.currentTarget);
+      };
+    
+      const handleClose = () => {
+        setAnchorEl(null);
+      };
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open1 = Boolean(anchorEl);
     const [view,setview]=useState(true);
     const [dropc,setdrop]=useState(true);
     const handleview=()=>{
@@ -216,53 +237,46 @@ export default function Dropup(props){
                                 <Grid item xs={12} style={{marginTop:"26px"}}>
                                     <Grid container justify="center">
                                         <Grid item xs={11}>
-                                            <Grid container>
-                                                <Grid item xs={9}>
+                                            <Grid container spacing={0}>
+                                                <Grid item xs={8}>
                                                     <ContactGs1/>
                                                 </Grid>
                                                 <Grid item xs={2} >
-                                                    <div style={{height:"100%",width:"70%",display:'flex',flexDirection:"column",justifyContent:"space-between"}}>
-                                                    
-                                                    {/* <div item style={{display:"flex",justifyContent:"center",alignItems:"center",width:"100%",height:"46%",border: "0.6px solid #000000",borderRadius: "2px",fontStyle: "normal",
-                                                    fontWeight: "normal",
-                                                    fontSize: "13px",
-                                                    minWidth:"80px",
-                                                    color: "rgba(0, 0, 0, 0.6)"}}>
-                                                        <div>
-                                                        <img src={grid}>
-                                                        </img>
-                                                        </div>
-                                                        
-                                                        <div style={{paddingBottom:"2px",paddingLeft:"5px"}}>
+                                                    <Grid container style={{width:"100%"}} spacing={1} >
+                                                        <Grid item>
+                                                            <Button
+                                                            variant="outlined"
+                                                            
+                                                            className={classes.button}
+                                                            startIcon={<img src={grid} />}
+                                                            onClick={handleview1}
+                                                            style={{border:view?"0.6px solid #000000":"1px solid #8950FC"}}
+                                                            >
                                                             Grid View
-                                                        </div>
-                                                                    
-                                                    </div> */}
-                                                    <Button
-                                                        variant="outlined"
-                                                        
-                                                        className={classes.button}
-                                                        startIcon={<img src={grid} />}
-                                                        onClick={handleview1}
-                                                        style={{border:view?"0.6px solid #000000":"1px solid #8950FC"}}
-                                                    >
-                                                        Grid View
-                                                    </Button>
-                                                    <Button
-                                                        variant="outlined"
-                                                        
-                                                        className={classes.button}
-                                                        startIcon={<img src={list} />}
-                                                        onClick={handleview}
-                                                        
-                                                        style={{border:view?"1px solid #8950FC":"0.6px solid #000000"}}
-                                                    >
-                                                        List View
-                                                    </Button>
+                                                        </Button>
+                                                        </Grid>
+                                                        <Grid item>
 
-                                                    </div>
+                                                            <Button
+                                                            variant="outlined"
+                                                            
+                                                            className={classes.button}
+                                                            startIcon={<img src={list} />}
+                                                            onClick={handleview}
+                                                            
+                                                            style={{border:view?"1px solid #8950FC":"0.6px solid #000000"}}
+                                                        >
+                                                            List View
+                                                        </Button>
+                                                        </Grid>
+                                                    </Grid>
+
                                                     
                                                 </Grid>
+                                                <Grid item >
+
+
+                                                </Grid> 
                                                 <Grid item xs={1}>
                                                     <Button style={{width:"60%",height:"100%",minWidth:"45px",borderRadius: "2px",border:props.filtervalue?"0.6px solid #000000":"0.6px solid #8950FC"}} variant="outlined" onClick={props.filter}>
                                                     <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",width:"60%",height:"100%",fontStyle: "normal",
@@ -278,6 +292,48 @@ export default function Dropup(props){
                                                             
                                                     </div>
                                                     </Button>
+                                                </Grid> 
+                                                <Grid item xs={1}>
+                                                    <Button onClick={handleMenu} style={{width:"50%",height:"100%",minWidth:"45px",borderRadius: "2px",border:props.filtervalue?"0.6px solid #000000":"0.6px solid #8950FC"}} variant="outlined" >
+                                                    <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",width:"60%",height:"100%",fontStyle: "normal",
+                                                    fontWeight: "normal",
+                                                    fontSize: "13px",
+                                                    minWidth:"45px",
+                                                    color: "rgba(0, 0, 0, 0.6)"}}>
+                                                        <img src={filter}>
+                                                        </img>
+                                                        <div>
+                                                            Sort 
+                                                        </div>
+                                                            
+                                                    </div>
+                                                    </Button>
+                                                    <Menu
+                                                        id="simple-menu"
+                                                        getContentAnchorEl={null}
+                                                        anchorOrigin={{
+                                                        vertical: "bottom",
+                                                        horizontal: "left"
+                                                        }}
+                                                        transformOrigin={{
+                                                        vertical: "top",
+                                                        horizontal: "left"
+                                                        }}
+                                                        keepMounted
+                                                        anchorEl={anchorEl}
+                                                        open={Boolean(anchorEl)}
+                                                        onClose={handleClose}
+                                                    >
+                                                        <MenuItem onClick={handleClose}>Newest to oldest</MenuItem>
+                                                        
+                                                        <MenuItem >Oldest to newest</MenuItem>
+                                                        <MenuItem >Severity: high to low</MenuItem>
+                                                        <MenuItem >Severity: low to high</MenuItem>
+                                                        <MenuItem >Keywords: most to least alerts</MenuItem>
+                                                        <MenuItem >Keywords: least to most alerts</MenuItem>
+                                                        <MenuItem >Keywords: A to Z</MenuItem>
+                                                        <MenuItem >Keywords: Z to A</MenuItem>
+                                                    </Menu>
                                                 </Grid> 
                                             </Grid>
                                         </Grid>
@@ -327,7 +383,37 @@ export default function Dropup(props){
                                         </Grid>
                                     </Grid>
                                 </Grid>
+                                <Grid item xs={12} style={{marginTop:"26px"}}>
+                                    <Grid container justify="center">
+                                        <Grid item xs={11}>
+                                            <div style={{fontStyle: "normal",fontWeight: "500",fontSize: "15px",color: "#000000"}}>
+                                                Source
+                                            </div>
 
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                
+                                <Grid item xs={12} style={{marginTop:"20px"}}>
+                                    <Grid container justify="center">
+                                        <Grid item xs={11}>
+                                        <Grid container spacing={2}>
+                                            <Grid item>
+                                                <Chip  size="small" className={classes.chip}   label="Deep Web" variant="outlined"/> 
+      
+                                            </Grid>
+                                            <Grid item>
+                                                <Chip size="small" className={classes.chip} label="Dark Web" variant="outlined"/>       
+                                         
+                                            </Grid>
+                                            <Grid item>
+                                                <Chip  size="small" className={classes.chip} label="Data Breach" variant="outlined"/>   
+                                            </Grid>
+                                        </Grid>
+
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
                                 <Grid item xs={12} style={{marginTop:"26px"}}>
                                     <Grid container justify="center">
                                         <Grid item xs={11}>
@@ -345,62 +431,123 @@ export default function Dropup(props){
                                         <Grid item xs={11}>
                                             <Grid container >
                                                 <Grid item xs={10}>
-                                                <Grid container spacing={2}>
+                                                <Grid container spacing={1}>
                                                 
                                                 <Grid item>
-                                                    <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"157px",height:"25px",
-                                                                fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
-                                                        Sensitive Information
-                                                    </div>
+                                                    <Grid container alignItems="center">
+                                                        <Grid item>
+                                                            <Chip  size="small" className={classes.chip} label=" Sensitive Information" variant="outlined"/> 
+                                                        </Grid>
+                                                        <Grid item>
+                                                            <IconButton>
+                                                                <ArrowRightIcon/>
+                                                            </IconButton>
+                                                        </Grid>
+                                                    </Grid>
+
+                                                      
+                                        
+                                                    
+                                                        
+                                                    
                                                 </Grid>
                                                 <Grid item>
-                                                    <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"101px",height:"25px",
-                                                    marginLeft:"0px",fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
-                                                        Discussions
-                                                    </div>
+                                                    <Grid container alignItems="center">
+                                                        <Grid item>
+                                                            <Chip  size="small" className={classes.chip} label=" Discussions" variant="outlined"/> 
+                                                        </Grid>
+                                                        <Grid item>
+                                                            <IconButton>
+                                                                <ArrowRightIcon/>
+                                                            </IconButton>
+                                                        </Grid>
+                                                    </Grid>
                                                 </Grid>
                                                 <Grid item>
-                                                    <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"116px",height:"25px",marginLeft:"0px",
-                                                fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
-                                                        Black Markets
-                                                    </div>
+                                                    <Grid container alignItems="center">
+                                                        <Grid item>
+                                                            <Chip  size="small" className={classes.chip} label=" Black Markets" variant="outlined"/> 
+                                                        </Grid>
+                                                        <Grid item>
+                                                            <IconButton>
+                                                                <ArrowRightIcon/>
+                                                            </IconButton>
+                                                        </Grid>
+                                                    </Grid>
                                                 </Grid>
                                                 <Grid item>
-                                                    <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"81px",height:"25px",marginLeft:"0px",
-                                                fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
-                                                        Financial
-                                                    </div>
+                                                    <Grid container alignItems="center">
+                                                        <Grid item>
+                                                            <Chip  size="small" className={classes.chip} label=" Financial" variant="outlined"/> 
+                                                        </Grid>
+                                                        <Grid item>
+                                                            <IconButton>
+                                                                <ArrowRightIcon/>
+                                                            </IconButton>
+                                                        </Grid>
+                                                    </Grid>
                                                 </Grid>
                                                 <Grid item>
-                                                    <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"157px",height:"25px",marginLeft:"0px",
-                                                fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
-                                                        Exposed Credentials
-                                                    </div>
+                                                    <Grid container alignItems="center">
+                                                        <Grid item>
+                                                            <Chip  size="small" className={classes.chip} label="Exposed Credentials" variant="outlined"/> 
+                                                        </Grid>
+                                                        <Grid item>
+                                                            <IconButton>
+                                                                <ArrowRightIcon/>
+                                                            </IconButton>
+                                                        </Grid>
+                                                    </Grid>
                                                 </Grid>
                                                 <Grid item>
-                                                    <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"157px",height:"25px",marginLeft:"0px",
-                                                fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
-                                                        Personal Information
-                                                    </div>
+                                                    <Grid container alignItems="center">
+                                                        <Grid item>
+                                                            <Chip  size="small" className={classes.chip} label="Personal Information" variant="outlined"/> 
+                                                        </Grid>
+                                                        <Grid item>
+                                                            <IconButton>
+                                                                <ArrowRightIcon/>
+                                                            </IconButton>
+                                                        </Grid>
+                                                    </Grid>
                                                 </Grid>
                                                 <Grid item>
-                                                    <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"175px",height:"25px",marginLeft:"0px",
-                                                fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
-                                                        Hacker Group Targeting
-                                                    </div>
+                                                    <Grid container alignItems="center">
+                                                        <Grid item>
+                                                            <Chip  size="small" className={classes.chip} label="Hacker Group Targeting" variant="outlined"/> 
+                                                        </Grid>
+                                                        <Grid item>
+                                                            <IconButton>
+                                                                <ArrowRightIcon/>
+                                                            </IconButton>
+                                                        </Grid>
+                                                    </Grid>
                                                 </Grid>
                                                 <Grid item>
-                                                    <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"150px",height:"25px",marginLeft:"0px",
-                                                fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
-                                                        Attacks & Compromises
-                                                    </div>
+                                                    <Grid container alignItems="center">
+                                                        <Grid item>
+                                                            <Chip  size="small" className={classes.chip} label=" Attacks & Compromises" variant="outlined"/> 
+                                                        </Grid>
+                                                        <Grid item>
+                                                            <IconButton>
+                                                                <ArrowRightIcon/>
+                                                            </IconButton>
+                                                        </Grid>
+                                                    </Grid>
                                                 </Grid>
                                                 <Grid item>
-                                                    <div style={{display:"flex",alignItems:"center",justifyContent:"center",border: "0.6px solid #000000",borderRadius: "2px",width:"117px",height:"25px",marginLeft:"0px",
-                                                fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
-                                                        Under Analysis
-                                                    </div>
+                                                    <Grid container alignItems="center">
+                                                        <Grid item>
+                                                            <Chip  size="small" className={classes.chip} label=" Under Analysis" variant="outlined"/> 
+                                                        </Grid>
+                                                        <Grid item>
+                                                            <IconButton>
+                                                                <ArrowRightIcon/>
+                                                            </IconButton>
+                                                        </Grid>
+                                                    </Grid>
                                                 </Grid>
+
 
                                                 </Grid>
                                                 </Grid>
@@ -409,11 +556,90 @@ export default function Dropup(props){
                                         </Grid>
                                     </Grid>
                                     </Grid>
+                                    <Grid item xs={12} style={{marginTop:"0px"}}>
+                                        <Grid container justify="center">
+                                            <Grid item xs={11}>
+                                                <Grid container alignItems="center">
+                                                    <Grid item>
+                                                        <div style={{fontStyle: "normal",fontWeight: "500",fontSize: "15px",color: "#000000"}}>
+                                                        Language
+                                                        </div>
+                                                    </Grid>
+                                                    <Grid item>
 
+                                                            <IconButton>
+                                                                <ArrowRightIcon/>
+                                                            </IconButton>
+                                                    </Grid>
+                                                </Grid>
+
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid item xs={12} style={{marginTop:"0px"}}>
+                                        <Grid container justify="center">
+                                            <Grid item xs={11}>
+                                                <Grid container alignItems="center">
+                                                    <Grid item>
+                                                        <div style={{fontStyle: "normal",fontWeight: "500",fontSize: "15px",color: "#000000"}}>
+                                                        Social Security Number
+                                                        </div>
+                                                    </Grid>
+                                                    <Grid item>
+
+                                                            <IconButton>
+                                                                <ArrowRightIcon/>
+                                                            </IconButton>
+                                                    </Grid>
+                                                </Grid>
+
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid item xs={12} style={{marginTop:"0px"}}>
+                                        <Grid container justify="center">
+                                            <Grid item xs={11}>
+                                                <Grid container alignItems="center">
+                                                    <Grid item>
+                                                        <div style={{fontStyle: "normal",fontWeight: "500",fontSize: "15px",color: "#000000"}}>
+                                                        Other
+                                                        </div>
+                                                    </Grid>
+                                                    <Grid item>
+
+                                                            <IconButton>
+                                                                <ArrowRightIcon/>
+                                                            </IconButton>
+                                                    </Grid>
+                                                </Grid>
+
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
                                     <Grid>
                                         <Time/>
                                     </Grid>
+                                    <Grid item xs={12} style={{marginTop:"20px"}}>
+                                        <Grid container justify="center">
+                                            <Grid item xs={11}>
+                                                <Grid container alignItems="center">
+                                                    <Grid item>
+                                                        <div style={{fontStyle: "normal",fontWeight: "500",fontSize: "15px",color: "#000000"}}>
+                                                        Alert group
+                                                        </div>
+                                                    </Grid>
+                                                </Grid>
 
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid item xs={12} style={{marginTop:"20px"}}>
+                                        <Grid container justify="center">
+                                            <Grid item xs={11}>
+                                                <Chip  size="small" className={classes.chip} label="Highlighted Alerts" variant="outlined"/> 
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
                                     </div>
 
 

@@ -7,12 +7,15 @@ import active from "../../Links/images/active.png";
 import new1 from "../../Links/images/new.png";
 import activesource from "../../Links/images/activesource.png"
 import Progressbar from "./progressbar";
+import BarGroup from "./BarGroup.jsx";
+import Piechart from "./Piechart.jsx";
 import drop from "../../Links/images/drop.png";
 import Dropup from "./Dropup.jsx";
 import Dropdown from "./Dropdown.jsx";
 import GetAppIcon from '@material-ui/icons/GetApp';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
+
 const LightTooltip = withStyles((theme) => ({
     tooltip: {
       backgroundColor: theme.palette.common.white,
@@ -40,10 +43,9 @@ const useStyles = makeStyles((theme) => ({
     },
     HeaderFont:{
         fontFamily: 'Roboto',
-        fontSize: "16px" ,
-          fontWeight:"500",
-          fontStyle:"normal",
-          color: "#B5B5C3"
+        fontSize: "16.9411px" ,
+          fontWeight:"bold",
+          fontStyle:"normal"
       },
       progressfont:{
         
@@ -119,10 +121,12 @@ const useStyles = makeStyles((theme) => ({
         
     },
     f5:{
-        width:"1093px",
-        boxShadow: "0px 0px 35px rgba(181, 181, 195, 0.15)",
-        borderRadius: "6px",
-        height:"140px"
+        width:"100%",
+        boxShadow: "0px 0px 19.9579px rgba(56, 71, 109, 0.03)",
+         borderRadius: "11.9747px",
+         
+         paddingBottom:"18px",
+         height:"447px"
     },
     f2:{
         background: "#FFFFFF",
@@ -224,75 +228,122 @@ export default function EContent(){
     </Grid>
 
 </Grid>
+<Grid item xs={12}>
+<Grid container justify="center" style={{marginTop:"20px"}}>
+                    <Grid item xs={12} md={12} lg={12}>
+                        <Grid container spacing={2} >
+                            <Grid item xs={6} lg={6}>
+                            <Card className={classes.f5}>
+                                <CardHeader
+                                className={classes.HeaderFont}
+                            
+                                disableTypography="true" 
+                                action={
+                                    
+                                    <IconButton color="primary"  >
+                                        
+                                        </IconButton>
+                                    
+                                }
+                                
+                                title={<div style={{display:"flex"}}><Typography>All Alerts Trend </Typography>
+                                <Grid item style={{marginLeft:"10px"}}>
+                                <LightTooltip title="This bar chart depicts the number of alerts found per month over the past two years.">
 
-<Grid item xs={12} >
-    <Grid container justify="center" spacing={0} >
-        <Grid item xs={11} lg={10}  >
-            <div className={classes.root}>
-            <Grid container justify="space-between" spacing={1}>
-                <Grid item  >
-                    <Card className={classes.paper}>
-                        
-                            <img src={warning}></img>
-                            <Typography style={{fontStyle:"normal",fontWeight:"bold",fontSize:"40px",color:"#464E5F"}}>
-                                158
-                            </Typography>
-                            <Typography className={classes.fontin}>
-                                Total Alerts Found
-                            </Typography>
-                        
-                        
-                    </Card>
-                    
-                    
-                </Grid>
-                <Grid item  >
-                    <Paper className={classes.paper}>
-                            <img src={new1}></img>
-                            <Typography style={{fontStyle:"normal",fontWeight:"bold",fontSize:"40px",color:"#464E5F"}}>
-                                25
-                            </Typography>
-                            <Typography className={classes.fontin}>
-                                New Alerts Today
-                            </Typography>
-                    </Paper>
-                </Grid>
-                <Grid item >
-                    <Paper className={classes.paper}>
-                            <img src={active}></img>
-                            <div className={classes.but} >
-                                <div style={{display:"flex",borderRight: "1px solid #000000",width:"117px",height:"32px",fontStyle: "normal",fontWeight: "500",fontSize: "14px",color:"white",alignItems:"center",justifyContent:"center"}}>
-                                        Hacker Group
-                                </div>
-                                <div style={{display:"flex",width:"42px",textAlign:"center",height:"32px",alignItems:"center",justifyContent:"center",fontStyle:"normal",fontWeight: "600",fontSize: "14px",color:"white"}}>
-                                    17
-                                </div>
-                            </div>
-                            <Typography className={classes.fontin} style={{paddingTop:"35px"}}>
-                                Most Active Category
-                            </Typography>
-                    </Paper>
-                </Grid>
-                <Grid item >
-                    <Paper className={classes.paper}>
-                    <img src={activesource}></img>
-                    <span className={classes.dot}>
-                        <Typography style={{color:"white",fontStyle: "normal",fontWeight: "600",fontSize: "10px"}}>
-                                Dark Web
-                        </Typography>
-                    </span>
-                            <Typography className={classes.fontin} style={{paddingTop:"13px"}}>
-                               Most Active Source
-                            </Typography>
-                    </Paper>
-                </Grid>
-            </Grid>
-            </div>
-            
-            
+<InfoOutlinedIcon />
+</LightTooltip >
+                                </Grid>
+                        </div>}      
+                                />
+                                <Divider/>
+                                <BarGroup/>
+                                
+                                    
+                                
+                            
+                            </Card>
+                                
+                            </Grid>
+                            <Grid item xs={4} lg={4}>
+                            <Card className={classes.f5}>
+                                <CardHeader
+                                className={classes.HeaderFont}
+                            
+                                disableTypography="true" 
+                                action={
+                                    
+                                    <IconButton color="primary"  >
+                                        
+                                        </IconButton>
+                                    
+                                }
+                                
+                                title={<div style={{display:"flex"}}><Typography>Source</Typography>
+                                <Grid item style={{marginLeft:"10px"}}>
+                                <LightTooltip title="This pie chart depicts the percentage of alerts found on the dark web, deep web and data breaches. Adjust the chart by selecting one or more sources.">
 
-        </Grid>
-    </Grid>
+<InfoOutlinedIcon />
+</LightTooltip >
+                                </Grid>
+                        </div>}      
+                                />
+                                <Divider/>
+                                <Piechart/>
+                                
+                                    
+                                
+                            
+                            </Card>
+                            </Grid>
+                            <Grid item xs={2}>
+                                <Card className={classes.f5}>
+                                    <Grid container direction="column" style={{height:"447px"}}spacing={3} justify="space-evenly" alignItems="center">
+                                        <Grid item>
+                                            <Grid container direction="column" alignItems="center">
+                                                <Grid item style={{color:"#464E5F",fontWeight:"bold",fontSize:"40px"}}>
+                                                    158
+                                                </Grid>
+                                                <Grid item style={{color:"#B5B5C3",fontWeight:"500",fontSize:"12px;"}}>
+                                                    Total Alerts Found
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid item>
+                                            <Grid container direction="column" alignItems="center">
+                                                <Grid item style={{color:"#464E5F",fontWeight:"bold",fontSize:"40px"}}>
+                                                    3
+                                                </Grid>
+                                                <Grid item style={{color:"#B5B5C3",fontWeight:"500",fontSize:"12px;"}}>
+                                                    Alert Found Today
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid item>
+                                            <Grid container direction="column" alignItems="center">
+                                                <Grid item style={{color:"#464E5F",fontWeight:"bold",fontSize:"40px"}}>
+                                                    17
+                                                </Grid>
+                                                <Grid item style={{color:"#B5B5C3",fontWeight:"500",fontSize:"12px;"}}>
+                                                    Alert Found Last month
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid item>
+                                            <Grid container direction="column" alignItems="center">
+                                                <Grid item style={{color:"#464E5F",fontWeight:"bold",fontSize:"40px"}}>
+                                                    35
+                                                </Grid>
+                                                <Grid item style={{color:"#B5B5C3",fontWeight:"500",fontSize:"12px;"}}>
+                                                    Alert Found Last 3 months
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Card>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
 </Grid>
 
 {/* Charts  */}

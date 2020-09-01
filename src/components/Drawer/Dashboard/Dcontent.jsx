@@ -21,6 +21,15 @@ import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import Tooltip from '@material-ui/core/Tooltip';
 import SpiderWeb from './SpiderWeb.jsx';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import AppBar from '@material-ui/core/AppBar';
+
+import TabContext from '@material-ui/lab/TabContext';
+import TabList from '@material-ui/lab/TabList';
+import TabPanel from '@material-ui/lab/TabPanel';
+import A from './Tabs';
+import Highlight from './Highlight.js'
 const LightTooltip = withStyles((theme) => ({
     tooltip: {
       backgroundColor: theme.palette.common.white,
@@ -91,11 +100,75 @@ const useStyles = makeStyles((theme) => ({
     control: {
       padding: theme.spacing(2),
     },
+    app1:{
+        background:"red",
+        boxShadow: "0px 0px 0px rgba(181, 181, 195, 0.15), 0px 0px 0px rgba(0, 0, 0, 0.25)",
+        fontStyle: "normal",
+        fontWeight:"500",
+        fontSize:"20px",
+        color: "#000000",
+        height:"72px",
+        '&$selected': {
+            backgroundColor: '#004C9B',
+            color: 'white',
+            fontWeight: theme.typography.fontWeightMedium,
+        },
+        inkBar: {
+            backgroundColor: 'yellow'
+            },
+            indicator: {
+                backgroundColor: '#1890ff',
+              },
+
+    },
+    tlist:{
+        '&$selected': {
+            backgroundColor: '#004C9B',
+            color: 'white',
+            fontWeight: theme.typography.fontWeightMedium,
+        },
+        indicator: {
+            backgroundColor: '#1890ff',
+          },
+          inkBar: {
+            backgroundColor: 'yellow'
+            }
+    },
+    stab:{
+        fontWeight: theme.typography.fontWeightRegular,
+        fontSize: theme.typography.pxToRem(17),
+        padding:"7px",paddingBottom:"20px",
+        background:"yellow",
+        width:"100vw", 
+        '&$selected': {
+            backgroundColor: '#004C9B',
+            color: 'white',
+            fontWeight: theme.typography.fontWeightMedium,
+        },
+        inkBar: {
+            backgroundColor: 'yellow'
+            },
+            indicator: {
+                backgroundColor: '#1890ff',
+              },
+        
+    }
   }));
 export default function Dcontent (){
     const classes = useStyles();
     const handleClickOpen2=()=>{
         
+    }
+    const [index1,setindex]=React.useState({index:0});
+
+    const [value, setValue] = React.useState('2');
+
+    const handleChange = (event, newValue) => {
+      setValue(newValue);
+    };
+    const handle1=(index1)=>{
+        console.log('index',index1)
+        setindex({index:index1})
     }
     return(
 
@@ -223,22 +296,40 @@ export default function Dcontent (){
                         <Grid items md={11}>
                         <Card className={classes.f2}>
                             <CardHeader
-                                className={classes.HeaderFont}
-                            
-                                disableTypography="true" 
-                                action={
-                                    
-                                    <IconButton color="primary" >
-                                    <ChevronRightIcon style={{fontSize:"25px"}}/>
-                                    </IconButton>
-                                    
-                                }
-                                
-                                title="Latest Alerts "      
-                                />
+                                className={classes.HeaderFont}>
+
+                            </CardHeader>
                             <Divider/>
                             <CardContent>
-                                <Latest/>
+                                <Grid container>
+                                    <Grid item xs={12}>
+                                        <A.Tabs value={index1.index} onChange={(_,index1)=>handle1(index1)}>
+                                            <A.Tab title="Latest Alerts" />
+                                            <A.Tab title="Highlighted Alerts"/>
+                                            
+                                        </A.Tabs>
+
+                                        
+
+                                        <A.TabContent value={index1.index} index={0}>
+                                        <Grid item>
+                                            <Latest/>
+                                        </Grid>
+                                        </A.TabContent>
+                                        <A.TabContent value={index1.index}  index={1}>
+                                        <Grid item >
+                                            <Highlight/>
+                                        </Grid>
+                                        </A.TabContent>
+                                       
+
+
+
+                                    </Grid>
+
+
+                                </Grid>
+                                
                             </CardContent>
                             
                         </Card>

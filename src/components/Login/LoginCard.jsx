@@ -50,6 +50,15 @@ function LoginCard(){
                 
 
             }
+            else if (response.data.sucess==="false1"){
+                changeemailvalidate(false)
+                changepasswordvalidate(true)
+            }
+            else if(response.data.sucess==="True2"){
+                console.log("thiscoderun")
+                changeemailvalidate(true)
+                changepasswordvalidate(false)
+            }
         //     else if(store.sucess==="false1"){
         //     changeemailvalidate(true)
         //     changepasswordvalidate(false)
@@ -110,7 +119,7 @@ function LoginCard(){
      const handleMouseDownPassword = (event) => {
          console.log("123")
         event.preventDefault();
-        event.stopImmediatePropagation()
+        
       };
 
      const handleSubmit = (event) => {
@@ -182,7 +191,7 @@ function LoginCard(){
                         inputProps={{ style: inputStyle }}
                         variant="outlined"
                    
-                        placeholder="Enter Username or email"
+                        placeholder="Enter Username"
                         
                         InputLabelProps={{shrink: false}}
                         
@@ -191,9 +200,10 @@ function LoginCard(){
                         labelWidth={0}
                     />
                  {/* <TextField multiline size="small" variant="outlined" style={{marginTop:"2%"}} fullWidth  id="name" name="name" label="Enter Username or email"  value={name} onChange={handleChange('name')}/>
-                */}<div className={styles.email} style={{display:emailvalidate?"none":"flex"}}>  
-                    <p> Email is not registered</p>
+                */}
                 </div>
+                <div className={styles.email} style={{display:emailvalidate?"none":"flex"}}>  
+                    <p> Account is not registered</p>
                 </div>
 
                 <div className={styles.email1}>
@@ -226,12 +236,12 @@ function LoginCard(){
                         labelWidth={0}
                     />
                 
+                    
+                
+                </div>   
                     <div className={styles.email} style={{display:passwordvalidate?"none":"flex"}}>
                         <p> Password is not valid</p>
                     </div>
-                
-                </div>   
-
             </div>
             <div style={{display:"flex",marginTop:"5px"}}>
             <FormControlLabel
@@ -286,8 +296,10 @@ function LoginCard(){
                     
                 </div>
                 <div className={styles.loginfooter2}>
-                   
-                    <a>Contact Support</a>
+                   <Link to="/Contactus">
+                   <a>Contact Support</a>
+                   </Link>
+                    
                     
                 </div>
             </div>
