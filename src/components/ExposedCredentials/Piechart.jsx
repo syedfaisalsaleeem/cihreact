@@ -80,11 +80,11 @@ render(){
             }
         },
         tooltips: {
-            enabled: false
+            enabled: true
         },
         plugins: {
             datalabels: {
-                enabled: false,
+                enabled: true,
                 color: 'white',
                 textAlign: 'center',
                 render: 'percentage',
@@ -94,7 +94,7 @@ render(){
                     family:"Roboto",
                     lineHeight: 0,
                     weight: 'bold',
-                    size: 0,
+                    size: 15,
                     
                 },
                 

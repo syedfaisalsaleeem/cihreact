@@ -151,7 +151,7 @@ const useStyles = makeStyles((theme) => ({
       },
     
 }))
-export default function LatestCard(){
+export default function LatestCard(props){
     const [fullWidth, setFullWidth] = React.useState(true);
     
     const [st1,set]=React.useState([""]);
@@ -161,6 +161,15 @@ export default function LatestCard(){
     const [open, setOpen] = React.useState(false);
     const addcount=()=>{
         selectstar(!star)
+        if(star===false){
+            props.addcount()
+        }
+        else if(star===true){
+            props.changeflag()
+        }
+        
+        
+        console.log(props.changeflag)
     }
     const handleClickOpen = () => {
       setOpen(true);

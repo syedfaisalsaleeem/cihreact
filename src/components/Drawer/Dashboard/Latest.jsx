@@ -115,7 +115,7 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(2),
     },
   }));
-export default function Latest(){
+export default function Latest(props){
     const classes = useStyles();
     const [st1,set]=React.useState([""]);
     const [click,setclick]=React.useState(true);
@@ -128,13 +128,16 @@ export default function Latest(){
         
       }
     
-    
+    const handling=()=>{
+        console.log(props.changeflag)
+        
+    }
     return(
         <div>
-            <LatestCard/>
-            <LatestCard/>
-            <LatestCard/>
-            <LatestCard/>
+            <LatestCard changeflag={props.changeflag} addcount={props.addcount}/>
+            <LatestCard changeflag={props.changeflag} addcount={props.addcount}/>
+            <LatestCard changeflag={props.changeflag} addcount={props.addcount}/>
+            <LatestCard changeflag={props.changeflag} addcount={props.addcount}/>
       
             <Grid container className={classes.root1} spacing={2}>
                 <Grid item xs={12} >

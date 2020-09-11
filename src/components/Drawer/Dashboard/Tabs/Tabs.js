@@ -3,7 +3,7 @@ import Styled from './style'
 import { CTabs } from './style'
 
 const CustomTabs = props => (
-  <div style={{marginBottom:"20px"}}>
+  <div style={{marginBottom:"20px",background:"white"}}>
     <CTabs
       variant="fullWidth"
       indicatorColor="primary"

@@ -56,10 +56,10 @@ render(){
             
                 <Doughnut
             data= {{
-                labels:['Dark Web',"Data Breach","Deep Web"],
+                labels:['Remediated Risk',"Residual Risk"],
         datasets: [{
-            data: [99, 0, 1 ],
-            backgroundColor:  ['#D0021B','#50E3C2','#F5A623'],
+            data: [99,  1 ],
+            backgroundColor:  ['#D0021B','#50E3C2'],
             
             borderColor: 'white'
         }]

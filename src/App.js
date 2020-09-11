@@ -26,6 +26,9 @@ import AttacksAndCompromises from './Links/Exposed/attacksandcompromises.js';
 import UnderAnalysis from './Links/Exposed/underanalysis.js';
 import Remediation from './Links/Exposed/remediation.js';
 import Contact1 from './Links/Contact/Contact.js';
+import Discover from "./Links/Discover/index.js";
+import MainDashboard from './Links/MainDashboard/index.js';
+
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
@@ -44,7 +47,9 @@ function App() {
         <Route path="/" component={Login} exact />
         <Route path="/CantLogin" component={CantLogin} exact/>
         <Route path="/Home" component={Home1} exact/>
+        <Route path="/MDashBoard" component={MainDashboard} exact/>
         <Route path="/DashBoard" component={Home} exact/>
+        <Route path="/Discover" component={Discover} exact/>
         <Route path="/Settings" component={Setting} exact/>
         <Route path="/Support" component={Support} exact/>
         <Route path="/Notification" component={Notification} exact/>

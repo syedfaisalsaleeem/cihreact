@@ -1,0 +1,33 @@
+.MuiGrid-item {
+  
+}
+
+.thDiv {
+  display: flex;
+  align-items: center;
+}
+
+.foldable {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lastBox {
+  padding-top: 8px;
+  height: 3rem;
+  width: 5rem;
+  background: #000;
+  color: #ffffff;
+  font-size: 12px;
+  text-align: center;
+}
+
+.downloadBtns button {
+  background: green;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+}

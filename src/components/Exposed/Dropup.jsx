@@ -186,16 +186,29 @@ const useStyles = makeStyles((theme) => ({
         },
         exposurecategory:{
             sensitiveinformation:{
-                all:true,
-                sourcecode:false
+                control:{
+                    all:true,
+                    button:false,
+                },
+                value:{
+                    sourcecode:false
+                }
             },
-            Discussions:{
-                all:false,
+            discussion:{
+                control:{
+                    all:false,
+                    button:false,
+                },
+                value:{
                 discussionforum:false,
-                discussion:false
+                discussion:false}
             },
             blackmarket:{
-                all:false,
+                control:{
+                    all:false,
+                    button:false,
+                },
+                value:{
                 sales:false, 
                 marketplace:false, 
                 drugsales:false, 
@@ -203,10 +216,14 @@ const useStyles = makeStyles((theme) => ({
                 credentialsales:false, 
                 hackingsales:false, 
                 malwaresales:false 
-
+            }
             },
             financial:{
-                all:false,
+                control:{
+                    all:false,
+                    button:false,
+                },
+                value:{
                 creditcards:false, 
                 ibannumbers:false,
                 cryptoaddresses:false, 
@@ -221,16 +238,24 @@ const useStyles = makeStyles((theme) => ({
                 dashaddresses:false, 
                 dogecoinaddresses:false, 
                 neoaddresses:false 
-            },
-            ExposedCredentials:{
-                all:false,
+            }},
+            exposedcredentials:{
+                control:{
+                    all:false,
+                    button:false,
+                },
+                value:{
                 password:false, 
                 cleartextpassword:false, 
                 encryptedpassword:false, 
                 username:false 
-            },
+            }},
             personalinformation:{
-                all:false,
+                control:{
+                    all:false,
+                    button:false,
+                },
+                value:{
                 phonenumbers:false, 
                 passportnumbers:false, 
                 passportinformation:false, 
@@ -239,10 +264,14 @@ const useStyles = makeStyles((theme) => ({
                 lastname:false, 
                 firstname:false, 
                 phonenumber:false 
-                
+            }  
             },
             hackergrouptargeting:{
-                all:false,
+                control:{
+                    all:false,
+                    button:false,
+                },
+                value:{
                 iptargetlist:false, 
                 emailtargetlist:false, 
                 domaintargetlist:false, 
@@ -253,10 +282,14 @@ const useStyles = makeStyles((theme) => ({
                 iplist:false, 
                 emaillist:false, 
                 domainlist:false, 
-                wordlist:false
+                wordlist:false}
             },
             attacksandcompromises:{
-                all:false,
+                control:{
+                    all:false,
+                    button:false,
+                },
+                value:{
                 sql:false,
                 reconnaissance:false,
                 exploitationtool:false,
@@ -276,8 +309,13 @@ const useStyles = makeStyles((theme) => ({
                 ssh:false, 
                 telnet:false, 
                 ftp:false, 
-                sftp:false   
-            }
+                sftp:false  } 
+            },
+            underanalysis:{
+                control:{
+                    all:false,
+                },
+            },
         },
             languages:{
                 control:{
@@ -325,9 +363,44 @@ const useStyles = makeStyles((theme) => ({
                 romanian:false, russian:false, slovak:false, slovenian:false, somali:false, albanian:false, swedish:false, swahili:false, 
                 tamil:false, telugu:false, thai:false, tagalog:false, turkish:false, ukrainian:false, urdu:false, vietnamese:false, chinese:false 
                 }
-            }
+            },
+            socialsecuritynumber:{
+                control:{
+                    all:false,
+                    button:false
+                },
+                value:{
+                spainsocialsecuritynumbers:false, latviasocialsecuritynumbers:false, lithuaniasocialsecuritynumbers:false, malaysiasocialsecuritynumbers:false, 
+                indonesiasocialsecuritynumbers:false, Hongkongsocialsecuritynumbers:false, arabemiratessocialsecuritynumbers:false, southafricasocialsecuritynumbers:false, 
+                chinasocialsecuritynumbers:false, belgiumsocialsecuritynumbers:false, bulgariasocialsecuritynumbers:false, croatiasocialsecuritynumbers:false, 
+                czechrepublicsocialsecuritynumbers:false, denmarksocialsecuritynumbers:false, francesocialsecuritynumbers:false, greecesocialsecuritynumbers:false, 
+                irelandsocialsecuritynumbers:false, estoniasocialsecuritynumbers:false, italysocialsecuritynumbers:false, netherlandssocialsecuritynumbers:false, 
+                norwaysocialsecuritynumbers:false, polandsocialsecuritynumbers:false, romaniasocialsecuritynumbers:false, swedensocialsecuritynumbers:false, 
+                sloveniasocialsecuritynumbers:false, slovakiasocialsecuritynumbers:false, singaporesocialsecuritynumbers:false, finlandsocialsecuritynumbers:false, 
+                unitedstatessocialsecuritynumbers:false
+                }
+            },
 
-        
+            
+        other:{
+            control:{
+                all:false,
+                button:false
+            },
+            value:{
+                directory:false, news:false, advertisement:false, ipv4:false 
+            }
+        },
+        alertgroup:{
+            control:{
+                all:false
+            },
+            value:{
+                highlightedalerts:false
+            }
+        }
+
+  
 };
 
 // function reducer(state, action) {
@@ -338,8 +411,64 @@ const useStyles = makeStyles((theme) => ({
 //             throw new Error();
 //     }
 //   }
+// function change1(value){
+//        return {
+//               ...state,
+//               languages:{...state.languages,
+//                     control:{...state.languages.control,value:false}
+//                     }
+//             }
+// }
 function reducer(state, action) {
     switch (action.type) {
+        case 'low':
+            
+            return{
+                ...state,
+                severitylevel:{...state.severitylevel,low:!action.payload}
+                    
+                    
+            }
+        case 'medium':
+            
+            return{
+                ...state,
+                severitylevel:{...state.severitylevel,medium:!action.payload}
+                    
+                    
+            }
+        case 'high':
+            
+            return{
+                ...state,
+                severitylevel:{...state.severitylevel,high:!action.payload}
+                    
+                    
+            }
+        case 'deepweb':
+            
+            return{
+                ...state,
+                source:{...state.source,deepweb:!action.payload}
+                    
+                    
+            }
+        case 'darkweb':
+            
+            return{
+                ...state,
+                source:{...state.source,darkweb:!action.payload}
+                    
+                    
+            }
+        case 'databreach':
+            
+            return{
+                ...state,
+                source:{...state.source,databreach:!action.payload}
+                    
+                    
+            }
       case 'language':
         console.log(state.languages.control.button)
         return{
@@ -348,6 +477,344 @@ function reducer(state, action) {
                 control:{...state.languages.control,button:!action.payload}
                 }
         }
+        case 'languagein':
+            // return change1(action.payload);
+            const x=action.payload.value2
+            // const y=action.payload
+            
+            return(
+                
+                {
+                ...state,
+                languages:{...state.languages,
+                    value:{...state.languages.value,[x]:!action.payload.value1}
+                    }
+            })
+        case 'socialsecuritynumber':
+            
+             return {
+                ...state,
+                socialsecuritynumber:{...state.socialsecuritynumber,
+                    control:{...state.socialsecuritynumber.control,button:!action.payload}
+                    }
+            }
+        case 'socialsecurityin':
+                // return change1(action.payload);
+                const y=action.payload.value2
+                // const y=action.payload
+                
+                return(
+                    
+                    {
+                    ...state,
+                    socialsecuritynumber:{...state.socialsecuritynumber,
+                        value:{...state.socialsecuritynumber.value,[action.payload.value2]:!action.payload.value1}
+                        }
+                })
+        case 'other':
+            
+             return {
+                ...state,
+                other:{...state.other,
+                    control:{...state.other.control,button:!action.payload}
+                    }
+            }
+        case 'otherin':
+                // return change1(action.payload);
+               
+                // const y=action.payload
+                
+                return(
+                    
+                    {
+                    ...state,
+                    other:{...state.other,
+                        value:{...state.other.value,[action.payload.value2]:!action.payload.value1}
+                        }
+                })
+        case 'alertgroup':
+            
+             return {
+                ...state,
+                alertgroup:{...state.alertgroup,
+                    value:{...state.other.value,highlightedalerts:!action.payload}
+                    }
+            }
+        case 'sensitiveinformation':
+            
+            return {
+                ...state,
+                exposurecategory:{...state.exposurecategory,
+                    sensitiveinformation:{...state.exposurecategory.sensitiveinformation,
+                        control:{...state.exposurecategory.sensitiveinformation.control,all:!action.payload}
+                        
+                    }
+                }
+            }
+        case 'sensitiveinformation1':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        sensitiveinformation:{...state.exposurecategory.sensitiveinformation,
+                            control:{...state.exposurecategory.sensitiveinformation.control,button:!action.payload}
+                            
+                        }
+                    }
+                }
+        case 'sensitiveinformationin':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        sensitiveinformation:{...state.exposurecategory.sensitiveinformation,
+                            value:{...state.exposurecategory.sensitiveinformation.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+        case 'discussion':
+            
+            return {
+                ...state,
+                exposurecategory:{...state.exposurecategory,
+                    discussion:{...state.exposurecategory.discussion,
+                        control:{...state.exposurecategory.discussion.control,all:!action.payload}
+                        
+                    }
+                }
+            }
+        case 'discussion1':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        discussion:{...state.exposurecategory.discussion,
+                            control:{...state.exposurecategory.discussion.control,button:!action.payload}
+                            
+                        }
+                    }
+                }
+        case 'discussionin':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        discussion:{...state.exposurecategory.discussion,
+                            value:{...state.exposurecategory.discussion.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+        case 'blackmarket':
+    
+            return {
+                ...state,
+                exposurecategory:{...state.exposurecategory,
+                    blackmarket:{...state.exposurecategory.blackmarket,
+                        control:{...state.exposurecategory.blackmarket.control,all:!action.payload}
+                        
+                    }
+                }
+            }
+        case 'blackmarket1':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        blackmarket:{...state.exposurecategory.blackmarket,
+                            control:{...state.exposurecategory.blackmarket.control,button:!action.payload}
+                            
+                        }
+                    }
+                }
+        case 'blackmarketin':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        blackmarket:{...state.exposurecategory.blackmarket,
+                            value:{...state.exposurecategory.blackmarket.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+        case 'financial':
+
+            return {
+                ...state,
+                exposurecategory:{...state.exposurecategory,
+                    financial:{...state.exposurecategory.financial,
+                        control:{...state.exposurecategory.financial.control,all:!action.payload}
+                        
+                    }
+                }
+            }
+        case 'financial1':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        financial:{...state.exposurecategory.financial,
+                            control:{...state.exposurecategory.financial.control,button:!action.payload}
+                            
+                        }
+                    }
+                }
+        case 'financialin':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        financial:{...state.exposurecategory.financial,
+                            value:{...state.exposurecategory.financial.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+        case 'exposedcredentials':
+
+            return {
+                ...state,
+                exposurecategory:{...state.exposurecategory,
+                    exposedcredentials:{...state.exposurecategory.exposedcredentials,
+                        control:{...state.exposurecategory.exposedcredentials.control,all:!action.payload}
+                        
+                    }
+                }
+            }
+        case 'exposedcredentials1':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        exposedcredentials:{...state.exposurecategory.exposedcredentials,
+                            control:{...state.exposurecategory.exposedcredentials.control,button:!action.payload}
+                            
+                        }
+                    }
+                }
+        case 'exposedcredentialsin':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        exposedcredentials:{...state.exposurecategory.exposedcredentials,
+                            value:{...state.exposurecategory.exposedcredentials.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+        case 'personalinformation':
+
+            return {
+                ...state,
+                exposurecategory:{...state.exposurecategory,
+                    personalinformation:{...state.exposurecategory.personalinformation,
+                        control:{...state.exposurecategory.personalinformation.control,all:!action.payload}
+                        
+                    }
+                }
+            }
+        case 'personalinformation1':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        personalinformation:{...state.exposurecategory.personalinformation,
+                            control:{...state.exposurecategory.personalinformation.control,button:!action.payload}
+                            
+                        }
+                    }
+                }
+        case 'personalinformationin':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        personalinformation:{...state.exposurecategory.personalinformation,
+                            value:{...state.exposurecategory.personalinformation.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+        case 'hackergrouptargeting':
+
+            return {
+                ...state,
+                exposurecategory:{...state.exposurecategory,
+                    hackergrouptargeting:{...state.exposurecategory.hackergrouptargeting,
+                        control:{...state.exposurecategory.hackergrouptargeting.control,all:!action.payload}
+                        
+                    }
+                }
+            }
+        case 'hackergrouptargeting1':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        hackergrouptargeting:{...state.exposurecategory.hackergrouptargeting,
+                            control:{...state.exposurecategory.hackergrouptargeting.control,button:!action.payload}
+                            
+                        }
+                    }
+                }
+        case 'hackergrouptargetingin':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        hackergrouptargeting:{...state.exposurecategory.hackergrouptargeting,
+                            value:{...state.exposurecategory.hackergrouptargeting.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+        case 'attacksandcompromises':
+
+            return {
+                ...state,
+                exposurecategory:{...state.exposurecategory,
+                    attacksandcompromises:{...state.exposurecategory.attacksandcompromises,
+                        control:{...state.exposurecategory.attacksandcompromises.control,all:!action.payload}
+                        
+                    }
+                }
+            }
+        case 'attacksandcompromises1':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        attacksandcompromises:{...state.exposurecategory.attacksandcompromises,
+                            control:{...state.exposurecategory.attacksandcompromises.control,button:!action.payload}
+                            
+                        }
+                    }
+                }
+        case 'attacksandcompromisesin':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        attacksandcompromises:{...state.exposurecategory.attacksandcompromises,
+                            value:{...state.exposurecategory.attacksandcompromises.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+        case 'underanalysis':
+
+            return {
+                ...state,
+                exposurecategory:{...state.exposurecategory,
+                    underanalysis:{...state.exposurecategory.underanalysis,
+                        control:{...state.exposurecategory.underanalysis.control,all:!action.payload}
+                        
+                    }
+                }
+            }
         // this.setState(prevState => ({
         //     ...prevState,
         //     someProperty: {
@@ -369,8 +836,7 @@ function reducer(state, action) {
             //   })
         
         //  return {...state.languages.control,button:true}
-      case 'decrement':
-        return {count: state.count - 1};
+
       default:
         throw new Error();
     }
@@ -481,7 +947,8 @@ export default function Dropup(props){
 
                                                 </Grid> 
                                                 <Grid item xs={1}>
-                                                    <Button style={{width:"60%",height:"100%",minWidth:"45px",borderRadius: "2px",border:props.filtervalue?"0.6px solid #000000":"0.6px solid #8950FC"}} variant="outlined" onClick={props.filter}>
+                                                    <Button style={{width:"60%",height:"100%",minWidth:"45px",borderRadius: "2px",border:props.filtervalue?"0.6px solid #000000":"0.6px solid #8950FC"}} variant="outlined" 
+                                                    onClick={props.filter}>
                                                     <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",width:"60%",height:"100%",fontStyle: "normal",
                                                     fontWeight: "normal",
                                                     fontSize: "13px",
@@ -545,8 +1012,104 @@ export default function Dropup(props){
                                 </Grid>
                                 {props.filtervalue?
                                     <div>
+                                        <Grid container justify="center">
+                                            <Grid item xs={11}>
+                                                <Grid container spacing={2}>
+                                                    <Grid item style={{display:state.severitylevel.low?"flex":"none"}}>
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.severitylevel.low?"#B7E9F7":'white'}} label="Low" variant="outlined" onClick={() => dispatch({type: 'low',payload:state.severitylevel.low})} /> 
+                                                    </Grid>
+                                                    <Grid item style={{display:state.severitylevel.medium?"flex":"none"}}>
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.severitylevel.medium?"#B7E9F7":'white'}} label="Medium" variant="outlined" onClick={() => dispatch({type: 'medium',payload:state.severitylevel.medium})} /> 
+                                                    </Grid>
+                                                    <Grid item style={{display:state.severitylevel.high?"flex":"none"}}>
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.severitylevel.high?"#B7E9F7":'white'}} label="High" variant="outlined" onClick={() => dispatch({type: 'high',payload:state.severitylevel.high})} /> 
+                                                    </Grid>
+                                                    <Grid item style={{display:state.source.deepweb?"flex":"none"}}>
+                                                    <Chip  size="small" className={classes.chip} style={{background:state.source.deepweb?"#B7E9F7":'white'}} label="DeepWeb" variant="outlined" onClick={() => dispatch({type: 'deepweb',payload:state.source.deepweb})} /> 
+                                                </Grid>
+                                                <Grid item style={{display:state.source.darkweb?"flex":"none"}}>
+                                                    <Chip  size="small" className={classes.chip} style={{background:state.source.darkweb?"#B7E9F7":'white'}} label="DarkWeb" variant="outlined" onClick={() => dispatch({type: 'darkweb',payload:state.source.darkweb})} /> 
+                                                </Grid>
+                                                <Grid item style={{display:state.source.databreach?"flex":"none"}}>
+                                                    <Chip  size="small" className={classes.chip} style={{background:state.source.databreach?"#B7E9F7":'white'}} label="DataBreach" variant="outlined" onClick={() => dispatch({type: 'databreach',payload:state.source.databreach})} /> 
+                                                </Grid>
+                                                    <Grid item style={{display:state.exposurecategory.sensitiveinformation.control.all?"flex":"none"}}>
 
-                                    </div>:
+                                                    <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.sensitiveinformation.control.all?"#B7E9F7":'white'}} label="Sensitive Information" variant="outlined" onClick={() => dispatch({type: 'sensitiveinformation',payload:state.exposurecategory.sensitiveinformation.control.all})} /> 
+
+                                                    </Grid>
+                                                    <Grid item style={{display:state.exposurecategory.discussion.control.all?"flex":"none"}}>
+
+                                                    <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.discussion.control.all?"#B7E9F7":'white'}} label="Discussion" variant="outlined" onClick={() => dispatch({type: 'discussion',payload:state.exposurecategory.discussion.control.all})} /> 
+
+                                                    </Grid>
+                                                    <Grid item style={{display:state.exposurecategory.blackmarket.control.all?"flex":"none"}}>
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.blackmarket.control.all?"#B7E9F7":'white'}} label="Black Market" variant="outlined" onClick={() => dispatch({type: 'blackmarket',payload:state.exposurecategory.blackmarket.control.all})} /> 
+
+                                                        </Grid>
+                                                        <Grid item style={{display:state.exposurecategory.financial.control.all?"flex":"none"}}>
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.financial.control.all?"#B7E9F7":'white'}} label="Financial" variant="outlined" onClick={() => dispatch({type: 'financial',payload:state.exposurecategory.financial.control.all})} /> 
+
+                                                        </Grid>
+                                                        <Grid item style={{display:state.exposurecategory.exposedcredentials.control.all?"flex":"none"}}>
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.exposedcredentials.control.all?"#B7E9F7":'white'}} label="Exposed Credentials" variant="outlined" onClick={() => dispatch({type: 'exposedcredentials',payload:state.exposurecategory.exposedcredentials.control.all})} /> 
+
+                                                        </Grid>
+                                                        <Grid item style={{display:state.exposurecategory.personalinformation.control.all?"flex":"none"}}> 
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.personalinformation.control.all?"#B7E9F7":'white'}} label="Personal information" variant="outlined" onClick={() => dispatch({type: 'personalinformation',payload:state.exposurecategory.personalinformation.control.all})} /> 
+
+                                                        </Grid>
+                                                        <Grid item style={{display:state.exposurecategory.hackergrouptargeting.control.all?"flex":"none"}}>
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.hackergrouptargeting.control.all?"#B7E9F7":'white'}} label="Hacker Group Targeting" variant="outlined" onClick={() => dispatch({type: 'hackergrouptargeting',payload:state.exposurecategory.hackergrouptargeting.control.all})} /> 
+
+                                                        </Grid>
+                                                        <Grid item style={{display:state.exposurecategory.attacksandcompromises.control.all?"flex":"none"}}>
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.attacksandcompromises.control.all?"#B7E9F7":'white'}} label="Attacks and Compromises" variant="outlined" onClick={() => dispatch({type: 'attacksandcompromises',payload:state.exposurecategory.attacksandcompromises.control.all})} /> 
+
+                                                        </Grid>
+                                                        <Grid item style={{display:state.exposurecategory.underanalysis.control.all?"flex":"none"}}>
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.underanalysis.control.all?"#B7E9F7":'white'}} label="Under Analysis" variant="outlined" onClick={() => dispatch({type: 'underanalysis',payload:state.exposurecategory.underanalysis.control.all})} /> 
+
+                                                        </Grid>
+
+                                                    {Object.keys(state.exposurecategory.sensitiveinformation.value).map((value1,index) => (
+                                                        state.exposurecategory.sensitiveinformation.value[value1]?
+                                                        <Grid item>
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.sensitiveinformation.value[value1]?"#B7E9F7":'white'}} label={value1} onClick={() => dispatch({type: 'sensitiveinformationin',payload:{value1:state.exposurecategory.sensitiveinformation.value[value1],value2:value1}})} variant="outlined"/> 
+                                                        
+                                                        </Grid>:<div></div>))}
+                                                    {Object.keys(state.exposurecategory.discussion.value).map((value1,index) => (
+                                                        state.exposurecategory.discussion.value[value1]?
+                                                        <Grid item>
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.discussion.value[value1]?"#B7E9F7":'white'}} label={value1} onClick={() => dispatch({type: 'discussionin',payload:{value1:state.exposurecategory.discussion.value[value1],value2:value1}})} variant="outlined"/> 
+                                                        
+                                                        </Grid>:<div></div>))}
+                                                    {Object.keys(state.exposurecategory.hackergrouptargeting.value).map((value1,index) => (
+                                                        state.exposurecategory.hackergrouptargeting.value[value1]?
+                                                        <Grid item>
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.hackergrouptargeting.value[value1]?"#B7E9F7":'white'}} label={value1} onClick={() => dispatch({type: 'hackergrouptargetingin',payload:{value1:state.exposurecategory.hackergrouptargeting.value[value1],value2:value1}})} variant="outlined"/> 
+                                                        
+                                                        </Grid>:<div></div>))}
+                                                    
+
+
+
+                                                </Grid>
+
+                                            </Grid>
+                                        </Grid>
+                                    </div>
+                                    :
                                     <div>
                                     <Grid item xs={12} style={{marginTop:"26px"}}>
                                     <Grid container justify="center">
@@ -561,26 +1124,17 @@ export default function Dropup(props){
                                 <Grid item xs={12} style={{marginTop:"10px"}}>
                                     <Grid container justify="center">
                                         <Grid item xs={11}>
-                                            <div style={{display:"flex",width:"50%",height:"23px"}}>
-                                                <Button variant="outlined" style={{border: "0.6px solid #8950FC",borderRadius: "2px",width:"81px",height:"23px",textTransform:"capitalize"}}>
-                                                <div style={{display:"flex",alignItems:"center",justifyContent:"center",
-                                                            fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
-                                                    Low
-                                                </div>
-                                                </Button>
-                                                <Button variant="outlined" style={{border: "0.6px solid #000000",borderRadius: "2px",width:"81px",height:"23px",textTransform:"capitalize",marginLeft:"16px"}}>
-                                                <div style={{display:"flex",alignItems:"center",justifyContent:"center",
-                                                fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
-                                                    Medium
-                                                </div>
-                                                </Button>
-                                                <Button variant="outlined" style={{border: "0.6px solid #000000",borderRadius: "2px",width:"81px",height:"23px",textTransform:"capitalize",marginLeft:"16px"}}>
-                                                <div style={{display:"flex",alignItems:"center",justifyContent:"center",
-                                            fontStyle: "normal",fontWeight: "normal",fontSize: "13px",color: "rgba(0, 0, 0, 0.8)"}}>
-                                                    High
-                                                </div>
-                                                </Button>
-                                            </div>
+                                            <Grid container spacing={2}>
+                                                <Grid item>
+                                                    <Chip  size="small" className={classes.chip} style={{background:state.severitylevel.low?"#B7E9F7":'white'}} label="Low" variant="outlined" onClick={() => dispatch({type: 'low',payload:state.severitylevel.low})} /> 
+                                                </Grid>
+                                                <Grid item>
+                                                    <Chip  size="small" className={classes.chip} style={{background:state.severitylevel.medium?"#B7E9F7":'white'}} label="Medium" variant="outlined" onClick={() => dispatch({type: 'medium',payload:state.severitylevel.medium})} /> 
+                                                </Grid>
+                                                <Grid item>
+                                                    <Chip  size="small" className={classes.chip} style={{background:state.severitylevel.high?"#B7E9F7":'white'}} label="High" variant="outlined" onClick={() => dispatch({type: 'high',payload:state.severitylevel.high})} /> 
+                                                </Grid>
+                                            </Grid>
                                             
 
                                         </Grid>
@@ -601,17 +1155,16 @@ export default function Dropup(props){
                                     <Grid container justify="center">
                                         <Grid item xs={11}>
                                         <Grid container spacing={2}>
-                                            <Grid item>
-                                                <Chip  size="small" className={classes.chip}   label="Deep Web" variant="outlined"/> 
-      
-                                            </Grid>
-                                            <Grid item>
-                                                <Chip size="small" className={classes.chip} label="Dark Web" variant="outlined"/>       
-                                         
-                                            </Grid>
-                                            <Grid item>
-                                                <Chip  size="small" className={classes.chip} label="Data Breach" variant="outlined"/>   
-                                            </Grid>
+                                                <Grid item>
+                                                    <Chip  size="small" className={classes.chip} style={{background:state.source.deepweb?"#B7E9F7":'white'}} label="DeepWeb" variant="outlined" onClick={() => dispatch({type: 'deepweb',payload:state.source.deepweb})} /> 
+                                                </Grid>
+                                                <Grid item>
+                                                    <Chip  size="small" className={classes.chip} style={{background:state.source.darkweb?"#B7E9F7":'white'}} label="DarkWeb" variant="outlined" onClick={() => dispatch({type: 'darkweb',payload:state.source.darkweb})} /> 
+                                                </Grid>
+                                                <Grid item>
+                                                    <Chip  size="small" className={classes.chip} style={{background:state.source.databreach?"#B7E9F7":'white'}} label="DataBreach" variant="outlined" onClick={() => dispatch({type: 'databreach',payload:state.source.databreach})} /> 
+                                                </Grid>
+                                            
                                         </Grid>
 
                                         </Grid>
@@ -633,122 +1186,252 @@ export default function Dropup(props){
                                     <Grid container justify="center">
                                         <Grid item xs={11}>
                                             <Grid container >
-                                                <Grid item xs={10}>
+                                                <Grid item xs={12}>
                                                 <Grid container spacing={1}>
                                                 
                                                 <Grid item>
                                                     <Grid container alignItems="center">
                                                         <Grid item>
-                                                            <Chip  size="small" className={classes.chip} label=" Sensitive Information" variant="outlined"/> 
+
+                                                            <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.sensitiveinformation.control.all?"#B7E9F7":'white'}} label="Sensitive Information" variant="outlined" onClick={() => dispatch({type: 'sensitiveinformation',payload:state.exposurecategory.sensitiveinformation.control.all})} /> 
+                                       
                                                         </Grid>
                                                         <Grid item>
-                                                            <IconButton>
-                                                                <ArrowRightIcon/>
+                                                            <IconButton onClick={() => dispatch({type: 'sensitiveinformation1',payload:state.exposurecategory.sensitiveinformation.control.button})}>
+                                                                <ArrowRightIcon style={{display:state.exposurecategory.sensitiveinformation.control.button?"none":"flex"}} />
+                                                                <ArrowDropDownIcon style={{display:state.exposurecategory.sensitiveinformation.control.button?"flex":"none"}} />
                                                             </IconButton>
-                                                        </Grid>
-                                                    </Grid>
+                                                            </Grid>
+                                                            </Grid>
+                                                         <Grid container spacing={1} style={{display:state.exposurecategory.sensitiveinformation.control.button?"flex":"none"}}>
 
-                                                      
-                                        
-                                                    
+                                                            {Object.keys(state.exposurecategory.sensitiveinformation.value).map((value1,index) => ( 
+                                                            <Grid item>
+                                                            
+                                                            <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.sensitiveinformation.value[value1]?"#B7E9F7":'white'}} label={value1} onClick={() => dispatch({type: 'sensitiveinformationin',payload:{value1:state.exposurecategory.sensitiveinformation.value[value1],value2:value1}})} variant="outlined"/> 
+
+                                                            </Grid>
+
+                                                            ))}
+
+
+                                                        </Grid>   
                                                         
                                                     
                                                 </Grid>
                                                 <Grid item>
                                                     <Grid container alignItems="center">
                                                         <Grid item>
-                                                            <Chip  size="small" className={classes.chip} label=" Discussions" variant="outlined"/> 
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.discussion.control.all?"#B7E9F7":'white'}} label="Discussion" variant="outlined" onClick={() => dispatch({type: 'discussion',payload:state.exposurecategory.discussion.control.all})} /> 
+
                                                         </Grid>
                                                         <Grid item>
-                                                            <IconButton>
-                                                                <ArrowRightIcon/>
-                                                            </IconButton>
+
+                                                        <IconButton onClick={() => dispatch({type: 'discussion1',payload:state.exposurecategory.discussion.control.button})}>
+                                                            <ArrowRightIcon style={{display:state.exposurecategory.discussion.control.button?"none":"flex"}} />
+                                                            <ArrowDropDownIcon style={{display:state.exposurecategory.discussion.control.button?"flex":"none"}} />
+                                                        </IconButton>
                                                         </Grid>
                                                     </Grid>
+                                                    <Grid container spacing={1} style={{display:state.exposurecategory.discussion.control.button?"flex":"none"}}>
+
+                                                        {Object.keys(state.exposurecategory.discussion.value).map((value1,index) => ( 
+                                                        <Grid item>
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.discussion.value[value1]?"#B7E9F7":'white'}} label={value1} onClick={() => dispatch({type: 'discussionin',payload:{value1:state.exposurecategory.discussion.value[value1],value2:value1}})} variant="outlined"/> 
+
+                                                        </Grid>
+
+                                                        ))}
+
+
+                                                    </Grid> 
+                                                </Grid>
+                                                
+                                                <Grid item>
+                                                    <Grid container alignItems="center">
+                                                        <Grid item>
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.blackmarket.control.all?"#B7E9F7":'white'}} label="Black Market" variant="outlined" onClick={() => dispatch({type: 'blackmarket',payload:state.exposurecategory.blackmarket.control.all})} /> 
+
+                                                        </Grid>
+                                                        <Grid item>
+
+                                                        <IconButton onClick={() => dispatch({type: 'blackmarket1',payload:state.exposurecategory.blackmarket.control.button})}>
+                                                            <ArrowRightIcon style={{display:state.exposurecategory.blackmarket.control.button?"none":"flex"}} />
+                                                            <ArrowDropDownIcon style={{display:state.exposurecategory.blackmarket.control.button?"flex":"none"}} />
+                                                        </IconButton>
+                                                        </Grid>
+                                                    </Grid>
+                                                    <Grid container spacing={1} style={{display:state.exposurecategory.blackmarket.control.button?"flex":"none"}}>
+
+                                                        {Object.keys(state.exposurecategory.blackmarket.value).map((value1,index) => ( 
+                                                        <Grid item>
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.blackmarket.value[value1]?"#B7E9F7":'white'}} label={value1} onClick={() => dispatch({type: 'blackmarketin',payload:{value1:state.exposurecategory.blackmarket.value[value1],value2:value1}})} variant="outlined"/> 
+
+                                                        </Grid>
+
+                                                        ))}
+
+
+                                                    </Grid> 
                                                 </Grid>
                                                 <Grid item>
                                                     <Grid container alignItems="center">
                                                         <Grid item>
-                                                            <Chip  size="small" className={classes.chip} label=" Black Markets" variant="outlined"/> 
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.financial.control.all?"#B7E9F7":'white'}} label="Financial" variant="outlined" onClick={() => dispatch({type: 'financial',payload:state.exposurecategory.financial.control.all})} /> 
+
                                                         </Grid>
                                                         <Grid item>
-                                                            <IconButton>
-                                                                <ArrowRightIcon/>
-                                                            </IconButton>
+
+                                                        <IconButton onClick={() => dispatch({type: 'financial1',payload:state.exposurecategory.financial.control.button})}>
+                                                            <ArrowRightIcon style={{display:state.exposurecategory.financial.control.button?"none":"flex"}} />
+                                                            <ArrowDropDownIcon style={{display:state.exposurecategory.financial.control.button?"flex":"none"}} />
+                                                        </IconButton>
                                                         </Grid>
                                                     </Grid>
+                                                    <Grid container spacing={1} style={{display:state.exposurecategory.financial.control.button?"flex":"none"}}>
+
+                                                        {Object.keys(state.exposurecategory.financial.value).map((value1,index) => ( 
+                                                        <Grid item>
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.financial.value[value1]?"#B7E9F7":'white'}} label={value1} onClick={() => dispatch({type: 'financialin',payload:{value1:state.exposurecategory.financial.value[value1],value2:value1}})} variant="outlined"/> 
+
+                                                        </Grid>
+
+                                                        ))}
+
+
+                                                    </Grid> 
                                                 </Grid>
                                                 <Grid item>
                                                     <Grid container alignItems="center">
                                                         <Grid item>
-                                                            <Chip  size="small" className={classes.chip} label=" Financial" variant="outlined"/> 
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.exposedcredentials.control.all?"#B7E9F7":'white'}} label="Exposed Credentials" variant="outlined" onClick={() => dispatch({type: 'exposedcredentials',payload:state.exposurecategory.exposedcredentials.control.all})} /> 
+
                                                         </Grid>
                                                         <Grid item>
-                                                            <IconButton>
-                                                                <ArrowRightIcon/>
-                                                            </IconButton>
+
+                                                        <IconButton onClick={() => dispatch({type: 'exposedcredentials1',payload:state.exposurecategory.exposedcredentials.control.button})}>
+                                                            <ArrowRightIcon style={{display:state.exposurecategory.exposedcredentials.control.button?"none":"flex"}} />
+                                                            <ArrowDropDownIcon style={{display:state.exposurecategory.exposedcredentials.control.button?"flex":"none"}} />
+                                                        </IconButton>
                                                         </Grid>
                                                     </Grid>
+                                                    <Grid container spacing={1} style={{display:state.exposurecategory.exposedcredentials.control.button?"flex":"none"}}>
+
+                                                        {Object.keys(state.exposurecategory.exposedcredentials.value).map((value1,index) => ( 
+                                                        <Grid item>
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.exposedcredentials.value[value1]?"#B7E9F7":'white'}} label={value1} onClick={() => dispatch({type: 'exposedcredentialsin',payload:{value1:state.exposurecategory.exposedcredentials.value[value1],value2:value1}})} variant="outlined"/> 
+
+                                                        </Grid>
+
+                                                        ))}
+
+
+                                                    </Grid> 
                                                 </Grid>
                                                 <Grid item>
                                                     <Grid container alignItems="center">
                                                         <Grid item>
-                                                            <Chip  size="small" className={classes.chip} label="Exposed Credentials" variant="outlined"/> 
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.personalinformation.control.all?"#B7E9F7":'white'}} label="Personal information" variant="outlined" onClick={() => dispatch({type: 'personalinformation',payload:state.exposurecategory.personalinformation.control.all})} /> 
+
                                                         </Grid>
                                                         <Grid item>
-                                                            <IconButton>
-                                                                <ArrowRightIcon/>
-                                                            </IconButton>
+
+                                                        <IconButton onClick={() => dispatch({type: 'personalinformation1',payload:state.exposurecategory.personalinformation.control.button})}>
+                                                            <ArrowRightIcon style={{display:state.exposurecategory.personalinformation.control.button?"none":"flex"}} />
+                                                            <ArrowDropDownIcon style={{display:state.exposurecategory.personalinformation.control.button?"flex":"none"}} />
+                                                        </IconButton>
                                                         </Grid>
                                                     </Grid>
+                                                    <Grid container spacing={1} style={{display:state.exposurecategory.personalinformation.control.button?"flex":"none"}}>
+
+                                                        {Object.keys(state.exposurecategory.personalinformation.value).map((value1,index) => ( 
+                                                        <Grid item>
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.personalinformation.value[value1]?"#B7E9F7":'white'}} label={value1} onClick={() => dispatch({type: 'personalinformationin',payload:{value1:state.exposurecategory.personalinformation.value[value1],value2:value1}})} variant="outlined"/> 
+
+                                                        </Grid>
+
+                                                        ))}
+
+
+                                                    </Grid> 
                                                 </Grid>
                                                 <Grid item>
                                                     <Grid container alignItems="center">
                                                         <Grid item>
-                                                            <Chip  size="small" className={classes.chip} label="Personal Information" variant="outlined"/> 
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.hackergrouptargeting.control.all?"#B7E9F7":'white'}} label="Hacker Group Targeting" variant="outlined" onClick={() => dispatch({type: 'hackergrouptargeting',payload:state.exposurecategory.hackergrouptargeting.control.all})} /> 
+
                                                         </Grid>
                                                         <Grid item>
-                                                            <IconButton>
-                                                                <ArrowRightIcon/>
-                                                            </IconButton>
+
+                                                        <IconButton onClick={() => dispatch({type: 'hackergrouptargeting1',payload:state.exposurecategory.hackergrouptargeting.control.button})}>
+                                                            <ArrowRightIcon style={{display:state.exposurecategory.hackergrouptargeting.control.button?"none":"flex"}} />
+                                                            <ArrowDropDownIcon style={{display:state.exposurecategory.hackergrouptargeting.control.button?"flex":"none"}} />
+                                                        </IconButton>
                                                         </Grid>
                                                     </Grid>
+                                                    <Grid container spacing={1} style={{display:state.exposurecategory.hackergrouptargeting.control.button?"flex":"none"}}>
+
+                                                        {Object.keys(state.exposurecategory.hackergrouptargeting.value).map((value1,index) => ( 
+                                                        <Grid item>
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.hackergrouptargeting.value[value1]?"#B7E9F7":'white'}} label={value1} onClick={() => dispatch({type: 'hackergrouptargetingin',payload:{value1:state.exposurecategory.hackergrouptargeting.value[value1],value2:value1}})} variant="outlined"/> 
+
+                                                        </Grid>
+
+                                                        ))}
+
+
+                                                    </Grid> 
                                                 </Grid>
                                                 <Grid item>
                                                     <Grid container alignItems="center">
                                                         <Grid item>
-                                                            <Chip  size="small" className={classes.chip} label="Hacker Group Targeting" variant="outlined"/> 
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.attacksandcompromises.control.all?"#B7E9F7":'white'}} label="Attacks and Compromises" variant="outlined" onClick={() => dispatch({type: 'attacksandcompromises',payload:state.exposurecategory.attacksandcompromises.control.all})} /> 
+
                                                         </Grid>
                                                         <Grid item>
-                                                            <IconButton>
-                                                                <ArrowRightIcon/>
-                                                            </IconButton>
+
+                                                        <IconButton onClick={() => dispatch({type: 'attacksandcompromises1',payload:state.exposurecategory.attacksandcompromises.control.button})}>
+                                                            <ArrowRightIcon style={{display:state.exposurecategory.attacksandcompromises.control.button?"none":"flex"}} />
+                                                            <ArrowDropDownIcon style={{display:state.exposurecategory.attacksandcompromises.control.button?"flex":"none"}} />
+                                                        </IconButton>
                                                         </Grid>
                                                     </Grid>
+                                                    <Grid container spacing={1} style={{display:state.exposurecategory.attacksandcompromises.control.button?"flex":"none"}}>
+
+                                                        {Object.keys(state.exposurecategory.attacksandcompromises.value).map((value1,index) => ( 
+                                                        <Grid item>
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.attacksandcompromises.value[value1]?"#B7E9F7":'white'}} label={value1} onClick={() => dispatch({type: 'attacksandcompromisesin',payload:{value1:state.exposurecategory.attacksandcompromises.value[value1],value2:value1}})} variant="outlined"/> 
+
+                                                        </Grid>
+
+                                                        ))}
+
+
+                                                    </Grid> 
                                                 </Grid>
                                                 <Grid item>
-                                                    <Grid container alignItems="center">
+                                                    <Grid container alignItems="center" style={{height:"45px"}}>
                                                         <Grid item>
-                                                            <Chip  size="small" className={classes.chip} label=" Attacks & Compromises" variant="outlined"/> 
-                                                        </Grid>
-                                                        <Grid item>
-                                                            <IconButton>
-                                                                <ArrowRightIcon/>
-                                                            </IconButton>
+
+                                                        <Chip  size="small" className={classes.chip} style={{background:state.exposurecategory.underanalysis.control.all?"#B7E9F7":'white'}} label="Under Analysis" variant="outlined" onClick={() => dispatch({type: 'underanalysis',payload:state.exposurecategory.underanalysis.control.all})} /> 
+
                                                         </Grid>
                                                     </Grid>
-                                                </Grid>
-                                                <Grid item>
-                                                    <Grid container alignItems="center">
-                                                        <Grid item>
-                                                            <Chip  size="small" className={classes.chip} label=" Under Analysis" variant="outlined"/> 
-                                                        </Grid>
-                                                        <Grid item>
-                                                            <IconButton>
-                                                                <ArrowRightIcon/>
-                                                            </IconButton>
-                                                        </Grid>
-                                                    </Grid>
+
                                                 </Grid>
 
 
@@ -778,10 +1461,10 @@ export default function Dropup(props){
                                                 </Grid>
                                                 <Grid container spacing={1} style={{display:state.languages.control.button?"flex":"none"}}>
 
-                                                    {Object.keys(state.languages.value).map((value,index) => ( 
+                                                    {Object.keys(state.languages.value).map((value1,index) => ( 
                                                         <Grid item>
-                                                            {/* {console.log(value)} */}
-                                                            <Chip  size="small" className={classes.chip} label={value} variant="outlined"/> 
+                                                            {console.log(state.languages.value[value1])}
+                                                            <Chip  size="small" className={classes.chip} style={{background:state.languages.value[value1]?"#B7E9F7":'white'}} label={value1} onClick={() => dispatch({type: 'languagein',payload:{value1:state.languages.value[value1],value2:value1}})} variant="outlined"/> 
                                                         
                                                             </Grid>
                                                        
@@ -805,10 +1488,25 @@ export default function Dropup(props){
                                                     </Grid>
                                                     <Grid item>
 
-                                                            <IconButton>
-                                                                <ArrowRightIcon/>
+                                                            <IconButton onClick={() => dispatch({type: 'socialsecuritynumber',payload:state.socialsecuritynumber.control.button})}>
+                                                                <ArrowRightIcon style={{display:state.socialsecuritynumber.control.button?"none":"flex"}} />
+                                                                <ArrowDropDownIcon style={{display:state.socialsecuritynumber.control.button?"flex":"none"}} />
                                                             </IconButton>
                                                     </Grid>
+                                                </Grid>
+                                                <Grid container spacing={1} style={{display:state.socialsecuritynumber.control.button?"flex":"none"}}>
+
+                                                    {Object.keys(state.socialsecuritynumber.value).map((value1,index) => ( 
+                                                        <Grid item>
+                                                            {/* {console.log(value)} */}
+                                                            
+                                                            <Chip  size="small" className={classes.chip} style={{background:state.socialsecuritynumber.value[value1]?"#B7E9F7":'white'}} label={value1} onClick={() => dispatch({type: 'socialsecurityin',payload:{value1:state.socialsecuritynumber.value[value1],value2:value1}})} variant="outlined"/> 
+                                                        
+                                                            </Grid>
+                                                    
+                                                            ))}
+
+
                                                 </Grid>
 
                                             </Grid>
@@ -825,33 +1523,28 @@ export default function Dropup(props){
                                                     </Grid>
                                                     <Grid item>
 
-                                                            <IconButton>
-                                                                <ArrowRightIcon/>
+                                                            <IconButton onClick={() => dispatch({type: 'other',payload:state.other.control.button})}>
+                                                                <ArrowRightIcon style={{display:state.other.control.button?"none":"flex"}} />
+                                                                <ArrowDropDownIcon style={{display:state.other.control.button?"flex":"none"}} />
                                                             </IconButton>
                                                     </Grid>
                                                 </Grid>
-                                                <Grid container spacing={1}>
+                                                <Grid container spacing={1} style={{display:state.other.control.button?"flex":"none"}}>
                                                     
                                                         {/* {console.log(state.languages)} */}
                                                                 
                                                         
-                                                        {Object.keys(state.languages.value).map((value,index) => ( 
-                                                            <Grid item>
-                                                                {/* {console.log(value)} */}
-                                                                <Chip  size="small" className={classes.chip} label={value} variant="outlined"/> 
+                                                        {Object.keys(state.other.value).map((value1,index) => ( 
+                                                        <Grid item>
+                                                            {/* {console.log(value)} */}
                                                             
-                                                                </Grid>
-                                                           
-                                                                ))}
+                                                            <Chip  size="small" className={classes.chip} style={{background:state.other.value[value1]?"#B7E9F7":'white'}} label={value1} onClick={() => dispatch({type: 'otherin',payload:{value1:state.other.value[value1],value2:value1}})} variant="outlined"/> 
+                                                        
+                                                            </Grid>
                                                     
+                                                            ))}
                                                     
-                                                {/* {state.map((value,index) => (        
-                                             
-                                             
-                                             <div style={{display:"flex"}}>                                
-                                                        {{value}}
-                                            </div>
-                                                 ))} */}
+
                                                 </Grid>
 
                                             </Grid>
@@ -877,7 +1570,9 @@ export default function Dropup(props){
                                     <Grid item xs={12} style={{marginTop:"20px"}}>
                                         <Grid container justify="center">
                                             <Grid item xs={11}>
-                                                <Chip  size="small" className={classes.chip} label="Highlighted Alerts" variant="outlined"/> 
+
+                                                        
+                                                <Chip  size="small" className={classes.chip} style={{background:state.alertgroup.value.highlightedalerts?"#B7E9F7":'white'}} label="Highlighted Alerts" variant="outlined" onClick={() => dispatch({type: 'alertgroup',payload:state.alertgroup.value.highlightedalerts})} /> 
                                             </Grid>
                                         </Grid>
                                     </Grid>

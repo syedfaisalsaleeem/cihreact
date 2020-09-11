@@ -1,12 +1,24 @@
 import React from 'react'
 import {Card,Grid,Button,Chip,Dialog,DialogTitle,IconButton,Typography,Divider,DialogContent,DialogActions} from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles,withStyles } from '@material-ui/core/styles';
 import styles from "../Drawer/Dashboard/LatestCard.module.css";
 import CloseIcon from '@material-ui/icons/Close';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
+import GradeIcon from '@material-ui/icons/Grade';
+import TextField from '@material-ui/core/TextField';
+import theme from '../../theme';
+import Tooltip from '@material-ui/core/Tooltip';
+const LightTooltip = withStyles((theme) => ({
+    tooltip: {
+      backgroundColor: theme.palette.common.white,
+      color: 'rgba(0, 0, 0, 0.87)',
+      boxShadow: theme.shadows[1],
+      fontSize: 11,
+    },
+  }))(Tooltip);
 const useStyles = makeStyles((theme) => ({
     f5:{
         
@@ -37,11 +49,34 @@ const useStyles = makeStyles((theme) => ({
         
         
     },
+    f31:{
+        width:"100%",
+        background: "#FFFFFF",
+        borderRadius: "2px",
+        border: "0.1px solid #000000",
+        boxSizing: "border-box",
+        borderRadius: "2px",
+        marginTop:"1px"
+        
+        
+    },
     f4:{
         width:"100%",
         boxShadow: "0px 0px 35px rgba(181, 181, 195, 0.15)",
         background: "black",
         color:"white",
+        borderRadius: "2px",
+        border: "0.1px solid #000000",
+        boxSizing: "border-box",
+        borderRadius: "2px"
+        
+        
+    },
+    f41:{
+        width:"100%",
+        boxShadow: "0px 0px 35px rgba(181, 181, 195, 0.15)",
+        background: "white",
+        
         borderRadius: "2px",
         border: "0.1px solid #000000",
         boxSizing: "border-box",
@@ -76,7 +111,8 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: "400",
         fontSize: "15px",
         
-        height:"35px"
+        height:"35px",
+        
     },
     chip: {
         margin: theme.spacing(0.5),
@@ -119,12 +155,13 @@ export default function LatestCard(){
     const [fullWidth, setFullWidth] = React.useState(true);
     
     const [st1,set]=React.useState([""]);
-    const [click,setclick]=React.useState(false);
-    const addcount=()=>{
-        setclick(!click)
-    }
-    const [open, setOpen] = React.useState(false);
+    const [click,setclick]=React.useState(true);
 
+    const [star,selectstar]=React.useState(false)
+    const [open, setOpen] = React.useState(false);
+    const addcount=()=>{
+        selectstar(!star)
+    }
     const handleClickOpen = () => {
       setOpen(true);
     };
@@ -132,6 +169,7 @@ export default function LatestCard(){
     const handleClose = () => {
       setOpen(false);
     };
+
     const classes=useStyles()
     return(
         <div>
@@ -233,15 +271,17 @@ export default function LatestCard(){
                                     </div>
                                     </Grid>
                                 <Grid item>
-                                    <Grid container alignItems="center">
+                                    <Grid container alignItems="flex-start" style={{height:'140px'}}>
                                         <Grid item>
                                     <div>
                                         
                                         <Grid item xs={12} >
-                                                <IconButton aria-label="settings" onClick={addcount} >
-                                                    <AddOutlinedIcon  style={{display:click?"none":"block",fontSize:"32px"}}/>
-                                                    <RemoveRoundedIcon  style={{display:click?"block":"none",fontSize:"32px"}} />
-                                                </IconButton>
+                                                    <LightTooltip title="Highlight alert">
+                                                        <IconButton aria-label="settings" onClick={addcount} >
+                                                            <GradeIcon style={{fontSize:'32px',color:star?"yellow":"gray"}}/>
+
+                                                        </IconButton>   
+                                                    </LightTooltip >
                                                 
                                         </Grid>
                                         
@@ -266,33 +306,38 @@ export default function LatestCard(){
                                 <Grid container alignItems="center" direction="row" >
                                     
                                     <div style={{padding:"10px"}}>
-                                        8 :
+                                        About Data is displayed here
                                     </div>
-                                    <Divider orientation="vertical" flexItem />
-                                    <div style={{padding:"10px",color:"white"}}>
-                                    Woody
-                                    </div>
-                                    <Divider orientation="vertical" style={{background:"white"}} flexItem />
-                                    <div style={{padding:"10px"}}>
-                                    McGibbon
-                                    </div>
-                                    <Divider orientation="vertical" style={{background:"white"}} flexItem />
-                                    <div style={{padding:"10px"}}>
-                                    woodymcgibbon@dempcompany.com
-                                    </div>
-                                    <Divider orientation="vertical" style={{background:"white"}} flexItem />
-                                    <div style={{padding:"10px"}}>
-                                    woodymcgibbon@dempcompany.com
-                                    </div>
-                                    <Divider orientation="vertical" style={{background:"white"}} flexItem />
-                                    <div style={{padding:"10px"}}>
-                                    1963-04-12
-                                    </div>
-                                    <Divider orientation="vertical" style={{background:"white"}} flexItem />
-                                    <div style={{padding:"10px"}}>
-                                    2017-04-08 23:25:41
-                                    </div>
+
                                     
+                                </Grid>
+                                </Card>
+                                </div>
+                            </Grid>
+                                 
+                        
+                        </Card>
+                    </Grid>
+                </Grid>
+                <Grid item xs={12} md={12} style={{display:click?"block":"none"}}>
+                    <Grid container justify="flex-start" maxWidth="xl" >
+                        <Card className={classes.f31}>
+                            <Grid item md={12} lg={12}>
+                                <div  >
+                                <Card className={classes.f41} style={{padding:theme.spacing(2)}}>
+                                <Grid container alignItems="center" direction="row" >
+                                    
+                                    <Grid item xs={12}>
+                                        <TextField
+                                        id="standard-multiline-flexible"
+                                        label="User can add notes here"
+                                        multiline
+                                        variant="outlined"
+                                        fullWidth
+
+                                        />
+                                    </Grid>
+
                                 </Grid>
                                 </Card>
                                 </div>
@@ -350,7 +395,7 @@ export default function LatestCard(){
 
                                             </div>
                                             </Grid>
-                                            <Grid item xs={5}>
+                                            <Grid item xs={4}>
                                             <div style={{display:"flex",flexDirection:"column",marginTop:"10px",minHeight:"60px",marginLeft:"1vw"}} >
                                             
                                             <div style={{paddingTop:'2px'}} >
@@ -362,6 +407,21 @@ export default function LatestCard(){
                                             </div>
 
                                             </div>
+                                            </Grid>
+                                            <Grid item xs={2}>
+                                                <Grid container justify="flex-end" alignItems="center" style={{height:"70px"}}>
+                                                    <Grid item>
+                                                    <LightTooltip title="Highlight alert">
+                                                        <IconButton aria-label="settings" onClick={addcount} >
+                                                            <GradeIcon style={{fontSize:'32px',color:star?"yellow":"gray"}}/>
+
+                                                        </IconButton>   
+                                                    </LightTooltip >
+
+                                                    </Grid>
+
+                                                </Grid>
+
                                             </Grid>
                                             </Grid>
                                         
@@ -402,7 +462,7 @@ export default function LatestCard(){
         <div className={styles.main4}>
         <Grid item xs={12}>
             <Grid container justify="center">
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                             <Grid container direction="column"  style={{paddingTop:"10px",paddingLeft:"25px",paddingBottom:"10px"}} >
                                 <Grid item className={classes.tag} >
                                     KeyWord
@@ -411,7 +471,20 @@ export default function LatestCard(){
                                     <Chip size="small" className={classes.chip} label="KeyWord" variant="outlined"/>         
                                 </Grid>
                             </Grid>
-                        </Grid>
+                </Grid>
+                <Grid item xs={6}>
+                            <Grid container direction="column"  style={{paddingTop:"10px",paddingLeft:"25px",paddingBottom:"10px"}} >
+                                <Grid item className={classes.tag} >
+                                    Tags
+                                </Grid>
+                                <Grid item style={{paddingTop:"4px"}}>
+                                    <Chip size="small" className={classes.chip} label="Tags" variant="outlined"/>       
+                                    <Chip  size="small" className={classes.chip}   label="Tags" variant="outlined"/> 
+                                    <Chip  size="small" className={classes.chip} label="Tags" variant="outlined"/>   
+                                    <Chip  size="small" className={classes.chip}   label="Tags" variant="outlined"/>      
+                                </Grid>
+                            </Grid>
+                </Grid>
             </Grid>
         </Grid>
     </div>
@@ -422,13 +495,17 @@ export default function LatestCard(){
                     <Grid item xs={12}>
                         <Grid container direction="column"  style={{paddingTop:"10px",paddingLeft:"25px",paddingBottom:"10px"}} >
                             <Grid item className={classes.tag} >
-                                Tags
+                                Notes
                             </Grid>
                             <Grid item style={{paddingTop:"4px"}}>
-                            <Chip size="small" className={classes.chip} label="Key Word" variant="outlined"/>       
-                            <Chip  size="small" className={classes.chip}   label="Key Word" variant="outlined"/> 
-                            <Chip  size="small" className={classes.chip} label="Key Word" variant="outlined"/>   
-                            <Chip  size="small" className={classes.chip}   label="Key Word" variant="outlined"/>   
+                                    <TextField
+                                        id="standard-multiline-flexible"
+                                        label="User can add notes here"
+                                        multiline
+                                        variant="outlined"
+                                        fullWidth
+
+                                        />
                             </Grid>
                         </Grid>
                     </Grid>

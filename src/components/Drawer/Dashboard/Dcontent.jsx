@@ -30,6 +30,7 @@ import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
 import A from './Tabs';
 import Highlight from './Highlight.js'
+import {Badge} from "@material-ui/core"
 const LightTooltip = withStyles((theme) => ({
     tooltip: {
       backgroundColor: theme.palette.common.white,
@@ -162,7 +163,19 @@ export default function Dcontent (){
     const [index1,setindex]=React.useState({index:0});
 
     const [value, setValue] = React.useState('2');
+    const [count,setcount]=React.useState(0);
+    const [flag,setflag]=React.useState(false);
+    const addcount=()=>{
 
+            
+
+       
+            setcount(count+1)
+  
+    }
+    const changeflag=()=>{
+        setcount(count-1)
+    }
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
@@ -305,7 +318,14 @@ export default function Dcontent (){
                                     <Grid item xs={12}>
                                         <A.Tabs value={index1.index} onChange={(_,index1)=>handle1(index1)}>
                                             <A.Tab title="Latest Alerts" />
-                                            <A.Tab title="Highlighted Alerts"/>
+                                            <A.Tab title=
+                                            {
+                                            <Badge color="secondary" badgeContent={count}>
+                                                        Highlighted Alerts
+                                                        </Badge>
+                                            
+
+                                                }/>
                                             
                                         </A.Tabs>
 
@@ -313,12 +333,12 @@ export default function Dcontent (){
 
                                         <A.TabContent value={index1.index} index={0}>
                                         <Grid item>
-                                            <Latest/>
+                                            <Latest changeflag={changeflag} addcount={addcount}/>
                                         </Grid>
                                         </A.TabContent>
                                         <A.TabContent value={index1.index}  index={1}>
                                         <Grid item >
-                                            <Highlight/>
+                                            <Highlight count={count} changeflag={changeflag} addcount={addcount}/>
                                         </Grid>
                                         </A.TabContent>
                                        

@@ -115,7 +115,7 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(2),
     },
   }));
-export default function Latest(){
+export default function Latest(props){
     const classes = useStyles();
     const [st1,set]=React.useState([""]);
     const [click,setclick]=React.useState(true);
@@ -131,6 +131,8 @@ export default function Latest(){
     
     return(
         <div >
+            {
+            [...Array(props.count)].map((e, i) => <span className="busterCards" key={i}><LatestCard addcount={props.addcount}  changeflag={props.changeflag}/></span>)}
             <Grid container style={{height:'500px'}}>
 
             </Grid>
