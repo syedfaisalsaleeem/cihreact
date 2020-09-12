@@ -1,8 +1,8 @@
 .MuiGrid-item {
-  
+  width: 100%;
 }
 
-.thDiv {
+.thDiv .i {
   display: flex;
   align-items: center;
 }
