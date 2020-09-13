@@ -46,7 +46,7 @@ function LoginCard(){
             if(response.data.sucess==="True"){
                 changeauthenticate(true)
                 localStorage.setItem("token",response.data.token)
-                history.push("/Dashboard");
+                history.push("/MDashboard/");
                 
 
             }

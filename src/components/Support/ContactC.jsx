@@ -11,7 +11,7 @@ import ContactMailIcon from '@material-ui/icons/ContactMail';
 import {Link} from "react-router-dom";
 export default function ContactC (props){
     return(
-        <div>
+        <div >
             <Grid container>
                 <Grid item xs={12}>
                 <Grid container justify="center" style={{marginTop:"10px"}}>
@@ -83,7 +83,7 @@ export default function ContactC (props){
                         </Grid>
                         <Grid item lg={3} md={3} xs={4}>
                         <Link 
-                         to="./Contact"
+                         to="/MDashBoard/Email"
                         >
                         
                             

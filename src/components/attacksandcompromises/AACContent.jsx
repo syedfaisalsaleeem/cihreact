@@ -147,7 +147,7 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(2),
     },
   }));
-export default function SIContent(){
+export default function AACContent(){
     const classes = useStyles();
     const [count,setcount]=useState();
     const [view,setview]=useState(true);
@@ -196,11 +196,11 @@ export default function SIContent(){
                 <Grid container spacing={2}>
                     <Grid item>
                         <Typography variant="h5">
-                            Personal Information
+                            Discussions
                         </Typography>
                     </Grid>
                     <Grid item>
-                    <LightTooltip title="Employee or customer names, addresses and phone numbers, health records, passports and other official documents. ">
+                    <LightTooltip title="See hackers discussing your organisation or tools to enable hacking. It also includes any disgruntled employees or ex-employees spreading rumours.">
                     <InfoOutlinedIcon />
                     </LightTooltip >
                     </Grid>
@@ -245,7 +245,7 @@ export default function SIContent(){
                                     
                                 }
                                 
-                                title={<div style={{display:"flex"}}><Typography>Personal Information Trend </Typography>
+                                title={<div style={{display:"flex"}}><Typography>Discussions Trend </Typography>
                                 <Grid item style={{marginLeft:"10px"}}>
                                 <LightTooltip title="This bar chart depicts the number of alerts found per month over the past two years.">
 

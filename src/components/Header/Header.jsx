@@ -114,7 +114,7 @@ function Header(props) {
           </Typography>
             <div className={classes.ic1}>
                 <div className={classes.ic}>
-                <Link to="./Notification">
+                <Link to="/Notification">
                   <IconButton>
                   
                   

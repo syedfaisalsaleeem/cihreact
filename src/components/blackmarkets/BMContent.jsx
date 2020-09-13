@@ -147,7 +147,7 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(2),
     },
   }));
-export default function SIContent(){
+export default function BMContent(){
     const classes = useStyles();
     const [count,setcount]=useState();
     const [view,setview]=useState(true);

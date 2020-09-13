@@ -105,7 +105,7 @@ export default function Header(props) {
 
       <AppBar >
         <Toolbar className={classes.tool}>
-          <Link to="./Dashboard">
+          <Link to="/MDashboard/">
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={props.call}>
             <ChevronLeftIcon/>
           </IconButton>

@@ -10,7 +10,7 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 import ContactMailIcon from '@material-ui/icons/ContactMail';
 import {Link} from "react-router-dom";
 import ContactForm from "./ContactForm.jsx";
-export default function ContactC (){
+export default function ContactE (){
     return(
         <div>
             <Grid container>
@@ -40,7 +40,7 @@ export default function ContactC (){
                     <Grid item lg={6} md={10} xs={12}>
                     <Grid container justify="space-evenly">
                         <Grid item lg={3} md={3} xs={4}>
-                            <Link to="./Support">
+                            <Link to="/MDashBoard/Support">
                             <Card style={{paddingTop:"20px",paddingBottom:"20px"}}>
 
                             <Grid container direction="column" justify="center" spacing={1}>

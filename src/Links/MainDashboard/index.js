@@ -10,20 +10,43 @@ function handledrawer(){
   setdrawer(!drawer)
 }
   return(
-    <React.Fragment>
-      <main style={{background:"#F2F3F7"}}>
+    <React.Fragment >
+      <div >
       <Header call={handledrawer}/>
         <MainDrawer call={drawer}/>
        
        
-      </main>
-      <footer style={{display:"flex",marginTop:"0vh",background:"#F2F3F7"}}>
+      </div>
+      <footer style={{display:"flex",marginTop:"2vh",marginBottom:"0vh"}}>
       
       <Footer />
          
        
       </footer>
-
+      <style jsx global>{`
+          html,
+          body {
+            width:100%;
+            height:100%;
+            padding: 0;
+            margin: 0;
+            background:#F2F3F7;
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+              Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+              sans-serif;
+          }
+          a{
+              text-decoration:none
+          }
+          .percent-text{
+            text-anchor: middle;
+            font-family: 'Roboto', sans-serif;
+            
+          }
+          * {
+            box-sizing: border-box;
+          }
+        `}</style>  
     </React.Fragment>
   )
 }

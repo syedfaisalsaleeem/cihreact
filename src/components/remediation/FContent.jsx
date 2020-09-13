@@ -150,7 +150,7 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(2),
     },
   }));
-export default function FContent(){
+export default function RContent(){
     const classes = useStyles();
     const handleClickOpen2=()=>{
         

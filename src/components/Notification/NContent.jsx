@@ -33,13 +33,13 @@ export default function NContent (){
 
                 </Grid>
                 <Grid item xs={11}  className={classes.root}>
-                <Link to="./ServiceUpdates">
+                <Link to="/ServiceUpdates">
                 <Chip size="Large" label="Service Updates" variant="outlined" className={classes.chipborder}  style={{padding:"10px",background:"#F2F3F7",fontSize:"16px",color:"black",border: "0.6px solid #000000"}}/>
                 </Link>
-                <Link to="./LatestAlerts">
+                <Link to="/LatestAlerts">
                 <Chip size="Large" label="Latest Alerts" variant="outlined" className={classes.chipborder} style={{padding:"10px",background:"#F2F3F7",fontSize:"16px",color:"black",border: "0.6px solid #000000"}}/>
                 </Link>
-                <Link to="./SupportUpdates">
+                <Link to="/SupportUpdates">
                 <Chip size="Large" label="Support Updates" variant="outlined" className={classes.chipborder} style={{padding:"10px",background:"#F2F3F7",fontSize:"16px",color:"black",border: "0.6px solid #000000"}}/>
                 </Link>
                 </Grid>
