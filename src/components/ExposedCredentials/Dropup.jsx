@@ -242,7 +242,7 @@ const useStyles = makeStyles((theme) => ({
             }},
             exposedcredentials:{
                 control:{
-                    all:false,
+                    all:true,
                     button:false,
                 },
                 value:{
@@ -314,7 +314,7 @@ const useStyles = makeStyles((theme) => ({
             },
             underanalysis:{
                 control:{
-                    all:true,
+                    all:false,
                 },
             },
         },
@@ -912,34 +912,7 @@ export default function Dropup(props){
                                                     <ContactGs1/>
                                                 </Grid>
                                                 <Grid item xs={2} >
-                                                    <Grid container style={{width:"100%"}} spacing={1} >
-                                                        <Grid item>
-                                                            <Button
-                                                            variant="outlined"
-                                                            
-                                                            className={classes.button}
-                                                            startIcon={<img src={grid} />}
-                                                            onClick={handleview1}
-                                                            style={{border:view?"0.6px solid #000000":"1px solid #8950FC"}}
-                                                            >
-                                                            Grid View
-                                                        </Button>
-                                                        </Grid>
-                                                        <Grid item>
 
-                                                            <Button
-                                                            variant="outlined"
-                                                            
-                                                            className={classes.button}
-                                                            startIcon={<img src={list} />}
-                                                            onClick={handleview}
-                                                            
-                                                            style={{border:view?"1px solid #8950FC":"0.6px solid #000000"}}
-                                                        >
-                                                            List View
-                                                        </Button>
-                                                        </Grid>
-                                                    </Grid>
 
                                                     
                                                 </Grid>
@@ -995,15 +968,18 @@ export default function Dropup(props){
                                                         open={Boolean(anchorEl)}
                                                         onClose={handleClose}
                                                     >
-                                                        <MenuItem onClick={handleClose}>Newest to oldest</MenuItem>
                                                         
-                                                        <MenuItem >Oldest to newest</MenuItem>
-                                                        <MenuItem >Severity: high to low</MenuItem>
-                                                        <MenuItem >Severity: low to high</MenuItem>
-                                                        <MenuItem >Keywords: most to least alerts</MenuItem>
-                                                        <MenuItem >Keywords: least to most alerts</MenuItem>
-                                                        <MenuItem >Keywords: A to Z</MenuItem>
-                                                        <MenuItem >Keywords: Z to A</MenuItem>
+                                                        
+                                                        <MenuItem >Severity: highest to lowest</MenuItem>
+                                                        <MenuItem >Severity: lowest to highest</MenuItem>
+                                                        <MenuItem >Username: A to Z</MenuItem>
+                                                        <MenuItem >Username: Z to A</MenuItem>
+                                                        <MenuItem >First found: newest to oldest</MenuItem>
+                                                        <MenuItem >First found: oldest to newest</MenuItem>
+                                                        <MenuItem >Last found: newest to oldest</MenuItem>
+                                                        <MenuItem >Last found: oldest to newest</MenuItem>
+                                                        <MenuItem >Finds: most to least</MenuItem>
+                                                        <MenuItem >Finds: least to most</MenuItem>
                                                     </Menu>
                                                 </Grid> 
                                             </Grid>
@@ -1013,7 +989,7 @@ export default function Dropup(props){
                                 </Grid>
                                 {props.filtervalue?
                                     <div>
-                                        <Grid container justify="center">
+                                        <Grid container justify="center" style={{marginTop:"10px"}}>
                                             <Grid item xs={11}>
                                                 <Grid container spacing={2}>
                                                     <Grid item style={{display:state.severitylevel.low?"flex":"none"}}>

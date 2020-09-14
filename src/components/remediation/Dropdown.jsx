@@ -888,7 +888,7 @@ const handleChange3 = date => {
                                                         <Grid item>
                                                             <Button
                                                             variant="outlined"
-                                                            
+                                                            disabled="true"
                                                             className={classes.button}
                                                             startIcon={<img src={grid} />}
                                                             onClick={handleview1}
@@ -901,12 +901,12 @@ const handleChange3 = date => {
 
                                                             <Button
                                                             variant="outlined"
-                                                            
+                                                            disabled="true"
                                                             className={classes.button}
                                                             startIcon={<img src={list} />}
                                                             onClick={handleview}
                                                             
-                                                            style={{border:view?"1px solid #8950FC":"0.6px solid #000000"}}
+                                                            style={{border:view?"0.6px solid #000000":"1px solid #8950FC"}}
                                                         >
                                                             List View
                                                         </Button>

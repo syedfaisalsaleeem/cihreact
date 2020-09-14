@@ -171,7 +171,7 @@ function LoginCard(){
       const token=localStorage.getItem("token")
       console.log(token)
       if(token!==null){
-          return <Redirect to="/Dashboard"></Redirect>
+          return <Redirect to="/MDashboard/"></Redirect>
         // history.push("/Dashboard");
       }
       else{

@@ -11,65 +11,27 @@ class Progressbar extends React.Component{
 render(props){
     return(
         <div className="progress">
-            <div className="text">
-                {this.props.values}
-            </div>
-            
-            <div className="progress-bar" style={{width:this.props.values,background:this.props.color}} >
-            
+            <div className="progress-bar" style={{width:this.props.values}}>
+                
             </div>
         <style jsx>
             {`
-            .text{
-                display:flex;
-                position:absolute;
-                justify-content:center;
-                align-items:center;
-                width: 28%;
-                height: 27px;
-                font-family: Helvetica;
-                font-style: normal;
-                font-weight: bold;
-                font-size: 14px;
-                
-                
-                letter-spacing: 0.396667px;
-                text-transform: uppercase;
-                color: #FFFFFF;
-            }
-            .text1{
-                display:flex;
-                
-                justify-content:center;
-                align-items:center;
-                
-                font-family: Helvetica;
-                font-style: normal;
-                font-weight: bold;
-                font-size: 14px;
-                
-                
-                letter-spacing: 0.396667px;
-                text-transform: uppercase;
-                color: #FFFFFF;
-            }
             .progress {
                 display:flex;
                 background: rgba(0, 0, 0, 0.3);
                 
-                width: 100%;
+                width: 80%;;
                 height: 26px;
-                border-radius: 100px;
                 
-                
+                margin-bottom: 3rem;
 
             }
             .progress-bar {
                 display:flex;
-                background: black;
+                background: #53B53A;
                 width:0%;
                 height: 100%;
-                border-radius: 10rem;
+                
                 color: #fff;
                 
                 opacity: 1;

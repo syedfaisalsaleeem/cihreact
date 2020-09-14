@@ -6,7 +6,15 @@ import { Grid, Tooltip } from "@material-ui/core";
 import Structure from "../Structure/Structure";
 import ListItems from "../ListItems/ListItems";
 import HelperText from "../HelperText/HelperText";
-
+import { withStyles } from '@material-ui/core/styles';
+const LightTooltip = withStyles((theme) => ({
+  tooltip: {
+    backgroundColor: theme.palette.common.white,
+    color: 'rgba(0, 0, 0, 0.87)',
+    boxShadow: theme.shadows[1],
+    fontSize: 11,
+  },
+}))(Tooltip);
 export default function General() {
   const values = useContext(ItemsListContext);
   const [newBrandName, setNewBrandName] = useState("");
@@ -114,9 +122,9 @@ export default function General() {
             <Grid className={classes.formControl} key={field.label}>
               <Grid item container xs="6" className={classes.labelWarper}>
                 <label htmlFor="">{field.label}</label>
-                <Tooltip title={field.tooltip}>
+                <LightTooltip title={field.tooltip}>
                   <InfoOutlinedIcon style={{ marginLeft: "1rem" }} />
-                </Tooltip>
+                </LightTooltip>
               </Grid>
               <Grid item container xs="6" className={classes.inputWarper}>
                 <input

@@ -1,6 +1,6 @@
 import React from "react";
-import { Grid,Button } from "@material-ui/core";
-import { makeStyles,withStyles } from "@material-ui/core/styles";
+import { Grid, Button } from "@material-ui/core";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
@@ -14,22 +14,22 @@ import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import InfoIcon from "@material-ui/icons/Info";
 import "./Table1.css";
-import Tooltip from '@material-ui/core/Tooltip';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import Tooltip from "@material-ui/core/Tooltip";
+import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
+
+import controlImg from "../../Links/images/CIS-controls.png";
 
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
     backgroundColor: theme.palette.common.white,
-    color: 'rgba(0, 0, 0, 0.87)',
+    color: "rgba(0, 0, 0, 0.87)",
     boxShadow: theme.shadows[1],
     fontSize: 11,
   },
 }))(Tooltip);
 const useRowStyles = makeStyles({
   root: {
-    width:"100vw",
     "& > *": {
       borderBottom: "unset",
     },
@@ -64,12 +64,18 @@ function Row(props) {
   return (
     <React.Fragment>
       <TableRow className={classes.root}>
-        <TableCell align="left" component="th" scope="row">
+        <TableCell align="left" component="th" scope="row" width="30%">
           {row.remediationAction}
         </TableCell>
-        <TableCell align="left">{row.affects}</TableCell>
-        <TableCell align="left">{row.risk}</TableCell>
-        <TableCell align="left">{row.cisControl}</TableCell>
+        <TableCell align="left" style={{ paddingLeft: "2rem" }}>
+          {row.affects}
+        </TableCell>
+        <TableCell align="left" style={{ paddingLeft: "2rem" }}>
+          {row.risk}
+        </TableCell>
+        <TableCell align="left" style={{ paddingLeft: "2rem" }}>
+          {row.cisControl}
+        </TableCell>
         <TableCell align="left">
           {" "}
           <div className="foldable">
@@ -83,14 +89,27 @@ function Row(props) {
             </IconButton>
           </div>{" "}
         </TableCell>
-        <TableCell>
-          <Button style={{textTransform:"capitalize",background:"black",color:"white"}} size="small">
-            Lorem, ipsum dolor.
+        <TableCell align="center" width="20%">
+          <Button
+            style={{
+              textTransform: "capitalize",
+              background: "black",
+              color: "white",
+              width: "100%",
+              padding: "0.5rem",
+            }}
+            size="small"
+          >
+            Remediated actions
           </Button>
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell
+          style={{ paddingBottom: 0, paddingTop: 0 }}
+          colSpan={6}
+          width="20%"
+        >
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box
               style={{
@@ -119,9 +138,8 @@ function Row(props) {
                     natus impedit ducimus!
                   </div>
                 </Grid>
-                <Grid item xs="2" className="downloadBtns">
-                  <button>Download as PDF</button>
-                  <button>Download as CSV</button>
+                <Grid item xs="4" className="downImg">
+                  <img src={controlImg} alt="" />
                 </Grid>
                 <Grid item xs="2" className="downloadBtns">
                   <button>Download as PDF</button>
@@ -149,84 +167,69 @@ const rows = [
 
 export default function FContent() {
   return (
-    <div>
-      <Grid item xs={12}>
-        <Grid container>
-          <Grid item>
-            <TableContainer component={Paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="left">
-                      <div className="thDiv">
-                        Remediated action
-                        <div className="i">
-                        <LightTooltip title="Unfold a remediation action to review the source of the exposure and how to mitigate the risk.">
-
-                        <InfoOutlinedIcon />
-                        </LightTooltip >
-
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell align="left">
-                      <div className="thDiv">
-                        Affects
-                        <div className="i">
-                        <LightTooltip title="number of alerts affected by this remediation.">
-
-                        <InfoOutlinedIcon />
-                        </LightTooltip >
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell align="left">
-                      <div className="thDiv">
-                        Risk
-                        <div className="i">
-                        <LightTooltip title="The risk level is calculated as the weighted sum of high, medium and low severity alerts.">
-
-                        <InfoOutlinedIcon />
-                        </LightTooltip >
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell align="left" style={{ width: "10rem" }}>
-                      <div className="thDiv">
-                        CIS Control
-                        <div className="i">
-                        <LightTooltip title="A set of 20 best practises making up the critical security controls, published by the Center for Internet Security (CIS). ">
-
-                      <InfoOutlinedIcon />
-                      </LightTooltip >
-                          
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell align="left" style={{ width: "15rem" }}>
-                      <div className="thDiv">
-                        Time to Exploit
-                        <div className="i">
-                        <LightTooltip title="Estimated time needed for cybercriminals to exploit exposure ">
-
-                      <InfoOutlinedIcon />
-                      </LightTooltip >
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell />
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {rows.map((row) => (
-                    <Row key={row.name} row={row} />
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
-        </Grid>
-      </Grid>
-    </div>
+    <TableContainer component={Paper}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell align="center">
+              <div className="thDiv">
+                Remediated action
+                <div className="i">
+                  <LightTooltip title="Unfold a remediation action to review the source of the exposure and how to mitigate the risk.">
+                    <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
+                  </LightTooltip>
+                </div>
+              </div>
+            </TableCell>
+            <TableCell align="center">
+              <div className="thDiv">
+                Affects
+                <div className="i">
+                  <LightTooltip title="number of alerts affected by this remediation.">
+                    <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
+                  </LightTooltip>
+                </div>
+              </div>
+            </TableCell>
+            <TableCell align="center">
+              <div className="thDiv">
+                Risk
+                <div className="i">
+                  <LightTooltip title="The risk level is calculated as the weighted sum of high, medium and low severity alerts.">
+                    <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
+                  </LightTooltip>
+                </div>
+              </div>
+            </TableCell>
+            <TableCell align="center" style={{ width: "10rem" }}>
+              <div className="thDiv">
+                CIS Control
+                <div className="i">
+                  <LightTooltip title="A set of 20 best practises making up the critical security controls, published by the Center for Internet Security (CIS). ">
+                    <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
+                  </LightTooltip>
+                </div>
+              </div>
+            </TableCell>
+            <TableCell align="center" style={{ width: "15rem" }}>
+              <div className="thDiv">
+                Time to Exploit
+                <div className="i">
+                  <LightTooltip title="Estimated time needed for cybercriminals to exploit exposure ">
+                    <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
+                  </LightTooltip>
+                </div>
+              </div>
+            </TableCell>
+            <TableCell />
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <Row key={row.name} row={row} />
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }

@@ -23,7 +23,23 @@ const LightTooltip = withStyles((theme) => ({
         
 
 export default function DiscoverContent(){
+    const [count,setcount]=useState();
 
+    const calculate = ()=>{
+        let char,calculate,x;
+        char=(70/300)*100;
+        console.log(char,"char")
+        x=Math.round(char)
+        calculate=String(x).concat("%")
+        
+        setcount(calculate)
+        
+
+    }
+
+    useEffect(() => {
+        calculate();
+      });
     return(
         <section>
         <ItemsContextProvider>
@@ -33,7 +49,7 @@ export default function DiscoverContent(){
             <Grid container style={{marginBottom:"20px"}}>
                 <Grid item xs={12}>
                     <Grid container>
-                        <Grid item>
+                        <Grid item xs={12}>
                             <div style={{display:"flex"}}>
                             <Typography variant="h4">
                             Discover
@@ -45,9 +61,20 @@ export default function DiscoverContent(){
                             <InfoOutlinedIcon />
                             </LightTooltip >
                             </Grid>
-                            <Grid item style={{marginLeft:"10px"}}>
-                                <Progressbar values={"20"}/>
+                            <Grid item xs={4} style={{marginLeft:"10px"}}>
+                                <Grid container alignItems="center" spacing={1}>
+                                    <Grid item style={{fontSize:"13px"}}>
+                                        Setup 75% complete
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Progressbar color={"#53B53A"} values={count}/>
+                                    </Grid>
+                                   
+                                </Grid>
+                            
                             </Grid>
+                                
+                            
                             </div>
 
                         </Grid>

@@ -1,12 +1,20 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography,Tooltip } from "@material-ui/core";
 import Structure from "../Structure/Structure";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { SystemContext } from "../../context/systemContext";
 import classes from "./Systems.module.css";
 import HelperText from "../HelperText/HelperText";
 import ListItems from "../ListItems/ListItems";
-
+import { withStyles } from '@material-ui/core/styles';
+const LightTooltip = withStyles((theme) => ({
+  tooltip: {
+    backgroundColor: theme.palette.common.white,
+    color: 'rgba(0, 0, 0, 0.87)',
+    boxShadow: theme.shadows[1],
+    fontSize: 11,
+  },
+}))(Tooltip);
 const Systems = () => {
   const values = useContext(SystemContext);
   const [newDomainName, setNewDomainName] = useState("");
@@ -29,7 +37,7 @@ const Systems = () => {
       fetchEditItem: values.editDomainName,
       setFetchEditItem: values.setEditDomainName,
       tooltip:
-        " Brand and product names owned by your company. Unique names consisting of 5 or more characters work best. Add your company’s name to your product name, that works for us: Cyber Intelligence House Exposure Monitor.",
+        "Add your company’s domain name(s). Our domain name is cyberintelligencehouse.com. Only add the parent domain, we automatically monitor the subdomains for you",
     },
     {
       label: "IP Address",
@@ -46,7 +54,7 @@ const Systems = () => {
       fetchEditItem: values.editIpAddress,
       setFetchEditItem: values.setEditIpAddress,
       tooltip:
-        "Confidential terms only used within your company, that are impossible to know from the outside. Think of a project code name or a hash value in your internal database, servername, or embedded in office documents metadata. A hash value is a numeric code that uniquely identifies data.",
+        "Add your company’s IP addresses. You can add individual IP addresses or use a wildcard to monitor all IP addresses within a netblock. For example, adding 12.34.56.* as a keyword would monitor all IP addresses within 12.34.56.1-255 range.",
     },
     {
       label: "URL",
@@ -63,7 +71,7 @@ const Systems = () => {
       fetchEditItem: values.editUrl,
       setFetchEditItem: values.setEditUrl,
       tooltip:
-        "Other keywords you want to monitor. Looking for malware? Add the malware hash, not the malware name. Want to monitor a Hacker group? Add group member names, instead of their group name. A hash value is numeric code that uniquely identifies data.",
+        "Add your company’s URL. Our URL is https://cyberintelligencehouse.com/",
     },
   ];
 
@@ -109,8 +117,11 @@ const Systems = () => {
             <>
               <Grid item lg="3">
                 <div className={classes.title}>
+               
                   <Typography>{field.label}</Typography>
+                <LightTooltip title={field.tooltip}>
                   <InfoOutlinedIcon />
+                </LightTooltip>
                 </div>
                 <div className={classes.input}>
                   <input

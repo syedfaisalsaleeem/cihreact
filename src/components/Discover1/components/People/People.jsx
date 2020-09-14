@@ -6,7 +6,16 @@ import Structure from "../Structure/Structure";
 import { PeopleContext } from "../../context/peopleContext";
 import classes from "./People.module.css";
 import ListItems from "../ListItems/ListItems";
-
+import { withStyles } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
+const LightTooltip = withStyles((theme) => ({
+  tooltip: {
+    backgroundColor: theme.palette.common.white,
+    color: 'rgba(0, 0, 0, 0.87)',
+    boxShadow: theme.shadows[1],
+    fontSize: 11,
+  },
+}))(Tooltip);
 const People = () => {
   const values = useContext(PeopleContext);
   const [newBrandName, setNewBrandName] = useState("");
@@ -136,7 +145,10 @@ const People = () => {
           </Grid>
         </Grid>
         <Grid item md="2">
-          <InfoOutlinedIcon />
+          <LightTooltip title={"The names and personal email addresses of key personnel in your company. The people who may be interesting for outsiders, because of their position or level of access to your assets. For example your CEO, top managers and system administrators. Add only email addresses that are not owned by your company. Email addresses under your company’s domain name are monitored automatically."}>
+            <InfoOutlinedIcon />
+          </LightTooltip>
+          
         </Grid>
       </Grid>
     </Structure>

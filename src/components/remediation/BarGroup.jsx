@@ -32,7 +32,7 @@ require('./RoundedBars.js')
         ],
         datasets: [
           {
-            label: "My First dataset",
+            label: "Residual Risks",
             backgroundColor: "#50E3C2",
             borderColor: "#50E3C2",
             hoverBackgroundColor: "rgba(255,99,132,0.4)",
@@ -40,6 +40,16 @@ require('./RoundedBars.js')
             //stack: 1,
             
             data: [0.5, 0.59, 0.80, 0.81, 0.56, 0.55, 0.40]
+          },
+          {
+            label: "Remediated Risks",
+            backgroundColor: " #F5A623",
+            borderColor: " #F5A623",
+            hoverBackgroundColor: "rgba(255,99,132,0.4)",
+            hoverBorderColor: "rgba(255,99,132,1)",
+            //stack: 1,
+           
+            data: [0.5, 0.9, 0.10, 0.41, 0.56, 0.25, 0.40]
           },
         ]
       }
@@ -68,9 +78,9 @@ require('./RoundedBars.js')
       maintainAspectRatio: false,
       cornerRadius:0,
       legend: {
-        display:false,
-        position:'top',
-        align:'end',
+        display:true,
+        position:'bottom',
+        align:'center',
         labels:{
           padding:25,
           usePointStyle: true ,
@@ -93,7 +103,7 @@ require('./RoundedBars.js')
         }],
         yAxes: [{
             scaleLabel:{
-                display:true,
+                display:false,
                 labelString:"Alerts"
             },
             gridLines: {

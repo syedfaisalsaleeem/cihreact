@@ -916,7 +916,7 @@ export default function Dropup1(props){
                                                         <Grid item>
                                                             <Button
                                                             variant="outlined"
-                                                            
+                                                            disabled="true"
                                                             className={classes.button}
                                                             startIcon={<img src={grid} />}
                                                             onClick={handleview1}
@@ -929,12 +929,12 @@ export default function Dropup1(props){
 
                                                             <Button
                                                             variant="outlined"
-                                                            
+                                                            disabled="true"
                                                             className={classes.button}
                                                             startIcon={<img src={list} />}
                                                             onClick={handleview}
                                                             
-                                                            style={{border:view?"1px solid #8950FC":"0.6px solid #000000"}}
+                                                            style={{border:view?"0.6px solid #000000":"1px solid #8950FC"}}
                                                         >
                                                             List View
                                                         </Button>
@@ -995,15 +995,15 @@ export default function Dropup1(props){
                                                         open={Boolean(anchorEl)}
                                                         onClose={handleClose}
                                                     >
-                                                        <MenuItem onClick={handleClose}>Newest to oldest</MenuItem>
+                                                        <MenuItem onClick={handleClose}>Affects: highest to lowest</MenuItem>
                                                         
-                                                        <MenuItem >Oldest to newest</MenuItem>
-                                                        <MenuItem >Severity: high to low</MenuItem>
-                                                        <MenuItem >Severity: low to high</MenuItem>
-                                                        <MenuItem >Keywords: most to least alerts</MenuItem>
-                                                        <MenuItem >Keywords: least to most alerts</MenuItem>
-                                                        <MenuItem >Keywords: A to Z</MenuItem>
-                                                        <MenuItem >Keywords: Z to A</MenuItem>
+                                                        <MenuItem >Affects: lowest to highest</MenuItem>
+                                                        <MenuItem >Risk: highest to lowest</MenuItem>
+                                                        <MenuItem >Risk: lowest to highest</MenuItem>
+                                                        <MenuItem >Remediated: newest to oldest</MenuItem>
+                                                        <MenuItem >Remediated: oldest to newest</MenuItem>
+                                                        <MenuItem >Username: A to Z</MenuItem>
+                                                        <MenuItem >Username: Z to A</MenuItem>
                                                     </Menu>
                                                 </Grid> 
                                             </Grid>

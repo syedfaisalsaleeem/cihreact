@@ -182,6 +182,8 @@ function reducer(state,action){
       // Get the size of an object
       // var size = Object.size(state);
       //   console.log(size)
+      var storing=''
+      var storingvalue=''
       var all= Object.assign(...Object.keys(state.all).map(k => ({ [k]: false })));
         var size=0,key
         
@@ -196,8 +198,15 @@ function reducer(state,action){
         //   console.log(state[value],index)
 
         // )
-        console.log(all,"acc")
-        if(state.home===false){
+        if(state.home===false && storing.length===0 && storingvalue.length===0)
+        {
+          return{
+            ...state,home:!action.payload,all
+            
+          }
+        }
+        
+        else if(state.home===false){
           return{
             ...state,home:!action.payload,[storing]:!storingvalue,
             all
@@ -211,6 +220,8 @@ function reducer(state,action){
     case 'exposedinformation1':
           return{...state,exposedinformation:true}
     case 'exposedinformation':
+      var storing=''
+      var storingvalue=''
           var all= Object.assign(...Object.keys(state.all).map(k => ({ [k]: false })));
           var size=0,key
           for(key in state){
@@ -221,7 +232,14 @@ function reducer(state,action){
             }
           }
           console.log(all)
-          if(state.exposedinformation===false){
+          if(state.exposedinformation===false && storing.length===0 && storingvalue.length===0)
+          {
+            return{
+              ...state,exposedinformation:!action.payload,all
+              
+            }
+          }
+          else if(state.exposedinformation===false){
             
             return{
               ...state,exposedinformation:!action.payload,[storing]:!storingvalue,all
@@ -237,6 +255,8 @@ function reducer(state,action){
       case 'settings2':
             return{...state,settings:action.payload}
       case 'settings':
+        var storing=''
+        var storingvalue=''
             var all= Object.assign(...Object.keys(state.all).map(k => ({ [k]: false })));
             var size=0,key
             for(key in state){
@@ -246,7 +266,14 @@ function reducer(state,action){
                   var storingvalue=state[key]
               }
             }
-            if(state.settings===false){
+            if(state.settings===false && storing.length===0 && storingvalue.length===0)
+            {
+              return{
+                ...state,settings:!action.payload,all
+                
+              }
+            }
+            else if(state.settings===false){
               
               return{
                 ...state,settings:!action.payload,[storing]:!storingvalue,all
@@ -260,6 +287,8 @@ function reducer(state,action){
       case 'exposedsystems1':
               return{...state,exposedsystems:true}
       case 'exposedsystems':
+        var storing=''
+        var storingvalue=''
               var all= Object.assign(...Object.keys(state.all).map(k => ({ [k]: false })));
               var size=0,key
               for(key in state){
@@ -269,7 +298,14 @@ function reducer(state,action){
                     var storingvalue=state[key]
                 }
               }
-              if(state.exposedsystems===false){
+              if(state.exposedsystems===false && storing.length===0 && storingvalue.length===0)
+              {
+                return{
+                  ...state,exposedsystems:!action.payload,all
+                  
+                }
+              }
+              else if(state.exposedsystems===false){
                 
                 return{
                   ...state,exposedsystems:!action.payload,[storing]:!storingvalue,all
@@ -285,6 +321,8 @@ function reducer(state,action){
       case 'support2':
                 return{...state,support:action.payload}
       case 'support':
+        var storing=''
+        var storingvalue=''
                 var all= Object.assign(...Object.keys(state.all).map(k => ({ [k]: false })));
                 var size=0,key
                 for(key in state){
@@ -294,7 +332,14 @@ function reducer(state,action){
                       var storingvalue=state[key]
                   }
                 }
-                if(state.support===false){
+                if(state.support===false && storing.length===0 && storingvalue.length===0)
+                {
+                  return{
+                    ...state,support:!action.payload,all
+                    
+                  }
+                }
+                else if(state.support===false){
                   
                   return{
                     ...state,support:!action.payload,[storing]:!storingvalue,all
@@ -308,6 +353,8 @@ function reducer(state,action){
         case 'discover1':
                   return{...state,discover:true}
         case 'discover':
+                  var storing=''
+                var storingvalue=''
                   var all= Object.assign(...Object.keys(state.all).map(k => ({ [k]: false })));
                   var size=0,key
                   for(key in state){
@@ -317,7 +364,14 @@ function reducer(state,action){
                         var storingvalue=state[key]
                     }
                   }
-                  if(state.discover===false){
+                  if(state.discover===false && storing.length===0 && storingvalue.length===0)
+                  {
+                    return{
+                      ...state,discover:!action.payload,all
+                      
+                    }
+                  }
+                  else if(state.discover===false){
                     
                     return{
                       ...state,discover:!action.payload,[storing]:!storingvalue,all
@@ -489,6 +543,10 @@ export default function MainDrawer(props) {
     }
     else if(window.location.href.includes("/MDashBoard/")===true){
       console.log(window.location.href,"working")
+      const f=()=>{dispatch({type:'exposedinformation1',payload:true})}
+      f()
+    }
+    else{
       const f=()=>{dispatch({type:'exposedinformation1',payload:true})}
       f()
     }

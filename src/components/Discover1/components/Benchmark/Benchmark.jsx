@@ -5,7 +5,7 @@ import Select from "../UI/Select";
 
 const Systems = () => {
   return (
-    <Structure titleText="Benchmark">
+    <Structure titleText="Benchmark" >
       <Grid container justify="space-evenly">
         <Grid item md="3">
           <Typography style={{ marginLeft: "1rem" }}>Continent</Typography>
