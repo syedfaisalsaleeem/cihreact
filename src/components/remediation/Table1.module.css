@@ -1,8 +1,4 @@
-.MuiGrid-item {
-  width: 100%;
-}
-
-.thDiv .i {
+.thDiv {
   display: flex;
   align-items: center;
 }
@@ -24,10 +20,17 @@
 }
 
 .downloadBtns button {
+  display: block;
   background: green;
   color: #fff;
   border: none;
   padding: 10px;
   margin-bottom: 0.5rem;
   cursor: pointer;
+}
+
+.downImg img {
+  display: block;
+  margin: auto;
+  width: 90%;
 }

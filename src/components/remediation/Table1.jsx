@@ -14,7 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import "./Table1.css";
+import customClasses from "./Table1.module.css";
 import Tooltip from "@material-ui/core/Tooltip";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 
@@ -78,7 +78,7 @@ function Row(props) {
         </TableCell>
         <TableCell align="left">
           {" "}
-          <div className="foldable">
+          <div className={customClasses.foldable}>
             <p style={{ color: "red" }}>Ready to exploit</p>
             <IconButton
               aria-label="expand row"
@@ -138,10 +138,10 @@ function Row(props) {
                     natus impedit ducimus!
                   </div>
                 </Grid>
-                <Grid item xs="4" className="downImg">
+                <Grid item xs="4" className={customClasses.downImg}>
                   <img src={controlImg} alt="" />
                 </Grid>
-                <Grid item xs="2" className="downloadBtns">
+                <Grid item xs="2" className={customClasses.downloadBtns}>
                   <button>Download as PDF</button>
                   <button>Download as CSV</button>
                 </Grid>
@@ -172,9 +172,9 @@ export default function FContent() {
         <TableHead>
           <TableRow>
             <TableCell align="center">
-              <div className="thDiv">
+              <div className={customClasses.thDiv}>
                 Remediated action
-                <div className="i">
+                <div className={customClasses.i}>
                   <LightTooltip title="Unfold a remediation action to review the source of the exposure and how to mitigate the risk.">
                     <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
                   </LightTooltip>
@@ -182,9 +182,9 @@ export default function FContent() {
               </div>
             </TableCell>
             <TableCell align="center">
-              <div className="thDiv">
+              <div className={customClasses.thDiv}>
                 Affects
-                <div className="i">
+                <div className={customClasses.i}>
                   <LightTooltip title="number of alerts affected by this remediation.">
                     <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
                   </LightTooltip>
@@ -192,9 +192,9 @@ export default function FContent() {
               </div>
             </TableCell>
             <TableCell align="center">
-              <div className="thDiv">
+              <div className={customClasses.thDiv}>
                 Risk
-                <div className="i">
+                <div className={customClasses.i}>
                   <LightTooltip title="The risk level is calculated as the weighted sum of high, medium and low severity alerts.">
                     <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
                   </LightTooltip>
@@ -202,9 +202,9 @@ export default function FContent() {
               </div>
             </TableCell>
             <TableCell align="center" style={{ width: "10rem" }}>
-              <div className="thDiv">
+              <div className={customClasses.thDiv}>
                 CIS Control
-                <div className="i">
+                <div className={customClasses.i}>
                   <LightTooltip title="A set of 20 best practises making up the critical security controls, published by the Center for Internet Security (CIS). ">
                     <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
                   </LightTooltip>
@@ -212,9 +212,9 @@ export default function FContent() {
               </div>
             </TableCell>
             <TableCell align="center" style={{ width: "15rem" }}>
-              <div className="thDiv">
+              <div className={customClasses.thDiv}>
                 Time to Exploit
-                <div className="i">
+                <div className={customClasses.i}>
                   <LightTooltip title="Estimated time needed for cybercriminals to exploit exposure ">
                     <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
                   </LightTooltip>

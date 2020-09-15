@@ -9,7 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import "./Table2.css";
+import customClasses from "./Table2.module.css";
 import Tooltip from "@material-ui/core/Tooltip";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import {
@@ -183,12 +183,12 @@ export default function FContent() {
         <TableHead>
           <TableRow>
             <TableCell align="left">
-              <div className="thDiv">Remediated action</div>
+              <div className={customClasses.thDiv}>Remediated action</div>
             </TableCell>
             <TableCell align="left">
-              <div className="thDiv">
+              <div className={customClasses.thDiv}>
                 Affects
-                <div className="i">
+                <div className={customClasses.i}>
                   <LightTooltip title=" Number of alerts affected by this remediation.">
                     <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
                   </LightTooltip>
@@ -196,9 +196,9 @@ export default function FContent() {
               </div>
             </TableCell>
             <TableCell align="left">
-              <div className="thDiv">
+              <div className={customClasses.thDiv}>
                 Risks
-                <div className="i">
+                <div className={customClasses.i}>
                   <LightTooltip title=" The risk level is calculated as the weighted sum of high, medium and low severity alerts.">
                     <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
                   </LightTooltip>
@@ -206,9 +206,9 @@ export default function FContent() {
               </div>
             </TableCell>
             <TableCell align="left" style={{ width: "10rem" }}>
-              <div className="thDiv">
+              <div className={customClasses.thDiv}>
                 Remediated
-                <div className="i">
+                <div className={customClasses.i}>
                   <LightTooltip title=" Date when the action was remediated.">
                     <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
                   </LightTooltip>
@@ -216,9 +216,9 @@ export default function FContent() {
               </div>
             </TableCell>
             <TableCell align="left" style={{ width: "15rem" }}>
-              <div className="thDiv">
+              <div className={customClasses.thDiv}>
                 Username
-                <div className="i">
+                <div className={customClasses.i}>
                   <LightTooltip title="Username associated with remediation.">
                     <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
                   </LightTooltip>
