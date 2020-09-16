@@ -8,11 +8,15 @@ const FetchDataContextProvider = (props) => {
   const [spiderRisks, setSpiderRisks] = useState([]);
   const [lineChartAlerts, setLineChartAlerts] = useState([]);
   const [lineChartRisks, setLineChartRisks] = useState([]);
+  const [barChartAlertsInfo, setBarChartAlertsInfo] = useState([]);
   const [barChartSensitiveInfo, setBarChartSensitiveInfo] = useState([]);
   const [barChartDiscussionInfo, setBarChartDiscussionInfo] = useState([]);
   const [barChartBMtInfo, setBarChartBMtInfo] = useState([]);
   const [barChartFinancialInfo, setBarChartFinancialInfo] = useState([]);
   const [barChartECInfo, setBarChartECInfo] = useState([]);
+  const [barChartPIInfo, setBarChartPIInfo] = useState([]);
+  const [barChartHGInfo, setBarChartHGInfo] = useState([]);
+  const [barChartACInfo, setBarChartACInfo] = useState([]);
 
   const fetchedRiskAlertHandler = (
     object,
@@ -31,6 +35,11 @@ const FetchDataContextProvider = (props) => {
 
   const fetchedBarChartDataHandler = (object, array, setFunc, domain) => {
     switch (domain) {
+      case "alerts":
+        for (const key in object) {
+          array.push(object[key].alerts);
+        }
+        break;
       case "sensitive":
         for (const key in object) {
           array.push(object[key].sensitivedisclosure);
@@ -56,6 +65,22 @@ const FetchDataContextProvider = (props) => {
           array.push(object[key].exposedcredentials);
         }
         break;
+      case "personalinformation":
+        for (const key in object) {
+          array.push(object[key].personalinformation);
+        }
+        break;
+      case "hackergrouptargeting":
+        for (const key in object) {
+          array.push(object[key].hackergrouptargeting);
+        }
+        break;
+
+      case "attacksandcompromises":
+        for (const key in object) {
+          array.push(object[key].attacksandcompromises);
+        }
+        break;
       default:
         return null;
     }
@@ -75,16 +100,19 @@ const FetchDataContextProvider = (props) => {
         }
       );
       const res = result.data;
-      console.log("result = ", result.data);
       const loadedSpiderAlertsData = [];
       const loadedSpiderRisksData = [];
       const loadedLineChartAlerts = [];
       const loadedLineChartRisks = [];
+      const loadedBarChartAlertsInfo = [];
       const loadedBarChartSensitiveInfo = [];
       const loadedBarChartDiscussionInfo = [];
       const loadedBarChartBMInfo = [];
       const loadedBarChartFinancialInfo = [];
       const loadedBarChartECInfo = [];
+      const loadedBarChartPIInfo = [];
+      const loadedBarChartHGInfo = [];
+      const loadedBarChartACInfo = [];
 
       fetchedRiskAlertHandler(
         res.by_category,
@@ -130,12 +158,38 @@ const FetchDataContextProvider = (props) => {
         setBarChartECInfo,
         "exposedcredentials"
       );
+      fetchedBarChartDataHandler(
+        res.trend,
+        loadedBarChartPIInfo,
+        setBarChartPIInfo,
+        "personalinformation"
+      );
+      fetchedBarChartDataHandler(
+        res.trend,
+        loadedBarChartHGInfo,
+        setBarChartHGInfo,
+        "hackergrouptargeting"
+      );
+      fetchedBarChartDataHandler(
+        res.trend,
+        loadedBarChartACInfo,
+        setBarChartACInfo,
+        "attacksandcompromises"
+      );
+
+      fetchedBarChartDataHandler(
+        res.trend,
+        loadedBarChartAlertsInfo,
+        setBarChartAlertsInfo,
+        "alerts"
+      );
     };
     fetchSpiderData();
   }, []);
   return (
     <FetchDataContext.Provider
       value={{
+        barChartAlertsInfo,
         spiderAlerts,
         spiderRisks,
         lineChartAlerts,
@@ -144,7 +198,10 @@ const FetchDataContextProvider = (props) => {
         barChartDiscussionInfo,
         barChartBMtInfo,
         barChartFinancialInfo,
-        barChartECInfo
+        barChartECInfo,
+        barChartPIInfo,
+        barChartHGInfo,
+        barChartACInfo,
       }}
     >
       {props.children}
