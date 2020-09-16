@@ -18,6 +18,16 @@ const FetchDataContextProvider = (props) => {
   const [barChartHGInfo, setBarChartHGInfo] = useState([]);
   const [barChartACInfo, setBarChartACInfo] = useState([]);
 
+  const [pieChartAlertsInfo, setPieChartAlertsInfo] = useState([]);
+  const [pieChartSensitiveInfo, setPieChartSensitiveInfo] = useState([]);
+  const [pieChartDiscussionInfo, setPieChartDiscussionInfo] = useState([]);
+  const [pieChartBMInfo, setPieChartBMInfo] = useState([]);
+  const [pieChartFinancialInfo, setPieChartFinancialInfo] = useState([]);
+  const [pieChartECInfo, setPieChartECInfo] = useState([]);
+  const [pieChartPIInfo, setPieChartPIInfo] = useState([]);
+  const [pieChartHGInfo, setPieChartHGInfo] = useState([]);
+  const [pieChartACInfo, setPieChartACInfo] = useState([]);
+
   const fetchedRiskAlertHandler = (
     object,
     array1,
@@ -47,7 +57,7 @@ const FetchDataContextProvider = (props) => {
         break;
       case "discussion":
         for (const key in object) {
-          array.push(object[key].discussion);
+          array.push(object[key].discussions);
         }
         break;
       case "blackmarkets":
@@ -88,6 +98,22 @@ const FetchDataContextProvider = (props) => {
     setFunc(array);
   };
 
+  const fetchedPieChartDataHandler = (setFunc, obj1, obj2, obj3) => {
+    const darkWeb = obj1;
+    const darkBreach = obj2;
+    const deepWeb = obj3;
+    const totalPie = darkWeb + darkBreach + deepWeb;
+    const darkWebPer = (darkWeb / totalPie) * 100;
+    const darkBreachPer = (darkBreach / totalPie) * 100;
+    const deepWebPer = (deepWeb / totalPie) * 100;
+    const loadedPieChartsInfo = [
+      darkWebPer.toFixed(2),
+      darkBreachPer.toFixed(2),
+      deepWebPer.toFixed(2),
+    ];
+    setFunc(loadedPieChartsInfo);
+  };
+
   useEffect(() => {
     let result = null;
     const fetchSpiderData = async () => {
@@ -100,6 +126,12 @@ const FetchDataContextProvider = (props) => {
         }
       );
       const res = result.data;
+      console.log(
+        res.by_source.darkweb.alerts,
+        res.by_source.databreach.alerts,
+        res.by_source.deepweb.alerts
+      );
+
       const loadedSpiderAlertsData = [];
       const loadedSpiderRisksData = [];
       const loadedLineChartAlerts = [];
@@ -176,12 +208,66 @@ const FetchDataContextProvider = (props) => {
         setBarChartACInfo,
         "attacksandcompromises"
       );
-
       fetchedBarChartDataHandler(
         res.trend,
         loadedBarChartAlertsInfo,
         setBarChartAlertsInfo,
         "alerts"
+      );
+
+      fetchedPieChartDataHandler(
+        setPieChartAlertsInfo,
+        res.by_source.darkweb.alerts,
+        res.by_source.databreach.alerts,
+        res.by_source.deepweb.alerts
+      );
+      fetchedPieChartDataHandler(
+        setPieChartSensitiveInfo,
+        res.by_source.darkweb.sensitivedisclosure,
+        res.by_source.databreach.sensitivedisclosure,
+        res.by_source.deepweb.sensitivedisclosure
+      );
+      fetchedPieChartDataHandler(
+        setPieChartDiscussionInfo,
+        res.by_source.darkweb.discussions,
+        res.by_source.databreach.discussions,
+        res.by_source.deepweb.discussions
+      );
+      fetchedPieChartDataHandler(
+        setPieChartBMInfo,
+        res.by_source.darkweb.blackmarkets,
+        res.by_source.databreach.blackmarkets,
+        res.by_source.deepweb.blackmarkets
+      );
+      fetchedPieChartDataHandler(
+        setPieChartFinancialInfo,
+        res.by_source.darkweb.financialinformation,
+        res.by_source.databreach.financialinformation,
+        res.by_source.deepweb.financialinformation
+      );
+      fetchedPieChartDataHandler(
+        setPieChartECInfo,
+        res.by_source.darkweb.exposedcredentials,
+        res.by_source.databreach.exposedcredentials,
+        res.by_source.deepweb.exposedcredentials
+      );
+      fetchedPieChartDataHandler(
+        setPieChartPIInfo,
+        res.by_source.darkweb.personalinformation,
+        res.by_source.databreach.personalinformation,
+        res.by_source.deepweb.personalinformation
+      );
+      fetchedPieChartDataHandler(
+        setPieChartHGInfo,
+        res.by_source.darkweb.hackergrouptargeting,
+        res.by_source.databreach.hackergrouptargeting,
+        res.by_source.deepweb.hackergrouptargeting
+      );
+      fetchedPieChartDataHandler(
+        setPieChartACInfo,
+        res.by_source.darkweb.attacksandcompromises,
+        res.by_source.databreach.attacksandcompromises,
+        res.by_source.deepweb.attacksandcompromises
       );
     };
     fetchSpiderData();
@@ -189,11 +275,11 @@ const FetchDataContextProvider = (props) => {
   return (
     <FetchDataContext.Provider
       value={{
-        barChartAlertsInfo,
         spiderAlerts,
         spiderRisks,
         lineChartAlerts,
         lineChartRisks,
+        barChartAlertsInfo,
         barChartSensitiveInfo,
         barChartDiscussionInfo,
         barChartBMtInfo,
@@ -202,6 +288,15 @@ const FetchDataContextProvider = (props) => {
         barChartPIInfo,
         barChartHGInfo,
         barChartACInfo,
+        pieChartAlertsInfo,
+        pieChartSensitiveInfo,
+        pieChartDiscussionInfo,
+        pieChartBMInfo,
+        pieChartFinancialInfo,
+        pieChartECInfo,
+        pieChartPIInfo,
+        pieChartHGInfo,
+        pieChartACInfo,
       }}
     >
       {props.children}
