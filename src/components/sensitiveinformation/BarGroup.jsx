@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BarGroup() {
   const barChartSensitiveInfoData = useContext(FetchDataContext);
-
   const { barChartSensitiveInfo } = barChartSensitiveInfoData;
 
   const databar = {

@@ -10,6 +10,9 @@ const FetchDataContextProvider = (props) => {
   const [lineChartRisks, setLineChartRisks] = useState([]);
   const [barChartSensitiveInfo, setBarChartSensitiveInfo] = useState([]);
   const [barChartDiscussionInfo, setBarChartDiscussionInfo] = useState([]);
+  const [barChartBMtInfo, setBarChartBMtInfo] = useState([]);
+  const [barChartFinancialInfo, setBarChartFinancialInfo] = useState([]);
+  const [barChartECInfo, setBarChartECInfo] = useState([]);
 
   const fetchedRiskAlertHandler = (
     object,
@@ -38,6 +41,21 @@ const FetchDataContextProvider = (props) => {
           array.push(object[key].discussion);
         }
         break;
+      case "blackmarkets":
+        for (const key in object) {
+          array.push(object[key].blackmarkets);
+        }
+        break;
+      case "financial":
+        for (const key in object) {
+          array.push(object[key].financialinformation);
+        }
+        break;
+      case "exposedcredentials":
+        for (const key in object) {
+          array.push(object[key].exposedcredentials);
+        }
+        break;
       default:
         return null;
     }
@@ -64,6 +82,10 @@ const FetchDataContextProvider = (props) => {
       const loadedLineChartRisks = [];
       const loadedBarChartSensitiveInfo = [];
       const loadedBarChartDiscussionInfo = [];
+      const loadedBarChartBMInfo = [];
+      const loadedBarChartFinancialInfo = [];
+      const loadedBarChartECInfo = [];
+
       fetchedRiskAlertHandler(
         res.by_category,
         loadedSpiderAlertsData,
@@ -90,6 +112,24 @@ const FetchDataContextProvider = (props) => {
         setBarChartDiscussionInfo,
         "discussion"
       );
+      fetchedBarChartDataHandler(
+        res.trend,
+        loadedBarChartBMInfo,
+        setBarChartBMtInfo,
+        "blackmarkets"
+      );
+      fetchedBarChartDataHandler(
+        res.trend,
+        loadedBarChartFinancialInfo,
+        setBarChartFinancialInfo,
+        "financial"
+      );
+      fetchedBarChartDataHandler(
+        res.trend,
+        loadedBarChartECInfo,
+        setBarChartECInfo,
+        "exposedcredentials"
+      );
     };
     fetchSpiderData();
   }, []);
@@ -101,7 +141,10 @@ const FetchDataContextProvider = (props) => {
         lineChartAlerts,
         lineChartRisks,
         barChartSensitiveInfo,
-        barChartDiscussionInfo
+        barChartDiscussionInfo,
+        barChartBMtInfo,
+        barChartFinancialInfo,
+        barChartECInfo
       }}
     >
       {props.children}
