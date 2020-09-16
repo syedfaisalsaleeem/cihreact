@@ -1,5 +1,7 @@
 import { Chart as ChartJS } from 'react-chartjs-2'
-charrt=function(){
+
+
+charrt = function(){
 var helpers = Chart.helpers;
 
 var eventPosition = helpers.getRelativePosition(e, myRadarChart.chart);

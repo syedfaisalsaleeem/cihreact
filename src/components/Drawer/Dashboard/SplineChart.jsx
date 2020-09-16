@@ -22,7 +22,7 @@ class SplineChart extends Component {
 				xValueFormatString: "MMMM",
 				type: "spline",
 				dataPoints: [
-					{ x: new Date(2017, 0), y: 25060 },
+					{ x: new Date(2017, 0), y: 25060	 },
 					{ x: new Date(2017, 1), y: 27980 },
 					{ x: new Date(2017, 2), y: 42800 },
 					{ x: new Date(2017, 3), y: 32400 },

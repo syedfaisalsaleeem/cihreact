@@ -29,6 +29,8 @@ import Contact1 from "./Links/Contact/Contact.js";
 import Discover from "./Links/Discover/index.js";
 import MainDashboard from "./Links/MainDashboard/index.js";
 
+
+
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
