@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import Select from "@material-ui/core/Select";
 import FormControl from "@material-ui/core/FormControl";
@@ -25,8 +25,96 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Linechart() {
+  const [finalArray, setFinalArray] = useState([]);
+  const [finalArray1, setFinalArray1] = useState([]);
   const lineChartData = useContext(FetchDataContext);
-  const { lineChartAlerts, lineChartRisks } = lineChartData;
+  const {
+    lineChartAlerts,
+    lineChartRisks,
+    barChartSensitiveInfo,
+    barChartDiscussionInfo,
+    barChartBMtInfo,
+    barChartFinancialInfo,
+    barChartECInfo,
+    barChartPIInfo,
+    barChartHGInfo,
+    barChartACInfo,
+  } = lineChartData;
+
+  const [selected, setSelected] = React.useState([]);
+  const [seletChart, setSelectChart] = React.useState("");
+
+  const options = [
+    { label: "Sensitive Information", value: "Sensitive Information" },
+    { label: "Discussions", value: "Discussions" },
+    { label: "Black Markets", value: "Black Markets" },
+    { label: "Financial", value: "Financial" },
+    { label: "Exposed Credential", value: "Exposed Credential" },
+    { label: "Personal Information", value: "Personal Information" },
+    { label: "Hacker Group Targeting", value: "Hacker Group Targeting" },
+    { label: "Attacks and Compromises", value: "Attacks and Compromises" },
+  ];
+
+  useEffect(() => {
+    switch (seletChart) {
+      case "Sensitive Information":
+        setFinalArray([...barChartSensitiveInfo]);
+        setFinalArray1([]);
+        break;
+      case "Discussions":
+        setFinalArray([...barChartDiscussionInfo]);
+        setFinalArray1([]);
+        break;
+      case "Black Markets":
+        setFinalArray([...barChartBMtInfo]);
+        setFinalArray1([]);
+        break;
+      case "Financial":
+        setFinalArray([...barChartFinancialInfo]);
+        setFinalArray1([]);
+        break;
+      case "Exposed Credential":
+        setFinalArray([...barChartECInfo]);
+        setFinalArray1([]);
+        break;
+      case "Personal Information":
+        setFinalArray([...barChartPIInfo]);
+        setFinalArray1([]);
+        break;
+      case "Hacker Group Targeting":
+        setFinalArray([...barChartHGInfo]);
+        setFinalArray1([]);
+        break;
+      case "Attacks and Compromises":
+        setFinalArray([...barChartACInfo]);
+        setFinalArray1([]);
+        break;
+      case "":
+        setFinalArray([...lineChartAlerts]);
+        setFinalArray1([...lineChartRisks]);
+        break;
+      default:
+        setFinalArray([...lineChartAlerts]);
+        setFinalArray1([...lineChartRisks]);
+        break;
+    }
+  }, [
+    lineChartRisks,
+    lineChartAlerts,
+    barChartSensitiveInfo,
+    barChartDiscussionInfo,
+    barChartBMtInfo,
+    barChartFinancialInfo,
+    barChartECInfo,
+    barChartPIInfo,
+    barChartHGInfo,
+    barChartACInfo,
+    seletChart,
+  ]);
+
+  useEffect(() => {
+    console.log(seletChart);
+  });
 
   const statelinechart = {
     labels: [
@@ -63,7 +151,7 @@ export default function Linechart() {
         backgroundColor: "grey",
         borderColor: "grey",
         borderWidth: 2,
-        data: [...lineChartAlerts],
+        data: finalArray,
       },
       {
         label: "labelB",
@@ -73,7 +161,7 @@ export default function Linechart() {
         color: "red",
         borderColor: "red",
         borderWidth: 2,
-        data: [...lineChartRisks],
+        data: finalArray1,
       },
     ],
   };
@@ -90,18 +178,6 @@ export default function Linechart() {
   const handleChange = (event) => {
     setAge1(event.target.value);
   };
-  const options = [
-    { label: "Sensitive Information", value: "Sensitive Information" },
-    { label: "Discussions", value: "Discussions" },
-    { label: "Black Markets", value: "Black Markets" },
-    { label: "Financial", value: "Financial" },
-    { label: "Exposed Credential", value: "Exposed Credential" },
-    { label: "Personal Information", value: "Personal Information" },
-    { label: "Hacker Group Targeting", value: "Hacker Group Targeting" },
-    { label: "Attacks and Compromises", value: "Attacks and Compromises" },
-  ];
-
-  const [selected, setSelected] = React.useState([]);
 
   return (
     <div>
@@ -109,7 +185,7 @@ export default function Linechart() {
         <MultiSelect
           options={options}
           value={selected}
-          onChange={setSelected}
+          onChange={(e) => setSelectChart(e[0].label)}
           labelledBy={"Select"}
         />
         {/* <Multiselect
