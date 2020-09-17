@@ -361,7 +361,7 @@ export default function EContent() {
                                   color: "#B5B5C3",
                                   fontWeight: "500",
                                   fontSize: "12px;",
-                                  textAlign: 'center'
+                                  textAlign: "center",
                                 }}
                               >
                                 Alert Found Last month
@@ -390,7 +390,7 @@ export default function EContent() {
                                   color: "#B5B5C3",
                                   fontWeight: "500",
                                   fontSize: "12px;",
-                                  textAlign: 'center'
+                                  textAlign: "center",
                                 }}
                               >
                                 Alert Found Last 3 months
