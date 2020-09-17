@@ -1,9 +1,9 @@
 import React from 'react';
 import Login from "./Links/Login/Login.jsx"
-import Home1 from "./Links/Home/index.js"
+
 import {BrowserRouter,Link,Switch,Route} from 'react-router-dom';
 import CantLogin from './Links/CantLogin/CantLogin.jsx';
-import Contact from "./Links/Support/Contact.jsx";
+
 import Notification from "./Links/Notification/index.js";
 import LatestAlerts from "./Links/Notification/LatestAlerts.jsx";
 import ServiceUpdates from "./Links/Notification/ServiceUpdates.js";
@@ -30,7 +30,7 @@ function App() {
         
         <Route path="/" component={Login} exact />
         <Route path="/CantLogin" component={CantLogin} exact/>
-        <Route path="/Home" component={Home1} exact/>
+        
         <Route path="/Notification" component={Notification} exact/>
         <Route path="/LatestAlerts" component={LatestAlerts} exact/>
         <Route path="/ServiceUpdates" component={ServiceUpdates} exact/>

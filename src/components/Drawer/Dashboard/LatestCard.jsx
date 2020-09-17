@@ -11,6 +11,7 @@ import GradeIcon from '@material-ui/icons/Grade';
 import TextField from '@material-ui/core/TextField';
 import theme from '../../../theme';
 import Tooltip from '@material-ui/core/Tooltip';
+import axios from 'axios'
 const LightTooltip = withStyles((theme) => ({
     tooltip: {
       backgroundColor: theme.palette.common.white,
@@ -152,8 +153,22 @@ const useStyles = makeStyles((theme) => ({
     
 }))
 export default function LatestCard(props){
+    const {date,
+        alertcreated,severity,
+        title,source,keyword,
+        remediation,tags,comments,id}=props
+    if(severity!==""){
+        // console.log(severity)
+        const newStr = severity.split('');
+        newStr.splice(0,8);
+       var nseverity = newStr.join('');
+    }
+    else{
+        var nseverity=severity
+    }
+
     const [fullWidth, setFullWidth] = React.useState(true);
-    
+    const [commenting,setcommenting]=React.useState('');
     const [st1,set]=React.useState([""]);
     const [click,setclick]=React.useState(true);
 
@@ -169,7 +184,7 @@ export default function LatestCard(props){
         }
         
         
-        console.log(props.changeflag)
+        // console.log(props.changeflag)
     }
     const handleClickOpen = () => {
       setOpen(true);
@@ -178,10 +193,54 @@ export default function LatestCard(props){
     const handleClose = () => {
       setOpen(false);
     };
+    const handlecomment=async()=>{
+        if(comments.length>0){
+            // console.log("faisal2",commenting,comments[0]['id'])
+            
+            const response= await fetch('https://if.cyberintelligencehouse.com/api/alerts/'+id+'/comments/'+comments[0]['id'], {
+                method: 'PUT',
+                headers: {
+                    'accept': 'application/json',
+                    'X-Api-Key': '1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'text='+commenting
+            });
+            // let data = await response.json()
+            // console.log(data)
+        }
+        else{
+            const response=await fetch('https://if.cyberintelligencehouse.com/api/alerts/'+id+'/comments', {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'X-Api-Key': '1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'nick=dsadasdsasd&text='+commenting
+            });
+            // let data = await response.json()
+            // console.log(data)
+        }
 
-    const classes=useStyles()
+}
+const handlecommenting=(e)=>{
+    setcommenting(e.target.value)
+}
+React.useEffect(()=>{
+    if(comments.length>0){
+        setcommenting(comments[0]['text'])
+    }
+    else{
+        setcommenting('')
+    }
+    
+},[])
+    // https://if.cyberintelligencehouse.com/api/alerts/39412cec-8a69-4254-9a81-3cf21a83ba09/comments
+     const classes=useStyles()
     return(
         <div>
+            {/* {console.log("keyword",keyword[0]['value'])} */}
             <Grid item xs={12} style={{marginBottom:"20px"}}>
             <Card className={classes.f5}>
                 <Grid item xs={12}>
@@ -190,16 +249,17 @@ export default function LatestCard(props){
                             <div style={{display:"flex",flexDirection:"column",width:"130px",height:"140px",background:"white",borderRight:"0.2px solid #000000"}}>
                                 <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"50%",fontStyle: "normal",fontWeight: "500",
                                     fontSize: "12px",color: "#000000",opacity:"0.5"}}>
-                                    DD - MM - YYYY
+                                    {date}
                                 </div>
                                 <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"50%",fontStyle: "normal",fontWeight: "600",
                                     fontSize: "16px",color: "white",background:"#F5A623"}}>
-                                                    Medium
+
+                                                    {nseverity}
                                 </div>
                             </div>
                         </Grid>
                         <Grid item xs={8} lg={8} >
-                            <div style={{display:"flex",height:"140px"}}>
+                            <div style={{display:"flex"}}>
                                 <Grid container justify="space-between">
                                 <Grid item>
                                     <div style={{display:"flex",width:"22vw",height:"70px",alignItems:"center"}}>
@@ -208,7 +268,7 @@ export default function LatestCard(props){
                                                 Title
                                             </div>
                                             <div style={{paddingTop:"5px",fontStyle: "normal",fontWeight: "normal",fontSize: "12px"}}>
-                                                Title goes here
+                                                {title}
                                             </div>
                                         </div>
 
@@ -222,7 +282,7 @@ export default function LatestCard(props){
                                                 Source
                                             </div>
                                             <div style={{paddingTop:"5px",fontStyle: "normal",fontWeight: "normal",fontSize: "12px"}}>
-                                                https://Type-Goes-Here.com
+                                                {source}
                                             </div>
                                         </div>
                                     </div>
@@ -235,20 +295,27 @@ export default function LatestCard(props){
                                             </div>
                                             <div style={{display:"flex",paddingTop:"5px",justifyContent:"flex-start"}}>
                                                     <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-                                                    <Chip  size="small" label="KeyWord" variant="outlined" className={classes.chipborder}/>
+                                                    <Chip  size="small" label={keyword[0]['value']} variant="outlined" className={classes.chipborder}/>
                                                     </div>
                                             </div>
                                         </div>
                                     </div>
                                 </Grid>
-                                <Grid item>
-                                            <div style={{display:"flex",width:"20.5vw",height:"70px",alignItems:"center"}}>
+                                <Grid item >
+                                            <div style={{display:"flex",width:"20.5vw",height:"auto",alignItems:"center"}}>
                                                 <div style={{display:"flex",flexDirection:"column",width:"100%",height:"75%"}}>
                                                 <div style={{fontStyle: "normal",fontWeight: "600",fontSize: "14px"}}>
                                                     Tags
                                                 </div>
                                                 <div style={{display:"flex",paddingTop:"5px",justifyContent:"flex-start"}}>
+                                                    {tags.map((number)=>
                                                         <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+                                                        <Chip style={{margin:"2px"}} size="small" label={number} variant="outlined" className={classes.chipborder}/>
+                                                        </div>
+                                                          
+                                                    )}
+                                                  
+                                                        {/* <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
                                                         <Chip  size="small" label="Tag Here" variant="outlined" className={classes.chipborder}/>
                                                         </div>
                                                         <div style={{display:"flex",justifyContent:"center",alignItems:"center",paddingLeft:"5px"}}>
@@ -256,7 +323,7 @@ export default function LatestCard(props){
                                                         </div>
                                                         <div style={{display:"flex",justifyContent:"center",alignItems:"center",paddingLeft:"5px"}}>
                                                         <Chip  size="small" label="Tag Here" variant="outlined" className={classes.chipborder}/>
-                                                        </div>
+                                                        </div> */}
                                                 </div>
                                         </div>
                                             
@@ -286,7 +353,7 @@ export default function LatestCard(props){
                                         
                                         <Grid item xs={12} >
                                                     <LightTooltip title="Highlight alert">
-                                                        <IconButton aria-label="settings" onClick={addcount} >
+                                                        <IconButton aria-label="settings" disabled="true" onClick={addcount} >
                                                             <GradeIcon style={{fontSize:'32px',color:star?"yellow":"gray"}}/>
 
                                                         </IconButton>   
@@ -332,24 +399,40 @@ export default function LatestCard(props){
                     <Grid container justify="flex-start" maxWidth="xl" >
                         <Card className={classes.f31}>
                             <Grid item md={12} lg={12}>
-                                <div  >
-                                <Card className={classes.f41} style={{padding:theme.spacing(2)}}>
-                                <Grid container alignItems="center" direction="row" >
+                                <Grid container>
+                                    <Grid item xs={10}>
+                                    <div  >
                                     
-                                    <Grid item xs={12}>
-                                        <TextField
-                                        id="standard-multiline-flexible"
-                                        label="User can add notes here"
-                                        multiline
-                                        variant="outlined"
-                                        fullWidth
+                                    <Grid container alignItems="center" direction="row" style={{padding:theme.spacing(2)}} >
+                                        
+                                        <Grid item xs={12}>
+                                            <TextField
+                                            id="commenting"
+                                            label="User can add notes here"
+                                            multiline
+                                            variant="outlined"
+                                            value={commenting}
+                                            onChange={handlecommenting}
+                                            fullWidth
 
-                                        />
+                                            />
+                                        </Grid>
+
                                     </Grid>
-
+                                    
+                                    </div>
+                                    </Grid>
+                                    <Grid item xs={2} style={{minHeight:"100px"}}>
+                                            <Grid container alignItems="center" justify="center" style={{minHeight:"90px"}}>
+                                                <Grid item>
+                                                        <Button className={classes.Buttons} color="primary" variant="contained" onClick={handlecomment}>
+                                                            Add Notes
+                                                        </Button>
+                                                </Grid>
+                                            </Grid>
+                                    </Grid>
                                 </Grid>
-                                </Card>
-                                </div>
+
                             </Grid>
                                  
                         
@@ -380,7 +463,7 @@ export default function LatestCard(props){
                                                     <Grid container justify="center">
                                                         <Grid item>
                                                             <Typography component="div" style={{marginTop:"30px",color:"white"}}>
-                                                                Medium
+                                                                {nseverity}
                                                     
                                                             </Typography>
                                                         </Grid>
@@ -399,7 +482,7 @@ export default function LatestCard(props){
                                             </div>
 
                                             <div className={classes.bottom1} >
-                                            Title Goes Here
+                                            {title}
                                             </div>
 
                                             </div>
@@ -412,7 +495,7 @@ export default function LatestCard(props){
                                             </div>
 
                                             <div className={classes.bottom1} >
-                                            https://Type-Goes-Here.com
+                                            {source}
                                             </div>
 
                                             </div>
@@ -454,7 +537,8 @@ export default function LatestCard(props){
             <h2>Detect</h2>
             
             <div className={styles.date1} >
-                <p>DD-MM-YYYY</p>
+                <p> 
+                    {date}</p>
             </div>
 
             </div>
@@ -463,7 +547,7 @@ export default function LatestCard(props){
             <h2>Alert Created</h2>
             
             <div className={styles.date2} >
-                <p>DD-MM-YYYY</p>
+                <p>{alertcreated}</p>
             </div>
             </div>
         </div>
@@ -477,7 +561,7 @@ export default function LatestCard(props){
                                     KeyWord
                                 </Grid>
                                 <Grid item style={{paddingTop:"4px"}}>
-                                    <Chip size="small" className={classes.chip} label="KeyWord" variant="outlined"/>         
+                                    <Chip size="small" className={classes.chip} label={keyword[0]['value']} variant="outlined"/>         
                                 </Grid>
                             </Grid>
                 </Grid>
@@ -487,10 +571,22 @@ export default function LatestCard(props){
                                     Tags
                                 </Grid>
                                 <Grid item style={{paddingTop:"4px"}}>
-                                    <Chip size="small" className={classes.chip} label="Tags" variant="outlined"/>       
+                                    <Grid container>
+                                    {tags.map((number)=>
+                                                        <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+                                                       <Chip size="small" className={classes.chip} label={number}variant="outlined"/>       
+                                  
+                                                        
+                                                        </div>
+                                                          
+                                                    )}
+                                    </Grid>
+
+                                    {/* <Chip size="small" className={classes.chip} label="Tags" variant="outlined"/>       
                                     <Chip  size="small" className={classes.chip}   label="Tags" variant="outlined"/> 
                                     <Chip  size="small" className={classes.chip} label="Tags" variant="outlined"/>   
-                                    <Chip  size="small" className={classes.chip}   label="Tags" variant="outlined"/>      
+                                    <Chip  size="small" className={classes.chip}   label="Tags" variant="outlined"/>       */}
+                                
                                 </Grid>
                             </Grid>
                 </Grid>
@@ -506,15 +602,38 @@ export default function LatestCard(props){
                             <Grid item className={classes.tag} >
                                 Notes
                             </Grid>
-                            <Grid item style={{paddingTop:"4px"}}>
-                                    <TextField
-                                        id="standard-multiline-flexible"
-                                        label="User can add notes here"
-                                        multiline
-                                        variant="outlined"
-                                        fullWidth
+                            <Grid container>
+                                    <Grid item xs={10}>
+                                    <div  >
+                                    
+                                    <Grid container alignItems="center" direction="row" style={{padding:theme.spacing(2)}} >
+                                        
+                                        <Grid item xs={12}>
+                                            <TextField
+                                            id="commenting"
+                                            label="User can add notes here"
+                                            multiline
+                                            variant="outlined"
+                                            value={commenting}
+                                            onChange={handlecommenting}
+                                            fullWidth
 
-                                        />
+                                            />
+                                        </Grid>
+
+                                    </Grid>
+                                    
+                                    </div>
+                                    </Grid>
+                                    <Grid item xs={2} style={{minHeight:"100px"}}>
+                                            <Grid container alignItems="center" justify="center" style={{minHeight:"90px"}}>
+                                                <Grid item>
+                                                        <Button className={classes.Buttons} color="primary" variant="contained" onClick={handlecomment}>
+                                                            Add Notes
+                                                        </Button>
+                                                </Grid>
+                                            </Grid>
+                                    </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -547,14 +666,7 @@ export default function LatestCard(props){
                                 Remedition Suggestion
                             </Grid>
                             <Grid item className={classes.fontp}style={{paddingTop:"4px"}}>
-                             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati, possimus delectus, 
-                             veritatis, saepe minus excepturi tempore cupiditate aperiam vitae sequi inventore pariatur numquam 
-                             accusantium neque necessitatibus deserunt exercitationem unde? Odio iste hic iusto id veniam provident a 
-                             laboriosam non? Laudantium quos nisi excepturi corrupti natus tempora commodi, optio ad culpa eius hic sint ipsa 
-                             maxime nemo magni architecto tenetur facere praesentium eligendi molestiae aspernatur. Deleniti nemo dicta, 
-                             similique totam corporis facilis sint ipsa autem est distinctio minima tempore id placeat, nostrum iusto neque ratione ad. 
-                             Voluptatem libero numquam saepe, quas, fuga placeat, minus amet officiis dolores possimus eum? Exercitationem, in
-             
+                                    {remediation}
                             </Grid>
                         </Grid>
                     </Grid>

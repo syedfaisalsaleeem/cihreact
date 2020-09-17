@@ -5,9 +5,9 @@ body {
 display: flex;
 flex-direction: column;
 min-width: 440px;
-width: 30vw;
-height: 293px;
-
+width: 32vw;
+height: auto;
+min-height: 300px;
     background: #FFFFFF;
 box-shadow: 0px 0px 35px rgba(181, 181, 195, 0.15);
 border-radius: 2px;
@@ -16,8 +16,8 @@ border-radius: 2px;
     display: flex;
     flex-direction: column;
     min-width: 440px;
-    width: 30vw;
-    
+    width: 32vw;
+    min-height: 60px;
     
         background: #FFFFFF;
     box-shadow: 0px 0px 35px rgba(181, 181, 195, 0.15);
