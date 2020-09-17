@@ -17,6 +17,7 @@ const FetchDataContextProvider = (props) => {
   const [barChartPIInfo, setBarChartPIInfo] = useState([]);
   const [barChartHGInfo, setBarChartHGInfo] = useState([]);
   const [barChartACInfo, setBarChartACInfo] = useState([]);
+  const [barChartUAInfo, setBarChartUAInfo] = useState([]);
 
   const [pieChartAlertsInfo, setPieChartAlertsInfo] = useState([]);
   const [pieChartSensitiveInfo, setPieChartSensitiveInfo] = useState([]);
@@ -27,14 +28,72 @@ const FetchDataContextProvider = (props) => {
   const [pieChartPIInfo, setPieChartPIInfo] = useState([]);
   const [pieChartHGInfo, setPieChartHGInfo] = useState([]);
   const [pieChartACInfo, setPieChartACInfo] = useState([]);
+  const [pieChartUAInfo, setPieChartUAInfo] = useState([]);
 
-  const fetchedRiskAlertHandler = (
-    object,
-    array1,
-    array2,
-    setAlertFunc,
-    setRiskFunc
-  ) => {
+  const [totalAlertsInfo, setTotalAlertsInfo] = useState({
+    totalAlerts: "",
+    alertsToday: "",
+    alertsLastMonth: "",
+    alertsLast3Months: "",
+  });
+  const [totalSensitiveInfo, setTotalSensitiveInfo] = useState({
+    totalAlerts: "",
+    alertsToday: "",
+    alertsLastMonth: "",
+    alertsLast3Months: "",
+  });
+  const [totalDiscussionInfo, setTotalDiscussionInfo] = useState({
+    totalAlerts: "",
+    alertsToday: "",
+    alertsLastMonth: "",
+    alertsLast3Months: "",
+  });
+  const [totalBMInfo, setTotalBMInfo] = useState({
+    totalAlerts: "",
+    alertsToday: "",
+    alertsLastMonth: "",
+    alertsLast3Months: "",
+  });
+  const [totalFinancialInfo, setTotalFinancialInfo] = useState({
+    totalAlerts: "",
+    alertsToday: "",
+    alertsLastMonth: "",
+    alertsLast3Months: "",
+  });
+  const [totalECInfo, setTotalECInfo] = useState({
+    totalAlerts: "",
+    alertsToday: "",
+    alertsLastMonth: "",
+    alertsLast3Months: "",
+  });
+  const [totalPIInfo, setTotalPIInfo] = useState({
+    totalAlerts: "",
+    alertsToday: "",
+    alertsLastMonth: "",
+    alertsLast3Months: "",
+  });
+  const [totalHGInfo, setTotalHGInfo] = useState({
+    totalAlerts: "",
+    alertsToday: "",
+    alertsLastMonth: "",
+    alertsLast3Months: "",
+  });
+  const [totalACInfo, setTotalACInfo] = useState({
+    totalAlerts: "",
+    alertsToday: "",
+    alertsLastMonth: "",
+    alertsLast3Months: "",
+  });
+  const [totalUAInfo, setTotalUAInfo] = useState({
+    totalAlerts: "",
+    alertsToday: "",
+    alertsLastMonth: "",
+    alertsLast3Months: "",
+  });
+
+  const fetchedRiskAlertHandler = (object, setAlertFunc, setRiskFunc) => {
+    const array1 = [];
+    const array2 = [];
     for (const key in object) {
       array1.push(object[key].alerts);
       array2.push(object[key].risk);
@@ -43,52 +102,68 @@ const FetchDataContextProvider = (props) => {
     setRiskFunc(array2);
   };
 
-  const fetchedBarChartDataHandler = (object, array, setFunc, domain) => {
+  const fetchedBarChartDataHandler = (object, setFunc, domain) => {
+    let array = [];
     switch (domain) {
       case "alerts":
+        array = [];
         for (const key in object) {
           array.push(object[key].alerts);
         }
         break;
       case "sensitive":
+        array = [];
         for (const key in object) {
           array.push(object[key].sensitivedisclosure);
         }
         break;
       case "discussion":
+        array = [];
         for (const key in object) {
           array.push(object[key].discussions);
         }
         break;
       case "blackmarkets":
+        array = [];
         for (const key in object) {
           array.push(object[key].blackmarkets);
         }
         break;
       case "financial":
+        array = [];
         for (const key in object) {
           array.push(object[key].financialinformation);
         }
         break;
       case "exposedcredentials":
+        array = [];
         for (const key in object) {
           array.push(object[key].exposedcredentials);
         }
         break;
       case "personalinformation":
+        array = [];
         for (const key in object) {
           array.push(object[key].personalinformation);
         }
         break;
       case "hackergrouptargeting":
+        array = [];
         for (const key in object) {
           array.push(object[key].hackergrouptargeting);
         }
         break;
 
       case "attacksandcompromises":
+        array = [];
         for (const key in object) {
           array.push(object[key].attacksandcompromises);
+        }
+        break;
+      case "unidentified":
+        array = [];
+        for (const key in object) {
+          array.push(object[key].unidentified);
         }
         break;
       default:
@@ -114,6 +189,95 @@ const FetchDataContextProvider = (props) => {
     setFunc(loadedPieChartsInfo);
   };
 
+  const fetchedTotalFiguresHandler = (setTotalObj, domain, object) => {
+    let array = [];
+    switch (domain) {
+      case "alerts":
+        array = [];
+        for (const key in object) {
+          array.push(object[key].alerts);
+        }
+        break;
+      case "sensitive":
+        array = [];
+        for (const key in object) {
+          array.push(object[key].sensitivedisclosure);
+        }
+        break;
+      case "discussion":
+        array = [];
+        for (const key in object) {
+          array.push(object[key].discussions);
+        }
+        break;
+      case "blackmarkets":
+        array = [];
+        for (const key in object) {
+          array.push(object[key].blackmarkets);
+        }
+        break;
+      case "financial":
+        array = [];
+        for (const key in object) {
+          array.push(object[key].financialinformation);
+        }
+        break;
+      case "exposedcredentials":
+        array = [];
+        for (const key in object) {
+          array.push(object[key].exposedcredentials);
+        }
+        break;
+      case "personalinformation":
+        array = [];
+        for (const key in object) {
+          array.push(object[key].personalinformation);
+        }
+        break;
+      case "hackergrouptargeting":
+        array = [];
+        for (const key in object) {
+          array.push(object[key].hackergrouptargeting);
+        }
+        break;
+
+      case "attacksandcompromises":
+        array = [];
+        for (const key in object) {
+          array.push(object[key].attacksandcompromises);
+        }
+        break;
+      case "unidentified":
+        array = [];
+        for (const key in object) {
+          array.push(object[key].unidentified);
+        }
+        break;
+      default:
+        return null;
+    }
+    const totalAlerts = array.reduce((acc, curr) => {
+      return acc + curr;
+    }, 0);
+    const alertsToday = array[array.length - 1];
+    const alertsLastMonth = array[array.length - 2];
+    const alertsLast3Months = [
+      array[array.length - 2],
+      array[array.length - 3],
+      array[array.length - 4],
+    ];
+    const totalLast3MonthsAlerts = alertsLast3Months.reduce((acc, curr) => {
+      return acc + curr;
+    }, 0);
+    setTotalObj((prevState) => ({
+      ...prevState,
+      totalAlerts: totalAlerts,
+      alertsToday: alertsToday,
+      alertsLastMonth: alertsLastMonth,
+      alertsLast3Months: totalLast3MonthsAlerts,
+    }));
+  };
+
   useEffect(() => {
     let result = null;
     const fetchSpiderData = async () => {
@@ -126,94 +290,78 @@ const FetchDataContextProvider = (props) => {
         }
       );
       const res = result.data;
-      console.log(
-        res.by_source.darkweb.alerts,
-        res.by_source.databreach.alerts,
-        res.by_source.deepweb.alerts
-      );
 
-      const loadedSpiderAlertsData = [];
-      const loadedSpiderRisksData = [];
-      const loadedLineChartAlerts = [];
-      const loadedLineChartRisks = [];
-      const loadedBarChartAlertsInfo = [];
-      const loadedBarChartSensitiveInfo = [];
-      const loadedBarChartDiscussionInfo = [];
-      const loadedBarChartBMInfo = [];
-      const loadedBarChartFinancialInfo = [];
-      const loadedBarChartECInfo = [];
-      const loadedBarChartPIInfo = [];
-      const loadedBarChartHGInfo = [];
-      const loadedBarChartACInfo = [];
+      fetchedTotalFiguresHandler(setTotalAlertsInfo, "alerts", res.trend);
+      fetchedTotalFiguresHandler(setTotalSensitiveInfo, "sensitive", res.trend);
+      fetchedTotalFiguresHandler(
+        setTotalDiscussionInfo,
+        "discussion",
+        res.trend
+      );
+      fetchedTotalFiguresHandler(setTotalBMInfo, "blackmarkets", res.trend);
+      fetchedTotalFiguresHandler(setTotalFinancialInfo, "financial", res.trend);
+      fetchedTotalFiguresHandler(
+        setTotalECInfo,
+        "exposedcredentials",
+        res.trend
+      );
+      fetchedTotalFiguresHandler(
+        setTotalPIInfo,
+        "personalinformation",
+        res.trend
+      );
+      fetchedTotalFiguresHandler(
+        setTotalHGInfo,
+        "hackergrouptargeting",
+        res.trend
+      );
+      fetchedTotalFiguresHandler(
+        setTotalACInfo,
+        "attacksandcompromises",
+        res.trend
+      );
+      fetchedTotalFiguresHandler(setTotalUAInfo, "unidentified", res.trend);
 
-      fetchedRiskAlertHandler(
-        res.by_category,
-        loadedSpiderAlertsData,
-        loadedSpiderRisksData,
-        setSpiderAlerts,
-        setSpiderRisks
-      );
-      fetchedRiskAlertHandler(
-        res.trend,
-        loadedLineChartAlerts,
-        loadedLineChartRisks,
-        setLineChartAlerts,
-        setLineChartRisks
-      );
+      fetchedRiskAlertHandler(res.by_category, setSpiderAlerts, setSpiderRisks);
+      fetchedRiskAlertHandler(res.trend, setLineChartAlerts, setLineChartRisks);
+      fetchedBarChartDataHandler(res.trend, setBarChartAlertsInfo, "alerts");
       fetchedBarChartDataHandler(
         res.trend,
-        loadedBarChartSensitiveInfo,
         setBarChartSensitiveInfo,
         "sensitive"
       );
       fetchedBarChartDataHandler(
         res.trend,
-        loadedBarChartDiscussionInfo,
         setBarChartDiscussionInfo,
         "discussion"
       );
+      fetchedBarChartDataHandler(res.trend, setBarChartBMtInfo, "blackmarkets");
       fetchedBarChartDataHandler(
         res.trend,
-        loadedBarChartBMInfo,
-        setBarChartBMtInfo,
-        "blackmarkets"
-      );
-      fetchedBarChartDataHandler(
-        res.trend,
-        loadedBarChartFinancialInfo,
         setBarChartFinancialInfo,
         "financial"
       );
       fetchedBarChartDataHandler(
         res.trend,
-        loadedBarChartECInfo,
         setBarChartECInfo,
         "exposedcredentials"
       );
       fetchedBarChartDataHandler(
         res.trend,
-        loadedBarChartPIInfo,
         setBarChartPIInfo,
         "personalinformation"
       );
       fetchedBarChartDataHandler(
         res.trend,
-        loadedBarChartHGInfo,
         setBarChartHGInfo,
         "hackergrouptargeting"
       );
       fetchedBarChartDataHandler(
         res.trend,
-        loadedBarChartACInfo,
         setBarChartACInfo,
         "attacksandcompromises"
       );
-      fetchedBarChartDataHandler(
-        res.trend,
-        loadedBarChartAlertsInfo,
-        setBarChartAlertsInfo,
-        "alerts"
-      );
+      fetchedBarChartDataHandler(res.trend, setBarChartUAInfo, "unidentified");
 
       fetchedPieChartDataHandler(
         setPieChartAlertsInfo,
@@ -269,6 +417,12 @@ const FetchDataContextProvider = (props) => {
         res.by_source.databreach.attacksandcompromises,
         res.by_source.deepweb.attacksandcompromises
       );
+      fetchedPieChartDataHandler(
+        setPieChartUAInfo,
+        res.by_source.darkweb.unidentified,
+        res.by_source.databreach.unidentified,
+        res.by_source.deepweb.unidentified
+      );
     };
     fetchSpiderData();
   }, []);
@@ -288,6 +442,7 @@ const FetchDataContextProvider = (props) => {
         barChartPIInfo,
         barChartHGInfo,
         barChartACInfo,
+        barChartUAInfo,
         pieChartAlertsInfo,
         pieChartSensitiveInfo,
         pieChartDiscussionInfo,
@@ -297,6 +452,17 @@ const FetchDataContextProvider = (props) => {
         pieChartPIInfo,
         pieChartHGInfo,
         pieChartACInfo,
+        pieChartUAInfo,
+        totalAlertsInfo,
+        totalSensitiveInfo,
+        totalDiscussionInfo,
+        totalBMInfo,
+        totalFinancialInfo,
+        totalECInfo,
+        totalPIInfo,
+        totalHGInfo,
+        totalACInfo,
+        totalUAInfo,
       }}
     >
       {props.children}
