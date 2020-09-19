@@ -25,8 +25,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Linechart() {
-  const [finalArray, setFinalArray] = useState([]);
-  const [finalArray1, setFinalArray1] = useState([]);
   const lineChartData = useContext(FetchDataContext);
   const {
     lineChartAlerts,
@@ -42,7 +40,18 @@ export default function Linechart() {
   } = lineChartData;
 
   const [selected, setSelected] = React.useState([]);
-  const [seletChart, setSelectChart] = React.useState("");
+
+  const [allow, setAllow] = useState(false);
+  const [sensitive, setSensitive] = useState([]);
+  const [discussion, setDiscussion] = useState([]);
+  const [bm, setBm] = useState([]);
+  const [financial, setFinancial] = useState([]);
+  const [ec, setEc] = useState([]);
+  const [pi, setPi] = useState([]);
+  const [hg, setHg] = useState([]);
+  const [ac, setAc] = useState([]);
+  const [alerts, setAlerts] = useState([]);
+  const [risks, setRisks] = useState([]);
 
   const options = [
     { label: "Sensitive Information", value: "Sensitive Information" },
@@ -56,49 +65,62 @@ export default function Linechart() {
   ];
 
   useEffect(() => {
-    switch (seletChart) {
-      case "Sensitive Information":
-        setFinalArray([...barChartSensitiveInfo]);
-        setFinalArray1([]);
-        break;
-      case "Discussions":
-        setFinalArray([...barChartDiscussionInfo]);
-        setFinalArray1([]);
-        break;
-      case "Black Markets":
-        setFinalArray([...barChartBMtInfo]);
-        setFinalArray1([]);
-        break;
-      case "Financial":
-        setFinalArray([...barChartFinancialInfo]);
-        setFinalArray1([]);
-        break;
-      case "Exposed Credential":
-        setFinalArray([...barChartECInfo]);
-        setFinalArray1([]);
-        break;
-      case "Personal Information":
-        setFinalArray([...barChartPIInfo]);
-        setFinalArray1([]);
-        break;
-      case "Hacker Group Targeting":
-        setFinalArray([...barChartHGInfo]);
-        setFinalArray1([]);
-        break;
-      case "Attacks and Compromises":
-        setFinalArray([...barChartACInfo]);
-        setFinalArray1([]);
-        break;
-      case "":
-        setFinalArray([...lineChartAlerts]);
-        setFinalArray1([...lineChartRisks]);
-        break;
-      default:
-        setFinalArray([...lineChartAlerts]);
-        setFinalArray1([...lineChartRisks]);
-        break;
+    const fetchedData = [
+      { label: "Sensitive Information", arrayFetch: barChartSensitiveInfo },
+      { label: "Discussions", arrayFetch: barChartDiscussionInfo },
+      { label: "Black Markets", arrayFetch: barChartBMtInfo },
+      { label: "Financial", arrayFetch: barChartFinancialInfo },
+      { label: "Exposed Credential", arrayFetch: barChartECInfo },
+      { label: "Personal Information", arrayFetch: barChartPIInfo },
+      { label: "Hacker Group Targeting", arrayFetch: barChartHGInfo },
+      { label: "Attacks and Compromises", arrayFetch: barChartACInfo },
+      { label: "Alerts", arrayFetch: lineChartAlerts },
+      { label: "Risks", arrayFetch: lineChartRisks },
+    ];
+
+    const allLabels = [];
+    for (const key in selected) {
+      allLabels.push(selected[key].label);
+    }
+    const labelObj = Object.assign({}, allLabels);
+
+    for (const key in labelObj) {
+      if (labelObj[key]) {
+        switch (labelObj[key]) {
+          case "Sensitive Information":
+            setSensitive([...barChartSensitiveInfo]);
+            break;
+          case "Discussions":
+            setDiscussion([...barChartDiscussionInfo]);
+            break;
+          case "Black Markets":
+            setBm([...barChartBMtInfo]);
+            break;
+          case "Financial":
+            setFinancial([...barChartFinancialInfo]);
+            break;
+          case "Exposed Credential":
+            setEc([...barChartECInfo]);
+            break;
+          case "Personal Information":
+            setPi([...barChartPIInfo]);
+            break;
+          case "Hacker Group Targeting":
+            setHg([...barChartHGInfo]);
+            break;
+          case "Attacks and Compromises":
+            setAc([...barChartACInfo]);
+            break;
+          default:
+            setAlerts([...lineChartAlerts]);
+            break;
+        }
+      } else {
+        console.log('no');
+      }
     }
   }, [
+    allow,
     lineChartRisks,
     lineChartAlerts,
     barChartSensitiveInfo,
@@ -109,11 +131,11 @@ export default function Linechart() {
     barChartPIInfo,
     barChartHGInfo,
     barChartACInfo,
-    seletChart,
+    selected,
   ]);
 
   useEffect(() => {
-    console.log(seletChart);
+    console.log(selected);
   });
 
   const statelinechart = {
@@ -145,23 +167,103 @@ export default function Linechart() {
     ],
     datasets: [
       {
-        label: "labelA",
+        label: "Alerts",
         fill: false,
         lineTension: 0.5,
         backgroundColor: "grey",
         borderColor: "grey",
         borderWidth: 2,
-        data: finalArray,
+        data: alerts,
       },
       {
-        label: "labelB",
+        label: "Risks",
         fill: false,
         lineTension: 0.5,
         backgroundColor: "red",
         color: "red",
         borderColor: "red",
         borderWidth: 2,
-        data: finalArray1,
+        data: risks,
+      },
+      {
+        label: "Sensitive Information",
+        fill: false,
+        lineTension: 0.5,
+        backgroundColor: "black",
+        color: "black",
+        borderColor: "#d2e603",
+        borderWidth: 3,
+        data: sensitive,
+      },
+      {
+        label: "Discussion",
+        fill: false,
+        lineTension: 0.5,
+        backgroundColor: "#dbcbbd",
+        color: "#dbcbbd",
+        borderColor: "#c87941",
+        borderWidth: 3,
+        data: discussion,
+      },
+      {
+        label: "Black Markets",
+        fill: false,
+        lineTension: 0.5,
+        backgroundColor: "#a2d5f2",
+        color: "#a2d5f2",
+        borderColor: "#07689f",
+        borderWidth: 3,
+        data: bm,
+      },
+      {
+        label: "Financial",
+        fill: false,
+        lineTension: 0.5,
+        backgroundColor: "#1a1a2e",
+        color: "#1a1a2e",
+        borderColor: "#e94560",
+        borderWidth: 3,
+        data: financial,
+      },
+      {
+        label: "Exposed Credential",
+        fill: false,
+        lineTension: 0.5,
+        backgroundColor: "#1a1a2e",
+        color: "#1a1a2e",
+        borderColor: "#fddb3a",
+        borderWidth: 3,
+        data: ec,
+      },
+      {
+        label: "Personal Information",
+        fill: false,
+        lineTension: 0.5,
+        backgroundColor: "#2a3d66",
+        color: "#2a3d66",
+        borderColor: "#d789d7",
+        borderWidth: 3,
+        data: pi,
+      },
+      {
+        label: "Personal Information",
+        fill: false,
+        lineTension: 0.5,
+        backgroundColor: "#f5efef",
+        color: "#f5efef",
+        borderColor: "#810000",
+        borderWidth: 3,
+        data: hg,
+      },
+      {
+        label: "Personal Information",
+        fill: false,
+        lineTension: 0.5,
+        backgroundColor: "#222831",
+        color: "#222831",
+        borderColor: "#32e0c4",
+        borderWidth: 3,
+        data: ac,
       },
     ],
   };
@@ -185,7 +287,10 @@ export default function Linechart() {
         <MultiSelect
           options={options}
           value={selected}
-          onChange={(e) => setSelectChart(e[0].label)}
+          onChange={(e) => {
+            setSelected(e);
+            setAllow(true);
+          }}
           labelledBy={"Select"}
         />
         {/* <Multiselect
