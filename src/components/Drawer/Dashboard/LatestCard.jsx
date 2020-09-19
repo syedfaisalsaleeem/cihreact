@@ -11,7 +11,8 @@ import GradeIcon from '@material-ui/icons/Grade';
 import TextField from '@material-ui/core/TextField';
 import theme from '../../../theme';
 import Tooltip from '@material-ui/core/Tooltip';
-import axios from 'axios'
+import axios from 'axios';
+import {Redirect,useHistory, withRouter} from 'react-router-dom';
 const LightTooltip = withStyles((theme) => ({
     tooltip: {
       backgroundColor: theme.palette.common.white,
@@ -193,32 +194,81 @@ export default function LatestCard(props){
     const handleClose = () => {
       setOpen(false);
     };
+    const history = useHistory();
+    const loggedout=()=>{
+        localStorage.removeItem("token")
+        
+        history.push("/");
+        window.location.reload();
+        
+      }
     const handlecomment=async()=>{
         if(comments.length>0){
-            // console.log("faisal2",commenting,comments[0]['id'])
-            
-            const response= await fetch('https://if.cyberintelligencehouse.com/api/alerts/'+id+'/comments/'+comments[0]['id'], {
-                method: 'PUT',
-                headers: {
-                    'accept': 'application/json',
-                    'X-Api-Key': '1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2',
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: 'text='+commenting
-            });
+            console.log("faisal2",commenting,comments[0]['id'])
+            const token=localStorage.getItem("token")
+            const  x= async()=>{
+                const response= await fetch('https://if.cyberdevelopment.house/api/alerts'+id+'/comments/'+comments[0]['id'], {
+                    method: 'PUT',
+                    headers: {
+                        'accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Authorization': token
+                    },
+                    body: 'text='+commenting
+                });
+                const y=await response.json()
+                if(y.message==="Invalid access token"){
+                    console.log(y,"typefaisal")
+                    loggedout()
+                }
+
+                // console.log(y,"typefaisal")
+                // setstate1(y.alerts)
+            }
+            x() 
+            // const response= await fetch('https://if.cyberintelligencehouse.com/api/alerts/'+id+'/comments/'+comments[0]['id'], {
+            //     method: 'PUT',
+            //     headers: {
+            //         'accept': 'application/json',
+            //         'X-Api-Key': '1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2',
+            //         'Content-Type': 'application/x-www-form-urlencoded'
+            //     },
+            //     body: 'text='+commenting
+            // });
             // let data = await response.json()
             // console.log(data)
         }
         else{
-            const response=await fetch('https://if.cyberintelligencehouse.com/api/alerts/'+id+'/comments', {
-                method: 'POST',
-                headers: {
-                    'accept': 'application/json',
-                    'X-Api-Key': '1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2',
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: 'nick=dsadasdsasd&text='+commenting
-            });
+            const token=localStorage.getItem("token")
+            const  x= async()=>{
+                const response= await fetch('https://if.cyberdevelopment.house/api/alerts'+id+'/comments', {
+                    method: 'POST',
+                    headers: {
+                        'accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Authorization': token
+                    },
+                    body: 'nick=dsadasdsasd&text='+commenting
+                });
+                const y=await response.json()
+                if(y.message==="Invalid access token"){
+                    console.log(y,"typefaisal")
+                    loggedout()
+                }
+
+                // console.log(y,"typefaisal")
+                // setstate1(y.alerts)
+            }
+            x() 
+            // const response=await fetch('https://if.cyberintelligencehouse.com/api/alerts/'+id+'/comments', {
+            //     method: 'POST',
+            //     headers: {
+            //         'accept': 'application/json',
+            //         'X-Api-Key': '1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2',
+            //         'Content-Type': 'application/x-www-form-urlencoded'
+            //     },
+            //     body: 'nick=dsadasdsasd&text='+commenting
+            // });
             // let data = await response.json()
             // console.log(data)
         }

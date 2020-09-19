@@ -3,9 +3,9 @@ import ContactGs1 from "./ContactGs1.jsx";
 import list from "../../Links/images/list.png";
 import grid from "../../Links/images/grid.png";
 import filter from "../../Links/images/filter.png";
-import LatestCard from "./LatestCard.jsx";
+import LatestCard from "../Drawer/Dashboard/LatestCard.jsx";
 import LatestCardH from "./LatestCardhigh.jsx";
-import CardGrid from "./CardGrid.jsx";
+import CardGrid from "../Exposed/CardGrid.jsx";
 import React,{useEffect, useState,useReducer} from 'react';
 import {Grid,Typography,Card,Paper,CardHeader,Divider,Button, IconButton,Chip} from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,6 +19,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import Menu from '@material-ui/core/Menu';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import axios from 'axios';
+import useDeepCompareEffect from 'use-deep-compare-effect'
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -174,6 +176,12 @@ const useStyles = makeStyles((theme) => ({
   }));
 
   const initialState = {
+      query:["attacksandcompromises"],
+      operations:{
+        and:true,
+        or:false,
+        not:false
+    },
       severitylevel:{
           low:false,
           medium:false,
@@ -184,6 +192,7 @@ const useStyles = makeStyles((theme) => ({
             deepweb:false,
             databreach:false
         },
+
         exposurecategory:{
             sensitiveinformation:{
                 control:{
@@ -419,58 +428,150 @@ const useStyles = makeStyles((theme) => ({
 //                     }
 //             }
 // }
+
 function reducer(state, action) {
+
     switch (action.type) {
         case 'low':
-            
-            return{
-                ...state,
-                severitylevel:{...state.severitylevel,low:!action.payload}
-                    
-                    
+            // console.log(state.query)
+            if(action.payload===true){
+                // let x=state['query']
+                const listi=Object.assign([],state.query);
+                // listi.splice("low");
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "severitylow") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+                return{
+                    ...state,query:listi,
+                    severitylevel:{...state.severitylevel,low:!action.payload}
+                        
+                        
+                }
+
+            }else{
+                return{
+                    ...state,query:[...state.query,'severitylow'],
+                    severitylevel:{...state.severitylevel,low:!action.payload}
+                        
+                        
+                }
+
             }
+
         case 'medium':
-            
+            // console.log(state.query)
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "severitymedium") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+                return{
+                    ...state,query:listi,
+                    severitylevel:{...state.severitylevel,medium:!action.payload}
+                        
+                        
+                }
+        }
+        else{
             return{
-                ...state,
+                ...state,query:[...state.query,'severitymedium'],
                 severitylevel:{...state.severitylevel,medium:!action.payload}
                     
                     
             }
+
+        }
         case 'high':
-            
-            return{
-                ...state,
-                severitylevel:{...state.severitylevel,high:!action.payload}
-                    
+            // console.log(state.query)
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "severityhigh") { listi.splice(i, 1); }}
+                return{
+                    ...state,query:listi,
+                    severitylevel:{...state.severitylevel,high:!action.payload}
+                }  
                     
             }
+            else{
+                return{
+                    ...state,query:[...state.query,'severityhigh'],
+                    severitylevel:{...state.severitylevel,high:!action.payload}
+                        
+                        
+                }
+    
+            } 
         case 'deepweb':
-            
-            return{
-                ...state,
-                source:{...state.source,deepweb:!action.payload}
-                    
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "deepweb") { listi.splice(i, 1); }}
+
+                return{
+                    ...state,query:listi,
+                    source:{...state.source,deepweb:!action.payload}
+                        
+                        
+                } 
                     
             }
+            else{
+                return{
+                    ...state,query:[...state.query,'deepweb'],
+                    source:{...state.source,deepweb:!action.payload}
+                        
+                        
+                } 
+    
+            }
+
         case 'darkweb':
-            
-            return{
-                ...state,
-                source:{...state.source,darkweb:!action.payload}
-                    
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "darkweb") { listi.splice(i, 1); }}
+
+                return{
+                    ...state,query:listi,
+                    source:{...state.source,darkweb:!action.payload}
+                        
+                        
+                }
                     
             }
+            else{
+                return{
+                    ...state,query:[...state.query,'darkweb'],
+                    source:{...state.source,darkweb:!action.payload}
+                        
+                        
+                }
+    
+            }
+
         case 'databreach':
-            
-            return{
-                ...state,
-                source:{...state.source,databreach:!action.payload}
-                    
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "databreach") { listi.splice(i, 1); }}
+
+                return{
+                    ...state,query:listi,
+                    source:{...state.source,databreach:!action.payload}
+                        
+                        
+                }
                     
             }
+            else{
+                return{
+                    ...state,query:[...state.query,'databreach'],
+                    source:{...state.source,databreach:!action.payload}
+                        
+                        
+                }
+    
+            }
+
       case 'language':
-        console.log(state.languages.control.button)
+        // console.log(state.languages.control.button)
         return{
             ...state,
             languages:{...state.languages,
@@ -480,16 +581,32 @@ function reducer(state, action) {
         case 'languagein':
             // return change1(action.payload);
             const x=action.payload.value2
-            // const y=action.payload
-            
-            return(
+            if(action.payload.value1===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === x) { listi.splice(i, 1); }}
+
+                return(
                 
-                {
-                ...state,
-                languages:{...state.languages,
-                    value:{...state.languages.value,[x]:!action.payload.value1}
-                    }
-            })
+                    {
+                    ...state,query:listi,
+                    languages:{...state.languages,
+                        value:{...state.languages.value,[x]:!action.payload.value1}
+                        }
+                })
+                    
+            }
+            else{
+                return(
+                
+                    {
+                    ...state,query:[...state.query,x],
+                    languages:{...state.languages,
+                        value:{...state.languages.value,[x]:!action.payload.value1}
+                        }
+                })
+    
+            }
+
         case 'socialsecuritynumber':
             
              return {
@@ -502,15 +619,32 @@ function reducer(state, action) {
                 // return change1(action.payload);
                 const y=action.payload.value2
                 // const y=action.payload
-                
-                return(
+                if(action.payload.value1===true){
+                    const listi=Object.assign([],state.query);
+                    for( var i = 0; i < listi.length; i++){ if ( listi[i] === y) { listi.splice(i, 1); }}
+    
+                    return(
                     
-                    {
-                    ...state,
-                    socialsecuritynumber:{...state.socialsecuritynumber,
-                        value:{...state.socialsecuritynumber.value,[action.payload.value2]:!action.payload.value1}
-                        }
-                })
+                        {
+                        ...state,query:listi,
+                        socialsecuritynumber:{...state.socialsecuritynumber,
+                            value:{...state.socialsecuritynumber.value,[action.payload.value2]:!action.payload.value1}
+                            }
+                    })
+                        
+                }
+                else{
+                    return(
+                    
+                        {
+                        ...state,query:[...state.query,y],
+                        socialsecuritynumber:{...state.socialsecuritynumber,
+                            value:{...state.socialsecuritynumber.value,[action.payload.value2]:!action.payload.value1}
+                            }
+                    })
+        
+                }
+
         case 'other':
             
              return {
@@ -523,15 +657,32 @@ function reducer(state, action) {
                 // return change1(action.payload);
                
                 // const y=action.payload
-                
-                return(
+                if(action.payload.value1===true){
+                    const listi=Object.assign([],state.query);
+                    for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
+    
+                    return(
                     
-                    {
-                    ...state,
-                    other:{...state.other,
-                        value:{...state.other.value,[action.payload.value2]:!action.payload.value1}
-                        }
-                })
+                        {
+                        ...state,query:listi,
+                        other:{...state.other,
+                            value:{...state.other.value,[action.payload.value2]:!action.payload.value1}
+                            }
+                    })
+                        
+                }
+                else{
+                    return(
+                    
+                        {
+                        ...state,query:[...state.query,action.payload.value2],
+                        other:{...state.other,
+                            value:{...state.other.value,[action.payload.value2]:!action.payload.value1}
+                            }
+                    })
+        
+                }
+
         case 'alertgroup':
             
              return {
@@ -541,9 +692,25 @@ function reducer(state, action) {
                     }
             }
         case 'sensitiveinformation':
-            
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "sensitivedisclosure") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        sensitiveinformation:{...state.exposurecategory.sensitiveinformation,
+                            control:{...state.exposurecategory.sensitiveinformation.control,all:!action.payload}
+                            
+                        }
+                    }
+                }
+        }
+        else{
             return {
-                ...state,
+                ...state,query:[...state.query,'sensitivedisclosure'],
                 exposurecategory:{...state.exposurecategory,
                     sensitiveinformation:{...state.exposurecategory.sensitiveinformation,
                         control:{...state.exposurecategory.sensitiveinformation.control,all:!action.payload}
@@ -551,6 +718,10 @@ function reducer(state, action) {
                     }
                 }
             }
+
+
+        }
+
         case 'sensitiveinformation1':
                 
                 return {
@@ -563,9 +734,11 @@ function reducer(state, action) {
                     }
                 }
         case 'sensitiveinformationin':
-                
+            if(action.payload.value1===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
                 return {
-                    ...state,
+                    ...state,query:listi,
                     exposurecategory:{...state.exposurecategory,
                         sensitiveinformation:{...state.exposurecategory.sensitiveinformation,
                             value:{...state.exposurecategory.sensitiveinformation.value,[action.payload.value2]:!action.payload.value1}
@@ -573,10 +746,42 @@ function reducer(state, action) {
                         }
                     }
                 }
+                    
+            }
+            else{
+                return {
+                    ...state,query:[...state.query,action.payload.value2],
+                    exposurecategory:{...state.exposurecategory,
+                        sensitiveinformation:{...state.exposurecategory.sensitiveinformation,
+                            value:{...state.exposurecategory.sensitiveinformation.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+    
+            }
+
         case 'discussion':
-            
+            // console.log(state.query)
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "discussions") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        discussion:{...state.exposurecategory.discussion,
+                            control:{...state.exposurecategory.discussion.control,all:!action.payload}
+                            
+                        }
+                    }
+                }
+        }
+        else{
             return {
-                ...state,
+                ...state,query:[...state.query,'discussions'],
                 exposurecategory:{...state.exposurecategory,
                     discussion:{...state.exposurecategory.discussion,
                         control:{...state.exposurecategory.discussion.control,all:!action.payload}
@@ -584,6 +789,10 @@ function reducer(state, action) {
                     }
                 }
             }
+
+
+        }
+
         case 'discussion1':
                 
                 return {
@@ -596,9 +805,11 @@ function reducer(state, action) {
                     }
                 }
         case 'discussionin':
-                
+            if(action.payload.value1===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
                 return {
-                    ...state,
+                    ...state,query:listi,
                     exposurecategory:{...state.exposurecategory,
                         discussion:{...state.exposurecategory.discussion,
                             value:{...state.exposurecategory.discussion.value,[action.payload.value2]:!action.payload.value1}
@@ -606,10 +817,41 @@ function reducer(state, action) {
                         }
                     }
                 }
-        case 'blackmarket':
+                    
+            }
+            else{
+                return {
+                    ...state,query:[...state.query,action.payload.value2],
+                    exposurecategory:{...state.exposurecategory,
+                        discussion:{...state.exposurecategory.discussion,
+                            value:{...state.exposurecategory.discussion.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
     
+            }
+
+        case 'blackmarket':
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "blackmarkets") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        blackmarket:{...state.exposurecategory.blackmarket,
+                            control:{...state.exposurecategory.blackmarket.control,all:!action.payload}
+                            
+                        }
+                    }
+                }
+        }
+        else{
             return {
-                ...state,
+                ...state,query:[...state.query,'blackmarkets'],
                 exposurecategory:{...state.exposurecategory,
                     blackmarket:{...state.exposurecategory.blackmarket,
                         control:{...state.exposurecategory.blackmarket.control,all:!action.payload}
@@ -617,6 +859,10 @@ function reducer(state, action) {
                     }
                 }
             }
+
+
+        }
+
         case 'blackmarket1':
                 
                 return {
@@ -629,9 +875,11 @@ function reducer(state, action) {
                     }
                 }
         case 'blackmarketin':
-                
+            if(action.payload.value1===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
                 return {
-                    ...state,
+                    ...state,query:listi,
                     exposurecategory:{...state.exposurecategory,
                         blackmarket:{...state.exposurecategory.blackmarket,
                             value:{...state.exposurecategory.blackmarket.value,[action.payload.value2]:!action.payload.value1}
@@ -639,10 +887,40 @@ function reducer(state, action) {
                         }
                     }
                 }
-        case 'financial':
+                    
+            }
+            else{
+                return {
+                    ...state,query:[...state.query,action.payload.value2],
+                    exposurecategory:{...state.exposurecategory,
+                        blackmarket:{...state.exposurecategory.blackmarket,
+                            value:{...state.exposurecategory.blackmarket.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+    
+            }
 
+        case 'financial':
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "financial") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        financial:{...state.exposurecategory.financial,
+                            control:{...state.exposurecategory.financial.control,all:!action.payload}
+                            
+                        }
+                    }
+                }
+        }
+        else{
             return {
-                ...state,
+                ...state,query:[...state.query,'financial'],
                 exposurecategory:{...state.exposurecategory,
                     financial:{...state.exposurecategory.financial,
                         control:{...state.exposurecategory.financial.control,all:!action.payload}
@@ -650,6 +928,10 @@ function reducer(state, action) {
                     }
                 }
             }
+
+
+        }
+
         case 'financial1':
                 
                 return {
@@ -662,9 +944,11 @@ function reducer(state, action) {
                     }
                 }
         case 'financialin':
-                
+            if(action.payload.value1===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
                 return {
-                    ...state,
+                    ...state,query:listi,
                     exposurecategory:{...state.exposurecategory,
                         financial:{...state.exposurecategory.financial,
                             value:{...state.exposurecategory.financial.value,[action.payload.value2]:!action.payload.value1}
@@ -672,10 +956,40 @@ function reducer(state, action) {
                         }
                     }
                 }
-        case 'exposedcredentials':
+                    
+            }
+            else{
+                return {
+                    ...state,query:[...state.query,action.payload.value2],
+                    exposurecategory:{...state.exposurecategory,
+                        financial:{...state.exposurecategory.financial,
+                            value:{...state.exposurecategory.financial.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+    
+            }
 
+        case 'exposedcredentials':
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "exposedcredentials") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        exposedcredentials:{...state.exposurecategory.exposedcredentials,
+                            control:{...state.exposurecategory.exposedcredentials.control,all:!action.payload}
+                            
+                        }
+                    }
+                }
+        }
+        else{
             return {
-                ...state,
+                ...state,query:[...state.query,'exposedcredentials'],
                 exposurecategory:{...state.exposurecategory,
                     exposedcredentials:{...state.exposurecategory.exposedcredentials,
                         control:{...state.exposurecategory.exposedcredentials.control,all:!action.payload}
@@ -683,6 +997,10 @@ function reducer(state, action) {
                     }
                 }
             }
+
+
+        }
+
         case 'exposedcredentials1':
                 
                 return {
@@ -695,9 +1013,11 @@ function reducer(state, action) {
                     }
                 }
         case 'exposedcredentialsin':
-                
+            if(action.payload.value1===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
                 return {
-                    ...state,
+                    ...state,query:listi,
                     exposurecategory:{...state.exposurecategory,
                         exposedcredentials:{...state.exposurecategory.exposedcredentials,
                             value:{...state.exposurecategory.exposedcredentials.value,[action.payload.value2]:!action.payload.value1}
@@ -705,10 +1025,40 @@ function reducer(state, action) {
                         }
                     }
                 }
-        case 'personalinformation':
+                    
+            }
+            else{
+                return {
+                    ...state,query:[...state.query,action.payload.value2],
+                    exposurecategory:{...state.exposurecategory,
+                        exposedcredentials:{...state.exposurecategory.exposedcredentials,
+                            value:{...state.exposurecategory.exposedcredentials.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+    
+            }
 
+        case 'personalinformation':
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "personalinformation") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        personalinformation:{...state.exposurecategory.personalinformation,
+                            control:{...state.exposurecategory.personalinformation.control,all:!action.payload}
+                            
+                        }
+                    }
+                }
+        }
+        else{
             return {
-                ...state,
+                ...state,query:[...state.query,'personalinformation'],
                 exposurecategory:{...state.exposurecategory,
                     personalinformation:{...state.exposurecategory.personalinformation,
                         control:{...state.exposurecategory.personalinformation.control,all:!action.payload}
@@ -716,6 +1066,10 @@ function reducer(state, action) {
                     }
                 }
             }
+
+
+        }
+
         case 'personalinformation1':
                 
                 return {
@@ -728,9 +1082,11 @@ function reducer(state, action) {
                     }
                 }
         case 'personalinformationin':
-                
+            if(action.payload.value1===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
                 return {
-                    ...state,
+                    ...state,query:listi,
                     exposurecategory:{...state.exposurecategory,
                         personalinformation:{...state.exposurecategory.personalinformation,
                             value:{...state.exposurecategory.personalinformation.value,[action.payload.value2]:!action.payload.value1}
@@ -738,10 +1094,40 @@ function reducer(state, action) {
                         }
                     }
                 }
-        case 'hackergrouptargeting':
+                    
+            }
+            else{
+                return {
+                    ...state,query:[...state.query,action.payload.value2],
+                    exposurecategory:{...state.exposurecategory,
+                        personalinformation:{...state.exposurecategory.personalinformation,
+                            value:{...state.exposurecategory.personalinformation.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+    
+            }
 
+        case 'hackergrouptargeting':
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "hackergrouptargeting") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        hackergrouptargeting:{...state.exposurecategory.hackergrouptargeting,
+                            control:{...state.exposurecategory.hackergrouptargeting.control,all:!action.payload}
+                            
+                        }
+                    }
+                }
+        }
+        else{
             return {
-                ...state,
+                ...state,query:[...state.query,'hackergrouptargeting'],
                 exposurecategory:{...state.exposurecategory,
                     hackergrouptargeting:{...state.exposurecategory.hackergrouptargeting,
                         control:{...state.exposurecategory.hackergrouptargeting.control,all:!action.payload}
@@ -749,6 +1135,10 @@ function reducer(state, action) {
                     }
                 }
             }
+
+
+        }
+
         case 'hackergrouptargeting1':
                 
                 return {
@@ -761,9 +1151,11 @@ function reducer(state, action) {
                     }
                 }
         case 'hackergrouptargetingin':
-                
+            if(action.payload.value1===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
                 return {
-                    ...state,
+                    ...state,query:listi,
                     exposurecategory:{...state.exposurecategory,
                         hackergrouptargeting:{...state.exposurecategory.hackergrouptargeting,
                             value:{...state.exposurecategory.hackergrouptargeting.value,[action.payload.value2]:!action.payload.value1}
@@ -771,10 +1163,40 @@ function reducer(state, action) {
                         }
                     }
                 }
-        case 'attacksandcompromises':
+                    
+            }
+            else{
+                return {
+                    ...state,query:[...state.query,action.payload.value2],
+                    exposurecategory:{...state.exposurecategory,
+                        hackergrouptargeting:{...state.exposurecategory.hackergrouptargeting,
+                            value:{...state.exposurecategory.hackergrouptargeting.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+    
+            } 
 
+        case 'attacksandcompromises':
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "attacksandcompromises") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        attacksandcompromises:{...state.exposurecategory.attacksandcompromises,
+                            control:{...state.exposurecategory.attacksandcompromises.control,all:!action.payload}
+                            
+                        }
+                    }
+                }
+        }
+        else{
             return {
-                ...state,
+                ...state,query:[...state.query,'attacksandcompromises'],
                 exposurecategory:{...state.exposurecategory,
                     attacksandcompromises:{...state.exposurecategory.attacksandcompromises,
                         control:{...state.exposurecategory.attacksandcompromises.control,all:!action.payload}
@@ -782,6 +1204,10 @@ function reducer(state, action) {
                     }
                 }
             }
+
+
+        }
+
         case 'attacksandcompromises1':
                 
                 return {
@@ -794,9 +1220,11 @@ function reducer(state, action) {
                     }
                 }
         case 'attacksandcompromisesin':
-                
+            if(action.payload.value1===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
                 return {
-                    ...state,
+                    ...state,query:listi,
                     exposurecategory:{...state.exposurecategory,
                         attacksandcompromises:{...state.exposurecategory.attacksandcompromises,
                             value:{...state.exposurecategory.attacksandcompromises.value,[action.payload.value2]:!action.payload.value1}
@@ -804,10 +1232,40 @@ function reducer(state, action) {
                         }
                     }
                 }
-        case 'underanalysis':
+                    
+            }
+            else{
+                return {
+                    ...state,query:[...state.query,action.payload.value2],
+                    exposurecategory:{...state.exposurecategory,
+                        attacksandcompromises:{...state.exposurecategory.attacksandcompromises,
+                            value:{...state.exposurecategory.attacksandcompromises.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+    
+            } 
 
+        case 'underanalysis':
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "undefined") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        underanalysis:{...state.exposurecategory.underanalysis,
+                            control:{...state.exposurecategory.underanalysis.control,all:!action.payload}
+                            
+                        }
+                    }
+                }
+        }
+        else{
             return {
-                ...state,
+                ...state,query:[...state.query,'undefined'],
                 exposurecategory:{...state.exposurecategory,
                     underanalysis:{...state.exposurecategory.underanalysis,
                         control:{...state.exposurecategory.underanalysis.control,all:!action.payload}
@@ -815,6 +1273,10 @@ function reducer(state, action) {
                     }
                 }
             }
+
+
+        }
+
         // this.setState(prevState => ({
         //     ...prevState,
         //     someProperty: {
@@ -844,6 +1306,10 @@ function reducer(state, action) {
 export default function Dropup(props){
     const classes=useStyles();
     const [state, dispatch] = useReducer(reducer, initialState);
+    const [select,changeselect]=React.useState('AND')
+    const handleselect=(e)=>{
+        changeselect(e.target.value)
+    }
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
       };
@@ -888,6 +1354,59 @@ export default function Dropup(props){
           setDate1(date)
   
         };
+        const [usestate1,setstate1]=React.useState({})
+        useDeepCompareEffect(()=>{
+            let result = null;
+            // console.log(state.query,"very valuable")
+            
+            if(state.query.length===0){
+                const fetchData = async () => {
+                    result = await axios.get(
+                      "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter_op="+select,
+                      {
+                        headers: {
+                          "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
+                        },
+                      }
+                    );
+                    // console.log(result.data,"faisal")
+                    setstate1(result.data.alerts)
+                  }
+                  fetchData()
+            }
+            else if(state.query.length===1){
+                const fetchData = async () => {
+                    result = await axios.get(
+                      "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+state.query[0]+"&filter_op="+select,
+                      {
+                        headers: {
+                          "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
+                        },
+                      }
+                    );
+                    // console.log(result.data,"faisal")
+                    setstate1(result.data.alerts)
+                  }
+                  fetchData()
+            }
+            else{
+                const y=state.query
+                const fetchData = async () => {
+                    result = await axios.get(
+                      "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+y.join("%2C")+"&filter_op="+select,
+                      {
+                        headers: {
+                          "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
+                        },
+                      }
+                    );
+                    // console.log(result.data,"faisal")
+                    setstate1(result.data.alerts)
+                  }
+                  fetchData()
+            }
+
+        },[state,select])
      return(
         <div style={{marginBottom:"30px"}}>
             <Grid item xs={12}>
@@ -1111,6 +1630,47 @@ export default function Dropup(props){
                                     </div>
                                     :
                                     <div>
+                                     <Grid item xs={12} style={{marginTop:"26px"}}>
+                                    <Grid container justify="center">
+                                        <Grid item xs={11}>
+                                            <div style={{fontStyle: "normal",fontWeight: "500",fontSize: "15px",color: "#000000"}}>
+                                                Operations
+                                            </div>
+
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={12} style={{marginTop:"20px"}}>
+                                    <Grid container justify="center">
+                                        <Grid item xs={11}>
+                                            <Grid container spacing={2}>
+                                            <FormControl className={classes.formControl} >
+
+                                                <Select
+                                                labelId="demo-simple-select-label"
+                                                id="demo-simple-select"
+                                                style={{height:"30px"}}
+                                                value={select}
+                                                onChange={handleselect}
+                                                
+                                                
+                                                variant="outlined"
+                                                displayEmpty
+                                                >
+                                            <MenuItem value={'AND'}>
+                                                    <em >AND</em>
+                                            </MenuItem>
+                                            
+                                            <MenuItem value={'OR'}>OR</MenuItem>
+                                            <MenuItem value={'NOT'}>NOT</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                            </Grid>
+                                            
+
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
                                     <Grid item xs={12} style={{marginTop:"26px"}}>
                                     <Grid container justify="center">
                                         <Grid item xs={11}>
@@ -1463,7 +2023,7 @@ export default function Dropup(props){
 
                                                     {Object.keys(state.languages.value).map((value1,index) => ( 
                                                         <Grid item>
-                                                            {console.log(state.languages.value[value1])}
+                                                            {/* {console.log(state.languages.value[value1])} */}
                                                             <Chip  size="small" className={classes.chip} style={{background:state.languages.value[value1]?"#B7E9F7":'white'}} label={value1} onClick={() => dispatch({type: 'languagein',payload:{value1:state.languages.value[value1],value2:value1}})} variant="outlined"/> 
                                                         
                                                             </Grid>
@@ -1593,16 +2153,30 @@ export default function Dropup(props){
                 <Grid container justify="center" >
                     <Grid item xs={11} lg={11}>
                         <Grid container justify="space-evenly" spacing={2}>
-                            <Grid item>
-                                <LatestCard/>
+                        {usestate1.length===0?
+                                <div></div>:
+                                Object.keys(usestate1).map((index)=>(
+                                <Grid item>
+                                                {/* {console.log(usestate1[index],"print")} */}
+                                <LatestCard
+                                date={usestate1[index]['timestamp']}
+                                alertcreated={usestate1[index]['created']}
+                                severity={usestate1[index]['severity']} 
+                                title={usestate1[index]['source_title']} 
+                                source={usestate1[index]['source_url']}
+                                keyword={usestate1[index]['keywords']}
+                                tags={usestate1[index]['tags']}
+                                remediation={usestate1[index]['remediation']}
+                                id={usestate1[index]['id']}
+                                comments={usestate1[index]['comments']}
+                                changeflag={props.changeflag} addcount={props.addcount}
+                                />
+                                
+                                </Grid>
+
+                                ))
+                                }
                             </Grid>
-                            <Grid item>
-                                <LatestCardH/>
-                            </Grid>
-                            <Grid item>
-                                <LatestCard/>
-                            </Grid>
-                        </Grid>
                         
                         
                         
@@ -1618,13 +2192,26 @@ export default function Dropup(props){
                     <Grid item xs={11} lg={11}>
                         
                            <Grid container justify="space-around">
-                               
-                               <CardGrid/>
-                                <CardGrid/>
-                                <CardGrid/>
-                                <CardGrid/>
-                               
+                           {usestate1.length===0?
+                                <div></div>:
+                                Object.keys(usestate1).map((index)=>(
+                                <Grid item>  
+                               <CardGrid            
+                               date={usestate1[index]['timestamp']}
+            alertcreated={usestate1[index]['created']}
+            severity={usestate1[index]['severity']} 
+            title={usestate1[index]['source_title']} 
+            source={usestate1[index]['source_url']}
+            keyword={usestate1[index]['keywords']}
+            tags={usestate1[index]['tags']}
+            remediation={usestate1[index]['remediation']}
+            id={usestate1[index]['id']}
+            comments={usestate1[index]['comments']}
+            changeflag={props.changeflag} addcount={props.addcount}/>
 
+                            </Grid>   
+                            ))
+                                }
                            </Grid>
 
                             

@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react';
+import React,{useEffect, useState,useContext} from 'react';
 import {Grid,Typography,Card,Paper,CardHeader,Divider,Button, IconButton} from "@material-ui/core";
 import { makeStyles,withStyles } from '@material-ui/core/styles';
 import refresh from "../../Links/images/refresh.png";
@@ -15,7 +15,7 @@ import Dropdown from "./Dropdown.jsx";
 import GetAppIcon from '@material-ui/icons/GetApp';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
-
+import { FetchDataContext } from "../../context/FetchDataContext";
 const LightTooltip = withStyles((theme) => ({
     tooltip: {
       backgroundColor: theme.palette.common.white,
@@ -149,6 +149,8 @@ const useStyles = makeStyles((theme) => ({
   }));
 export default function SIContent(){
     const classes = useStyles();
+    const totalAllSensitiveData = useContext(FetchDataContext);
+    const { totalSensitiveInfo } = totalAllSensitiveData;
     const [count,setcount]=useState();
     const [view,setview]=useState(true);
     const [dropc,setdrop]=useState(true);
@@ -300,7 +302,7 @@ export default function SIContent(){
                                         <Grid item>
                                             <Grid container direction="column" alignItems="center">
                                                 <Grid item style={{color:"#464E5F",fontWeight:"bold",fontSize:"40px"}}>
-                                                    158
+                                                {totalSensitiveInfo.totalAlerts}
                                                 </Grid>
                                                 <Grid item style={{color:"#B5B5C3",fontWeight:"500",fontSize:"12px;"}}>
                                                     Total Alerts Found
@@ -310,7 +312,7 @@ export default function SIContent(){
                                         <Grid item>
                                             <Grid container direction="column" alignItems="center">
                                                 <Grid item style={{color:"#464E5F",fontWeight:"bold",fontSize:"40px"}}>
-                                                    3
+                                                {totalSensitiveInfo.alertsToday}
                                                 </Grid>
                                                 <Grid item style={{color:"#B5B5C3",fontWeight:"500",fontSize:"12px;"}}>
                                                     Alert Found Today
@@ -320,7 +322,7 @@ export default function SIContent(){
                                         <Grid item>
                                             <Grid container direction="column" alignItems="center">
                                                 <Grid item style={{color:"#464E5F",fontWeight:"bold",fontSize:"40px"}}>
-                                                    17
+                                                {totalSensitiveInfo.alertsLastMonth}
                                                 </Grid>
                                                 <Grid item style={{color:"#B5B5C3",fontWeight:"500",fontSize:"12px;"}}>
                                                     Alert Found Last month
@@ -330,7 +332,7 @@ export default function SIContent(){
                                         <Grid item>
                                             <Grid container direction="column" alignItems="center">
                                                 <Grid item style={{color:"#464E5F",fontWeight:"bold",fontSize:"40px"}}>
-                                                    35
+                                                {totalSensitiveInfo.alertsLast3Months}
                                                 </Grid>
                                                 <Grid item style={{color:"#B5B5C3",fontWeight:"500",fontSize:"12px;"}}>
                                                     Alert Found Last 3 months

@@ -20,7 +20,10 @@ import Menu from '@material-ui/core/Menu';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import axios from 'axios';
-import useDeepCompareEffect from 'use-deep-compare-effect'
+import useDeepCompareEffect from 'use-deep-compare-effect';
+import {Redirect,useHistory, withRouter} from 'react-router-dom';
+
+
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -1303,8 +1306,9 @@ function reducer(state, action) {
         throw new Error();
     }
   }
-export default function Dropup(props){
+function  Dropup(props){
     const classes=useStyles();
+    const history = useHistory();
     const [state, dispatch] = useReducer(reducer, initialState);
     const [select,changeselect]=React.useState('AND')
     const handleselect=(e)=>{
@@ -1354,56 +1358,134 @@ export default function Dropup(props){
           setDate1(date)
   
         };
+        const loggedout=()=>{
+            localStorage.removeItem("token")
+            
+            history.push("/");
+            window.location.reload();
+            
+          }
         const [usestate1,setstate1]=React.useState({})
         useDeepCompareEffect(()=>{
             let result = null;
             // console.log(state.query,"very valuable")
-            
+            const token=localStorage.getItem("token")
             if(state.query.length===0){
-                const fetchData = async () => {
-                    result = await axios.get(
-                      "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter_op="+select,
-                      {
-                        headers: {
-                          "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
-                        },
-                      }
-                    );
-                    // console.log(result.data,"faisal")
-                    setstate1(result.data.alerts)
-                  }
-                  fetchData()
+ 
+                    const  x= async()=>{
+                        const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+select, {
+                            headers: {
+                                'accept': 'application/json',
+                                'Authorization': token
+                            }
+                        });
+                        const y=await response.json()
+                        if(y.message==="Invalid access token"){
+                            console.log(y,"typefaisal")
+                            loggedout()
+                        }
+                        else{
+                            console.log(y,"typefaisal")
+                            if(y.length===0){
+                                setstate1({})
+                            }
+                            else{
+                                setstate1(y.alerts)
+                            }
+                            
+                        }
+                        // console.log(y,"typefaisal")
+                        // setstate1(y.alerts)
+                    }
+                    x() 
+
+
+           
+            
             }
             else if(state.query.length===1){
-                const fetchData = async () => {
-                    result = await axios.get(
-                      "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+state.query[0]+"&filter_op="+select,
-                      {
+                const  x= async()=>{
+                    const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+state.query[0]+"&filter_op="+select, {
                         headers: {
-                          "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
-                        },
-                      }
-                    );
-                    // console.log(result.data,"faisal")
-                    setstate1(result.data.alerts)
-                  }
-                  fetchData()
+                            'accept': 'application/json',
+                            'Authorization': token
+                        }
+                    });
+                    const y1=await response.json()
+                    if(y1.message==="Invalid access token"){
+                        console.log(y1,"typefaisal")
+                        loggedout()
+                    }
+                    else{
+                        console.log(y1,"typefaisal")
+                        if(y1.length===0){
+                            setstate1({})
+                        }
+                        else{
+                            setstate1(y1.alerts)
+                        }
+                        
+                    }
+                    // console.log(y,"typefaisal")
+                    // setstate1(y.alerts)
+                }
+                x() 
+                // const fetchData = async () => {
+                //     result = await axios.get(
+                //       "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+state.query[0]+"&filter_op="+select,
+                //       {
+                //         headers: {
+                //           "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
+                //         },
+                //       }
+                //     );
+                //     // console.log(result.data,"faisal")
+                //     setstate1(result.data.alerts)
+                //   }
+                //   fetchData()
             }
             else{
                 const y=state.query
-                const fetchData = async () => {
-                    result = await axios.get(
-                      "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+y.join("%2C")+"&filter_op="+select,
-                      {
+                const  x= async()=>{
+                    const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+y.join("%2C")+"&filter_op="+select, {
                         headers: {
-                          "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
-                        },
-                      }
-                    );
-                    // console.log(result.data,"faisal")
-                    setstate1(result.data.alerts)
-                  }
-                  fetchData()
+                            'accept': 'application/json',
+                            'Authorization': token
+                        }
+                    });
+                    const y1=await response.json()
+                    if(y1.message==="Invalid access token"){
+                        console.log(y1,"typefaisal")
+                        loggedout()
+                    }
+                    else{
+                        console.log(y1,"typefaisal")
+                        if(y1.length===0){
+                            setstate1({})
+                        }
+                        else{
+                            setstate1(y1.alerts)
+                        }
+                        
+                    }
+                    // console.log(y,"typefaisal")
+                    // setstate1(y.alerts)
+                }
+                x()
+                // const y=state.query
+                // const fetchData = async () => {
+                //     result = await axios.get(
+                //       "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+y.join("%2C")+"&filter_op="+select,
+                //       {
+                //         headers: {
+                //           "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
+                //         },
+                //       }
+                //     );
+                //     // console.log(result.data,"faisal")
+                //     setstate1(result.data.alerts)
+                //   }
+                //   fetchData()
             }
 
         },[state,select])
@@ -2238,3 +2320,4 @@ export default function Dropup(props){
         </div>
      )
  }
+ export default withRouter(Dropup)

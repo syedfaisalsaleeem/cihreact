@@ -36,7 +36,7 @@ function App() {
         <Route path="/ServiceUpdates" component={ServiceUpdates} exact/>
         <Route path="/SupportUpdates" component={SupportUpdates} exact/>
         
-        <Route path="/MDashBoard/" component={MainDashboard}/>
+        <Route path="/MDashBoard/" component={MainDashboard} />
         {/* <Route path="/DashBoard" component={Home} exact/>
         <Route path="/Discover" component={Discover} exact/>
         {/* <Route path="/Settings" component={Setting} exact/>

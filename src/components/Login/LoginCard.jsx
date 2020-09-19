@@ -35,42 +35,62 @@ function LoginCard(){
     const checkuser=()=>{
         console.log("work")
         console.log(name,password)
-        let res=axios.post("/use/", {
-            "email": name,
-            "password": password
+        const x=async()=>{
+        const response=await fetch('https://if.cyberdevelopment.house/api/auth', {
+            method: 'POST',
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: "username="+name+"&password="+password
+        });
+        const y=await response.json()
+        if(y.message==="Invalid user credentials"){
+            changeauthenticate(true)
         }
-    )
-        .then((response)=>{
-            console.log(response.data,"123")
-            setstore(response.data)
-            if(response.data.sucess==="True"){
-                changeauthenticate(true)
-                localStorage.setItem("token",response.data.token)
-                history.push("/MDashboard/");
+        else{
+        changeauthenticate(true)
+        localStorage.setItem("token",y)
+        history.push("/MDashboard/");
+        }
+    }
+    x()
+    //     let res=axios.post("/use/", {
+    //         "email": name,
+    //         "password": password
+    //     }
+    // )
+    //     .then((response)=>{
+    //         console.log(response.data,"123")
+    //         setstore(response.data)
+    //         if(response.data.sucess==="True"){
+    //             changeauthenticate(true)
+    //             localStorage.setItem("token",response.data.token)
+    //             history.push("/MDashboard/");
                 
 
-            }
-            else if (response.data.sucess==="false1"){
-                changeemailvalidate(false)
-                changepasswordvalidate(true)
-            }
-            else if(response.data.sucess==="True2"){
-                console.log("thiscoderun")
-                changeemailvalidate(true)
-                changepasswordvalidate(false)
-            }
-        //     else if(store.sucess==="false1"){
-        //     changeemailvalidate(true)
-        //     changepasswordvalidate(false)
-        //  }
-            else{
-                changeemailvalidate(false)
-                changepasswordvalidate(true)
+    //         }
+    //         else if (response.data.sucess==="false1"){
+    //             changeemailvalidate(false)
+    //             changepasswordvalidate(true)
+    //         }
+    //         else if(response.data.sucess==="True2"){
+    //             console.log("thiscoderun")
+    //             changeemailvalidate(true)
+    //             changepasswordvalidate(false)
+    //         }
+    //     //     else if(store.sucess==="false1"){
+    //     //     changeemailvalidate(true)
+    //     //     changepasswordvalidate(false)
+    //     //  }
+    //         else{
+    //             changeemailvalidate(false)
+    //             changepasswordvalidate(true)
                
-            }
+    //         }
 
-        }
-        )
+    //     }
+    //     )
         console.log(store.sucess,"print")
     }
 

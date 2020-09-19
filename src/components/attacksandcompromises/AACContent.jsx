@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react';
+import React, { useEffect, useState, useContext } from "react";
 import {Grid,Typography,Card,Paper,CardHeader,Divider,Button, IconButton} from "@material-ui/core";
 import { makeStyles,withStyles } from '@material-ui/core/styles';
 import refresh from "../../Links/images/refresh.png";
@@ -15,7 +15,7 @@ import Dropdown from "./Dropdown.jsx";
 import GetAppIcon from '@material-ui/icons/GetApp';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
-
+import { FetchDataContext } from "../../context/FetchDataContext";
 const LightTooltip = withStyles((theme) => ({
     tooltip: {
       backgroundColor: theme.palette.common.white,
@@ -149,6 +149,8 @@ const useStyles = makeStyles((theme) => ({
   }));
 export default function AACContent(){
     const classes = useStyles();
+    const totalAllAlertsData = useContext(FetchDataContext);
+    const { totalACInfo } = totalAllAlertsData;
     const [count,setcount]=useState();
     const [view,setview]=useState(true);
     const [dropc,setdrop]=useState(true);
@@ -196,11 +198,11 @@ export default function AACContent(){
                 <Grid container spacing={2}>
                     <Grid item>
                         <Typography variant="h5">
-                            Discussions
+                        Attacks and compromises
                         </Typography>
                     </Grid>
                     <Grid item>
-                    <LightTooltip title="See hackers discussing your organisation or tools to enable hacking. It also includes any disgruntled employees or ex-employees spreading rumours.">
+                    <LightTooltip title="Information related to your internal system, databases or access to them and log files of leaks involving your systems or personnel.">
                     <InfoOutlinedIcon />
                     </LightTooltip >
                     </Grid>
@@ -300,7 +302,7 @@ export default function AACContent(){
                                         <Grid item>
                                             <Grid container direction="column" alignItems="center">
                                                 <Grid item style={{color:"#464E5F",fontWeight:"bold",fontSize:"40px"}}>
-                                                    158
+                                                {totalACInfo.totalAlerts}
                                                 </Grid>
                                                 <Grid item style={{color:"#B5B5C3",fontWeight:"500",fontSize:"12px;"}}>
                                                     Total Alerts Found
@@ -310,7 +312,7 @@ export default function AACContent(){
                                         <Grid item>
                                             <Grid container direction="column" alignItems="center">
                                                 <Grid item style={{color:"#464E5F",fontWeight:"bold",fontSize:"40px"}}>
-                                                    3
+                                                {totalACInfo.alertsToday}
                                                 </Grid>
                                                 <Grid item style={{color:"#B5B5C3",fontWeight:"500",fontSize:"12px;"}}>
                                                     Alert Found Today
@@ -320,7 +322,7 @@ export default function AACContent(){
                                         <Grid item>
                                             <Grid container direction="column" alignItems="center">
                                                 <Grid item style={{color:"#464E5F",fontWeight:"bold",fontSize:"40px"}}>
-                                                    17
+                                                {totalACInfo.alertsLastMonth}
                                                 </Grid>
                                                 <Grid item style={{color:"#B5B5C3",fontWeight:"500",fontSize:"12px;"}}>
                                                     Alert Found Last month
@@ -330,7 +332,7 @@ export default function AACContent(){
                                         <Grid item>
                                             <Grid container direction="column" alignItems="center">
                                                 <Grid item style={{color:"#464E5F",fontWeight:"bold",fontSize:"40px"}}>
-                                                    35
+                                                {totalACInfo.alertsLast3Months}
                                                 </Grid>
                                                 <Grid item style={{color:"#B5B5C3",fontWeight:"500",fontSize:"12px;"}}>
                                                     Alert Found Last 3 months

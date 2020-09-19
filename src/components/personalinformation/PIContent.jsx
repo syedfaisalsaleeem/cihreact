@@ -300,7 +300,7 @@ export default function PIContent(){
                                         <Grid item>
                                             <Grid container direction="column" alignItems="center">
                                                 <Grid item style={{color:"#464E5F",fontWeight:"bold",fontSize:"40px"}}>
-                                                    158
+                                                    0
                                                 </Grid>
                                                 <Grid item style={{color:"#B5B5C3",fontWeight:"500",fontSize:"12px;"}}>
                                                     Total Alerts Found
@@ -310,7 +310,7 @@ export default function PIContent(){
                                         <Grid item>
                                             <Grid container direction="column" alignItems="center">
                                                 <Grid item style={{color:"#464E5F",fontWeight:"bold",fontSize:"40px"}}>
-                                                    3
+                                                    0
                                                 </Grid>
                                                 <Grid item style={{color:"#B5B5C3",fontWeight:"500",fontSize:"12px;"}}>
                                                     Alert Found Today
@@ -320,7 +320,7 @@ export default function PIContent(){
                                         <Grid item>
                                             <Grid container direction="column" alignItems="center">
                                                 <Grid item style={{color:"#464E5F",fontWeight:"bold",fontSize:"40px"}}>
-                                                    17
+                                                    0
                                                 </Grid>
                                                 <Grid item style={{color:"#B5B5C3",fontWeight:"500",fontSize:"12px;"}}>
                                                     Alert Found Last month
@@ -330,7 +330,7 @@ export default function PIContent(){
                                         <Grid item>
                                             <Grid container direction="column" alignItems="center">
                                                 <Grid item style={{color:"#464E5F",fontWeight:"bold",fontSize:"40px"}}>
-                                                    35
+                                                  0
                                                 </Grid>
                                                 <Grid item style={{color:"#B5B5C3",fontWeight:"500",fontSize:"12px;"}}>
                                                     Alert Found Last 3 months
