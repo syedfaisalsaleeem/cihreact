@@ -3,7 +3,7 @@ import ContactGs1 from "./ContactGs1.jsx";
 import list from "../../Links/images/list.png";
 import grid from "../../Links/images/grid.png";
 import filter from "../../Links/images/filter.png";
-import LatestCard from "../Drawer/Dashboard/LatestCard.jsx";
+import LatestCard from "../Drawer/Dashboard/LatestCard1.jsx";
 import CardGrid from "../Exposed/CardGrid.jsx";
 import React,{useEffect, useState,useReducer} from 'react';
 import {Grid,Typography,Card,Paper,CardHeader,Divider,Button, IconButton,Chip} from "@material-ui/core";
@@ -13,13 +13,13 @@ import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import Time from "./Time.jsx"
+import Time from "../Exposed/Time.jsx"; 
 import Menu from '@material-ui/core/Menu';
 import "react-datepicker/dist/react-datepicker.css";
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import axios from 'axios';
-import useDeepCompareEffect from 'use-deep-compare-effect'
+import useDeepCompareEffect from 'use-deep-compare-effect';
+import {useHistory} from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -174,1137 +174,11 @@ const useStyles = makeStyles((theme) => ({
       },
   }));
 
-  const initialState = {
-      query:["sensitivedisclosure"],
-      operations:{
-        and:true,
-        or:false,
-        not:false
-    },
-      severitylevel:{
-          low:false,
-          medium:false,
-          high:false
-        },
-        source:{
-            darkweb:false,
-            deepweb:false,
-            databreach:false
-        },
 
-        exposurecategory:{
-            sensitiveinformation:{
-                control:{
-                    all:true,
-                    button:false,
-                },
-                value:{
-                    sourcecode:false
-                }
-            },
-            discussion:{
-                control:{
-                    all:false,
-                    button:false,
-                },
-                value:{
-                discussionforum:false,
-                discussion:false}
-            },
-            blackmarket:{
-                control:{
-                    all:false,
-                    button:false,
-                },
-                value:{
-                sales:false, 
-                marketplace:false, 
-                drugsales:false, 
-                weaponsales:false, 
-                credentialsales:false, 
-                hackingsales:false, 
-                malwaresales:false 
-            }
-            },
-            financial:{
-                control:{
-                    all:false,
-                    button:false,
-                },
-                value:{
-                creditcards:false, 
-                ibannumbers:false,
-                cryptoaddresses:false, 
-                bitcoinaddresses:false, 
-                ethereumaddresses:false, 
-                zcashtaddresses:false, 
-                zcashzaddresses:false, 
-                rippleaddresses:false, 
-                litecoinaddresses:false, 
-                moneroaddresses:false, 
-                bitcoincashaddresses:false, 
-                dashaddresses:false, 
-                dogecoinaddresses:false, 
-                neoaddresses:false 
-            }},
-            exposedcredentials:{
-                control:{
-                    all:false,
-                    button:false,
-                },
-                value:{
-                password:false, 
-                cleartextpassword:false, 
-                encryptedpassword:false, 
-                username:false 
-            }},
-            personalinformation:{
-                control:{
-                    all:false,
-                    button:false,
-                },
-                value:{
-                phonenumbers:false, 
-                passportnumbers:false, 
-                passportinformation:false, 
-                email:false, 
-                address:false, 
-                lastname:false, 
-                firstname:false, 
-                phonenumber:false 
-            }  
-            },
-            hackergrouptargeting:{
-                control:{
-                    all:false,
-                    button:false,
-                },
-                value:{
-                iptargetlist:false, 
-                emailtargetlist:false, 
-                domaintargetlist:false, 
-                attackcampaign:false, 
-                targetedcompany:false, 
-                targetedindividual:false, 
-                informationleakingplatform:false, 
-                iplist:false, 
-                emaillist:false, 
-                domainlist:false, 
-                wordlist:false}
-            },
-            attacksandcompromises:{
-                control:{
-                    all:false,
-                    button:false,
-                },
-                value:{
-                sql:false,
-                reconnaissance:false,
-                exploitationtool:false,
-                nmap:false,
-                sqlmap:false,
-                wireshark:false,
-                traceroute:false, 
-                metasploit:false, 
-                johntheripper:false, 
-                md5hashes:false, 
-                sha1hashes:false, 
-                sha256hashes:false, 
-                sha512hashes:false, 
-                specialhashes:false, 
-                pgpkeys:false, 
-                pgpsignatures:false, 
-                ssh:false, 
-                telnet:false, 
-                ftp:false, 
-                sftp:false  } 
-            },
-            underanalysis:{
-                control:{
-                    all:false,
-                },
-            },
-        },
-            languages:{
-                control:{
-                    all:false,
-                    button:false,
-                },
-                value:{
-                afrikaans:false, 
-                arabic:false, 
-                bulgarian:false, 
-                bengali:false, 
-                catalan:false, 
-                czech:false, 
-                welsh:false, 
-                danish:false, 
-                german:false, 
-                greek:false, 
-                english:false, 
-                spanish:false, 
-                estonian:false, 
-                persian:false, 
-                finnish:false, 
-                french:false, 
-                gujarati:false, 
-                hebrew:false, 
-                hindi:false, 
-                croatian:false, 
-                hungarian:false, 
-                indonesian:false, 
-                italian:false, 
-                japanese:false, 
-                kannada:false, 
-                korean:false, 
-                lithuanian:false, 
-                latvian:false, 
-                macedonian:false, 
-                malayalam:false, 
-                marathi:false, 
-                nepali:false, 
-                dutch:false, 
-                norwegian:false, 
-                punjabi:false, 
-                polish:false, 
-                portuguese:false, 
-                romanian:false, russian:false, slovak:false, slovenian:false, somali:false, albanian:false, swedish:false, swahili:false, 
-                tamil:false, telugu:false, thai:false, tagalog:false, turkish:false, ukrainian:false, urdu:false, vietnamese:false, chinese:false 
-                }
-            },
-            socialsecuritynumber:{
-                control:{
-                    all:false,
-                    button:false
-                },
-                value:{
-                spainsocialsecuritynumbers:false, latviasocialsecuritynumbers:false, lithuaniasocialsecuritynumbers:false, malaysiasocialsecuritynumbers:false, 
-                indonesiasocialsecuritynumbers:false, Hongkongsocialsecuritynumbers:false, arabemiratessocialsecuritynumbers:false, southafricasocialsecuritynumbers:false, 
-                chinasocialsecuritynumbers:false, belgiumsocialsecuritynumbers:false, bulgariasocialsecuritynumbers:false, croatiasocialsecuritynumbers:false, 
-                czechrepublicsocialsecuritynumbers:false, denmarksocialsecuritynumbers:false, francesocialsecuritynumbers:false, greecesocialsecuritynumbers:false, 
-                irelandsocialsecuritynumbers:false, estoniasocialsecuritynumbers:false, italysocialsecuritynumbers:false, netherlandssocialsecuritynumbers:false, 
-                norwaysocialsecuritynumbers:false, polandsocialsecuritynumbers:false, romaniasocialsecuritynumbers:false, swedensocialsecuritynumbers:false, 
-                sloveniasocialsecuritynumbers:false, slovakiasocialsecuritynumbers:false, singaporesocialsecuritynumbers:false, finlandsocialsecuritynumbers:false, 
-                unitedstatessocialsecuritynumbers:false
-                }
-            },
-
-            
-        other:{
-            control:{
-                all:false,
-                button:false
-            },
-            value:{
-                directory:false, news:false, advertisement:false, ipv4:false 
-            }
-        },
-        alertgroup:{
-            control:{
-                all:false
-            },
-            value:{
-                highlightedalerts:false
-            }
-        }
-
-  
-};
-
-// function reducer(state, action) {
-//     switch (action.type) {
-//         case 'language':
-//             console.log(state)
-//         default:
-//             throw new Error();
-//     }
-//   }
-// function change1(value){
-//        return {
-//               ...state,
-//               languages:{...state.languages,
-//                     control:{...state.languages.control,value:false}
-//                     }
-//             }
-// }
-
-function reducer(state, action) {
-
-    switch (action.type) {
-        case 'low':
-            console.log(state.query)
-            if(action.payload===true){
-                // let x=state['query']
-                const listi=Object.assign([],state.query);
-                // listi.splice("low");
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "severitylow") { listi.splice(i, 1); }}
-                // var PATTERN ='low' ,
-                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
-                return{
-                    ...state,query:listi,
-                    severitylevel:{...state.severitylevel,low:!action.payload}
-                        
-                        
-                }
-
-            }else{
-                return{
-                    ...state,query:[...state.query,'severitylow'],
-                    severitylevel:{...state.severitylevel,low:!action.payload}
-                        
-                        
-                }
-
-            }
-
-        case 'medium':
-            console.log(state.query)
-            if(action.payload===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "severitymedium") { listi.splice(i, 1); }}
-                // var PATTERN ='low' ,
-                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
-                return{
-                    ...state,query:listi,
-                    severitylevel:{...state.severitylevel,medium:!action.payload}
-                        
-                        
-                }
-        }
-        else{
-            return{
-                ...state,query:[...state.query,'severitymedium'],
-                severitylevel:{...state.severitylevel,medium:!action.payload}
-                    
-                    
-            }
-
-        }
-        case 'high':
-            console.log(state.query)
-            if(action.payload===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "severityhigh") { listi.splice(i, 1); }}
-                return{
-                    ...state,query:listi,
-                    severitylevel:{...state.severitylevel,high:!action.payload}
-                }  
-                    
-            }
-            else{
-                return{
-                    ...state,query:[...state.query,'severityhigh'],
-                    severitylevel:{...state.severitylevel,high:!action.payload}
-                        
-                        
-                }
-    
-            } 
-        case 'deepweb':
-            if(action.payload===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "deepweb") { listi.splice(i, 1); }}
-
-                return{
-                    ...state,query:listi,
-                    source:{...state.source,deepweb:!action.payload}
-                        
-                        
-                } 
-                    
-            }
-            else{
-                return{
-                    ...state,query:[...state.query,'deepweb'],
-                    source:{...state.source,deepweb:!action.payload}
-                        
-                        
-                } 
-    
-            }
-
-        case 'darkweb':
-            if(action.payload===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "darkweb") { listi.splice(i, 1); }}
-
-                return{
-                    ...state,query:listi,
-                    source:{...state.source,darkweb:!action.payload}
-                        
-                        
-                }
-                    
-            }
-            else{
-                return{
-                    ...state,query:[...state.query,'darkweb'],
-                    source:{...state.source,darkweb:!action.payload}
-                        
-                        
-                }
-    
-            }
-
-        case 'databreach':
-            if(action.payload===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "databreach") { listi.splice(i, 1); }}
-
-                return{
-                    ...state,query:listi,
-                    source:{...state.source,databreach:!action.payload}
-                        
-                        
-                }
-                    
-            }
-            else{
-                return{
-                    ...state,query:[...state.query,'databreach'],
-                    source:{...state.source,databreach:!action.payload}
-                        
-                        
-                }
-    
-            }
-
-      case 'language':
-        console.log(state.languages.control.button)
-        return{
-            ...state,
-            languages:{...state.languages,
-                control:{...state.languages.control,button:!action.payload}
-                }
-        }
-        case 'languagein':
-            // return change1(action.payload);
-            const x=action.payload.value2
-            if(action.payload.value1===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === x) { listi.splice(i, 1); }}
-
-                return(
-                
-                    {
-                    ...state,query:listi,
-                    languages:{...state.languages,
-                        value:{...state.languages.value,[x]:!action.payload.value1}
-                        }
-                })
-                    
-            }
-            else{
-                return(
-                
-                    {
-                    ...state,query:[...state.query,x],
-                    languages:{...state.languages,
-                        value:{...state.languages.value,[x]:!action.payload.value1}
-                        }
-                })
-    
-            }
-
-        case 'socialsecuritynumber':
-            
-             return {
-                ...state,
-                socialsecuritynumber:{...state.socialsecuritynumber,
-                    control:{...state.socialsecuritynumber.control,button:!action.payload}
-                    }
-            }
-        case 'socialsecurityin':
-                // return change1(action.payload);
-                const y=action.payload.value2
-                // const y=action.payload
-                if(action.payload.value1===true){
-                    const listi=Object.assign([],state.query);
-                    for( var i = 0; i < listi.length; i++){ if ( listi[i] === y) { listi.splice(i, 1); }}
-    
-                    return(
-                    
-                        {
-                        ...state,query:listi,
-                        socialsecuritynumber:{...state.socialsecuritynumber,
-                            value:{...state.socialsecuritynumber.value,[action.payload.value2]:!action.payload.value1}
-                            }
-                    })
-                        
-                }
-                else{
-                    return(
-                    
-                        {
-                        ...state,query:[...state.query,y],
-                        socialsecuritynumber:{...state.socialsecuritynumber,
-                            value:{...state.socialsecuritynumber.value,[action.payload.value2]:!action.payload.value1}
-                            }
-                    })
-        
-                }
-
-        case 'other':
-            
-             return {
-                ...state,
-                other:{...state.other,
-                    control:{...state.other.control,button:!action.payload}
-                    }
-            }
-        case 'otherin':
-                // return change1(action.payload);
-               
-                // const y=action.payload
-                if(action.payload.value1===true){
-                    const listi=Object.assign([],state.query);
-                    for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
-    
-                    return(
-                    
-                        {
-                        ...state,query:listi,
-                        other:{...state.other,
-                            value:{...state.other.value,[action.payload.value2]:!action.payload.value1}
-                            }
-                    })
-                        
-                }
-                else{
-                    return(
-                    
-                        {
-                        ...state,query:[...state.query,action.payload.value2],
-                        other:{...state.other,
-                            value:{...state.other.value,[action.payload.value2]:!action.payload.value1}
-                            }
-                    })
-        
-                }
-
-        case 'alertgroup':
-            
-             return {
-                ...state,
-                alertgroup:{...state.alertgroup,
-                    value:{...state.other.value,highlightedalerts:!action.payload}
-                    }
-            }
-        case 'sensitiveinformation':
-            if(action.payload===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "sensitivedisclosure") { listi.splice(i, 1); }}
-                // var PATTERN ='low' ,
-                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
-
-                return {
-                    ...state,query:listi,
-                    exposurecategory:{...state.exposurecategory,
-                        sensitiveinformation:{...state.exposurecategory.sensitiveinformation,
-                            control:{...state.exposurecategory.sensitiveinformation.control,all:!action.payload}
-                            
-                        }
-                    }
-                }
-        }
-        else{
-            return {
-                ...state,query:[...state.query,'sensitivedisclosure'],
-                exposurecategory:{...state.exposurecategory,
-                    sensitiveinformation:{...state.exposurecategory.sensitiveinformation,
-                        control:{...state.exposurecategory.sensitiveinformation.control,all:!action.payload}
-                        
-                    }
-                }
-            }
-
-
-        }
-
-        case 'sensitiveinformation1':
-                
-                return {
-                    ...state,
-                    exposurecategory:{...state.exposurecategory,
-                        sensitiveinformation:{...state.exposurecategory.sensitiveinformation,
-                            control:{...state.exposurecategory.sensitiveinformation.control,button:!action.payload}
-                            
-                        }
-                    }
-                }
-        case 'sensitiveinformationin':
-            if(action.payload.value1===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
-                return {
-                    ...state,query:listi,
-                    exposurecategory:{...state.exposurecategory,
-                        sensitiveinformation:{...state.exposurecategory.sensitiveinformation,
-                            value:{...state.exposurecategory.sensitiveinformation.value,[action.payload.value2]:!action.payload.value1}
-                            
-                        }
-                    }
-                }
-                    
-            }
-            else{
-                return {
-                    ...state,query:[...state.query,action.payload.value2],
-                    exposurecategory:{...state.exposurecategory,
-                        sensitiveinformation:{...state.exposurecategory.sensitiveinformation,
-                            value:{...state.exposurecategory.sensitiveinformation.value,[action.payload.value2]:!action.payload.value1}
-                            
-                        }
-                    }
-                }
-    
-            }
-
-        case 'discussion':
-            console.log(state.query)
-            if(action.payload===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "discussions") { listi.splice(i, 1); }}
-                // var PATTERN ='low' ,
-                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
-
-                return {
-                    ...state,query:listi,
-                    exposurecategory:{...state.exposurecategory,
-                        discussion:{...state.exposurecategory.discussion,
-                            control:{...state.exposurecategory.discussion.control,all:!action.payload}
-                            
-                        }
-                    }
-                }
-        }
-        else{
-            return {
-                ...state,query:[...state.query,'discussions'],
-                exposurecategory:{...state.exposurecategory,
-                    discussion:{...state.exposurecategory.discussion,
-                        control:{...state.exposurecategory.discussion.control,all:!action.payload}
-                        
-                    }
-                }
-            }
-
-
-        }
-
-        case 'discussion1':
-                
-                return {
-                    ...state,
-                    exposurecategory:{...state.exposurecategory,
-                        discussion:{...state.exposurecategory.discussion,
-                            control:{...state.exposurecategory.discussion.control,button:!action.payload}
-                            
-                        }
-                    }
-                }
-        case 'discussionin':
-            if(action.payload.value1===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
-                return {
-                    ...state,query:listi,
-                    exposurecategory:{...state.exposurecategory,
-                        discussion:{...state.exposurecategory.discussion,
-                            value:{...state.exposurecategory.discussion.value,[action.payload.value2]:!action.payload.value1}
-                            
-                        }
-                    }
-                }
-                    
-            }
-            else{
-                return {
-                    ...state,query:[...state.query,action.payload.value2],
-                    exposurecategory:{...state.exposurecategory,
-                        discussion:{...state.exposurecategory.discussion,
-                            value:{...state.exposurecategory.discussion.value,[action.payload.value2]:!action.payload.value1}
-                            
-                        }
-                    }
-                }
-    
-            }
-
-        case 'blackmarket':
-            if(action.payload===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "blackmarkets") { listi.splice(i, 1); }}
-                // var PATTERN ='low' ,
-                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
-
-                return {
-                    ...state,query:listi,
-                    exposurecategory:{...state.exposurecategory,
-                        blackmarket:{...state.exposurecategory.blackmarket,
-                            control:{...state.exposurecategory.blackmarket.control,all:!action.payload}
-                            
-                        }
-                    }
-                }
-        }
-        else{
-            return {
-                ...state,query:[...state.query,'blackmarkets'],
-                exposurecategory:{...state.exposurecategory,
-                    blackmarket:{...state.exposurecategory.blackmarket,
-                        control:{...state.exposurecategory.blackmarket.control,all:!action.payload}
-                        
-                    }
-                }
-            }
-
-
-        }
-
-        case 'blackmarket1':
-                
-                return {
-                    ...state,
-                    exposurecategory:{...state.exposurecategory,
-                        blackmarket:{...state.exposurecategory.blackmarket,
-                            control:{...state.exposurecategory.blackmarket.control,button:!action.payload}
-                            
-                        }
-                    }
-                }
-        case 'blackmarketin':
-            if(action.payload.value1===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
-                return {
-                    ...state,query:listi,
-                    exposurecategory:{...state.exposurecategory,
-                        blackmarket:{...state.exposurecategory.blackmarket,
-                            value:{...state.exposurecategory.blackmarket.value,[action.payload.value2]:!action.payload.value1}
-                            
-                        }
-                    }
-                }
-                    
-            }
-            else{
-                return {
-                    ...state,query:[...state.query,action.payload.value2],
-                    exposurecategory:{...state.exposurecategory,
-                        blackmarket:{...state.exposurecategory.blackmarket,
-                            value:{...state.exposurecategory.blackmarket.value,[action.payload.value2]:!action.payload.value1}
-                            
-                        }
-                    }
-                }
-    
-            }
-
-        case 'financial':
-            if(action.payload===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "financial") { listi.splice(i, 1); }}
-                // var PATTERN ='low' ,
-                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
-                return {
-                    ...state,query:listi,
-                    exposurecategory:{...state.exposurecategory,
-                        financial:{...state.exposurecategory.financial,
-                            control:{...state.exposurecategory.financial.control,all:!action.payload}
-                            
-                        }
-                    }
-                }
-        }
-        else{
-            return {
-                ...state,query:[...state.query,'financial'],
-                exposurecategory:{...state.exposurecategory,
-                    financial:{...state.exposurecategory.financial,
-                        control:{...state.exposurecategory.financial.control,all:!action.payload}
-                        
-                    }
-                }
-            }
-
-
-        }
-
-        case 'financial1':
-                
-                return {
-                    ...state,
-                    exposurecategory:{...state.exposurecategory,
-                        financial:{...state.exposurecategory.financial,
-                            control:{...state.exposurecategory.financial.control,button:!action.payload}
-                            
-                        }
-                    }
-                }
-        case 'financialin':
-            if(action.payload.value1===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
-                return {
-                    ...state,query:listi,
-                    exposurecategory:{...state.exposurecategory,
-                        financial:{...state.exposurecategory.financial,
-                            value:{...state.exposurecategory.financial.value,[action.payload.value2]:!action.payload.value1}
-                            
-                        }
-                    }
-                }
-                    
-            }
-            else{
-                return {
-                    ...state,query:[...state.query,action.payload.value2],
-                    exposurecategory:{...state.exposurecategory,
-                        financial:{...state.exposurecategory.financial,
-                            value:{...state.exposurecategory.financial.value,[action.payload.value2]:!action.payload.value1}
-                            
-                        }
-                    }
-                }
-    
-            }
-
-        case 'exposedcredentials':
-            if(action.payload===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "exposedcredentials") { listi.splice(i, 1); }}
-                // var PATTERN ='low' ,
-                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
-                return {
-                    ...state,query:listi,
-                    exposurecategory:{...state.exposurecategory,
-                        exposedcredentials:{...state.exposurecategory.exposedcredentials,
-                            control:{...state.exposurecategory.exposedcredentials.control,all:!action.payload}
-                            
-                        }
-                    }
-                }
-        }
-        else{
-            return {
-                ...state,query:[...state.query,'exposedcredentials'],
-                exposurecategory:{...state.exposurecategory,
-                    exposedcredentials:{...state.exposurecategory.exposedcredentials,
-                        control:{...state.exposurecategory.exposedcredentials.control,all:!action.payload}
-                        
-                    }
-                }
-            }
-
-
-        }
-
-        case 'exposedcredentials1':
-                
-                return {
-                    ...state,
-                    exposurecategory:{...state.exposurecategory,
-                        exposedcredentials:{...state.exposurecategory.exposedcredentials,
-                            control:{...state.exposurecategory.exposedcredentials.control,button:!action.payload}
-                            
-                        }
-                    }
-                }
-        case 'exposedcredentialsin':
-            if(action.payload.value1===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
-                return {
-                    ...state,query:listi,
-                    exposurecategory:{...state.exposurecategory,
-                        exposedcredentials:{...state.exposurecategory.exposedcredentials,
-                            value:{...state.exposurecategory.exposedcredentials.value,[action.payload.value2]:!action.payload.value1}
-                            
-                        }
-                    }
-                }
-                    
-            }
-            else{
-                return {
-                    ...state,query:[...state.query,action.payload.value2],
-                    exposurecategory:{...state.exposurecategory,
-                        exposedcredentials:{...state.exposurecategory.exposedcredentials,
-                            value:{...state.exposurecategory.exposedcredentials.value,[action.payload.value2]:!action.payload.value1}
-                            
-                        }
-                    }
-                }
-    
-            }
-
-        case 'personalinformation':
-            if(action.payload===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "personalinformation") { listi.splice(i, 1); }}
-                // var PATTERN ='low' ,
-                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
-                return {
-                    ...state,query:listi,
-                    exposurecategory:{...state.exposurecategory,
-                        personalinformation:{...state.exposurecategory.personalinformation,
-                            control:{...state.exposurecategory.personalinformation.control,all:!action.payload}
-                            
-                        }
-                    }
-                }
-        }
-        else{
-            return {
-                ...state,query:[...state.query,'personalinformation'],
-                exposurecategory:{...state.exposurecategory,
-                    personalinformation:{...state.exposurecategory.personalinformation,
-                        control:{...state.exposurecategory.personalinformation.control,all:!action.payload}
-                        
-                    }
-                }
-            }
-
-
-        }
-
-        case 'personalinformation1':
-                
-                return {
-                    ...state,
-                    exposurecategory:{...state.exposurecategory,
-                        personalinformation:{...state.exposurecategory.personalinformation,
-                            control:{...state.exposurecategory.personalinformation.control,button:!action.payload}
-                            
-                        }
-                    }
-                }
-        case 'personalinformationin':
-            if(action.payload.value1===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
-                return {
-                    ...state,query:listi,
-                    exposurecategory:{...state.exposurecategory,
-                        personalinformation:{...state.exposurecategory.personalinformation,
-                            value:{...state.exposurecategory.personalinformation.value,[action.payload.value2]:!action.payload.value1}
-                            
-                        }
-                    }
-                }
-                    
-            }
-            else{
-                return {
-                    ...state,query:[...state.query,action.payload.value2],
-                    exposurecategory:{...state.exposurecategory,
-                        personalinformation:{...state.exposurecategory.personalinformation,
-                            value:{...state.exposurecategory.personalinformation.value,[action.payload.value2]:!action.payload.value1}
-                            
-                        }
-                    }
-                }
-    
-            }
-
-        case 'hackergrouptargeting':
-            if(action.payload===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "hackergrouptargeting") { listi.splice(i, 1); }}
-                // var PATTERN ='low' ,
-                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
-                return {
-                    ...state,query:listi,
-                    exposurecategory:{...state.exposurecategory,
-                        hackergrouptargeting:{...state.exposurecategory.hackergrouptargeting,
-                            control:{...state.exposurecategory.hackergrouptargeting.control,all:!action.payload}
-                            
-                        }
-                    }
-                }
-        }
-        else{
-            return {
-                ...state,query:[...state.query,'hackergrouptargeting'],
-                exposurecategory:{...state.exposurecategory,
-                    hackergrouptargeting:{...state.exposurecategory.hackergrouptargeting,
-                        control:{...state.exposurecategory.hackergrouptargeting.control,all:!action.payload}
-                        
-                    }
-                }
-            }
-
-
-        }
-
-        case 'hackergrouptargeting1':
-                
-                return {
-                    ...state,
-                    exposurecategory:{...state.exposurecategory,
-                        hackergrouptargeting:{...state.exposurecategory.hackergrouptargeting,
-                            control:{...state.exposurecategory.hackergrouptargeting.control,button:!action.payload}
-                            
-                        }
-                    }
-                }
-        case 'hackergrouptargetingin':
-            if(action.payload.value1===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
-                return {
-                    ...state,query:listi,
-                    exposurecategory:{...state.exposurecategory,
-                        hackergrouptargeting:{...state.exposurecategory.hackergrouptargeting,
-                            value:{...state.exposurecategory.hackergrouptargeting.value,[action.payload.value2]:!action.payload.value1}
-                            
-                        }
-                    }
-                }
-                    
-            }
-            else{
-                return {
-                    ...state,query:[...state.query,action.payload.value2],
-                    exposurecategory:{...state.exposurecategory,
-                        hackergrouptargeting:{...state.exposurecategory.hackergrouptargeting,
-                            value:{...state.exposurecategory.hackergrouptargeting.value,[action.payload.value2]:!action.payload.value1}
-                            
-                        }
-                    }
-                }
-    
-            } 
-
-        case 'attacksandcompromises':
-            if(action.payload===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "attacksandcompromises") { listi.splice(i, 1); }}
-                // var PATTERN ='low' ,
-                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
-                return {
-                    ...state,query:listi,
-                    exposurecategory:{...state.exposurecategory,
-                        attacksandcompromises:{...state.exposurecategory.attacksandcompromises,
-                            control:{...state.exposurecategory.attacksandcompromises.control,all:!action.payload}
-                            
-                        }
-                    }
-                }
-        }
-        else{
-            return {
-                ...state,query:[...state.query,'attacksandcompromises'],
-                exposurecategory:{...state.exposurecategory,
-                    attacksandcompromises:{...state.exposurecategory.attacksandcompromises,
-                        control:{...state.exposurecategory.attacksandcompromises.control,all:!action.payload}
-                        
-                    }
-                }
-            }
-
-
-        }
-
-        case 'attacksandcompromises1':
-                
-                return {
-                    ...state,
-                    exposurecategory:{...state.exposurecategory,
-                        attacksandcompromises:{...state.exposurecategory.attacksandcompromises,
-                            control:{...state.exposurecategory.attacksandcompromises.control,button:!action.payload}
-                            
-                        }
-                    }
-                }
-        case 'attacksandcompromisesin':
-            if(action.payload.value1===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
-                return {
-                    ...state,query:listi,
-                    exposurecategory:{...state.exposurecategory,
-                        attacksandcompromises:{...state.exposurecategory.attacksandcompromises,
-                            value:{...state.exposurecategory.attacksandcompromises.value,[action.payload.value2]:!action.payload.value1}
-                            
-                        }
-                    }
-                }
-                    
-            }
-            else{
-                return {
-                    ...state,query:[...state.query,action.payload.value2],
-                    exposurecategory:{...state.exposurecategory,
-                        attacksandcompromises:{...state.exposurecategory.attacksandcompromises,
-                            value:{...state.exposurecategory.attacksandcompromises.value,[action.payload.value2]:!action.payload.value1}
-                            
-                        }
-                    }
-                }
-    
-            } 
-
-        case 'underanalysis':
-            if(action.payload===true){
-                const listi=Object.assign([],state.query);
-                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "undefined") { listi.splice(i, 1); }}
-                // var PATTERN ='low' ,
-                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
-                return {
-                    ...state,query:listi,
-                    exposurecategory:{...state.exposurecategory,
-                        underanalysis:{...state.exposurecategory.underanalysis,
-                            control:{...state.exposurecategory.underanalysis.control,all:!action.payload}
-                            
-                        }
-                    }
-                }
-        }
-        else{
-            return {
-                ...state,query:[...state.query,'undefined'],
-                exposurecategory:{...state.exposurecategory,
-                    underanalysis:{...state.exposurecategory.underanalysis,
-                        control:{...state.exposurecategory.underanalysis.control,all:!action.payload}
-                        
-                    }
-                }
-            }
-
-
-        }
-
-        // this.setState(prevState => ({
-        //     ...prevState,
-        //     someProperty: {
-        //         ...prevState.someProperty,
-        //         someOtherProperty: {
-        //             ...prevState.someProperty.someOtherProperty, 
-        //             anotherProperty: {
-        //                ...prevState.someProperty.someOtherProperty.anotherProperty,
-        //                flag: false
-        //             }
-        //         }
-        //     }
-        // })
-       
-            // ((state) => {
-            //     state.languages.control.button = true
-                
-            //     return state
-            //   })
-        
-        //  return {...state.languages.control,button:true}
-
-      default:
-        throw new Error();
-    }
-  }
-export default function Dropup(props){
+export default function Dropdown(props){
     const classes=useStyles();
-    const [state, dispatch] = useReducer(reducer, initialState);
+    const history = useHistory();
+    const {state,dispatch}=props
     const [select,changeselect]=React.useState('AND')
     const handleselect=(e)=>{
         changeselect(e.target.value)
@@ -1353,60 +227,161 @@ export default function Dropup(props){
           setDate1(date)
   
         };
-        const [usestate1,setstate1]=React.useState({})
-        useDeepCompareEffect(()=>{
-            let result = null;
-            console.log(state.query,"very valuable")
+        const loggedout=()=>{
+            localStorage.removeItem("token")
             
-            if(state.query.length===0){
-                const fetchData = async () => {
-                    result = await axios.get(
-                      "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter_op="+select,
-                      {
-                        headers: {
-                          "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
-                        },
-                      }
-                    );
-                    console.log(result.data,"faisal")
-                    setstate1(result.data.alerts)
+            history.push("/");
+            window.location.reload();
+            
+          }
+          const [usestate1,setstate1]=React.useState({})
+          const [commenting,setcommenting]=React.useState([]);
+          const handlecall=(sq)=>{
+              // console.log(sq)
+              let array=[];
+              for (let i in sq){
+                  // console.log(i)
+                  if(sq[i]['comments'].length>0){
+                      // console.log(commenting)
+                      array.push(sq[i]['comments'][0]["text"])
+                      // setcommenting(commenting => [...commenting, sq[i]['comments'][0]["text"]])
                   }
-                  fetchData()
-            }
-            else if(state.query.length===1){
-                const fetchData = async () => {
-                    result = await axios.get(
-                      "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+state.query[0]+"&filter_op="+select,
-                      {
-                        headers: {
-                          "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
-                        },
-                      }
-                    );
-                    console.log(result.data,"faisal")
-                    setstate1(result.data.alerts)
+                  else{
+                      array.push("")
+                      // console.log(commenting)
+                      // setcommenting(commenting => [...commenting, ""])
                   }
-                  fetchData()
-            }
-            else{
-                const y=state.query
-                const fetchData = async () => {
-                    result = await axios.get(
-                      "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+y.join("%2C")+"&filter_op="+select,
-                      {
-                        headers: {
-                          "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
-                        },
+              }
+              setcommenting(array)
+              // setcommenting1("1")
+          }
+          useDeepCompareEffect(()=>{
+              let result = null;
+              // console.log(state.query,"very valuable")
+              const token=localStorage.getItem("token")
+              if(state.query.length===0){
+   
+                      const  x= async()=>{
+                          const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+select, {
+                              headers: {
+                                  'accept': 'application/json',
+                                  'Authorization': token
+                              }
+                          });
+                          const y=await response.json()
+                          if(y.message==="Invalid access token"){
+                              console.log(y,"typefaisal")
+                              loggedout()
+                          }
+                          else{
+                              console.log(y,"typefaisal")
+                              if(y.length===0){
+                                  setstate1({})
+                              }
+                              else{
+                                  setstate1(y.alerts.slice(0,6))
+                                  handlecall(y.alerts.slice(0,6))
+                              }
+                              
+                          }
+                          // console.log(y,"typefaisal")
+                          // setstate1(y.alerts)
                       }
-                    );
-                    console.log(result.data,"faisal")
-                    setstate1(result.data.alerts)
+                      x() 
+  
+  
+             
+              
+              }
+              else if(state.query.length===1){
+                  const  x= async()=>{
+                      const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+state.query[0]+"&filter_op="+select, {
+                          headers: {
+                              'accept': 'application/json',
+                              'Authorization': token
+                          }
+                      });
+                      const y1=await response.json()
+                      if(y1.message==="Invalid access token"){
+                          console.log(y1,"typefaisal")
+                          loggedout()
+                      }
+                      else{
+                          console.log(y1,"typefaisal")
+                          if(y1.length===0){
+                              setstate1({})
+                          }
+                          else{
+                              setstate1(y1.alerts.slice(0,6))
+                              handlecall(y1.alerts.slice(0,6))
+                          }
+                          
+                      }
+                      // console.log(y,"typefaisal")
+                      // setstate1(y.alerts)
                   }
-                  fetchData()
-            }
-
-        },[state,select])
-
+                  x() 
+                  // const fetchData = async () => {
+                  //     result = await axios.get(
+                  //       "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+state.query[0]+"&filter_op="+select,
+                  //       {
+                  //         headers: {
+                  //           "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
+                  //         },
+                  //       }
+                  //     );
+                  //     // console.log(result.data,"faisal")
+                  //     setstate1(result.data.alerts)
+                  //   }
+                  //   fetchData()
+              }
+              else{
+                  const y=state.query
+                  const  x= async()=>{
+                      const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+y.join("%2C")+"&filter_op="+select, {
+                          headers: {
+                              'accept': 'application/json',
+                              'Authorization': token
+                          }
+                      });
+                      const y1=await response.json()
+                      if(y1.message==="Invalid access token"){
+                          console.log(y1,"typefaisal")
+                          loggedout()
+                      }
+                      else{
+                          console.log(y1,"typefaisal")
+                          if(y1.length===0){
+                              setstate1({})
+                              
+                          }
+                          else{
+                              setstate1(y1.alerts.slice(0,6))
+                              handlecall(y1.alerts.slice(0,6))
+                          }
+                          
+                      }
+                      // console.log(y,"typefaisal")
+                      // setstate1(y.alerts)
+                  }
+                  x()
+                  // const y=state.query
+                  // const fetchData = async () => {
+                  //     result = await axios.get(
+                  //       "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+y.join("%2C")+"&filter_op="+select,
+                  //       {
+                  //         headers: {
+                  //           "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
+                  //         },
+                  //       }
+                  //     );
+                  //     // console.log(result.data,"faisal")
+                  //     setstate1(result.data.alerts)
+                  //   }
+                  //   fetchData()
+              }
+  
+          },[state,select])
      return(
          
         <div style={{width:"100%",marginTop:"-30px",marginBottom:"30px",padding:"-15px"}}>
@@ -1633,47 +608,8 @@ export default function Dropup(props){
                                     </div>
                                     :
                                     <div>
-                                                                             <Grid item xs={12} style={{marginTop:"26px"}}>
-                                    <Grid container justify="center">
-                                        <Grid item xs={11}>
-                                            <div style={{fontStyle: "normal",fontWeight: "500",fontSize: "15px",color: "#000000"}}>
-                                                Operations
-                                            </div>
 
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                                <Grid item xs={12} style={{marginTop:"20px"}}>
-                                    <Grid container justify="center">
-                                        <Grid item xs={11}>
-                                            <Grid container spacing={2}>
-                                            <FormControl className={classes.formControl} >
 
-                                                <Select
-                                                labelId="demo-simple-select-label"
-                                                id="demo-simple-select"
-                                                style={{height:"30px"}}
-                                                value={select}
-                                                onChange={handleselect}
-                                                
-                                                
-                                                variant="outlined"
-                                                displayEmpty
-                                                >
-                                            <MenuItem value={'AND'}>
-                                                    <em >AND</em>
-                                            </MenuItem>
-                                            
-                                            <MenuItem value={'OR'}>OR</MenuItem>
-                                            <MenuItem value={'NOT'}>NOT</MenuItem>
-                                                </Select>
-                                            </FormControl>
-                                            </Grid>
-                                            
-
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
                                     <Grid item xs={12} style={{marginTop:"26px"}}>
                                     <Grid container justify="center">
                                         <Grid item xs={11}>
@@ -2174,7 +1110,6 @@ export default function Dropup(props){
                                 <div></div>:
                                 Object.keys(usestate1).map((index)=>(
                                 <Grid item>
-                                                {console.log(usestate1[index],"print")}
                                 <LatestCard
                                 date={usestate1[index]['timestamp']}
                                 alertcreated={usestate1[index]['created']}
@@ -2185,8 +1120,12 @@ export default function Dropup(props){
                                 tags={usestate1[index]['tags']}
                                 remediation={usestate1[index]['remediation']}
                                 id={usestate1[index]['id']}
+                                id2={index}
                                 comments={usestate1[index]['comments']}
-                                changeflag={props.changeflag} addcount={props.addcount}
+                                changeflag={props.changeflag} 
+                                commenting1={commenting[index]}
+                                setcommenting={setcommenting}
+                                addcount={props.addcount}
                                 />
                                 
                                 </Grid>
@@ -2212,19 +1151,25 @@ export default function Dropup(props){
                            {usestate1.length===0?
                                 <div></div>:
                                 Object.keys(usestate1).map((index)=>(
-                                <Grid item>  
+                                <Grid item>
+                                     
                                <CardGrid            
-                               date={usestate1[index]['timestamp']}
-            alertcreated={usestate1[index]['created']}
-            severity={usestate1[index]['severity']} 
-            title={usestate1[index]['source_title']} 
-            source={usestate1[index]['source_url']}
-            keyword={usestate1[index]['keywords']}
-            tags={usestate1[index]['tags']}
-            remediation={usestate1[index]['remediation']}
-            id={usestate1[index]['id']}
-            comments={usestate1[index]['comments']}
-            changeflag={props.changeflag} addcount={props.addcount}/>
+                                date={usestate1[index]['timestamp']}
+                                alertcreated={usestate1[index]['created']}
+                                severity={usestate1[index]['severity']} 
+                                title={usestate1[index]['source_title']} 
+                                source={usestate1[index]['source_url']}
+                                keyword={usestate1[index]['keywords']}
+                                tags={usestate1[index]['tags']}
+                                remediation={usestate1[index]['remediation']}
+                                id={usestate1[index]['id']}
+                                id2={index}
+                                comments={usestate1[index]['comments']}
+                                changeflag={props.changeflag} 
+                                commenting1={commenting[index]}
+                                setcommenting={setcommenting}
+                                addcount={props.addcount}
+            />
 
                             </Grid>   
                             ))

@@ -1,7 +1,9 @@
 import React,{Component} from 'react';
 import {Bar,Line,Pie,Doughnut} from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import {Grid} from "@material-ui/core"
+import {Grid} from "@material-ui/core";
+import { FetchDataContext } from "../../context/FetchDataContext";
+
 class Piechart extends Component{
     constructor(props){
         super(props);
@@ -50,6 +52,7 @@ class Piechart extends Component{
         }
 
     }
+    static contextType = FetchDataContext;
 render(){
     return(
         <div className="chart" style={{maxHeight:"270px",minHeight:"270px",margin:"20px",marginTop:"50px",width:"90%"}}>
@@ -58,7 +61,7 @@ render(){
             data= {{
                 labels:['Dark Web',"Data Breach","Deep Web"],
         datasets: [{
-            data: [99, 0, 1 ],
+            data: [...this.context.pieChartECInfo],
             backgroundColor:  ['#D0021B','#50E3C2','#F5A623'],
             
             borderColor: 'white'

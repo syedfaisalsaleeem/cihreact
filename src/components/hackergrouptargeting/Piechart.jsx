@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Bar, Line, Pie, Doughnut } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { Grid } from "@material-ui/core";
-import { FetchDataContext } from "../../context/FetchDataContext";
+import { FetchDataContext } from "../../context/FetchDataContext.jsx";
 
 class Piechart extends Component {
   constructor(props) {

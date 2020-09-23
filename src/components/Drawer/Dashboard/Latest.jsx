@@ -19,7 +19,7 @@ import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
 import Chip from '@material-ui/core/Chip';
 import LatestCard from "./LatestCard.jsx";
 import React,{useEffect} from 'react'
-import axios from "axios";
+import {useHistory} from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -118,6 +118,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 export default function Latest(props){
     const classes = useStyles();
+    const history = useHistory();
     const [st1,set]=React.useState([""]);
     const [click,setclick]=React.useState(true);
     const addcount=()=>{
@@ -133,22 +134,57 @@ export default function Latest(props){
         console.log(props.changeflag)
         
     }
+    const loggedout=()=>{
+      localStorage.removeItem("token")
+      
+      history.push("/");
+      window.location.reload();
+      
+    }
     const [usestate1,setstate1]=React.useState({})
     useEffect(() => {
         let result = null;
-        const fetchData = async () => {
-          result = await axios.get(
-            "https://if.cyberintelligencehouse.com/api/alerts?filter_op=AND",
-            {
+        const token=localStorage.getItem("token")
+            
+        const  x= async()=>{
+          const response= await fetch('https://if.cyberdevelopment.house/api/alerts?filter_op=AND', {
               headers: {
-                "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
-              },
-            }
-          );
-          console.log(result.data,"faisal")
-          setstate1(result.data.alerts.slice(0,5))
-        }
-        fetchData()
+                  'accept': 'application/json',
+                  'Authorization': token
+              }
+          });
+          const y=await response.json()
+          if(y.message==="Invalid access token"){
+              console.log(y,"typefaisal")
+              loggedout()
+          }
+          else{
+              console.log(y,"typefaisal")
+              if(y.length===0){
+                  setstate1({})
+              }
+              else{
+                  setstate1(y.alerts.slice(0,5))
+              }
+              
+          }
+          // console.log(y,"typefaisal")
+          // setstate1(y.alerts)
+      }
+      x() 
+        // const fetchData = async () => {
+        //   result = await axios.get(
+        //     "https://if.cyberintelligencehouse.com/api/alerts?filter_op=AND",
+        //     {
+        //       headers: {
+        //         "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
+        //       },
+        //     }
+        //   );
+        //   console.log(result.data,"faisal")
+        //   setstate1(result.data.alerts.slice(0,5))
+        // }
+        // fetchData()
     },[])
     return(
         <div>

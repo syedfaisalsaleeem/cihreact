@@ -308,7 +308,7 @@ export default function Time(){
                         <em style={{fontSize:"12px",fontWeight:"bold",fontStyle:'normal'}}>All History</em>
                         </MenuItem>  
                         <MenuItem value={"week"} style={{fontSize:"13px",fontWeight:"bold",fontStyle:'normal'}}>Past Week</MenuItem>
-                        <MenuItem value={"month"} style={{fontSize:"13px",fontWeight:"bold",fontStyle:'normal'}}>Past months</MenuItem>
+                        <MenuItem value={"month"} style={{fontSize:"13px",fontWeight:"bold",fontStyle:'normal'}}>Past month</MenuItem>
                         <MenuItem value={"month6"} style={{fontSize:"13px",fontWeight:"bold",fontStyle:'normal'}}>Past 6 months</MenuItem>
                         <MenuItem value={"year"} style={{fontSize:"13px",fontWeight:"bold",fontStyle:'normal'}}>Past year</MenuItem>
                         <MenuItem value={"year2"} style={{fontSize:"13px",fontWeight:"bold",fontStyle:'normal'}}>Past 2 years</MenuItem>

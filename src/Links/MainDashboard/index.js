@@ -3,13 +3,22 @@ import React from 'react';
 import Header from "../../components/Header/Header.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import MainDrawer from "../../components/Discover/Drawer.js";
+import {BrowserRouter,Link,Switch,Route,Redirect,useHistory,withRouter} from 'react-router-dom';
+import FetchDataProvider from "../../context/FetchDataContext";
 export default function MainDashboard(){
-
+  let history = useHistory();
 const [drawer,setdrawer]=React.useState(true)
 function handledrawer(){
   setdrawer(!drawer)
 }
+const token=localStorage.getItem("token")
+if(token===null){
+  return <Redirect to="/"></Redirect>
+// history.push("/Dashboard");
+}
+else{
   return(
+    <FetchDataProvider>
     <React.Fragment >
       <div >
       <Header call={handledrawer}/>
@@ -48,7 +57,9 @@ function handledrawer(){
           }
         `}</style>  
     </React.Fragment>
+    </FetchDataProvider>
   )
+}
 }
 // class Discover extends React.Component {
 //   constructor(props){

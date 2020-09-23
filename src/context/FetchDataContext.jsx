@@ -278,12 +278,13 @@ const FetchDataContextProvider = (props) => {
       alertsLast3Months: totalLast3MonthsAlerts,
     }));
   };
-  const history = useHistory();
+  // let history = useHistory();
   const loggedout=()=>{
-    localStorage.removeItem("token")
+    // let history = useHistory();
+    // localStorage.removeItem("token")
     
-    history.push("/");
-    window.location.reload();
+    // history.push("/");
+    // window.location.reload();
     
   }
   useEffect(() => {

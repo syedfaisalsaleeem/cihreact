@@ -245,7 +245,7 @@ export default function ECContent(){
                                     
                                 }
                                 
-                                title={<div style={{display:"flex"}}><Typography>Exposed Information Trend </Typography>
+                                title={<div style={{display:"flex"}}><Typography>Exposed Credentials Trend </Typography>
                                 <Grid item style={{marginLeft:"10px"}}>
                                 <LightTooltip title=" This bar chart depicts the number of alerts found per month over the past two years.">
 

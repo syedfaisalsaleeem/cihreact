@@ -1,5 +1,5 @@
 import React from 'react'
-import {Card,Grid,Button,Chip,Dialog,DialogTitle,IconButton,Typography,Divider,DialogContent,DialogActions} from "@material-ui/core";
+import {Card,Grid,Button,Chip,Dialog,DialogTitle,IconButton,Typography,Divider,DialogContent,DialogActions,Box} from "@material-ui/core";
 import { makeStyles,withStyles } from '@material-ui/core/styles';
 import styles from "./LatestCard.module.css";
 import CloseIcon from '@material-ui/icons/Close';
@@ -24,7 +24,7 @@ const LightTooltip = withStyles((theme) => ({
 const useStyles = makeStyles((theme) => ({
     f5:{
         
-           
+           background:"white",
             boxShadow: "0px 0px 35px rgba(181, 181, 195, 0.15)",
             borderRadius: "6px",
             
@@ -207,7 +207,7 @@ export default function LatestCard(props){
             console.log("faisal2",commenting,comments[0]['id'])
             const token=localStorage.getItem("token")
             const  x= async()=>{
-                const response= await fetch('https://if.cyberdevelopment.house/api/alerts'+id+'/comments/'+comments[0]['id'], {
+                const response= await fetch('https://if.cyberdevelopment.house/api/alerts/'+id+'/comments/'+comments[0]['id'], {
                     method: 'PUT',
                     headers: {
                         'accept': 'application/json',
@@ -241,7 +241,7 @@ export default function LatestCard(props){
         else{
             const token=localStorage.getItem("token")
             const  x= async()=>{
-                const response= await fetch('https://if.cyberdevelopment.house/api/alerts'+id+'/comments', {
+                const response= await fetch('https://if.cyberdevelopment.house/api/alerts/'+id+'/comments', {
                     method: 'POST',
                     headers: {
                         'accept': 'application/json',
@@ -291,12 +291,21 @@ React.useEffect(()=>{
     return(
         <div>
             {/* {console.log("keyword",keyword[0]['value'])} */}
-            <Grid item xs={12} style={{marginBottom:"20px"}}>
-            <Card className={classes.f5}>
-                <Grid item xs={12}>
-                    <Grid container justify="flex-start" spacing={2}>
-                        <Grid item xs={2} lg={2} >
-                            <div style={{display:"flex",flexDirection:"column",width:"130px",height:"140px",background:"white",borderRight:"0.2px solid #000000"}}>
+            <Grid item xs={12}  style={{marginBottom:"20px"}}>
+            <Box className={classes.f5} height="100%"  >
+                <Grid item    xs={12}>
+                    <Grid container  justify="flex-start" spacing={1}>
+                        <Grid item xs={2} lg={2}  >
+                            {/* <Grid container direction="column">
+                                <Grid item style={{display:"flex",alignItems:"center",height:"50%",justifyContent:"center",fontStyle: "normal",fontWeight: "500",
+                                    fontSize: "12px",color: "#000000",opacity:"0.5"}}>
+                                {date}
+                                </Grid>
+                                <Grid item>
+                                {nseverity}
+                                </Grid>
+                            </Grid> */}
+                            <div style={{display:"flex",flexDirection:"column",width:"130px",height:"180px",background:"white",borderRight:"0.2px solid #000000"}}>
                                 <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"50%",fontStyle: "normal",fontWeight: "500",
                                     fontSize: "12px",color: "#000000",opacity:"0.5"}}>
                                     {date}
@@ -351,9 +360,27 @@ React.useEffect(()=>{
                                         </div>
                                     </div>
                                 </Grid>
-                                <Grid item >
-                                            <div style={{display:"flex",width:"20.5vw",height:"auto",alignItems:"center"}}>
-                                                <div style={{display:"flex",flexDirection:"column",width:"100%",height:"75%"}}>
+                                <Grid item style={{width:"20.5vw"}}>
+                                    <Grid container direction="column">
+                                        <Grid item style={{fontStyle: "normal",fontWeight: "600",fontSize: "14px",marginTop:"8px",marginBottom:"5px"}}>
+                                            Tags
+                                        </Grid>
+                                        <Grid item style={{paddingBottom:"10px"}}>
+                                            <Grid container >
+                                                {tags.map((number)=>
+                                                        <Grid item>
+                                                        <Chip style={{margin:"2px"}} size="small" label={number} variant="outlined" className={classes.chipborder}/>
+                                                        </Grid>
+                                                          
+                                                    )}
+                                                <Grid item>
+
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                            {/* <div style={{display:"flex",width:"20.5vw",alignItems:"center"}}>
+                                                <div style={{display:"flex",flexDirection:"column",width:"100%"}}>
                                                 <div style={{fontStyle: "normal",fontWeight: "600",fontSize: "14px"}}>
                                                     Tags
                                                 </div>
@@ -365,7 +392,7 @@ React.useEffect(()=>{
                                                           
                                                     )}
                                                   
-                                                        {/* <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+                                                        <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
                                                         <Chip  size="small" label="Tag Here" variant="outlined" className={classes.chipborder}/>
                                                         </div>
                                                         <div style={{display:"flex",justifyContent:"center",alignItems:"center",paddingLeft:"5px"}}>
@@ -373,12 +400,12 @@ React.useEffect(()=>{
                                                         </div>
                                                         <div style={{display:"flex",justifyContent:"center",alignItems:"center",paddingLeft:"5px"}}>
                                                         <Chip  size="small" label="Tag Here" variant="outlined" className={classes.chipborder}/>
-                                                        </div> */}
+                                                        </div>
                                                 </div>
                                         </div>
                                             
                                             
-                                            </div>
+                                            </div> */}
                                 </Grid>
                                 </Grid>
                             </div>
@@ -450,7 +477,7 @@ React.useEffect(()=>{
                         <Card className={classes.f31}>
                             <Grid item md={12} lg={12}>
                                 <Grid container>
-                                    <Grid item xs={10}>
+                                    <Grid item xs={12}>
                                     <div  >
                                     
                                     <Grid container alignItems="center" direction="row" style={{padding:theme.spacing(2)}} >
@@ -458,11 +485,13 @@ React.useEffect(()=>{
                                         <Grid item xs={12}>
                                             <TextField
                                             id="commenting"
-                                            label="User can add notes here"
+                                            // label="User can add notes here"
                                             multiline
                                             variant="outlined"
                                             value={commenting}
                                             onChange={handlecommenting}
+                                            onBlur={handlecomment}
+                                            placeholder="Add notes here"
                                             fullWidth
 
                                             />
@@ -472,7 +501,7 @@ React.useEffect(()=>{
                                     
                                     </div>
                                     </Grid>
-                                    <Grid item xs={2} style={{minHeight:"100px"}}>
+                                    {/* <Grid item xs={2} style={{minHeight:"100px"}}>
                                             <Grid container alignItems="center" justify="center" style={{minHeight:"90px"}}>
                                                 <Grid item>
                                                         <Button className={classes.Buttons} color="primary" variant="contained" onClick={handlecomment}>
@@ -480,7 +509,7 @@ React.useEffect(()=>{
                                                         </Button>
                                                 </Grid>
                                             </Grid>
-                                    </Grid>
+                                    </Grid> */}
                                 </Grid>
 
                             </Grid>
@@ -489,7 +518,7 @@ React.useEffect(()=>{
                         </Card>
                     </Grid>
                 </Grid>
-            </Card>
+            </Box>
             </Grid>
 
 
@@ -504,15 +533,15 @@ React.useEffect(()=>{
             >
                 
                 <DialogTitle>
-                                    <Grid container style={{height:"60px",marginTop:"-25px",marginLeft:"-24px"}} >
-                                        <Grid items xs={11}>
+                                    <Grid container style={{minheight:"60px",marginTop:"-25px",marginLeft:"-24px"}} >
+                                        <Grid items xs={11} >
                                             <Grid container direction="row">
-                                            <Grid item xs={2} style={{backgroundColor:"white"}}>
+                                            <Grid item xs={2} style={{backgroundColor:"white",height:"90px"}}>
                                                 <Grid container direction="row">
-                                                    <Grid item xs={10} style={{background:"#F5A623",height:"75px"}}>
-                                                    <Grid container justify="center">
-                                                        <Grid item>
-                                                            <Typography component="div" style={{marginTop:"30px",color:"white"}}>
+                                                    <Grid item xs={10} style={{background:"#F5A623",height:"100px"}}>
+                                                    <Grid container alignItems="center" justify="center">
+                                                        <Grid item >
+                                                            <Typography component="div" style={{marginTop:"45px",fontSize:"18px",color:"white"}}>
                                                                 {nseverity}
                                                     
                                                             </Typography>
@@ -653,7 +682,7 @@ React.useEffect(()=>{
                                 Notes
                             </Grid>
                             <Grid container>
-                                    <Grid item xs={10}>
+                                    <Grid item xs={12}>
                                     <div  >
                                     
                                     <Grid container alignItems="center" direction="row" style={{padding:theme.spacing(2)}} >
@@ -661,11 +690,13 @@ React.useEffect(()=>{
                                         <Grid item xs={12}>
                                             <TextField
                                             id="commenting"
-                                            label="User can add notes here"
+                                            // label="User can add notes here"
                                             multiline
                                             variant="outlined"
                                             value={commenting}
                                             onChange={handlecommenting}
+                                            onBlur={handlecomment}
+                                            placeholder="Add notes here"
                                             fullWidth
 
                                             />
@@ -675,7 +706,7 @@ React.useEffect(()=>{
                                     
                                     </div>
                                     </Grid>
-                                    <Grid item xs={2} style={{minHeight:"100px"}}>
+                                    {/* <Grid item xs={2} style={{minHeight:"100px"}}>
                                             <Grid container alignItems="center" justify="center" style={{minHeight:"90px"}}>
                                                 <Grid item>
                                                         <Button className={classes.Buttons} color="primary" variant="contained" onClick={handlecomment}>
@@ -683,7 +714,7 @@ React.useEffect(()=>{
                                                         </Button>
                                                 </Grid>
                                             </Grid>
-                                    </Grid>
+                                    </Grid> */}
                             </Grid>
                         </Grid>
                     </Grid>

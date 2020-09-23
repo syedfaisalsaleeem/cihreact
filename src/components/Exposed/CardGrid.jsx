@@ -138,13 +138,12 @@ chip: {
     }
 }))
 export default function CardGrid(props){
-    const [fullWidth, setFullWidth] = React.useState(true);
     const {date,
         alertcreated,severity,
         title,source,keyword,
-        remediation,tags,comments,id}=props
+        remediation,tags,comments}=props
     if(severity!==""){
-        console.log(severity)
+        // console.log(severity)
         const newStr = severity.split('');
         newStr.splice(0,8);
        var nseverity = newStr.join('');
@@ -152,15 +151,26 @@ export default function CardGrid(props){
     else{
         var nseverity=severity
     }
+
+    const [fullWidth, setFullWidth] = React.useState(true);
+    const [commenting,setcommenting]=React.useState();
     const [st1,set]=React.useState([""]);
     const [click,setclick]=React.useState(true);
-    const [commenting,setcommenting]=React.useState('');
+
     const [star,selectstar]=React.useState(false)
     const [open, setOpen] = React.useState(false);
     const addcount=()=>{
         selectstar(!star)
+        if(star===false){
+            props.addcount()
+        }
+        else if(star===true){
+            props.changeflag()
+        }
+        
+        
+        // console.log(props.changeflag)
     }
-
     const handleClickOpen = () => {
       setOpen(true);
     };
@@ -176,12 +186,18 @@ export default function CardGrid(props){
         window.location.reload();
         
       }
-    const handlecomment=async()=>{
+    const handlecomment=async(e)=>{
+            const {id , value} = e.target
+            console.log(id,value)   
+    props.setcommenting(prevState => ({
+        ...prevState,
+        [id] : value
+    }))
         if(comments.length>0){
             console.log("faisal2",commenting,comments[0]['id'])
             const token=localStorage.getItem("token")
             const  x= async()=>{
-                const response= await fetch('https://if.cyberdevelopment.house/api/alerts'+id+'/comments/'+comments[0]['id'], {
+                const response= await fetch('https://if.cyberdevelopment.house/api/alerts/'+props.id+'/comments/'+comments[0]['id'], {
                     method: 'PUT',
                     headers: {
                         'accept': 'application/json',
@@ -191,6 +207,7 @@ export default function CardGrid(props){
                     body: 'text='+commenting
                 });
                 const y=await response.json()
+
                 if(y.message==="Invalid access token"){
                     console.log(y,"typefaisal")
                     loggedout()
@@ -215,7 +232,7 @@ export default function CardGrid(props){
         else{
             const token=localStorage.getItem("token")
             const  x= async()=>{
-                const response= await fetch('https://if.cyberdevelopment.house/api/alerts'+id+'/comments', {
+                const response= await fetch('https://if.cyberdevelopment.house/api/alerts/'+props.id+'/comments', {
                     method: 'POST',
                     headers: {
                         'accept': 'application/json',
@@ -249,18 +266,26 @@ export default function CardGrid(props){
 
 }
 const handlecommenting=(e)=>{
+    console.log("doing work",e.target.value)
+    const {id , value} = e.target   
+    // props.setcommenting(prevState => ({
+    //     ...prevState,
+    //     [id] : value
+    // }))
     setcommenting(e.target.value)
 }
 React.useEffect(()=>{
-    if(comments.length>0){
-        setcommenting(comments[0]['text'])
+    if( props.commenting1!==undefined){
+        console.log("worked",props.commenting1)
+        setcommenting(props.commenting1)
     }
     else{
-        setcommenting('')
+        // setcommenting('')
     }
     
-},[])
-    const classes=useStyles()
+},[props.commenting1])
+    // https://if.cyberintelligencehouse.com/api/alerts/39412cec-8a69-4254-9a81-3cf21a83ba09/comments
+     const classes=useStyles()
     return(
         <div>
             <Grid item style={{marginTop:"20px"}} >
@@ -326,13 +351,15 @@ React.useEffect(()=>{
                     
                     </div>
                     </div>
-                    <div className={styles.b}>
+                    <div className={styles.b} style={{paddingLeft:"10px"}}>
+                    <Chip style={{margin:"2px"}} size="small" label={keyword[0]['value']}  variant="outlined" className={classes.chipborder}/>
+{/* 
                         <div className={styles.b1}>
                             
                        {keyword[0]['value']} 
                                                 
                         
-                        </div>
+                        </div> */}
 
                     </div>
                     <div className={styles.rowbox3}>
@@ -344,8 +371,8 @@ React.useEffect(()=>{
                     
                     </div>
                     </div>
-                    <div className={styles.b} styles={{marginLeft:"10px"}}>
-                        <Grid container justify="center">
+                    <div className={styles.b} style={{marginLeft:"10px",marginBottom:"10px"}}>
+                        <Grid container >
                     {tags.map((number)=>
                         <Grid item>
                             <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
@@ -399,19 +426,21 @@ React.useEffect(()=>{
                         <Card className={styles.main1}>
                             <Grid item md={12} lg={12}>
                             <Grid container justify="space-evenly">
-                                    <Grid item xs={8}>
+                                    <Grid item xs={12}>
                                     <div  >
                                     
                                     <Grid container alignItems="center" direction="row" style={{padding:"5px"}} >
                                         
                                         <Grid item xs={12}>
-                                            <TextField
-                                            id="commenting"
-                                            label="User can add notes here"
+                                        <TextField
+                                            id={props.id2}
+                                            // label="Add notes here"
                                             multiline
                                             variant="outlined"
                                             value={commenting}
                                             onChange={handlecommenting}
+                                            onBlur={handlecomment}
+                                            placeholder="Add notes here"
                                             fullWidth
 
                                             />
@@ -421,7 +450,7 @@ React.useEffect(()=>{
                                     
                                     </div>
                                     </Grid>
-                                    <Grid item xs={2} style={{minHeight:"70px"}}>
+                                    {/* <Grid item xs={2} style={{minHeight:"70px"}}>
                                             <Grid container alignItems="center" justify="center"style={{minHeight:"70px"}} >
                                                 <Grid item>
                                                         <Button size="small" color="primary" variant="contained" onClick={handlecomment}>
@@ -429,7 +458,7 @@ React.useEffect(()=>{
                                                         </Button>
                                                 </Grid>
                                             </Grid>
-                                    </Grid>
+                                    </Grid> */}
                                 </Grid>
                             </Grid>
                                 
@@ -447,16 +476,16 @@ React.useEffect(()=>{
             >
                 
                 <DialogTitle>
-                                    <Grid container style={{height:"60px",marginTop:"-25px",marginLeft:"-24px"}} >
-                                        <Grid items xs={11}>
+                <Grid container style={{minheight:"60px",marginTop:"-25px",marginLeft:"-24px"}} >
+                                        <Grid items xs={11} >
                                             <Grid container direction="row">
-                                            <Grid item xs={2} style={{backgroundColor:"white"}}>
+                                            <Grid item xs={2} style={{backgroundColor:"white",height:"90px"}}>
                                                 <Grid container direction="row">
-                                                    <Grid item xs={10} style={{background:"#F5A623",height:"75px"}}>
-                                                    <Grid container justify="center">
-                                                        <Grid item>
-                                                            <Typography component="div" style={{marginTop:"30px",color:"white"}}>
-                                                            {nseverity}
+                                                    <Grid item xs={10} style={{background:"#F5A623",height:"100px"}}>
+                                                    <Grid container alignItems="center" justify="center">
+                                                        <Grid item >
+                                                            <Typography component="div" style={{marginTop:"45px",fontSize:"18px",color:"white"}}>
+                                                                {nseverity}
                                                     
                                                             </Typography>
                                                         </Grid>
@@ -599,19 +628,21 @@ React.useEffect(()=>{
                                 Notes
                             </Grid>
                             <Grid container>
-                                    <Grid item xs={10}>
+                                    <Grid item xs={12}>
                                     <div  >
                                     
                                     <Grid container alignItems="center" direction="row" style={{padding:"5px"}} >
                                         
                                         <Grid item xs={12}>
-                                            <TextField
-                                            id="commenting"
-                                            label="User can add notes here"
+                                        <TextField
+                                            id={props.id2}
+                                            // label="Add notes here"
                                             multiline
                                             variant="outlined"
                                             value={commenting}
                                             onChange={handlecommenting}
+                                            onBlur={handlecomment}
+                                            placeholder="Add notes here"
                                             fullWidth
 
                                             />
@@ -621,15 +652,15 @@ React.useEffect(()=>{
                                     
                                     </div>
                                     </Grid>
-                                    <Grid item xs={2} style={{minHeight:"100px"}}>
+                                    {/* <Grid item xs={2} style={{minHeight:"100px"}}>
                                             <Grid container alignItems="center" justify="center" style={{minHeight:"90px"}}>
                                                 <Grid item>
-                                                        <Button className={classes.Buttons} color="primary" variant="contained" onClick={handlecomment}>
+                                                        <Button className={classes.Buttons} color="primary" variant="contained" >
                                                             Add Notes
                                                         </Button>
                                                 </Grid>
                                             </Grid>
-                                    </Grid>
+                                    </Grid> */}
                             </Grid>
                         </Grid>
                     </Grid>

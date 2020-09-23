@@ -219,16 +219,19 @@ export default function EnhancedTable() {
   const [show, setShow] = React.useState(false);
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
+  const [count,setcount]=React.useState(1);
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
   const [open, changeopen1] = React.useState(false);
-  const handle = () => {
+  const handle = (e) => {
+    console.log(e)
+    setcount(e)
     changeopen1(!open);
   };
-
+  const findings=[1,2,2,1]
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -247,10 +250,7 @@ export default function EnhancedTable() {
               handleChange={() => setShow((prevShow) => !prevShow)}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy)).map(
-                (row, index) => {
-                  return (
-                    <TableRow key={row.name}>
+            <TableRow>
                       <TableCell
                         component="th"
                         scope="row"
@@ -261,21 +261,26 @@ export default function EnhancedTable() {
                           textAlign: "center",
                         }}
                       >
-                        <Typography>{row.name}</Typography>
+                        <Typography> Medium</Typography>
                       </TableCell>
                       <TableCell
                         align="center"
                         style={{ border: "1px solid #aaa" }}
                       >
-                        <p>{row.calories}</p>
+                        <p>   abc1245abc1245</p>
                       </TableCell>
                       <TableCell
+                      
                         align="center"
                         style={{ border: "1px solid #aaa", width: "20%" }}
                       >
                         <Typography>
                           {show ? (
-                            row.fat
+                            <div>
+                           Password1
+                            </div>
+                            
+                            
                           ) : (
                             <div
                               style={{
@@ -298,13 +303,13 @@ export default function EnhancedTable() {
                         align="center"
                         style={{ border: "1px solid #aaa" }}
                       >
-                        {row.carbs}
+                   14/02/2020
                       </TableCell>
                       <TableCell
                         align="center"
                         style={{ border: "1px solid #aaa" }}
                       >
-                        {row.protein}
+                    18/02/2020
                       </TableCell>
                       <TableCell
                         align="center"
@@ -312,15 +317,238 @@ export default function EnhancedTable() {
                       >
                         <Button
                           style={{ textTransform: "lowercase" }}
-                          onClick={handle}
+                          onClick={()=>handle(1)}
                         >
-                          {row.found}
+                        1 finding
                         </Button>
                       </TableCell>
                     </TableRow>
-                  );
-                }
-              )}
+                    <TableRow>
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        padding="none"
+                        style={{
+                          border: "1px solid #aaa",
+                          width: "20%",
+                          textAlign: "center",
+                        }}
+                      >
+                        <Typography> Medium</Typography>
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        style={{ border: "1px solid #aaa" }}
+                      >
+                        <p>   abc1245abc1245</p>
+                      </TableCell>
+                      <TableCell
+                      
+                        align="center"
+                        style={{ border: "1px solid #aaa", width: "20%" }}
+                      >
+                        <Typography>
+                          {show ? (
+                            <div>
+                           Password
+
+                            </div>
+                            
+                            
+                          ) : (
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <MoreHorizIcon style={{ fontSize: "2rem" }} />
+                              <MoreHorizIcon
+                                style={{ marginLeft: "-8px", fontSize: "2rem" }}
+                              />
+                              <MoreHorizIcon
+                                style={{ marginLeft: "-8px", fontSize: "2rem" }}
+                              />
+                            </div>
+                          )}
+                        </Typography>
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        style={{ border: "1px solid #aaa" }}
+                      >
+                   14/02/2020
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        style={{ border: "1px solid #aaa" }}
+                      >
+                    18/02/2020
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        style={{ border: "1px solid #aaa" }}
+                      >
+                        <Button
+                          style={{ textTransform: "lowercase" }}
+                          onClick={()=>handle(2)}
+                        >
+                        2 finding
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        padding="none"
+                        style={{
+                          border: "1px solid #aaa",
+                          width: "20%",
+                          textAlign: "center",
+                        }}
+                      >
+                        <Typography> Medium</Typography>
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        style={{ border: "1px solid #aaa" }}
+                      >
+                        <p>   abc1245abc1245</p>
+                      </TableCell>
+                      <TableCell
+                      
+                        align="center"
+                        style={{ border: "1px solid #aaa", width: "20%" }}
+                      >
+                        <Typography>
+                          {show ? (
+                            <div>
+                           Password1
+                            <br/>
+                            Password2
+                            </div>
+                            
+                            
+                          ) : (
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <MoreHorizIcon style={{ fontSize: "2rem" }} />
+                              <MoreHorizIcon
+                                style={{ marginLeft: "-8px", fontSize: "2rem" }}
+                              />
+                              <MoreHorizIcon
+                                style={{ marginLeft: "-8px", fontSize: "2rem" }}
+                              />
+                            </div>
+                          )}
+                        </Typography>
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        style={{ border: "1px solid #aaa" }}
+                      >
+                   14/02/2020
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        style={{ border: "1px solid #aaa" }}
+                      >
+                    18/02/2020
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        style={{ border: "1px solid #aaa" }}
+                      >
+                        <Button
+                          style={{ textTransform: "lowercase" }}
+                          onClick={()=>handle(2)}
+                        >
+                        2 findings
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+            <TableRow>
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        padding="none"
+                        style={{
+                          border: "1px solid #aaa",
+                          width: "20%",
+                          textAlign: "center",
+                        }}
+                      >
+                        <Typography> Medium</Typography>
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        style={{ border: "1px solid #aaa" }}
+                      >
+                        <p>   abc1245abc1245</p>
+                      </TableCell>
+                      <TableCell
+                      
+                        align="center"
+                        style={{ border: "1px solid #aaa", width: "20%" }}
+                      >
+                        <Typography>
+                          {show ? (
+                            <div>
+                           Password1
+                            <br/>
+                            Password2
+                            </div>
+                            
+                            
+                          ) : (
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <MoreHorizIcon style={{ fontSize: "2rem" }} />
+                              <MoreHorizIcon
+                                style={{ marginLeft: "-8px", fontSize: "2rem" }}
+                              />
+                              <MoreHorizIcon
+                                style={{ marginLeft: "-8px", fontSize: "2rem" }}
+                              />
+                            </div>
+                          )}
+                        </Typography>
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        style={{ border: "1px solid #aaa" }}
+                      >
+                   14/02/2020
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        style={{ border: "1px solid #aaa" }}
+                      >
+                    18/02/2020
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        style={{ border: "1px solid #aaa" }}
+                      >
+                        <Button
+                          
+                          style={{ textTransform: "lowercase" }}
+                          onClick={()=>handle(1)}
+                        >
+                        1 finding
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+            
             </TableBody>
           </Table>
         </TableContainer>
@@ -352,8 +580,17 @@ export default function EnhancedTable() {
         </DialogTitle>
         <Divider />
         <DialogContent>
+            {count===2?
+            <div>
           <LatestCard />
           <LatestCard />
+            </div>:
+            <div>
+<LatestCard />
+            </div>
+
+            }
+
         </DialogContent>
       </Dialog>
     </div>

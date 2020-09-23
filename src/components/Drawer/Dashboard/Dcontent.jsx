@@ -255,7 +255,10 @@ export default function Dcontent (){
                                             
                                             title={<div style={{display:"flex"}}><Typography>Finding vs Risks </Typography>
                                             <Grid item style={{marginLeft:"10px"}}>
-                                                <InfoOutlinedIcon />
+                                            <LightTooltip title="This chart depicts the total number of findings and the related risk level per exposure category over the past 24 months.">
+
+                                            <InfoOutlinedIcon />
+                                            </LightTooltip >
                                             </Grid>
                                     </div>}        
                                             />
@@ -288,7 +291,10 @@ export default function Dcontent (){
                                 
                                 title={<div style={{display:"flex"}}><Typography>Exposure Trend </Typography>
                                 <Grid item style={{marginLeft:"10px"}}>
-                                    <InfoOutlinedIcon />
+                                <LightTooltip title="This graph depicts the number of findings and the related risk level per month over the past 24 months. Select one or more exposure categories for a custom trend view.">
+
+                                <InfoOutlinedIcon />
+                                </LightTooltip >
                                 </Grid>
                         </div>}      
                                 />

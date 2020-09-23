@@ -14,10 +14,16 @@ import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import "./Table1.css";
+import styles from "./Table1.module.css";
 import Tooltip from "@material-ui/core/Tooltip";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
-
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Divider,
+} from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
 import controlImg from "../../Links/images/CIS-controls.png";
 
 const LightTooltip = withStyles((theme) => ({
@@ -34,6 +40,12 @@ const useRowStyles = makeStyles({
       borderBottom: "unset",
     },
   },
+  b:{
+    textDecoration:"underline",
+    '&:hover': {
+      cursor:"pointer",
+ },
+  }
 });
 
 function createData(
@@ -59,6 +71,7 @@ function createData(
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
+  
   const classes = useRowStyles();
 
   return (
@@ -78,7 +91,7 @@ function Row(props) {
         </TableCell>
         <TableCell align="left">
           {" "}
-          <div className="foldable">
+          <div className={styles.foldable}>
             <p style={{ color: "red" }}>Ready to exploit</p>
             <IconButton
               aria-label="expand row"
@@ -100,7 +113,7 @@ function Row(props) {
             }}
             size="small"
           >
-            Remediated actions
+            Mark as Remediated
           </Button>
         </TableCell>
       </TableRow>
@@ -120,7 +133,7 @@ function Row(props) {
               }}
             >
               <Grid container justify="space-between">
-                <Grid item xs="6">
+                <Grid item xs="8">
                   <Typography
                     variant="subtitle1"
                     style={{ fontWeight: "bold" }}
@@ -138,12 +151,14 @@ function Row(props) {
                     natus impedit ducimus!
                   </div>
                 </Grid>
-                <Grid item xs="4" className="downImg">
-                  <img src={controlImg} alt="" />
-                </Grid>
-                <Grid item xs="2" className="downloadBtns">
+
+                <Grid item xs="2" className={styles.downloadBtns}>
                   <button>Download as PDF</button>
                   <button>Download as CSV</button>
+                </Grid>
+                <Grid item xs="2" className={styles.downloadBtns}>
+                  <button>Analyst Suuport</button>
+                  <button>Show Alerts</button>
                 </Grid>
               </Grid>
             </Box>
@@ -166,15 +181,21 @@ const rows = [
 ];
 
 export default function FContent() {
+  const [open1, setopen1] = React.useState(false);
+  const handle1=()=>{
+    setopen1(false)
+  }
+  const classes = useRowStyles();
   return (
+    <>
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
             <TableCell align="center">
-              <div className="thDiv">
+              <div className={styles.thDiv}>
                 Remediated action
-                <div className="i">
+                <div className={styles.i}>
                   <LightTooltip title="Unfold a remediation action to review the source of the exposure and how to mitigate the risk.">
                     <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
                   </LightTooltip>
@@ -182,19 +203,19 @@ export default function FContent() {
               </div>
             </TableCell>
             <TableCell align="center">
-              <div className="thDiv">
+              <div className={styles.thDiv}>
                 Affects
-                <div className="i">
-                  <LightTooltip title="number of alerts affected by this remediation.">
+                <div className={styles.i}>
+                  <LightTooltip title="Number of alerts affected by this remediation.">
                     <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
                   </LightTooltip>
                 </div>
               </div>
             </TableCell>
             <TableCell align="center">
-              <div className="thDiv">
+              <div className={styles.thDiv}>
                 Risk
-                <div className="i">
+                <div className={styles.i}>
                   <LightTooltip title="The risk level is calculated as the weighted sum of high, medium and low severity alerts.">
                     <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
                   </LightTooltip>
@@ -202,19 +223,30 @@ export default function FContent() {
               </div>
             </TableCell>
             <TableCell align="center" style={{ width: "10rem" }}>
-              <div className="thDiv">
+              <div className={styles.thDiv}>
                 CIS Control
-                <div className="i">
-                  <LightTooltip title="A set of 20 best practises making up the critical security controls, published by the Center for Internet Security (CIS). ">
+                <div className={styles.i}>
+                  <LightTooltip             
+
+                interactive
+                
+                  title={
+                    <div style={{display:"flex"}}  >
+                      <p>A set of 20 best practises making up the critical security controls, 
+                  published by the Center for Internet Security (CIS).<p className={classes.b} onClick={()=>setopen1(true)}>Show more</p>
+                  </p>
+                    </div>
+}
+                   >
                     <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
                   </LightTooltip>
                 </div>
               </div>
             </TableCell>
             <TableCell align="center" style={{ width: "15rem" }}>
-              <div className="thDiv">
+              <div className={styles.thDiv}>
                 Time to Exploit
-                <div className="i">
+                <div className={styles.i}>
                   <LightTooltip title="Estimated time needed for cybercriminals to exploit exposure ">
                     <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
                   </LightTooltip>
@@ -231,5 +263,22 @@ export default function FContent() {
         </TableBody>
       </Table>
     </TableContainer>
+    <Dialog
+        open={open1}
+        onClose={handle1}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        maxWidth={"xl"}
+      >
+
+        
+        <DialogContent>
+        <Grid item xs="12" className={styles.downImg}>
+                  <img src={controlImg} alt="" />
+                </Grid>
+        </DialogContent>
+      </Dialog>
+    
+    </>
   );
 }

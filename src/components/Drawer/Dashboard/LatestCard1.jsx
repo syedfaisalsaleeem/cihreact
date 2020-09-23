@@ -1,7 +1,7 @@
 import React from 'react'
-import {Card,Grid,Button,Chip,Dialog,DialogTitle,IconButton,Typography,Divider,DialogContent,DialogActions} from "@material-ui/core";
+import {Card,Grid,Button,Chip,Dialog,DialogTitle,IconButton,Typography,Divider,DialogContent,DialogActions,Box} from "@material-ui/core";
 import { makeStyles,withStyles } from '@material-ui/core/styles';
-import styles from "../Drawer/Dashboard/LatestCard.module.css";
+import styles from "./LatestCard.module.css"
 import CloseIcon from '@material-ui/icons/Close';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -9,8 +9,10 @@ import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
 import GradeIcon from '@material-ui/icons/Grade';
 import TextField from '@material-ui/core/TextField';
-import theme from '../../theme';
+import theme from '../../../theme';
 import Tooltip from '@material-ui/core/Tooltip';
+import axios from 'axios';
+import {Redirect,useHistory, withRouter} from 'react-router-dom';
 const LightTooltip = withStyles((theme) => ({
     tooltip: {
       backgroundColor: theme.palette.common.white,
@@ -22,7 +24,7 @@ const LightTooltip = withStyles((theme) => ({
 const useStyles = makeStyles((theme) => ({
     f5:{
         
-           
+           background:"white",
             boxShadow: "0px 0px 35px rgba(181, 181, 195, 0.15)",
             borderRadius: "6px",
             
@@ -151,9 +153,23 @@ const useStyles = makeStyles((theme) => ({
       },
     
 }))
-export default function LatestCard(){
+export default function LatestCard(props){
+    const {date,
+        alertcreated,severity,
+        title,source,keyword,
+        remediation,tags,comments}=props
+    if(severity!==""){
+        // console.log(severity)
+        const newStr = severity.split('');
+        newStr.splice(0,8);
+       var nseverity = newStr.join('');
+    }
+    else{
+        var nseverity=severity
+    }
+
     const [fullWidth, setFullWidth] = React.useState(true);
-    
+    const [commenting,setcommenting]=React.useState();
     const [st1,set]=React.useState([""]);
     const [click,setclick]=React.useState(true);
 
@@ -161,6 +177,15 @@ export default function LatestCard(){
     const [open, setOpen] = React.useState(false);
     const addcount=()=>{
         selectstar(!star)
+        if(star===false){
+            props.addcount()
+        }
+        else if(star===true){
+            props.changeflag()
+        }
+        
+        
+        // console.log(props.changeflag)
     }
     const handleClickOpen = () => {
       setOpen(true);
@@ -169,28 +194,145 @@ export default function LatestCard(){
     const handleClose = () => {
       setOpen(false);
     };
+    const history = useHistory();
+    const loggedout=()=>{
+        localStorage.removeItem("token")
+        
+        history.push("/");
+        window.location.reload();
+        
+      }
+    const handlecomment=async(e)=>{
+            const {id , value} = e.target
+            console.log(id,value)   
+    props.setcommenting(prevState => ({
+        ...prevState,
+        [id] : value
+    }))
+        if(comments.length>0){
+            console.log("faisal2",commenting,comments[0]['id'])
+            const token=localStorage.getItem("token")
+            const  x= async()=>{
+                const response= await fetch('https://if.cyberdevelopment.house/api/alerts/'+props.id+'/comments/'+comments[0]['id'], {
+                    method: 'PUT',
+                    headers: {
+                        'accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Authorization': token
+                    },
+                    body: 'text='+commenting
+                });
+                const y=await response.json()
 
-    const classes=useStyles()
+                if(y.message==="Invalid access token"){
+                    console.log(y,"typefaisal")
+                    loggedout()
+                }
+
+                // console.log(y,"typefaisal")
+                // setstate1(y.alerts)
+            }
+            x() 
+            // const response= await fetch('https://if.cyberintelligencehouse.com/api/alerts/'+id+'/comments/'+comments[0]['id'], {
+            //     method: 'PUT',
+            //     headers: {
+            //         'accept': 'application/json',
+            //         'X-Api-Key': '1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2',
+            //         'Content-Type': 'application/x-www-form-urlencoded'
+            //     },
+            //     body: 'text='+commenting
+            // });
+            // let data = await response.json()
+            // console.log(data)
+        }
+        else{
+            const token=localStorage.getItem("token")
+            const  x= async()=>{
+                const response= await fetch('https://if.cyberdevelopment.house/api/alerts/'+props.id+'/comments', {
+                    method: 'POST',
+                    headers: {
+                        'accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Authorization': token
+                    },
+                    body: 'nick=dsadasdsasd&text='+commenting
+                });
+                const y=await response.json()
+                if(y.message==="Invalid access token"){
+                    console.log(y,"typefaisal")
+                    loggedout()
+                }
+
+                // console.log(y,"typefaisal")
+                // setstate1(y.alerts)
+            }
+            x() 
+            // const response=await fetch('https://if.cyberintelligencehouse.com/api/alerts/'+id+'/comments', {
+            //     method: 'POST',
+            //     headers: {
+            //         'accept': 'application/json',
+            //         'X-Api-Key': '1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2',
+            //         'Content-Type': 'application/x-www-form-urlencoded'
+            //     },
+            //     body: 'nick=dsadasdsasd&text='+commenting
+            // });
+            // let data = await response.json()
+            // console.log(data)
+        }
+
+}
+const handlecommenting=(e)=>{
+    console.log("doing work",e.target.value)
+    const {id , value} = e.target   
+    // props.setcommenting(prevState => ({
+    //     ...prevState,
+    //     [id] : value
+    // }))
+    setcommenting(e.target.value)
+}
+React.useEffect(()=>{
+    if( props.commenting1!==undefined){
+        console.log("worked",props.commenting1)
+        setcommenting(props.commenting1)
+    }
+    else{
+        // setcommenting('')
+    }
+    
+},[props.commenting1])
+    // https://if.cyberintelligencehouse.com/api/alerts/39412cec-8a69-4254-9a81-3cf21a83ba09/comments
+     const classes=useStyles()
     return(
         <div>
-            <Grid item xs={12} style={{marginBottom:"20px"}}>
-            <Card className={classes.f5}>
-                <Grid item xs={12}>
-                    <Grid container justify="flex-start" spacing={2}>
-                        <Grid item xs={2} lg={2} >
-                            <div style={{display:"flex",flexDirection:"column",width:"130px",height:"140px",background:"white",borderRight:"0.2px solid #000000"}}>
+            {console.log("keyword",props.commenting1,"commenting",commenting)}
+            <Grid item xs={12}  style={{marginBottom:"20px"}}>
+            <Box className={classes.f5} height="100%"  >
+                <Grid item    xs={12}>
+                    <Grid container  justify="flex-start" spacing={1}>
+                        <Grid item xs={2} lg={2}  >
+                            {/* <Grid container direction="column">
+                                <Grid item style={{display:"flex",alignItems:"center",height:"50%",justifyContent:"center",fontStyle: "normal",fontWeight: "500",
+                                    fontSize: "12px",color: "#000000",opacity:"0.5"}}>
+                                {date}
+                                </Grid>
+                                <Grid item>
+                                {nseverity}
+                                </Grid>
+                            </Grid> */}
+                            <div style={{display:"flex",flexDirection:"column",width:"130px",height:"180px",background:"white",borderRight:"0.2px solid #000000"}}>
                                 <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"50%",fontStyle: "normal",fontWeight: "500",
                                     fontSize: "12px",color: "#000000",opacity:"0.5"}}>
-                                    DD - MM - YYYY
+                                    {date}
                                 </div>
                                 <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"50%",fontStyle: "normal",fontWeight: "600",
                                     fontSize: "16px",color: "white",background:"#F5A623"}}>
-                                                    Medium
+
+                                                    {nseverity}
                                 </div>
                             </div>
                         </Grid>
                         <Grid item xs={8} lg={8} >
-                            <div style={{display:"flex",height:"140px"}}>
+                            <div style={{display:"flex"}}>
                                 <Grid container justify="space-between">
                                 <Grid item>
                                     <div style={{display:"flex",width:"22vw",height:"70px",alignItems:"center"}}>
@@ -199,7 +341,7 @@ export default function LatestCard(){
                                                 Title
                                             </div>
                                             <div style={{paddingTop:"5px",fontStyle: "normal",fontWeight: "normal",fontSize: "12px"}}>
-                                                Title goes here
+                                                {title}
                                             </div>
                                         </div>
 
@@ -213,7 +355,7 @@ export default function LatestCard(){
                                                 Source
                                             </div>
                                             <div style={{paddingTop:"5px",fontStyle: "normal",fontWeight: "normal",fontSize: "12px"}}>
-                                                https://Type-Goes-Here.com
+                                                {source}
                                             </div>
                                         </div>
                                     </div>
@@ -226,19 +368,44 @@ export default function LatestCard(){
                                             </div>
                                             <div style={{display:"flex",paddingTop:"5px",justifyContent:"flex-start"}}>
                                                     <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-                                                    <Chip  size="small" label="KeyWord" variant="outlined" className={classes.chipborder}/>
+                                                    <Chip  size="small" label={keyword[0]['value']} variant="outlined" className={classes.chipborder}/>
                                                     </div>
                                             </div>
                                         </div>
                                     </div>
                                 </Grid>
-                                <Grid item>
-                                            <div style={{display:"flex",width:"20.5vw",height:"70px",alignItems:"center"}}>
-                                                <div style={{display:"flex",flexDirection:"column",width:"100%",height:"75%"}}>
+                                <Grid item style={{width:"20.5vw"}}>
+                                    <Grid container direction="column">
+                                        <Grid item style={{fontStyle: "normal",fontWeight: "600",fontSize: "14px",marginTop:"8px",marginBottom:"5px"}}>
+                                            Tags
+                                        </Grid>
+                                        <Grid item style={{paddingBottom:"10px"}}>
+                                            <Grid container >
+                                                {tags.map((number)=>
+                                                        <Grid item>
+                                                        <Chip style={{margin:"2px"}} size="small" label={number} variant="outlined" className={classes.chipborder}/>
+                                                        </Grid>
+                                                          
+                                                    )}
+                                                <Grid item>
+
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                            {/* <div style={{display:"flex",width:"20.5vw",alignItems:"center"}}>
+                                                <div style={{display:"flex",flexDirection:"column",width:"100%"}}>
                                                 <div style={{fontStyle: "normal",fontWeight: "600",fontSize: "14px"}}>
                                                     Tags
                                                 </div>
                                                 <div style={{display:"flex",paddingTop:"5px",justifyContent:"flex-start"}}>
+                                                    {tags.map((number)=>
+                                                        <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+                                                        <Chip style={{margin:"2px"}} size="small" label={number} variant="outlined" className={classes.chipborder}/>
+                                                        </div>
+                                                          
+                                                    )}
+                                                  
                                                         <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
                                                         <Chip  size="small" label="Tag Here" variant="outlined" className={classes.chipborder}/>
                                                         </div>
@@ -252,7 +419,7 @@ export default function LatestCard(){
                                         </div>
                                             
                                             
-                                            </div>
+                                            </div> */}
                                 </Grid>
                                 </Grid>
                             </div>
@@ -277,7 +444,7 @@ export default function LatestCard(){
                                         
                                         <Grid item xs={12} >
                                                     <LightTooltip title="Highlight alert">
-                                                        <IconButton aria-label="settings" onClick={addcount} >
+                                                        <IconButton aria-label="settings" disabled="true" onClick={addcount} >
                                                             <GradeIcon style={{fontSize:'32px',color:star?"yellow":"gray"}}/>
 
                                                         </IconButton>   
@@ -323,31 +490,49 @@ export default function LatestCard(){
                     <Grid container justify="flex-start" maxWidth="xl" >
                         <Card className={classes.f31}>
                             <Grid item md={12} lg={12}>
-                                <div  >
-                                <Card className={classes.f41} style={{padding:theme.spacing(2)}}>
-                                <Grid container alignItems="center" direction="row" >
-                                    
+                                <Grid container>
                                     <Grid item xs={12}>
-                                        <TextField
-                                        id="standard-multiline-flexible"
-                                        label="User can add notes here"
-                                        multiline
-                                        variant="outlined"
-                                        fullWidth
+                                    <div  >
+                                    
+                                    <Grid container alignItems="center" direction="row" style={{padding:theme.spacing(2)}} >
+                                        
+                                        <Grid item xs={12}>
+                                            <TextField
+                                            id={props.id2}
+                                            // label="Add notes here"
+                                            multiline
+                                            variant="outlined"
+                                            value={commenting}
+                                            onChange={handlecommenting}
+                                            onBlur={handlecomment}
+                                            placeholder="Add notes here"
+                                            fullWidth
 
-                                        />
+                                            />
+                                        </Grid>
+
                                     </Grid>
-
+                                    
+                                    </div>
+                                    </Grid>
+                                    {/* <Grid item xs={2} style={{minHeight:"100px"}}>
+                                            <Grid container alignItems="center" justify="center" style={{minHeight:"90px"}}>
+                                                <Grid item>
+                                                        <Button className={classes.Buttons} color="primary" variant="contained" onClick={handlecomment}>
+                                                            Add Notes
+                                                        </Button>
+                                                </Grid>
+                                            </Grid>
+                                    </Grid> */}
                                 </Grid>
-                                </Card>
-                                </div>
+
                             </Grid>
                                  
                         
                         </Card>
                     </Grid>
                 </Grid>
-            </Card>
+            </Box>
             </Grid>
 
 
@@ -362,16 +547,16 @@ export default function LatestCard(){
             >
                 
                 <DialogTitle>
-                                    <Grid container style={{height:"60px",marginTop:"-25px",marginLeft:"-24px"}} >
-                                        <Grid items xs={11}>
+                                    <Grid container style={{minheight:"60px",marginTop:"-25px",marginLeft:"-24px"}} >
+                                        <Grid items xs={11} >
                                             <Grid container direction="row">
-                                            <Grid item xs={2} style={{backgroundColor:"white"}}>
+                                            <Grid item xs={2} style={{backgroundColor:"white",height:"90px"}}>
                                                 <Grid container direction="row">
-                                                    <Grid item xs={10} style={{background:"#F5A623",height:"75px"}}>
-                                                    <Grid container justify="center">
-                                                        <Grid item>
-                                                            <Typography component="div" style={{marginTop:"30px",color:"white"}}>
-                                                                Medium
+                                                    <Grid item xs={10} style={{background:"#F5A623",height:"100px"}}>
+                                                    <Grid container alignItems="center" justify="center">
+                                                        <Grid item >
+                                                            <Typography component="div" style={{marginTop:"45px",fontSize:"18px",color:"white"}}>
+                                                                {nseverity}
                                                     
                                                             </Typography>
                                                         </Grid>
@@ -390,7 +575,7 @@ export default function LatestCard(){
                                             </div>
 
                                             <div className={classes.bottom1} >
-                                            Title Goes Here
+                                            {title}
                                             </div>
 
                                             </div>
@@ -403,7 +588,7 @@ export default function LatestCard(){
                                             </div>
 
                                             <div className={classes.bottom1} >
-                                            https://Type-Goes-Here.com
+                                            {source}
                                             </div>
 
                                             </div>
@@ -445,7 +630,8 @@ export default function LatestCard(){
             <h2>Detect</h2>
             
             <div className={styles.date1} >
-                <p>DD-MM-YYYY</p>
+                <p> 
+                    {date}</p>
             </div>
 
             </div>
@@ -454,7 +640,7 @@ export default function LatestCard(){
             <h2>Alert Created</h2>
             
             <div className={styles.date2} >
-                <p>DD-MM-YYYY</p>
+                <p>{alertcreated}</p>
             </div>
             </div>
         </div>
@@ -468,7 +654,7 @@ export default function LatestCard(){
                                     KeyWord
                                 </Grid>
                                 <Grid item style={{paddingTop:"4px"}}>
-                                    <Chip size="small" className={classes.chip} label="KeyWord" variant="outlined"/>         
+                                    <Chip size="small" className={classes.chip} label={keyword[0]['value']} variant="outlined"/>         
                                 </Grid>
                             </Grid>
                 </Grid>
@@ -478,10 +664,22 @@ export default function LatestCard(){
                                     Tags
                                 </Grid>
                                 <Grid item style={{paddingTop:"4px"}}>
-                                    <Chip size="small" className={classes.chip} label="Tags" variant="outlined"/>       
+                                    <Grid container>
+                                    {tags.map((number)=>
+                                                        <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+                                                       <Chip size="small" className={classes.chip} label={number}variant="outlined"/>       
+                                  
+                                                        
+                                                        </div>
+                                                          
+                                                    )}
+                                    </Grid>
+
+                                    {/* <Chip size="small" className={classes.chip} label="Tags" variant="outlined"/>       
                                     <Chip  size="small" className={classes.chip}   label="Tags" variant="outlined"/> 
                                     <Chip  size="small" className={classes.chip} label="Tags" variant="outlined"/>   
-                                    <Chip  size="small" className={classes.chip}   label="Tags" variant="outlined"/>      
+                                    <Chip  size="small" className={classes.chip}   label="Tags" variant="outlined"/>       */}
+                                
                                 </Grid>
                             </Grid>
                 </Grid>
@@ -497,15 +695,40 @@ export default function LatestCard(){
                             <Grid item className={classes.tag} >
                                 Notes
                             </Grid>
-                            <Grid item style={{paddingTop:"4px"}}>
-                                    <TextField
-                                        id="standard-multiline-flexible"
-                                        label="User can add notes here"
-                                        multiline
-                                        variant="outlined"
-                                        fullWidth
+                            <Grid container>
+                                    <Grid item xs={12}>
+                                    <div  >
+                                    
+                                    <Grid container alignItems="center" direction="row" style={{padding:theme.spacing(2)}} >
+                                        
+                                        <Grid item xs={12}>
+                                        <TextField
+                                            id={props.id2}
+                                            // label="Add notes here"
+                                            multiline
+                                            variant="outlined"
+                                            value={commenting}
+                                            onChange={handlecommenting}
+                                            onBlur={handlecomment}
+                                            placeholder="Add notes here"
+                                            fullWidth
 
-                                        />
+                                            />
+                                        </Grid>
+
+                                    </Grid>
+                                    
+                                    </div>
+                                    </Grid>
+                                    {/* <Grid item xs={2} style={{minHeight:"100px"}}>
+                                            <Grid container alignItems="center" justify="center" style={{minHeight:"90px"}}>
+                                                <Grid item>
+                                                        <Button className={classes.Buttons} color="primary" variant="contained" onClick={handlecomment}>
+                                                            Add Notes
+                                                        </Button>
+                                                </Grid>
+                                            </Grid>
+                                    </Grid> */}
                             </Grid>
                         </Grid>
                     </Grid>
@@ -538,14 +761,7 @@ export default function LatestCard(){
                                 Remedition Suggestion
                             </Grid>
                             <Grid item className={classes.fontp}style={{paddingTop:"4px"}}>
-                             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati, possimus delectus, 
-                             veritatis, saepe minus excepturi tempore cupiditate aperiam vitae sequi inventore pariatur numquam 
-                             accusantium neque necessitatibus deserunt exercitationem unde? Odio iste hic iusto id veniam provident a 
-                             laboriosam non? Laudantium quos nisi excepturi corrupti natus tempora commodi, optio ad culpa eius hic sint ipsa 
-                             maxime nemo magni architecto tenetur facere praesentium eligendi molestiae aspernatur. Deleniti nemo dicta, 
-                             similique totam corporis facilis sint ipsa autem est distinctio minima tempore id placeat, nostrum iusto neque ratione ad. 
-                             Voluptatem libero numquam saepe, quas, fuga placeat, minus amet officiis dolores possimus eum? Exercitationem, in
-             
+                                    {remediation}
                             </Grid>
                         </Grid>
                     </Grid>

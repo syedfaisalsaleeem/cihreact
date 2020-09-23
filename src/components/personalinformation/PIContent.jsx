@@ -1,21 +1,16 @@
-import React,{useEffect, useState} from 'react';
+import React,{useEffect, useState,useContext,useReducer} from 'react';
 import {Grid,Typography,Card,Paper,CardHeader,Divider,Button, IconButton} from "@material-ui/core";
 import { makeStyles,withStyles } from '@material-ui/core/styles';
-import refresh from "../../Links/images/refresh.png";
-import warning from "../../Links/images/warning.png";
-import active from "../../Links/images/active.png";
-import new1 from "../../Links/images/new.png";
-import activesource from "../../Links/images/activesource.png"
-import Progressbar from "./progressbar";
+
 import BarGroup from "./BarGroup.jsx";
 import Piechart from "./Piechart.jsx";
 import drop from "../../Links/images/drop.png";
-import Dropup from "./Dropup.jsx";
-import Dropdown from "./Dropdown.jsx";
+import Dropup from "../sensitiveinformation/Dropup.jsx";
+import Dropdown from "../sensitiveinformation/Dropdown.jsx";
 import GetAppIcon from '@material-ui/icons/GetApp';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
-
+import { FetchDataContext } from "../../context/FetchDataContext.jsx";
 const LightTooltip = withStyles((theme) => ({
     tooltip: {
       backgroundColor: theme.palette.common.white,
@@ -147,7 +142,1120 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(2),
     },
   }));
+  const initialState = {
+    query:["personalinformation"],
+    operations:{
+      and:true,
+      or:false,
+      not:false
+  },
+    severitylevel:{
+        low:false,
+        medium:false,
+        high:false
+      },
+      source:{
+          darkweb:false,
+          deepweb:false,
+          databreach:false
+      },
+
+      exposurecategory:{
+          sensitiveinformation:{
+              control:{
+                  all:false,
+                  button:false,
+              },
+              value:{
+                  sourcecode:false
+              }
+          },
+          discussion:{
+              control:{
+                  all:false,
+                  button:false,
+              },
+              value:{
+              discussionforum:false,
+              discussion:false}
+          },
+          blackmarket:{
+              control:{
+                  all:false,
+                  button:false,
+              },
+              value:{
+              sales:false, 
+              marketplace:false, 
+              drugsales:false, 
+              weaponsales:false, 
+              credentialsales:false, 
+              hackingsales:false, 
+              malwaresales:false 
+          }
+          },
+          financial:{
+              control:{
+                  all:false,
+                  button:false,
+              },
+              value:{
+              creditcards:false, 
+              ibannumbers:false,
+              cryptoaddresses:false, 
+              bitcoinaddresses:false, 
+              ethereumaddresses:false, 
+              zcashtaddresses:false, 
+              zcashzaddresses:false, 
+              rippleaddresses:false, 
+              litecoinaddresses:false, 
+              moneroaddresses:false, 
+              bitcoincashaddresses:false, 
+              dashaddresses:false, 
+              dogecoinaddresses:false, 
+              neoaddresses:false 
+          }},
+          exposedcredentials:{
+              control:{
+                  all:false,
+                  button:false,
+              },
+              value:{
+              password:false, 
+              cleartextpassword:false, 
+              encryptedpassword:false, 
+              username:false 
+          }},
+          personalinformation:{
+              control:{
+                  all:true,
+                  button:false,
+              },
+              value:{
+              phonenumbers:false, 
+              passportnumbers:false, 
+              passportinformation:false, 
+              email:false, 
+              address:false, 
+              lastname:false, 
+              firstname:false, 
+              phonenumber:false 
+          }  
+          },
+          hackergrouptargeting:{
+              control:{
+                  all:false,
+                  button:false,
+              },
+              value:{
+              iptargetlist:false, 
+              emailtargetlist:false, 
+              domaintargetlist:false, 
+              attackcampaign:false, 
+              targetedcompany:false, 
+              targetedindividual:false, 
+              informationleakingplatform:false, 
+              iplist:false, 
+              emaillist:false, 
+              domainlist:false, 
+              wordlist:false}
+          },
+          attacksandcompromises:{
+              control:{
+                  all:false,
+                  button:false,
+              },
+              value:{
+              sql:false,
+              reconnaissance:false,
+              exploitationtool:false,
+              nmap:false,
+              sqlmap:false,
+              wireshark:false,
+              traceroute:false, 
+              metasploit:false, 
+              johntheripper:false, 
+              md5hashes:false, 
+              sha1hashes:false, 
+              sha256hashes:false, 
+              sha512hashes:false, 
+              specialhashes:false, 
+              pgpkeys:false, 
+              pgpsignatures:false, 
+              ssh:false, 
+              telnet:false, 
+              ftp:false, 
+              sftp:false  } 
+          },
+          underanalysis:{
+              control:{
+                  all:false,
+              },
+          },
+      },
+          languages:{
+              control:{
+                  all:false,
+                  button:false,
+              },
+              value:{
+              afrikaans:false, 
+              arabic:false, 
+              bulgarian:false, 
+              bengali:false, 
+              catalan:false, 
+              czech:false, 
+              welsh:false, 
+              danish:false, 
+              german:false, 
+              greek:false, 
+              english:false, 
+              spanish:false, 
+              estonian:false, 
+              persian:false, 
+              finnish:false, 
+              french:false, 
+              gujarati:false, 
+              hebrew:false, 
+              hindi:false, 
+              croatian:false, 
+              hungarian:false, 
+              indonesian:false, 
+              italian:false, 
+              japanese:false, 
+              kannada:false, 
+              korean:false, 
+              lithuanian:false, 
+              latvian:false, 
+              macedonian:false, 
+              malayalam:false, 
+              marathi:false, 
+              nepali:false, 
+              dutch:false, 
+              norwegian:false, 
+              punjabi:false, 
+              polish:false, 
+              portuguese:false, 
+              romanian:false, russian:false, slovak:false, slovenian:false, somali:false, albanian:false, swedish:false, swahili:false, 
+              tamil:false, telugu:false, thai:false, tagalog:false, turkish:false, ukrainian:false, urdu:false, vietnamese:false, chinese:false 
+              }
+          },
+          socialsecuritynumber:{
+              control:{
+                  all:false,
+                  button:false
+              },
+              value:{
+              spainsocialsecuritynumbers:false, latviasocialsecuritynumbers:false, lithuaniasocialsecuritynumbers:false, malaysiasocialsecuritynumbers:false, 
+              indonesiasocialsecuritynumbers:false, Hongkongsocialsecuritynumbers:false, arabemiratessocialsecuritynumbers:false, southafricasocialsecuritynumbers:false, 
+              chinasocialsecuritynumbers:false, belgiumsocialsecuritynumbers:false, bulgariasocialsecuritynumbers:false, croatiasocialsecuritynumbers:false, 
+              czechrepublicsocialsecuritynumbers:false, denmarksocialsecuritynumbers:false, francesocialsecuritynumbers:false, greecesocialsecuritynumbers:false, 
+              irelandsocialsecuritynumbers:false, estoniasocialsecuritynumbers:false, italysocialsecuritynumbers:false, netherlandssocialsecuritynumbers:false, 
+              norwaysocialsecuritynumbers:false, polandsocialsecuritynumbers:false, romaniasocialsecuritynumbers:false, swedensocialsecuritynumbers:false, 
+              sloveniasocialsecuritynumbers:false, slovakiasocialsecuritynumbers:false, singaporesocialsecuritynumbers:false, finlandsocialsecuritynumbers:false, 
+              unitedstatessocialsecuritynumbers:false
+              }
+          },
+
+          
+      other:{
+          control:{
+              all:false,
+              button:false
+          },
+          value:{
+              directory:false, news:false, advertisement:false, ipv4:false 
+          }
+      },
+      alertgroup:{
+          control:{
+              all:false
+          },
+          value:{
+              highlightedalerts:false
+          }
+      }
+
+
+};
+function reducer(state, action) {
+
+    switch (action.type) {
+        case 'low':
+            // console.log(state.query)
+            if(action.payload===true){
+                // let x=state['query']
+                const listi=Object.assign([],state.query);
+                // listi.splice("low");
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "severitylow") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+                return{
+                    ...state,query:listi,
+                    severitylevel:{...state.severitylevel,low:!action.payload}
+                        
+                        
+                }
+
+            }else{
+                return{
+                    ...state,query:[...state.query,'severitylow'],
+                    severitylevel:{...state.severitylevel,low:!action.payload}
+                        
+                        
+                }
+
+            }
+
+        case 'medium':
+            // console.log(state.query)
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "severitymedium") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+                return{
+                    ...state,query:listi,
+                    severitylevel:{...state.severitylevel,medium:!action.payload}
+                        
+                        
+                }
+        }
+        else{
+            return{
+                ...state,query:[...state.query,'severitymedium'],
+                severitylevel:{...state.severitylevel,medium:!action.payload}
+                    
+                    
+            }
+
+        }
+        case 'high':
+            // console.log(state.query)
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "severityhigh") { listi.splice(i, 1); }}
+                return{
+                    ...state,query:listi,
+                    severitylevel:{...state.severitylevel,high:!action.payload}
+                }  
+                    
+            }
+            else{
+                return{
+                    ...state,query:[...state.query,'severityhigh'],
+                    severitylevel:{...state.severitylevel,high:!action.payload}
+                        
+                        
+                }
+    
+            } 
+        case 'deepweb':
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "deepweb") { listi.splice(i, 1); }}
+
+                return{
+                    ...state,query:listi,
+                    source:{...state.source,deepweb:!action.payload}
+                        
+                        
+                } 
+                    
+            }
+            else{
+                return{
+                    ...state,query:[...state.query,'deepweb'],
+                    source:{...state.source,deepweb:!action.payload}
+                        
+                        
+                } 
+    
+            }
+
+        case 'darkweb':
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "darkweb") { listi.splice(i, 1); }}
+
+                return{
+                    ...state,query:listi,
+                    source:{...state.source,darkweb:!action.payload}
+                        
+                        
+                }
+                    
+            }
+            else{
+                return{
+                    ...state,query:[...state.query,'darkweb'],
+                    source:{...state.source,darkweb:!action.payload}
+                        
+                        
+                }
+    
+            }
+
+        case 'databreach':
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "databreach") { listi.splice(i, 1); }}
+
+                return{
+                    ...state,query:listi,
+                    source:{...state.source,databreach:!action.payload}
+                        
+                        
+                }
+                    
+            }
+            else{
+                return{
+                    ...state,query:[...state.query,'databreach'],
+                    source:{...state.source,databreach:!action.payload}
+                        
+                        
+                }
+    
+            }
+
+      case 'language':
+        // console.log(state.languages.control.button)
+        return{
+            ...state,
+            languages:{...state.languages,
+                control:{...state.languages.control,button:!action.payload}
+                }
+        }
+        case 'languagein':
+            // return change1(action.payload);
+            const x=action.payload.value2
+            if(action.payload.value1===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === x) { listi.splice(i, 1); }}
+
+                return(
+                
+                    {
+                    ...state,query:listi,
+                    languages:{...state.languages,
+                        value:{...state.languages.value,[x]:!action.payload.value1}
+                        }
+                })
+                    
+            }
+            else{
+                return(
+                
+                    {
+                    ...state,query:[...state.query,x],
+                    languages:{...state.languages,
+                        value:{...state.languages.value,[x]:!action.payload.value1}
+                        }
+                })
+    
+            }
+
+        case 'socialsecuritynumber':
+            
+             return {
+                ...state,
+                socialsecuritynumber:{...state.socialsecuritynumber,
+                    control:{...state.socialsecuritynumber.control,button:!action.payload}
+                    }
+            }
+        case 'socialsecurityin':
+                // return change1(action.payload);
+                const y=action.payload.value2
+                // const y=action.payload
+                if(action.payload.value1===true){
+                    const listi=Object.assign([],state.query);
+                    for( var i = 0; i < listi.length; i++){ if ( listi[i] === y) { listi.splice(i, 1); }}
+    
+                    return(
+                    
+                        {
+                        ...state,query:listi,
+                        socialsecuritynumber:{...state.socialsecuritynumber,
+                            value:{...state.socialsecuritynumber.value,[action.payload.value2]:!action.payload.value1}
+                            }
+                    })
+                        
+                }
+                else{
+                    return(
+                    
+                        {
+                        ...state,query:[...state.query,y],
+                        socialsecuritynumber:{...state.socialsecuritynumber,
+                            value:{...state.socialsecuritynumber.value,[action.payload.value2]:!action.payload.value1}
+                            }
+                    })
+        
+                }
+
+        case 'other':
+            
+             return {
+                ...state,
+                other:{...state.other,
+                    control:{...state.other.control,button:!action.payload}
+                    }
+            }
+        case 'otherin':
+                // return change1(action.payload);
+               
+                // const y=action.payload
+                if(action.payload.value1===true){
+                    const listi=Object.assign([],state.query);
+                    for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
+    
+                    return(
+                    
+                        {
+                        ...state,query:listi,
+                        other:{...state.other,
+                            value:{...state.other.value,[action.payload.value2]:!action.payload.value1}
+                            }
+                    })
+                        
+                }
+                else{
+                    return(
+                    
+                        {
+                        ...state,query:[...state.query,action.payload.value2],
+                        other:{...state.other,
+                            value:{...state.other.value,[action.payload.value2]:!action.payload.value1}
+                            }
+                    })
+        
+                }
+
+        case 'alertgroup':
+            
+             return {
+                ...state,
+                alertgroup:{...state.alertgroup,
+                    value:{...state.other.value,highlightedalerts:!action.payload}
+                    }
+            }
+        case 'sensitiveinformation':
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "sensitivedisclosure") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        sensitiveinformation:{...state.exposurecategory.sensitiveinformation,
+                            control:{...state.exposurecategory.sensitiveinformation.control,all:!action.payload}
+                            
+                        }
+                    }
+                }
+        }
+        else{
+            return {
+                ...state,query:[...state.query,'sensitivedisclosure'],
+                exposurecategory:{...state.exposurecategory,
+                    sensitiveinformation:{...state.exposurecategory.sensitiveinformation,
+                        control:{...state.exposurecategory.sensitiveinformation.control,all:!action.payload}
+                        
+                    }
+                }
+            }
+
+
+        }
+
+        case 'sensitiveinformation1':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        sensitiveinformation:{...state.exposurecategory.sensitiveinformation,
+                            control:{...state.exposurecategory.sensitiveinformation.control,button:!action.payload}
+                            
+                        }
+                    }
+                }
+        case 'sensitiveinformationin':
+            if(action.payload.value1===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        sensitiveinformation:{...state.exposurecategory.sensitiveinformation,
+                            value:{...state.exposurecategory.sensitiveinformation.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+                    
+            }
+            else{
+                return {
+                    ...state,query:[...state.query,action.payload.value2],
+                    exposurecategory:{...state.exposurecategory,
+                        sensitiveinformation:{...state.exposurecategory.sensitiveinformation,
+                            value:{...state.exposurecategory.sensitiveinformation.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+    
+            }
+
+        case 'discussion':
+            // console.log(state.query)
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "discussions") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        discussion:{...state.exposurecategory.discussion,
+                            control:{...state.exposurecategory.discussion.control,all:!action.payload}
+                            
+                        }
+                    }
+                }
+        }
+        else{
+            return {
+                ...state,query:[...state.query,'discussions'],
+                exposurecategory:{...state.exposurecategory,
+                    discussion:{...state.exposurecategory.discussion,
+                        control:{...state.exposurecategory.discussion.control,all:!action.payload}
+                        
+                    }
+                }
+            }
+
+
+        }
+
+        case 'discussion1':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        discussion:{...state.exposurecategory.discussion,
+                            control:{...state.exposurecategory.discussion.control,button:!action.payload}
+                            
+                        }
+                    }
+                }
+        case 'discussionin':
+            if(action.payload.value1===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        discussion:{...state.exposurecategory.discussion,
+                            value:{...state.exposurecategory.discussion.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+                    
+            }
+            else{
+                return {
+                    ...state,query:[...state.query,action.payload.value2],
+                    exposurecategory:{...state.exposurecategory,
+                        discussion:{...state.exposurecategory.discussion,
+                            value:{...state.exposurecategory.discussion.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+    
+            }
+
+        case 'blackmarket':
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "blackmarkets") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        blackmarket:{...state.exposurecategory.blackmarket,
+                            control:{...state.exposurecategory.blackmarket.control,all:!action.payload}
+                            
+                        }
+                    }
+                }
+        }
+        else{
+            return {
+                ...state,query:[...state.query,'blackmarkets'],
+                exposurecategory:{...state.exposurecategory,
+                    blackmarket:{...state.exposurecategory.blackmarket,
+                        control:{...state.exposurecategory.blackmarket.control,all:!action.payload}
+                        
+                    }
+                }
+            }
+
+
+        }
+
+        case 'blackmarket1':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        blackmarket:{...state.exposurecategory.blackmarket,
+                            control:{...state.exposurecategory.blackmarket.control,button:!action.payload}
+                            
+                        }
+                    }
+                }
+        case 'blackmarketin':
+            if(action.payload.value1===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        blackmarket:{...state.exposurecategory.blackmarket,
+                            value:{...state.exposurecategory.blackmarket.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+                    
+            }
+            else{
+                return {
+                    ...state,query:[...state.query,action.payload.value2],
+                    exposurecategory:{...state.exposurecategory,
+                        blackmarket:{...state.exposurecategory.blackmarket,
+                            value:{...state.exposurecategory.blackmarket.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+    
+            }
+
+        case 'financial':
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "financial") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        financial:{...state.exposurecategory.financial,
+                            control:{...state.exposurecategory.financial.control,all:!action.payload}
+                            
+                        }
+                    }
+                }
+        }
+        else{
+            return {
+                ...state,query:[...state.query,'financial'],
+                exposurecategory:{...state.exposurecategory,
+                    financial:{...state.exposurecategory.financial,
+                        control:{...state.exposurecategory.financial.control,all:!action.payload}
+                        
+                    }
+                }
+            }
+
+
+        }
+
+        case 'financial1':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        financial:{...state.exposurecategory.financial,
+                            control:{...state.exposurecategory.financial.control,button:!action.payload}
+                            
+                        }
+                    }
+                }
+        case 'financialin':
+            if(action.payload.value1===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        financial:{...state.exposurecategory.financial,
+                            value:{...state.exposurecategory.financial.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+                    
+            }
+            else{
+                return {
+                    ...state,query:[...state.query,action.payload.value2],
+                    exposurecategory:{...state.exposurecategory,
+                        financial:{...state.exposurecategory.financial,
+                            value:{...state.exposurecategory.financial.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+    
+            }
+
+        case 'exposedcredentials':
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "exposedcredentials") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        exposedcredentials:{...state.exposurecategory.exposedcredentials,
+                            control:{...state.exposurecategory.exposedcredentials.control,all:!action.payload}
+                            
+                        }
+                    }
+                }
+        }
+        else{
+            return {
+                ...state,query:[...state.query,'exposedcredentials'],
+                exposurecategory:{...state.exposurecategory,
+                    exposedcredentials:{...state.exposurecategory.exposedcredentials,
+                        control:{...state.exposurecategory.exposedcredentials.control,all:!action.payload}
+                        
+                    }
+                }
+            }
+
+
+        }
+
+        case 'exposedcredentials1':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        exposedcredentials:{...state.exposurecategory.exposedcredentials,
+                            control:{...state.exposurecategory.exposedcredentials.control,button:!action.payload}
+                            
+                        }
+                    }
+                }
+        case 'exposedcredentialsin':
+            if(action.payload.value1===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        exposedcredentials:{...state.exposurecategory.exposedcredentials,
+                            value:{...state.exposurecategory.exposedcredentials.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+                    
+            }
+            else{
+                return {
+                    ...state,query:[...state.query,action.payload.value2],
+                    exposurecategory:{...state.exposurecategory,
+                        exposedcredentials:{...state.exposurecategory.exposedcredentials,
+                            value:{...state.exposurecategory.exposedcredentials.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+    
+            }
+
+        case 'personalinformation':
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "personalinformation") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        personalinformation:{...state.exposurecategory.personalinformation,
+                            control:{...state.exposurecategory.personalinformation.control,all:!action.payload}
+                            
+                        }
+                    }
+                }
+        }
+        else{
+            return {
+                ...state,query:[...state.query,'personalinformation'],
+                exposurecategory:{...state.exposurecategory,
+                    personalinformation:{...state.exposurecategory.personalinformation,
+                        control:{...state.exposurecategory.personalinformation.control,all:!action.payload}
+                        
+                    }
+                }
+            }
+
+
+        }
+
+        case 'personalinformation1':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        personalinformation:{...state.exposurecategory.personalinformation,
+                            control:{...state.exposurecategory.personalinformation.control,button:!action.payload}
+                            
+                        }
+                    }
+                }
+        case 'personalinformationin':
+            if(action.payload.value1===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        personalinformation:{...state.exposurecategory.personalinformation,
+                            value:{...state.exposurecategory.personalinformation.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+                    
+            }
+            else{
+                return {
+                    ...state,query:[...state.query,action.payload.value2],
+                    exposurecategory:{...state.exposurecategory,
+                        personalinformation:{...state.exposurecategory.personalinformation,
+                            value:{...state.exposurecategory.personalinformation.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+    
+            }
+
+        case 'hackergrouptargeting':
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "hackergrouptargeting") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        hackergrouptargeting:{...state.exposurecategory.hackergrouptargeting,
+                            control:{...state.exposurecategory.hackergrouptargeting.control,all:!action.payload}
+                            
+                        }
+                    }
+                }
+        }
+        else{
+            return {
+                ...state,query:[...state.query,'hackergrouptargeting'],
+                exposurecategory:{...state.exposurecategory,
+                    hackergrouptargeting:{...state.exposurecategory.hackergrouptargeting,
+                        control:{...state.exposurecategory.hackergrouptargeting.control,all:!action.payload}
+                        
+                    }
+                }
+            }
+
+
+        }
+
+        case 'hackergrouptargeting1':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        hackergrouptargeting:{...state.exposurecategory.hackergrouptargeting,
+                            control:{...state.exposurecategory.hackergrouptargeting.control,button:!action.payload}
+                            
+                        }
+                    }
+                }
+        case 'hackergrouptargetingin':
+            if(action.payload.value1===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        hackergrouptargeting:{...state.exposurecategory.hackergrouptargeting,
+                            value:{...state.exposurecategory.hackergrouptargeting.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+                    
+            }
+            else{
+                return {
+                    ...state,query:[...state.query,action.payload.value2],
+                    exposurecategory:{...state.exposurecategory,
+                        hackergrouptargeting:{...state.exposurecategory.hackergrouptargeting,
+                            value:{...state.exposurecategory.hackergrouptargeting.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+    
+            } 
+
+        case 'attacksandcompromises':
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "attacksandcompromises") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        attacksandcompromises:{...state.exposurecategory.attacksandcompromises,
+                            control:{...state.exposurecategory.attacksandcompromises.control,all:!action.payload}
+                            
+                        }
+                    }
+                }
+        }
+        else{
+            return {
+                ...state,query:[...state.query,'attacksandcompromises'],
+                exposurecategory:{...state.exposurecategory,
+                    attacksandcompromises:{...state.exposurecategory.attacksandcompromises,
+                        control:{...state.exposurecategory.attacksandcompromises.control,all:!action.payload}
+                        
+                    }
+                }
+            }
+
+
+        }
+
+        case 'attacksandcompromises1':
+                
+                return {
+                    ...state,
+                    exposurecategory:{...state.exposurecategory,
+                        attacksandcompromises:{...state.exposurecategory.attacksandcompromises,
+                            control:{...state.exposurecategory.attacksandcompromises.control,button:!action.payload}
+                            
+                        }
+                    }
+                }
+        case 'attacksandcompromisesin':
+            if(action.payload.value1===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === action.payload.value2) { listi.splice(i, 1); }}
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        attacksandcompromises:{...state.exposurecategory.attacksandcompromises,
+                            value:{...state.exposurecategory.attacksandcompromises.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+                    
+            }
+            else{
+                return {
+                    ...state,query:[...state.query,action.payload.value2],
+                    exposurecategory:{...state.exposurecategory,
+                        attacksandcompromises:{...state.exposurecategory.attacksandcompromises,
+                            value:{...state.exposurecategory.attacksandcompromises.value,[action.payload.value2]:!action.payload.value1}
+                            
+                        }
+                    }
+                }
+    
+            } 
+
+        case 'underanalysis':
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "undefined") { listi.splice(i, 1); }}
+                // var PATTERN ='low' ,
+                // filtered = state.query .filter(function (str) { return str.includes(PATTERN); });
+                return {
+                    ...state,query:listi,
+                    exposurecategory:{...state.exposurecategory,
+                        underanalysis:{...state.exposurecategory.underanalysis,
+                            control:{...state.exposurecategory.underanalysis.control,all:!action.payload}
+                            
+                        }
+                    }
+                }
+        }
+        else{
+            return {
+                ...state,query:[...state.query,'undefined'],
+                exposurecategory:{...state.exposurecategory,
+                    underanalysis:{...state.exposurecategory.underanalysis,
+                        control:{...state.exposurecategory.underanalysis.control,all:!action.payload}
+                        
+                    }
+                }
+            }
+
+
+        }
+
+        // this.setState(prevState => ({
+        //     ...prevState,
+        //     someProperty: {
+        //         ...prevState.someProperty,
+        //         someOtherProperty: {
+        //             ...prevState.someProperty.someOtherProperty, 
+        //             anotherProperty: {
+        //                ...prevState.someProperty.someOtherProperty.anotherProperty,
+        //                flag: false
+        //             }
+        //         }
+        //     }
+        // })
+       
+            // ((state) => {
+            //     state.languages.control.button = true
+                
+            //     return state
+            //   })
+        
+        //  return {...state.languages.control,button:true}
+
+      default:
+        throw new Error();
+    }
+  }
 export default function PIContent(){
+    const totalAllAlertsData = useContext(FetchDataContext);
+    const [state, dispatch] = useReducer(reducer, initialState);
+    const { totalPIInfo } = totalAllAlertsData;
     const classes = useStyles();
     const [count,setcount]=useState();
     const [view,setview]=useState(true);
@@ -300,7 +1408,7 @@ export default function PIContent(){
                                         <Grid item>
                                             <Grid container direction="column" alignItems="center">
                                                 <Grid item style={{color:"#464E5F",fontWeight:"bold",fontSize:"40px"}}>
-                                                    0
+                                                {totalPIInfo.totalAlerts}
                                                 </Grid>
                                                 <Grid item style={{color:"#B5B5C3",fontWeight:"500",fontSize:"12px;"}}>
                                                     Total Alerts Found
@@ -310,7 +1418,7 @@ export default function PIContent(){
                                         <Grid item>
                                             <Grid container direction="column" alignItems="center">
                                                 <Grid item style={{color:"#464E5F",fontWeight:"bold",fontSize:"40px"}}>
-                                                    0
+                                                {totalPIInfo.alertsToday}
                                                 </Grid>
                                                 <Grid item style={{color:"#B5B5C3",fontWeight:"500",fontSize:"12px;"}}>
                                                     Alert Found Today
@@ -320,7 +1428,7 @@ export default function PIContent(){
                                         <Grid item>
                                             <Grid container direction="column" alignItems="center">
                                                 <Grid item style={{color:"#464E5F",fontWeight:"bold",fontSize:"40px"}}>
-                                                    0
+                                                {totalPIInfo.alertsLastMonth}
                                                 </Grid>
                                                 <Grid item style={{color:"#B5B5C3",fontWeight:"500",fontSize:"12px;"}}>
                                                     Alert Found Last month
@@ -330,7 +1438,7 @@ export default function PIContent(){
                                         <Grid item>
                                             <Grid container direction="column" alignItems="center">
                                                 <Grid item style={{color:"#464E5F",fontWeight:"bold",fontSize:"40px"}}>
-                                                  0
+                                                {totalPIInfo.alertsLast3Months}
                                                 </Grid>
                                                 <Grid item style={{color:"#B5B5C3",fontWeight:"500",fontSize:"12px;"}}>
                                                     Alert Found Last 3 months
@@ -381,11 +1489,11 @@ export default function PIContent(){
 
 
 </Grid>
-                <Dropup filter={changefilter} filtervalue={filter}/>
+                <Dropup state={state} dispatch={dispatch} filter={changefilter} filtervalue={filter}/>
                 </div>
                 :
                 <div>
-                    <Dropdown call={handledrop} filter={changefilter} filtervalue={filter}/>
+                    <Dropdown state={state} dispatch={dispatch} call={handledrop} filter={changefilter} filtervalue={filter}/>
                 </div>
                 
                 

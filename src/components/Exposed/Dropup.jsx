@@ -3,8 +3,8 @@ import ContactGs1 from "./ContactGs1.jsx";
 import list from "../../Links/images/list.png";
 import grid from "../../Links/images/grid.png";
 import filter from "../../Links/images/filter.png";
-import LatestCard from "../Drawer/Dashboard/LatestCard.jsx";
-import LatestCardH from "./LatestCardhigh.jsx";
+import LatestCard from "../Drawer/Dashboard/LatestCard1.jsx";
+
 import CardGrid from "./CardGrid.jsx";
 import React,{useEffect, useState,useReducer} from 'react';
 import {Grid,Typography,Card,Paper,CardHeader,Divider,Button, IconButton,Chip} from "@material-ui/core";
@@ -179,14 +179,14 @@ const useStyles = makeStyles((theme) => ({
   }));
 
   const initialState = {
-      query:[],
+      query:["severitylow"],
       operations:{
         and:true,
         or:false,
         not:false
     },
       severitylevel:{
-          low:false,
+          low:true,
           medium:false,
           high:false
         },
@@ -1366,6 +1366,26 @@ function  Dropup(props){
             
           }
         const [usestate1,setstate1]=React.useState({})
+        const [commenting,setcommenting]=React.useState([]);
+        const handlecall=(sq)=>{
+            // console.log(sq)
+            let array=[];
+            for (let i in sq){
+                // console.log(i)
+                if(sq[i]['comments'].length>0){
+                    // console.log(commenting)
+                    array.push(sq[i]['comments'][0]["text"])
+                    // setcommenting(commenting => [...commenting, sq[i]['comments'][0]["text"]])
+                }
+                else{
+                    array.push("")
+                    // console.log(commenting)
+                    // setcommenting(commenting => [...commenting, ""])
+                }
+            }
+            setcommenting(array)
+            // setcommenting1("1")
+        }
         useDeepCompareEffect(()=>{
             let result = null;
             // console.log(state.query,"very valuable")
@@ -1390,7 +1410,8 @@ function  Dropup(props){
                                 setstate1({})
                             }
                             else{
-                                setstate1(y.alerts)
+                                setstate1(y.alerts.slice(0,6))
+                                handlecall(y.alerts.slice(0,6))
                             }
                             
                         }
@@ -1422,7 +1443,8 @@ function  Dropup(props){
                             setstate1({})
                         }
                         else{
-                            setstate1(y1.alerts)
+                            setstate1(y1.alerts.slice(0,6))
+                            handlecall(y1.alerts.slice(0,6))
                         }
                         
                     }
@@ -1462,9 +1484,11 @@ function  Dropup(props){
                         console.log(y1,"typefaisal")
                         if(y1.length===0){
                             setstate1({})
+                            
                         }
                         else{
-                            setstate1(y1.alerts)
+                            setstate1(y1.alerts.slice(0,6))
+                            handlecall(y1.alerts.slice(0,6))
                         }
                         
                     }
@@ -1491,6 +1515,7 @@ function  Dropup(props){
         },[state,select])
      return(
         <div style={{marginBottom:"30px"}}>
+            {console.log(commenting,"commenting") }
             <Grid item xs={12}>
                 <Grid container justify="center">
                     <Grid item xs={11} lg={9} >
@@ -1712,47 +1737,8 @@ function  Dropup(props){
                                     </div>
                                     :
                                     <div>
-                                     <Grid item xs={12} style={{marginTop:"26px"}}>
-                                    <Grid container justify="center">
-                                        <Grid item xs={11}>
-                                            <div style={{fontStyle: "normal",fontWeight: "500",fontSize: "15px",color: "#000000"}}>
-                                                Operations
-                                            </div>
 
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                                <Grid item xs={12} style={{marginTop:"20px"}}>
-                                    <Grid container justify="center">
-                                        <Grid item xs={11}>
-                                            <Grid container spacing={2}>
-                                            <FormControl className={classes.formControl} >
 
-                                                <Select
-                                                labelId="demo-simple-select-label"
-                                                id="demo-simple-select"
-                                                style={{height:"30px"}}
-                                                value={select}
-                                                onChange={handleselect}
-                                                
-                                                
-                                                variant="outlined"
-                                                displayEmpty
-                                                >
-                                            <MenuItem value={'AND'}>
-                                                    <em >AND</em>
-                                            </MenuItem>
-                                            
-                                            <MenuItem value={'OR'}>OR</MenuItem>
-                                            <MenuItem value={'NOT'}>NOT</MenuItem>
-                                                </Select>
-                                            </FormControl>
-                                            </Grid>
-                                            
-
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
                                     <Grid item xs={12} style={{marginTop:"26px"}}>
                                     <Grid container justify="center">
                                         <Grid item xs={11}>
@@ -2235,11 +2221,15 @@ function  Dropup(props){
                 <Grid container justify="center" >
                     <Grid item xs={11} lg={11}>
                         <Grid container justify="space-evenly" spacing={2}>
+                        {/* {handlecall()} */}
                         {usestate1.length===0?
                                 <div></div>:
                                 Object.keys(usestate1).map((index)=>(
                                 <Grid item>
-                                                {/* {console.log(usestate1[index],"print")} */}
+                                    
+                                   {/* {setSearches(searches => [...searches, query])
+                                    setcommenting(index,usestate1[index]['comments'])
+                                   }              {console.log(usestate1[index],"print")} */}
                                 <LatestCard
                                 date={usestate1[index]['timestamp']}
                                 alertcreated={usestate1[index]['created']}
@@ -2250,8 +2240,12 @@ function  Dropup(props){
                                 tags={usestate1[index]['tags']}
                                 remediation={usestate1[index]['remediation']}
                                 id={usestate1[index]['id']}
+                                id2={index}
                                 comments={usestate1[index]['comments']}
-                                changeflag={props.changeflag} addcount={props.addcount}
+                                changeflag={props.changeflag} 
+                                commenting1={commenting[index]}
+                                setcommenting={setcommenting}
+                                addcount={props.addcount}
                                 />
                                 
                                 </Grid>
@@ -2277,19 +2271,25 @@ function  Dropup(props){
                            {usestate1.length===0?
                                 <div></div>:
                                 Object.keys(usestate1).map((index)=>(
-                                <Grid item>  
+                                <Grid item>
+                                     
                                <CardGrid            
-                               date={usestate1[index]['timestamp']}
-            alertcreated={usestate1[index]['created']}
-            severity={usestate1[index]['severity']} 
-            title={usestate1[index]['source_title']} 
-            source={usestate1[index]['source_url']}
-            keyword={usestate1[index]['keywords']}
-            tags={usestate1[index]['tags']}
-            remediation={usestate1[index]['remediation']}
-            id={usestate1[index]['id']}
-            comments={usestate1[index]['comments']}
-            changeflag={props.changeflag} addcount={props.addcount}/>
+                                date={usestate1[index]['timestamp']}
+                                alertcreated={usestate1[index]['created']}
+                                severity={usestate1[index]['severity']} 
+                                title={usestate1[index]['source_title']} 
+                                source={usestate1[index]['source_url']}
+                                keyword={usestate1[index]['keywords']}
+                                tags={usestate1[index]['tags']}
+                                remediation={usestate1[index]['remediation']}
+                                id={usestate1[index]['id']}
+                                id2={index}
+                                comments={usestate1[index]['comments']}
+                                changeflag={props.changeflag} 
+                                commenting1={commenting[index]}
+                                setcommenting={setcommenting}
+                                addcount={props.addcount}
+            />
 
                             </Grid>   
                             ))

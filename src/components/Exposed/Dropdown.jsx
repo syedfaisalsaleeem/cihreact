@@ -18,10 +18,8 @@ import Menu from '@material-ui/core/Menu';
 import "react-datepicker/dist/react-datepicker.css";
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import {useHistory} from 'react-router-dom';
-
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -177,14 +175,14 @@ const useStyles = makeStyles((theme) => ({
   }));
 
   const initialState = {
-      query:[],
+      query:["severitylow"],
       operations:{
         and:true,
         or:false,
         not:false
     },
       severitylevel:{
-          low:false,
+          low:true,
           medium:false,
           high:false
         },
@@ -1363,130 +1361,154 @@ export default function Dropdown(props){
             window.location.reload();
             
           }
-        const [usestate1,setstate1]=React.useState({})
-        useDeepCompareEffect(()=>{
-            let result = null;
-            // console.log(state.query,"very valuable")
-            const token=localStorage.getItem("token")
-            if(state.query.length===0){
- 
-                    const  x= async()=>{
-                        const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+select, {
-                            headers: {
-                                'accept': 'application/json',
-                                'Authorization': token
-                            }
-                        });
-                        const y=await response.json()
-                        if(y.message==="Invalid access token"){
-                            console.log(y,"typefaisal")
-                            loggedout()
-                        }
-                        else{
-                            console.log(y,"typefaisal")
-                            if(y.length===0){
-                                setstate1({})
-                            }
-                            else{
-                                setstate1(y.alerts)
-                            }
-                            
-                        }
-                        // console.log(y,"typefaisal")
-                        // setstate1(y.alerts)
-                    }
-                    x() 
-
-
-           
-            
-            }
-            else if(state.query.length===1){
-                const  x= async()=>{
-                    const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+state.query[0]+"&filter_op="+select, {
-                        headers: {
-                            'accept': 'application/json',
-                            'Authorization': token
-                        }
-                    });
-                    const y1=await response.json()
-                    if(y1.message==="Invalid access token"){
-                        console.log(y1,"typefaisal")
-                        loggedout()
-                    }
-                    else{
-                        console.log(y1,"typefaisal")
-                        if(y1.length===0){
-                            setstate1({})
-                        }
-                        else{
-                            setstate1(y1.alerts)
-                        }
-                        
-                    }
-                    // console.log(y,"typefaisal")
-                    // setstate1(y.alerts)
-                }
-                x() 
-                // const fetchData = async () => {
-                //     result = await axios.get(
-                //       "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+state.query[0]+"&filter_op="+select,
-                //       {
-                //         headers: {
-                //           "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
-                //         },
-                //       }
-                //     );
-                //     // console.log(result.data,"faisal")
-                //     setstate1(result.data.alerts)
-                //   }
-                //   fetchData()
-            }
-            else{
-                const y=state.query
-                const  x= async()=>{
-                    const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+y.join("%2C")+"&filter_op="+select, {
-                        headers: {
-                            'accept': 'application/json',
-                            'Authorization': token
-                        }
-                    });
-                    const y1=await response.json()
-                    if(y1.message==="Invalid access token"){
-                        console.log(y1,"typefaisal")
-                        loggedout()
-                    }
-                    else{
-                        console.log(y1,"typefaisal")
-                        if(y1.length===0){
-                            setstate1({})
-                        }
-                        else{
-                            setstate1(y1.alerts)
-                        }
-                        
-                    }
-                    // console.log(y,"typefaisal")
-                    // setstate1(y.alerts)
-                }
-                x()
-                // const y=state.query
-                // const fetchData = async () => {
-                //     result = await axios.get(
-                //       "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+y.join("%2C")+"&filter_op="+select,
-                //       {
-                //         headers: {
-                //           "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
-                //         },
-                //       }
-                //     );
-                //     // console.log(result.data,"faisal")
-                //     setstate1(result.data.alerts)
-                //   }
-                //   fetchData()
-            }
-
-        },[state,select])
+          const [usestate1,setstate1]=React.useState({})
+          const [commenting,setcommenting]=React.useState([]);
+          const handlecall=(sq)=>{
+              // console.log(sq)
+              let array=[];
+              for (let i in sq){
+                  // console.log(i)
+                  if(sq[i]['comments'].length>0){
+                      // console.log(commenting)
+                      array.push(sq[i]['comments'][0]["text"])
+                      // setcommenting(commenting => [...commenting, sq[i]['comments'][0]["text"]])
+                  }
+                  else{
+                      array.push("")
+                      // console.log(commenting)
+                      // setcommenting(commenting => [...commenting, ""])
+                  }
+              }
+              setcommenting(array)
+              // setcommenting1("1")
+          }
+          useDeepCompareEffect(()=>{
+              let result = null;
+              // console.log(state.query,"very valuable")
+              const token=localStorage.getItem("token")
+              if(state.query.length===0){
+   
+                      const  x= async()=>{
+                          const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+select, {
+                              headers: {
+                                  'accept': 'application/json',
+                                  'Authorization': token
+                              }
+                          });
+                          const y=await response.json()
+                          if(y.message==="Invalid access token"){
+                              console.log(y,"typefaisal")
+                              loggedout()
+                          }
+                          else{
+                              console.log(y,"typefaisal")
+                              if(y.length===0){
+                                  setstate1({})
+                              }
+                              else{
+                                  setstate1(y.alerts.slice(0,6))
+                                  handlecall(y.alerts.slice(0,6))
+                              }
+                              
+                          }
+                          // console.log(y,"typefaisal")
+                          // setstate1(y.alerts)
+                      }
+                      x() 
+  
+  
+             
+              
+              }
+              else if(state.query.length===1){
+                  const  x= async()=>{
+                      const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+state.query[0]+"&filter_op="+select, {
+                          headers: {
+                              'accept': 'application/json',
+                              'Authorization': token
+                          }
+                      });
+                      const y1=await response.json()
+                      if(y1.message==="Invalid access token"){
+                          console.log(y1,"typefaisal")
+                          loggedout()
+                      }
+                      else{
+                          console.log(y1,"typefaisal")
+                          if(y1.length===0){
+                              setstate1({})
+                          }
+                          else{
+                              setstate1(y1.alerts.slice(0,6))
+                              handlecall(y1.alerts.slice(0,6))
+                          }
+                          
+                      }
+                      // console.log(y,"typefaisal")
+                      // setstate1(y.alerts)
+                  }
+                  x() 
+                  // const fetchData = async () => {
+                  //     result = await axios.get(
+                  //       "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+state.query[0]+"&filter_op="+select,
+                  //       {
+                  //         headers: {
+                  //           "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
+                  //         },
+                  //       }
+                  //     );
+                  //     // console.log(result.data,"faisal")
+                  //     setstate1(result.data.alerts)
+                  //   }
+                  //   fetchData()
+              }
+              else{
+                  const y=state.query
+                  const  x= async()=>{
+                      const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+y.join("%2C")+"&filter_op="+select, {
+                          headers: {
+                              'accept': 'application/json',
+                              'Authorization': token
+                          }
+                      });
+                      const y1=await response.json()
+                      if(y1.message==="Invalid access token"){
+                          console.log(y1,"typefaisal")
+                          loggedout()
+                      }
+                      else{
+                          console.log(y1,"typefaisal")
+                          if(y1.length===0){
+                              setstate1({})
+                              
+                          }
+                          else{
+                              setstate1(y1.alerts.slice(0,6))
+                              handlecall(y1.alerts.slice(0,6))
+                          }
+                          
+                      }
+                      // console.log(y,"typefaisal")
+                      // setstate1(y.alerts)
+                  }
+                  x()
+                  // const y=state.query
+                  // const fetchData = async () => {
+                  //     result = await axios.get(
+                  //       "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+y.join("%2C")+"&filter_op="+select,
+                  //       {
+                  //         headers: {
+                  //           "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
+                  //         },
+                  //       }
+                  //     );
+                  //     // console.log(result.data,"faisal")
+                  //     setstate1(result.data.alerts)
+                  //   }
+                  //   fetchData()
+              }
+  
+          },[state,select])
      return(
          
         <div style={{width:"100%",marginTop:"-30px",marginBottom:"30px",padding:"-15px"}}>
@@ -1713,47 +1735,8 @@ export default function Dropdown(props){
                                     </div>
                                     :
                                     <div>
-                                                                             <Grid item xs={12} style={{marginTop:"26px"}}>
-                                    <Grid container justify="center">
-                                        <Grid item xs={11}>
-                                            <div style={{fontStyle: "normal",fontWeight: "500",fontSize: "15px",color: "#000000"}}>
-                                                Operations
-                                            </div>
 
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                                <Grid item xs={12} style={{marginTop:"20px"}}>
-                                    <Grid container justify="center">
-                                        <Grid item xs={11}>
-                                            <Grid container spacing={2}>
-                                            <FormControl className={classes.formControl} >
 
-                                                <Select
-                                                labelId="demo-simple-select-label"
-                                                id="demo-simple-select"
-                                                style={{height:"30px"}}
-                                                value={select}
-                                                onChange={handleselect}
-                                                
-                                                
-                                                variant="outlined"
-                                                displayEmpty
-                                                >
-                                            <MenuItem value={'AND'}>
-                                                    <em >AND</em>
-                                            </MenuItem>
-                                            
-                                            <MenuItem value={'OR'}>OR</MenuItem>
-                                            <MenuItem value={'NOT'}>NOT</MenuItem>
-                                                </Select>
-                                            </FormControl>
-                                            </Grid>
-                                            
-
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
                                     <Grid item xs={12} style={{marginTop:"26px"}}>
                                     <Grid container justify="center">
                                         <Grid item xs={11}>
@@ -2254,7 +2237,6 @@ export default function Dropdown(props){
                                 <div></div>:
                                 Object.keys(usestate1).map((index)=>(
                                 <Grid item>
-                                                {console.log(usestate1[index],"print")}
                                 <LatestCard
                                 date={usestate1[index]['timestamp']}
                                 alertcreated={usestate1[index]['created']}
@@ -2265,8 +2247,12 @@ export default function Dropdown(props){
                                 tags={usestate1[index]['tags']}
                                 remediation={usestate1[index]['remediation']}
                                 id={usestate1[index]['id']}
+                                id2={index}
                                 comments={usestate1[index]['comments']}
-                                changeflag={props.changeflag} addcount={props.addcount}
+                                changeflag={props.changeflag} 
+                                commenting1={commenting[index]}
+                                setcommenting={setcommenting}
+                                addcount={props.addcount}
                                 />
                                 
                                 </Grid>
@@ -2292,19 +2278,25 @@ export default function Dropdown(props){
                            {usestate1.length===0?
                                 <div></div>:
                                 Object.keys(usestate1).map((index)=>(
-                                <Grid item>  
+                                <Grid item>
+                                     
                                <CardGrid            
-                               date={usestate1[index]['timestamp']}
-            alertcreated={usestate1[index]['created']}
-            severity={usestate1[index]['severity']} 
-            title={usestate1[index]['source_title']} 
-            source={usestate1[index]['source_url']}
-            keyword={usestate1[index]['keywords']}
-            tags={usestate1[index]['tags']}
-            remediation={usestate1[index]['remediation']}
-            id={usestate1[index]['id']}
-            comments={usestate1[index]['comments']}
-            changeflag={props.changeflag} addcount={props.addcount}/>
+                                date={usestate1[index]['timestamp']}
+                                alertcreated={usestate1[index]['created']}
+                                severity={usestate1[index]['severity']} 
+                                title={usestate1[index]['source_title']} 
+                                source={usestate1[index]['source_url']}
+                                keyword={usestate1[index]['keywords']}
+                                tags={usestate1[index]['tags']}
+                                remediation={usestate1[index]['remediation']}
+                                id={usestate1[index]['id']}
+                                id2={index}
+                                comments={usestate1[index]['comments']}
+                                changeflag={props.changeflag} 
+                                commenting1={commenting[index]}
+                                setcommenting={setcommenting}
+                                addcount={props.addcount}
+            />
 
                             </Grid>   
                             ))

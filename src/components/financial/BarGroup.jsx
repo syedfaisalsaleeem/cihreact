@@ -9,7 +9,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import { FetchDataContext } from "../../context/FetchDataContext.jsx";
 
-require("./RoundedBars.js");
+
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
