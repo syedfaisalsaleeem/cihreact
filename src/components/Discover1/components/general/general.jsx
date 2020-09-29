@@ -20,7 +20,6 @@ export default function General() {
   const [newBrandName, setNewBrandName] = useState("");
   const [newInternalKeyword, setNewInternalKeyword] = useState("");
   const [newOtherKeyword, setNewOtherKeyword] = useState("");
-  
 
   const inputFields = [
     {
@@ -104,31 +103,35 @@ export default function General() {
                 </LightTooltip>
               </Grid>
               <Grid item container xs="6">
-                <div className={classes.inputWarper}>
+                <form
+                  onSubmit={(e) =>
+                    handleSubmit(
+                      e,
+                      field.onSubmit,
+                      field.value,
+                      field.onChange,
+                      field.alertMessage
+                    )
+                  }
+                  className={classes.inputWarper}
+                >
                   <input
                     type="text"
                     value={field.value}
                     onChange={(e) => handleChange(e, field.onChange)}
                   />
-                  <div
+                  <button
+                    type="submit"
                     style={{
                       border: "1px solid #000",
                       cursor: "pointer",
+                      padding: 0,
+                      background: "none",
                     }}
                   >
-                    <PlayArrowIcon
-                      onClick={(e) =>
-                        handleSubmit(
-                          e,
-                          field.onSubmit,
-                          field.value,
-                          field.onChange,
-                          field.alertMessage
-                        )
-                      }
-                    />
-                  </div>
-                </div>
+                    <PlayArrowIcon />
+                  </button>
+                </form>
               </Grid>
             </Grid>
             <Grid container>

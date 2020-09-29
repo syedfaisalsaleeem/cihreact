@@ -15,8 +15,6 @@ const ItemsContextProvider = (props) => {
   const [editOtherKeyword, setEditOtherKeyword] = useState(null);
 
   const [progress, setProgress] = useState(false);
-  const [count, setCount] = useState(0);
-
   useEffect(() => {
     if (
       brandNames.length > 0 &&
@@ -27,7 +25,7 @@ const ItemsContextProvider = (props) => {
     } else {
       setProgress(false);
     }
-  }, [progress, count, brandNames, internalKeyword, otherKeyword]);
+  }, [progress ,  brandNames, internalKeyword, otherKeyword]);
 
   //Add Brand Name
   const addBrandName = (brandTitle) => {
@@ -110,7 +108,6 @@ const ItemsContextProvider = (props) => {
         setEditOtherKeyword,
         editItem,
         progress,
-        count,
       }}
     >
       {props.children}

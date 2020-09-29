@@ -98,33 +98,37 @@ const Systems = () => {
                     <InfoOutlinedIcon />
                   </LightTooltip>
                 </div>
-                <div className={classes.input}>
+                <form
+                  className={classes.input}
+                  onSubmit={(e) =>
+                    handleSubmit(
+                      e,
+                      field.onSubmit,
+                      field.value,
+                      field.onChange,
+                      field.alertMessage
+                    )
+                  }
+                >
                   <input
                     type="text"
                     placeholder={field.placeholder}
                     value={field.value}
                     onChange={(e) => handleChange(e, field.onChange)}
                   />
-                  <div
+                  <button
+                    type="submit"
                     style={{
                       border: "1px solid #000",
                       cursor: "pointer",
                       marginLeft: "0.2rem",
+                      padding: "0",
+                      background: "none",
                     }}
                   >
-                    <PlayArrowIcon
-                      onClick={(e) =>
-                        handleSubmit(
-                          e,
-                          field.onSubmit,
-                          field.value,
-                          field.onChange,
-                          field.alertMessage
-                        )
-                      }
-                    />
-                  </div>
-                </div>
+                    <PlayArrowIcon />
+                  </button>
+                </form>
                 <Grid container className={classes.ListItemsWarper}>
                   <ListItems
                     field={field}

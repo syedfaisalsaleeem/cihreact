@@ -82,7 +82,7 @@ const Systems = () => {
         </Grid>
         <Grid item lg="3">
           <Typography style={{ marginLeft: "1rem" }}>Employee Count</Typography>
-          <Select selectData={employeeCount} placeholder="Select Employee.."/>
+          <Select selectData={employeeCount} placeholder="Select Employee..."/>
         </Grid>
       </Grid>
     </Structure>

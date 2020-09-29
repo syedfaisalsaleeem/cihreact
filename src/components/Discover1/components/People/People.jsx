@@ -81,32 +81,38 @@ const People = () => {
                   <Typography variant="subtitle1">{field.title}</Typography>
                   <InfoOutlinedIcon />
                 </div>
-                <div className={classes.input}>
-                  <input
-                    type="text"
-                    placeholder={field.placeholder}
-                    value={field.value}
-                    onChange={(e) => handleChange(e, field.onChange)}
-                  />
-                  <div
-                    style={{
-                      border: "1px solid #000",
-                      cursor: "pointer",
-                      marginLeft: "0.2rem",
-                    }}
+                <div>
+                  <form
+                    className={classes.input}
+                    onSubmit={(e) =>
+                      handleSubmit(
+                        e,
+                        field.onSubmit,
+                        field.value,
+                        field.onChange,
+                        field.alertMessage
+                      )
+                    }
                   >
-                    <PlayArrowIcon
-                      onClick={(e) =>
-                        handleSubmit(
-                          e,
-                          field.onSubmit,
-                          field.value,
-                          field.onChange,
-                          field.alertMessage
-                        )
-                      }
+                    <input
+                      type="text"
+                      placeholder={field.placeholder}
+                      value={field.value}
+                      onChange={(e) => handleChange(e, field.onChange)}
                     />
-                  </div>
+                    <button
+                      type="submit"
+                      style={{
+                        border: "1px solid #000",
+                        cursor: "pointer",
+                        marginLeft: "0.2rem",
+                        background: "none",
+                        padding: "0",
+                      }}
+                    >
+                      <PlayArrowIcon />
+                    </button>
+                  </form>
                 </div>
 
                 <div className={classes.ListItemsWarper}>
