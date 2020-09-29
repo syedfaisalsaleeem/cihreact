@@ -39,7 +39,7 @@ const BootstrapInput = withStyles((theme) => ({
     position: "relative",
     backgroundColor: theme.palette.background.paper,
     border: "1px solid #ced4da",
-    fontSize: 16,
+    fontSize: 14,
     padding: "10px 26px 10px 12px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     // Use the system font instead of the default Roboto font.
@@ -76,6 +76,7 @@ export default function GroupedSelect(props) {
           // onChange={handleChange}
           input={<BootstrapInput />}
         >
+         <option value="">Select Industry</option>
           {dropdownData.map((dt, i) => {
             return (
               <optgroup key={i} label={dt.label}>

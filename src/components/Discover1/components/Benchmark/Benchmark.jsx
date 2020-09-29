@@ -74,7 +74,7 @@ const Systems = () => {
       <Grid container justify="space-evenly">
         <Grid item lg="3">
           <Typography style={{ marginLeft: "1rem" }}>Continent</Typography>
-          <Select selectData={continent} />
+          <Select selectData={continent} placeholder="Select Continent"/>
         </Grid>
         <Grid item lg="3">
           <Typography style={{ marginLeft: "1rem" }}>Industry</Typography>
@@ -82,7 +82,7 @@ const Systems = () => {
         </Grid>
         <Grid item lg="3">
           <Typography style={{ marginLeft: "1rem" }}>Employee Count</Typography>
-          <Select selectData={employeeCount} />
+          <Select selectData={employeeCount} placeholder="Select Employee.."/>
         </Grid>
       </Grid>
     </Structure>
