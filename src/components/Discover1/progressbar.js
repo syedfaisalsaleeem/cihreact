@@ -1,9 +1,10 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import MobileStepper from "@material-ui/core/MobileStepper";
 import { ItemsListContext } from "./context/itemsContext";
 import { SystemContext } from "./context/systemContext";
 import { PeopleContext } from "./context/peopleContext";
+import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
@@ -25,20 +26,22 @@ export default function ProgressMobileStepper() {
   const general = useContext(ItemsListContext);
   const system = useContext(SystemContext);
   const people = useContext(PeopleContext);
+  const [setup, setSetup] = useState(75);
 
   const handleNext = (setStepFunc) => {
     setStepFunc(1);
+    setSetup((prevSetup) => prevSetup + 25);
   };
 
   const handleBack = (setStepFunc) => {
     setStepFunc(0);
+    setSetup((prevSetup) => prevSetup - 25);
   };
 
   useEffect(() => {
     if (general.progress) {
       handleNext(setGeneralStep);
-    } 
-    else {
+    } else {
       handleBack(setGeneralStep);
     }
   }, [general.progress]);
@@ -46,8 +49,7 @@ export default function ProgressMobileStepper() {
   useEffect(() => {
     if (system.progress) {
       handleNext(setSystemStep);
-    } 
-    else {
+    } else {
       handleBack(setSystemStep);
     }
   }, [system.progress]);
@@ -55,8 +57,7 @@ export default function ProgressMobileStepper() {
   useEffect(() => {
     if (people.progress) {
       handleNext(setPeopleStep);
-    } 
-    else {
+    } else {
       handleBack(setPeopleStep);
     }
   }, [people.progress]);
@@ -68,12 +69,21 @@ export default function ProgressMobileStepper() {
   const [peopleStep, setPeopleStep] = React.useState(0);
 
   return (
-    <MobileStepper
-      variant="progress"
-      steps={4}
-      position="static"
-      activeStep={generalStep + systemStep + peopleStep}
-      className={classes.root}
-    />
+    <div>
+      <Typography
+        style={{ marginRight: "0.5rem" }}
+        align="right"
+        variant="subtitle2"
+      >
+        Setup {setup}% completed.
+      </Typography>
+      <MobileStepper
+        variant="progress"
+        steps={5}
+        position="static"
+        activeStep={generalStep + systemStep + peopleStep}
+        className={classes.root}
+      />
+    </div>
   );
 }
