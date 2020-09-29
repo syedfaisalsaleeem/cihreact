@@ -21,13 +21,13 @@ export default function ProgressMobileStepper() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
   useEffect(() => {
-    if (general.progressGeneral) {
+    if (general.progress) {
       handleNext();
       handleNext();
-    }else {
+    } else {
       handleBack();
     }
-  }, [general.progressGeneral]);
+  }, [general.progress]);
 
   const classes = useStyles();
   const theme = useTheme();
