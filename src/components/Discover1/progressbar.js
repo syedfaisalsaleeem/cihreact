@@ -26,42 +26,53 @@ export default function ProgressMobileStepper() {
   const system = useContext(SystemContext);
   const people = useContext(PeopleContext);
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  const handleNext = (setStepFunc) => {
+    setStepFunc(1);
   };
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  const handleBack = (setStepFunc) => {
+    setStepFunc(0);
   };
 
   useEffect(() => {
     if (general.progress) {
-      handleNext();
+      handleNext(setGeneralStep);
+    } 
+    else {
+      handleBack(setGeneralStep);
     }
   }, [general.progress]);
 
   useEffect(() => {
     if (system.progress) {
-      handleNext();
+      handleNext(setSystemStep);
+    } 
+    else {
+      handleBack(setSystemStep);
     }
   }, [system.progress]);
 
   useEffect(() => {
     if (people.progress) {
-      handleNext();
+      handleNext(setPeopleStep);
+    } 
+    else {
+      handleBack(setPeopleStep);
     }
   }, [people.progress]);
 
   const classes = useStyles();
   const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [generalStep, setGeneralStep] = React.useState(0);
+  const [systemStep, setSystemStep] = React.useState(0);
+  const [peopleStep, setPeopleStep] = React.useState(0);
 
   return (
     <MobileStepper
       variant="progress"
       steps={4}
       position="static"
-      activeStep={activeStep}
+      activeStep={generalStep + systemStep + peopleStep}
       className={classes.root}
     />
   );
