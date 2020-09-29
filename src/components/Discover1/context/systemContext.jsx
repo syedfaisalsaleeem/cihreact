@@ -1,18 +1,27 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import { v4 as uuid } from "uuid";
 
 export const SystemContext = createContext();
 
 const ItemsContextProvider = (props) => {
-  const [domainNames, setDomainNames] = useState([{}]);
 
-  const [ipAddress, setIpAddress] = useState([{}]);
-
-  const [url, setUrl] = useState([{}]);
+  const [domainNames, setDomainNames] = useState([]);
+  const [ipAddress, setIpAddress] = useState([]);
+  const [url, setUrl] = useState([]);
 
   const [editDomainName, setEditDomainName] = useState(null);
   const [editIpAddress, setEditIpAddress] = useState(null);
   const [editUrl, setEditUrl] = useState(null);
+
+  const [progress, setProgress] = useState(false);
+
+  useEffect(() => {
+    if (domainNames.length > 0 && ipAddress.length > 0 && url.length > 0) {
+      setProgress(true);
+    } else {
+      setProgress(false);
+    }
+  }, [progress, domainNames, ipAddress, url]);
 
   //Add Brand Name
   const addDomainName = (brandTitle) => {
@@ -88,6 +97,7 @@ const ItemsContextProvider = (props) => {
         setEditIpAddress,
         setEditUrl,
         editItem,
+        progress
       }}
     >
       {props.children}

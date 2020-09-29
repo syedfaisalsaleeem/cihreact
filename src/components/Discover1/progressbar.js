@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import MobileStepper from "@material-ui/core/MobileStepper";
 import { ItemsListContext } from "./context/itemsContext";
+import { SystemContext } from "./context/systemContext";
 
 const useStyles = makeStyles({
   root: {
@@ -12,6 +13,7 @@ const useStyles = makeStyles({
 
 export default function ProgressMobileStepper() {
   const general = useContext(ItemsListContext);
+  const system = useContext(SystemContext);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -20,15 +22,22 @@ export default function ProgressMobileStepper() {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+
   useEffect(() => {
     if (general.progress) {
       handleNext();
-      handleNext();
-    } else {
-      handleBack();
     }
   }, [general.progress]);
 
+  useEffect(() => {
+    if (system.progress) {
+      handleNext();
+    }
+  }, [system.progress]);
+
+
+
+  
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);

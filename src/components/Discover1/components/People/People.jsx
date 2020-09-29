@@ -56,7 +56,7 @@ const People = () => {
     setNewFunction(e.target.value);
   };
 
-  const handleSubmit = (e, setFunction, newItem, setValue,alertMessage) => {
+  const handleSubmit = (e, setFunction, newItem, setValue, alertMessage) => {
     e.preventDefault();
     setFunction(newItem);
     setValue("");
@@ -70,14 +70,13 @@ const People = () => {
     removeFunction(id);
   };
 
- 
   return (
     <Structure titleText="People">
       <Grid container className={classes.People}>
         <Grid item md="10" container>
           {inputFields.map((field) => {
             return (
-              <Grid item  md="6">
+              <Grid item lg="6">
                 <div className={classes.titleInput}>
                   <Typography variant="subtitle1">{field.title}</Typography>
                   <InfoOutlinedIcon />
@@ -109,6 +108,7 @@ const People = () => {
                     />
                   </div>
                 </div>
+
                 <div className={classes.ListItemsWarper}>
                   <ListItems
                     field={field}

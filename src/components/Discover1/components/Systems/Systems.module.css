@@ -1,7 +1,7 @@
+
 .input {
   display: flex;
   align-items: center;
-  justify-content: space-around;
   margin-top: 1rem;
 }
 
@@ -21,5 +21,5 @@
 }
 
 .ListItemsWarper {
-  margin-top: 1rem;
+  margin-top: 2rem;
 }

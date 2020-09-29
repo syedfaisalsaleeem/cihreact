@@ -23,7 +23,6 @@ const Systems = () => {
 
   const inputFields = [
     {
-
       label: "Domain Name",
       helperText: "add a new domain name",
       placeholder: "Add Domain Name",
@@ -72,7 +71,7 @@ const Systems = () => {
     setNewFunction(e.target.value);
   };
 
-  const handleSubmit = (e, setFunction, newItem, setValue , alertMessage) => {
+  const handleSubmit = (e, setFunction, newItem, setValue, alertMessage) => {
     e.preventDefault();
     setFunction(newItem);
     setValue("");
@@ -86,7 +85,6 @@ const Systems = () => {
     removeFunction(id);
   };
 
-  
   return (
     <Structure titleText="Systems">
       <Grid container justify="space-around" className={classes.Systems}>
@@ -111,7 +109,7 @@ const Systems = () => {
                     style={{
                       border: "1px solid #000",
                       cursor: "pointer",
-                      marginLeft: '0.2rem'
+                      marginLeft: "0.2rem",
                     }}
                   >
                     <PlayArrowIcon

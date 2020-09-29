@@ -72,15 +72,15 @@ const Systems = () => {
   return (
     <Structure titleText="Benchmark">
       <Grid container justify="space-evenly">
-        <Grid item md="3">
+        <Grid item lg="3">
           <Typography style={{ marginLeft: "1rem" }}>Continent</Typography>
           <Select selectData={continent} />
         </Grid>
-        <Grid item md="3">
+        <Grid item lg="3">
           <Typography style={{ marginLeft: "1rem" }}>Industry</Typography>
           <GroupDropdown dropdownData={industry} />
         </Grid>
-        <Grid item md="3">
+        <Grid item lg="3">
           <Typography style={{ marginLeft: "1rem" }}>Employee Count</Typography>
           <Select selectData={employeeCount} />
         </Grid>
