@@ -1,5 +1,7 @@
 .list ul {
   list-style-type: none;
+  margin-top: -20px;
+  margin-bottom: 0;
 }
 
 .list ul li {
@@ -7,7 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 80%;
+  max-width: 5rem;
   padding-bottom: 10px;
 }
 

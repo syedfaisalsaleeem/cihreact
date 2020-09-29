@@ -32,7 +32,7 @@ const LightTooltip = withStyles((theme) => ({
 const useRowStyles = makeStyles({
   root: {
     "& > *": {
-      borderBottom: "unset",
+      
     },
   },
 });
@@ -65,16 +65,16 @@ function Row(props) {
       <TableRow className={classes.root}>
         <TableCell
           align="left"
-          component="th"
+          component="th" 
           scope="row"
-          style={{ width: "30%" }}
+          style={{ width: "30%",border: "1px solid #aaa" }}
         >
           {row.remediationAction}
         </TableCell>
-        <TableCell align="left" style={{ width: "10%", paddingLeft: "2rem" }}>
+        <TableCell align="left" style={{ width: "10%", paddingLeft: "2rem",border: "1px solid #aaa" }}>
           {row.affects}
         </TableCell>
-        <TableCell align="left" style={{ width: "10%", paddingLeft: "2rem" }}>
+        <TableCell align="left" style={{ width: "10%", paddingLeft: "2rem",border: "1px solid #aaa" }}>
           {" "}
           <Typography
             variant="subtitle1"
@@ -82,13 +82,13 @@ function Row(props) {
           ></Typography>{" "}
           {row.risk}
         </TableCell>
-        <TableCell align="left" style={{ width: "10%" }}>
+        <TableCell align="left" style={{ width: "10%",border: "1px solid #aaa" }}>
           {row.cisControl}
         </TableCell>
-        <TableCell align="left" style={{ width: "10%", paddingLeft: "2rem" }}>
+        <TableCell align="left" style={{ width: "10%", paddingLeft: "2rem",border: "1px solid #aaa" }}>
           {row.timeToExploit}
         </TableCell>
-        <TableCell align="center" style={{ width: "20%" }}>
+        <TableCell align="center" style={{ width: "20%",borderBottom: "1px solid #aaa" }}>
           <Button
             style={{
               textTransform: "capitalize",
@@ -182,21 +182,21 @@ export default function FContent() {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell align="left">
+            <TableCell align="left" style={{border: "1px solid #aaa"}}>
               <div className={customClasses.thDiv}>Remediated action</div>
             </TableCell>
-            <TableCell align="left">
+            <TableCell align="left" style={{border: "1px solid #aaa"}}>
               <div className={customClasses.thDiv}>
                 Affects
-                <div className={customClasses.i}>
+                <div className={customClasses.i} >
                   <LightTooltip title=" Number of alerts affected by this remediation.">
                     <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
                   </LightTooltip>
                 </div>
               </div>
             </TableCell>
-            <TableCell align="left">
-              <div className={customClasses.thDiv}>
+            <TableCell align="left" style={{border: "1px solid #aaa"}}>
+              <div className={customClasses.thDiv} >
                 Risks
                 <div className={customClasses.i}>
                   <LightTooltip title=" The risk level is calculated as the weighted sum of high, medium and low severity alerts.">
@@ -205,7 +205,7 @@ export default function FContent() {
                 </div>
               </div>
             </TableCell>
-            <TableCell align="left" style={{ width: "10rem" }}>
+            <TableCell align="left" style={{ width: "10rem",border: "1px solid #aaa" }}>
               <div className={customClasses.thDiv}>
                 Remediated
                 <div className={customClasses.i}>
@@ -215,7 +215,7 @@ export default function FContent() {
                 </div>
               </div>
             </TableCell>
-            <TableCell align="left" style={{ width: "15rem" }}>
+            <TableCell align="left" style={{ width: "15rem",border: "1px solid #aaa" }}>
               <div className={customClasses.thDiv}>
                 Username
                 <div className={customClasses.i}>
@@ -225,7 +225,7 @@ export default function FContent() {
                 </div>
               </div>
             </TableCell>
-            <TableCell />
+            <TableCell style={{border: "1px solid #aaa"}} />
           </TableRow>
         </TableHead>
         <TableBody>

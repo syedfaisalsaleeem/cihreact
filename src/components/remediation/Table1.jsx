@@ -37,7 +37,7 @@ const LightTooltip = withStyles((theme) => ({
 const useRowStyles = makeStyles({
   root: {
     "& > *": {
-      borderBottom: "unset",
+      
     },
   },
   b:{
@@ -77,19 +77,26 @@ function Row(props) {
   return (
     <React.Fragment>
       <TableRow className={classes.root}>
-        <TableCell align="left" component="th" scope="row" width="30%">
+        <TableCell align="left" component="th" scope="row" width="30%" 
+        style={{
+                          border: "1px solid #aaa",
+                         
+                          
+                        }}>
           {row.remediationAction}
         </TableCell>
-        <TableCell align="left" style={{ paddingLeft: "2rem" }}>
+        <TableCell align="left" style={{                          border: "1px solid #aaa",
+                          
+                         paddingLeft: "2rem" }}>
           {row.affects}
         </TableCell>
-        <TableCell align="left" style={{ paddingLeft: "2rem" }}>
+        <TableCell align="left" style={{ border: "1px solid #aaa", paddingLeft: "2rem" }}>
           {row.risk}
         </TableCell>
-        <TableCell align="left" style={{ paddingLeft: "2rem" }}>
+        <TableCell align="left" style={{ border: "1px solid #aaa", paddingLeft: "2rem" }}>
           {row.cisControl}
         </TableCell>
-        <TableCell align="left">
+        <TableCell style={{ border: "1px solid #aaa"}} align="left">
           {" "}
           <div className={styles.foldable}>
             <p style={{ color: "red" }}>Ready to exploit</p>
@@ -102,7 +109,7 @@ function Row(props) {
             </IconButton>
           </div>{" "}
         </TableCell>
-        <TableCell align="center" width="20%">
+        <TableCell style={{borderBottom: "1px solid #aaa"}}  align="center" width="20%">
           <Button
             style={{
               textTransform: "capitalize",
@@ -153,12 +160,12 @@ function Row(props) {
                 </Grid>
 
                 <Grid item xs="2" className={styles.downloadBtns}>
-                  <button>Download as PDF</button>
-                  <button>Download as CSV</button>
+                  <button style={{width:"150px"}}>Download as PDF</button>
+                  <button style={{width:"150px"}}>Download as CSV</button>
                 </Grid>
                 <Grid item xs="2" className={styles.downloadBtns}>
-                  <button>Analyst Suuport</button>
-                  <button>Show Alerts</button>
+                  <button style={{width:"150px"}}>Analyst Support</button>
+                  <button style={{width:"150px"}}>Show Alerts</button>
                 </Grid>
               </Grid>
             </Box>
@@ -192,7 +199,7 @@ export default function FContent() {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell align="center">
+            <TableCell align="center" style={{border: "1px solid #aaa"}}>
               <div className={styles.thDiv}>
                 Remediated action
                 <div className={styles.i}>
@@ -202,7 +209,7 @@ export default function FContent() {
                 </div>
               </div>
             </TableCell>
-            <TableCell align="center">
+            <TableCell align="center" style={{border: "1px solid #aaa"}}>
               <div className={styles.thDiv}>
                 Affects
                 <div className={styles.i}>
@@ -212,7 +219,7 @@ export default function FContent() {
                 </div>
               </div>
             </TableCell>
-            <TableCell align="center">
+            <TableCell align="center" style={{border: "1px solid #aaa"}}>
               <div className={styles.thDiv}>
                 Risk
                 <div className={styles.i}>
@@ -222,7 +229,7 @@ export default function FContent() {
                 </div>
               </div>
             </TableCell>
-            <TableCell align="center" style={{ width: "10rem" }}>
+            <TableCell align="center" style={{ width: "10rem",border: "1px solid #aaa" }}>
               <div className={styles.thDiv}>
                 CIS Control
                 <div className={styles.i}>
@@ -243,7 +250,7 @@ export default function FContent() {
                 </div>
               </div>
             </TableCell>
-            <TableCell align="center" style={{ width: "15rem" }}>
+            <TableCell align="center" style={{ width: "15rem",border: "1px solid #aaa" }}>
               <div className={styles.thDiv}>
                 Time to Exploit
                 <div className={styles.i}>
@@ -253,7 +260,7 @@ export default function FContent() {
                 </div>
               </div>
             </TableCell>
-            <TableCell />
+            <TableCell style={{border: "1px solid #aaa"}}/>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -270,7 +277,39 @@ export default function FContent() {
         aria-describedby="alert-dialog-description"
         maxWidth={"xl"}
       >
-
+        <DialogTitle>
+        <Grid container style={{height:"6vh",display:"flex"}} >
+            <Grid items xs={11} style={{height:"6vh",display:"flex"}}>
+                <Grid container spacing={2}>
+                <Grid item>
+                </Grid>
+                <Grid item>
+                    <Typography component="div" style={{display:"flex",height:"6vh",justifyContent:"flex-start",alignItems:"center"}}>
+                    
+                    
+                    </Typography>
+                
+                </Grid>
+                <Grid item xs={7}>
+                    <Typography style={{display:"flex",height:"6vh",justifyContent:"flex-start",alignItems:"center",marginLeft:"-15px"}}>
+                     </Typography>
+                
+                </Grid>
+                </Grid>
+            
+            </Grid>
+            
+            <Grid items xs={1} style={{height:"6vh",display:"flex",justifyContent:"center",alignItems:"center"}}>
+            
+            <CloseIcon onClick={handle1} />
+            
+                
+            </Grid>
+            
+            
+            
+        </Grid>
+        </DialogTitle>
         
         <DialogContent>
         <Grid item xs="12" className={styles.downImg}>

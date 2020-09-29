@@ -15,9 +15,11 @@
 }
 
 .formControl input {
-  margin: 0 2rem;
-  padding: 0.3rem;
-  width: 80%;
+  border: 1px solid #000;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  width: 100%;
+  
 }
 
 .labelWarper {
@@ -26,9 +28,10 @@
 }
 
 .inputWarper {
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
 .inputWarper input {
-  width: 100%;
+  margin-right: 0.1rem;
 }

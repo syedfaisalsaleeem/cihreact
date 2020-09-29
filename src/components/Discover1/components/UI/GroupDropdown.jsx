@@ -1,8 +1,17 @@
 import React from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
+
 import FormControl from "@material-ui/core/FormControl";
+
 import NativeSelect from "@material-ui/core/NativeSelect";
 import InputBase from "@material-ui/core/InputBase";
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+}));
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -25,6 +34,7 @@ const BootstrapInput = withStyles((theme) => ({
     },
   },
   input: {
+    width: "7rem",
     borderRadius: 4,
     position: "relative",
     backgroundColor: theme.palette.background.paper,
@@ -53,35 +63,34 @@ const BootstrapInput = withStyles((theme) => ({
   },
 }))(InputBase);
 
-const useStyles = makeStyles((theme) => ({
-  margin: {
-    margin: theme.spacing(1),
-  },
-}));
-
-export default function CustomizedSelects(props) {
-  const { selectData } = props;
+export default function GroupedSelect(props) {
+  const { dropdownData } = props;
   const classes = useStyles();
-  const [age, setAge] = React.useState("");
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+
   return (
-    <FormControl style={{ width: "100%" }} className={classes.margin}>
-      <NativeSelect
-        id="demo-customized-select-native"
-        value={age}
-        onChange={handleChange}
-        input={<BootstrapInput />}
-      >
-        {selectData.map((dt, i) => {
-          return (
-            <option key={i} value={dt}>
-              {dt}
-            </option>
-          );
-        })}
-      </NativeSelect>
-    </FormControl>
+    <div>
+      <FormControl className={classes.formControl}>
+        <NativeSelect
+          id="demo-customized-select-native"
+          // value={age}
+          // onChange={handleChange}
+          input={<BootstrapInput />}
+        >
+          {dropdownData.map((dt, i) => {
+            return (
+              <optgroup key={i} label={dt.label}>
+                {dt.array.map((el, i) => {
+                  return (
+                    <option key={i} value={el}>
+                      {el}
+                    </option>
+                  );
+                })}
+              </optgroup>
+            );
+          })}
+        </NativeSelect>
+      </FormControl>
+    </div>
   );
 }

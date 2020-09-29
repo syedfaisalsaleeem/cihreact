@@ -204,7 +204,8 @@ export default function Latest(props){
             remediation={usestate1[index]['remediation']}
             id={usestate1[index]['id']}
             comments={usestate1[index]['comments']}
-            changeflag={props.changeflag} addcount={props.addcount}
+            
+            // changeflag={props.changeflag} addcount={props.addcount}
             />
             
               </div>

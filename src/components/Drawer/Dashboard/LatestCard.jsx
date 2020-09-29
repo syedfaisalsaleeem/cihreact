@@ -158,6 +158,9 @@ export default function LatestCard(props){
         alertcreated,severity,
         title,source,keyword,
         remediation,tags,comments,id}=props
+        const [tags1,settags1]=React.useState(tags.some(tag=>tag==="highlightedalerts"))
+        // const tags1=tags.filter(tag=>tag==="highlightedalerts")
+        console.log(tags1)
     if(severity!==""){
         // console.log(severity)
         const newStr = severity.split('');

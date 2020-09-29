@@ -5,12 +5,13 @@ import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { Grid, Tooltip } from "@material-ui/core";
 import Structure from "../Structure/Structure";
 import ListItems from "../ListItems/ListItems";
-import HelperText from "../HelperText/HelperText";
-import { withStyles } from '@material-ui/core/styles';
+import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import { withStyles } from "@material-ui/core/styles";
+import {TextField} from "@material-ui/core";
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
     backgroundColor: theme.palette.common.white,
-    color: 'rgba(0, 0, 0, 0.87)',
+    color: "rgba(0, 0, 0, 0.87)",
     boxShadow: theme.shadows[1],
     fontSize: 11,
   },
@@ -20,8 +21,22 @@ export default function General() {
   const [newBrandName, setNewBrandName] = useState("");
   const [newInternalKeyword, setNewInternalKeyword] = useState("");
   const [newOtherKeyword, setNewOtherKeyword] = useState("");
+  
 
   const inputFields = [
+    {
+      label: "Company Name",
+      helperText: "add a company name",
+      value: newBrandName,
+      onChange: setNewBrandName,
+      onSubmit: values.addBrandName,
+      fetchItems: values.brandNames,
+      setFetchItems: values.setBrandNames,
+      removeItems: values.removeBrandName,
+      tooltip:
+        "",
+      alertMessage: "Brand Name Added.",
+    },
     {
       label: "Brand Name",
       helperText: "add a brand name",
@@ -31,12 +46,9 @@ export default function General() {
       fetchItems: values.brandNames,
       setFetchItems: values.setBrandNames,
       removeItems: values.removeBrandName,
-      findItem: values.findItem,
-      onEdit: values.editItem,
-      fetchEditItem: values.editBrandName,
-      setFetchEditItem: values.setEditBrandName,
       tooltip:
         " Brand and product names owned by your company. Unique names consisting of 5 or more characters work best. Add your company’s name to your product name, that works for us: Cyber Intelligence House Exposure Monitor.",
+      alertMessage: "Brand Name Added.",
     },
     {
       label: "Internal keywords",
@@ -47,12 +59,9 @@ export default function General() {
       fetchItems: values.internalKeyword,
       setFetchItems: values.setInternalKeyword,
       removeItems: values.removeInternalKeyword,
-      findItem: values.findItem,
-      onEdit: values.editItem,
-      fetchEditItem: values.editInternalKeyword,
-      setFetchEditItem: values.setEditInternalKeyword,
       tooltip:
         "Confidential terms only used within your company, that are impossible to know from the outside. Think of a project code name or a hash value in your internal database, servername, or embedded in office documents metadata. A hash value is a numeric code that uniquely identifies data.",
+      alertMessage: "Internal Keyword Added.",
     },
     {
       label: "Other keywords",
@@ -63,12 +72,9 @@ export default function General() {
       fetchItems: values.otherKeyword,
       setFetchItems: values.setOtherKeyword,
       removeItems: values.removeOtherKeyword,
-      findItem: values.findItem,
-      onEdit: values.editItem,
-      fetchEditItem: values.editOtherKeyword,
-      setFetchEditItem: values.setEditOtherKeyword,
       tooltip:
         "Other keywords you want to monitor. Looking for malware? Add the malware hash, not the malware name. Want to monitor a Hacker group? Add group member names, instead of their group name. A hash value is numeric code that uniquely identifies data.",
+      alertMessage: "Other Keyword Added.",
     },
   ];
 
@@ -77,34 +83,19 @@ export default function General() {
     setNewFunction(e.target.value);
   };
 
-  const handleSubmit = (e, setFunction, newItem, setValue) => {
+  const handleSubmit = (e, setFunction, newItem, setValue, alertMessage) => {
     e.preventDefault();
     setFunction(newItem);
     setValue("");
+    setTimeout(() => {
+      window.alert(alertMessage);
+    }, 2);
   };
 
   const handleRemove = (e, removeFunction, id) => {
     e.preventDefault();
     removeFunction(id);
   };
-
-  useEffect(() => {
-    if (values.editBrandName !== null) {
-      setNewBrandName(values.editBrandName.title);
-    }
-  }, [values.editBrandName]);
-
-  useEffect(() => {
-    if (values.editInternalKeyword !== null) {
-      setNewInternalKeyword(values.editInternalKeyword.title);
-    }
-  }, [values.editInternalKeyword]);
-
-  useEffect(() => {
-    if (values.editOtherKeyword !== null) {
-      setNewOtherKeyword(values.editOtherKeyword.title);
-    }
-  }, [values.editOtherKeyword]);
 
   return (
     <Structure titleText="General">
@@ -113,7 +104,7 @@ export default function General() {
           <label htmlFor="">Company Name</label>
         </Grid>
         <Grid item xs="6">
-          <input type="text" />
+          <TextField type="text" variant="outlined" placeholder="Company Name" />
         </Grid>
       </div>
       {inputFields.map((field) => {
@@ -126,18 +117,45 @@ export default function General() {
                   <InfoOutlinedIcon style={{ marginLeft: "1rem" }} />
                 </LightTooltip>
               </Grid>
-              <Grid item container xs="6" className={classes.inputWarper}>
-                <input
-                  type="text"
-                  value={field.value}
-                  onChange={(e) => handleChange(e, field.onChange)}
-                />
-                <HelperText field={field} handleSubmit={handleSubmit} />
+              <Grid item container  xs="6">
+                <div className={classes.inputWarper}>
+                  <TextField
+                    type="text"
+                    variant="outlined"
+                    value={field.value}
+                    onChange={(e) => handleChange(e, field.onChange)}
+                  />
+                  <div
+                    style={{
+                      
+                      cursor: "pointer",
+                      marginLeft:"5px",
+                     
+                    }}
+                  >
+                    <PlayArrowIcon 
+                      style={{fontSize:"30px",border: "1px solid #000",marginTop:"5px",height:"30px"}}
+                      onClick={(e) =>
+                        handleSubmit(
+                          e,
+                          field.onSubmit,
+                          field.value,
+                          field.onChange,
+                          field.alertMessage
+                        )
+                      }
+                    />
+                  </div>
+                </div>
               </Grid>
             </Grid>
             <Grid container>
               <Grid item xs="7"></Grid>
-              <ListItems field={field} handleRemove={handleRemove} columns="5"/>
+              <ListItems
+                field={field}
+                handleRemove={handleRemove}
+                columns="5"
+              />
             </Grid>
           </>
         );

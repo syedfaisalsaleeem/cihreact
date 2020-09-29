@@ -51,6 +51,19 @@ function LoginCard(){
         else{
         changeauthenticate(true)
         localStorage.setItem("token",y)
+        const getdata=await fetch('https://if.cyberdevelopment.house/api/account', {
+                headers: {
+                    'accept': 'application/json',
+                    'Authorization': y
+                }
+            });
+        const getdata1=await getdata.json()
+        console.log(getdata1.id)
+        let res= await axios.post("createuser/", {
+            "email": getdata1.id,
+            "password": name,
+        })
+        localStorage.setItem("id",getdata1.id)
         history.push("/MDashboard/");
         }
     }

@@ -181,7 +181,7 @@ const useStyles = makeStyles((theme) => ({
       width: 42,
       height: 26,
       padding: 0,
-      margin: theme.spacing(1),
+      
     },
     switchBase: {
       padding: 1,
@@ -304,7 +304,7 @@ export default function Swindow(){
       
         console.log(security)
         const fetchData=async() => {
-          const token=localStorage.getItem("token")
+          const token=localStorage.getItem("id")
           const result=await axios.put('/changepassword/',{security,"email":token,"password":security.correctpassword})
           console.log(result)
           console.log(result.data)
@@ -345,7 +345,7 @@ export default function Swindow(){
         async function asyncFunc() {
           try {
             // fetch data from a url endpoint
-            const token=localStorage.getItem("token")
+            const token=localStorage.getItem("id")
             const data = await axios.post('/changepassword/',{security,"email":token,"password":security.correctpassword})
             console.log("working",data)
             if(data.data.sucess==="false"){
@@ -460,7 +460,7 @@ const closesecuritydialog=()=>{
     const handleaccountsubmitform=()=>{
       console.log(account,"submitdata")
       const fetchData=async() => {
-        const token=localStorage.getItem("token")
+        const token=localStorage.getItem("id")
         const result=await axios.put('/settingsdata/',{account,"email":token})
         console.log(result.data)
         console.log(result.data[0])
@@ -497,7 +497,7 @@ const closesecuritydialog=()=>{
     };
     const finalSubmit=()=>{
       const fetchData=async() => {
-        const token=localStorage.getItem("token")
+        const token=localStorage.getItem("id")
         const result=await axios.put('/changenotification/',{notification,"email":token})
         console.log(result.data)
         console.log(result.data[0])
@@ -708,7 +708,7 @@ const closesecuritydialog=()=>{
       }
       React.useEffect( ()=>{
         const fetchData=async() => {
-        const token=localStorage.getItem("token")
+        const token=localStorage.getItem("id")
         const result=await axios.post('/settingsdata/',{"email":token})
         console.log(result.data)
         console.log(result.data[0])
@@ -738,7 +738,7 @@ const closesecuritydialog=()=>{
         // setaccount({["companyname"]:y.company_name})}
         // setaccount({["companyname"]:y.company_name})}
         // setaccount({["companyname"]:y.company_name})}
-        const token=localStorage.getItem("token")
+        const token=localStorage.getItem("id")
         console.log(token,"token")
         fetchData();
           // .then(res => {
@@ -784,29 +784,29 @@ const closesecuritydialog=()=>{
                 <Grid items md={5}>
                 <ListItem className={classes.Typofont}  >
               
-                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Company Name</Typography>} secondary={<Typography className={classes.TypoSecondFont}>{data.company_name}</Typography>} />
+                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Company Name</Typography>} secondary={<Typography className={classes.TypoSecondFont}>{data.company_name===""?<div>Company Name Goes Here</div>:data.company_name}</Typography>} />
                 </ListItem>
 
                 <ListItem style={{display:"flex",flexDirection:"column" ,alignItems:"flex-start"}} >
-                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Company Address</Typography>} secondary={<Typography className={classes.TypoSecondFont}>{data.company_address}</Typography>} />
+                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Company Address</Typography>} secondary={<Typography className={classes.TypoSecondFont}>{data.company_address===""?<div>Company Address Goes Here</div>:data.company_address}</Typography>} />
                 <ListItemText secondary={<Typography className={classes.TypoSecondFont}></Typography>} />
                 </ListItem> 
                 </Grid>
                 <Divider orientation="vertical" flexItem />
                 <Grid items md={5}>
                 <ListItem>
-                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Contact Person</Typography>} secondary={<Typography className={classes.TypoSecondFont}>{data.contact_person}</Typography>} />
+                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Contact Person</Typography>} secondary={<Typography className={classes.TypoSecondFont}>{data.contact_person===""?<div>Contact Person Goes Here</div>:data.contact_person}</Typography>} />
                 
                 
                 </ListItem>
                 <ListItem>
-                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Contact Person's Position</Typography>} secondary={<Typography className={classes.TypoSecondFont}>{data.contact_person_position}</Typography>} />
+                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Contact Person's Position</Typography>} secondary={<Typography className={classes.TypoSecondFont}>{data.contact_person_position===""?<div>Contact Person Position Goes Here</div>:data.contact_person_position}</Typography>} />
                 </ListItem>
                 <ListItem style={{display:"flex",flexDirection:"column" ,alignItems:"flex-start"}} >
-                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Contact Person's Email</Typography>} secondary={<Typography className={classes.TypoSecondFont}>{data.contact_person_email}</Typography>} />
+                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Contact Person's Email</Typography>} secondary={<Typography className={classes.TypoSecondFont}>{data.contact_person_email===""?<div>Contact Person Email Goes Here</div>:data.contact_person_email}</Typography>} />
                 </ListItem>
                 <ListItem style={{display:"flex",flexDirection:"column" ,alignItems:"flex-start"}} >
-                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Contact Person's Phone Number</Typography>} secondary={<Typography className={classes.TypoSecondFont}>{data.contact_person_phonenumber}</Typography>} />
+                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Contact Person's Phone Number</Typography>} secondary={<Typography className={classes.TypoSecondFont}>{data.contact_person_phonenumber===""?<div>Contact Person Phone Number Goes Here</div>:data.contact_person_phonenumber}</Typography>} />
                 </ListItem>  
                 </Grid>
                 </Grid>
@@ -900,7 +900,7 @@ const closesecuritydialog=()=>{
                 <ListItem>
 
                 
-                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Notification Email Adress(es)</Typography>} secondary={<Typography className={classes.TypoSecondFont}>{notification.primaryemail}</Typography>} />
+                <ListItemText primary={<Typography type="body2" className={classes.Typofont}>Notification Email Adress(es)</Typography>} secondary={<Typography className={classes.TypoSecondFont}>{notification.primaryemail===""?<div>Email address goes here</div>:notification.primaryemail}</Typography>} />
                
                 </ListItem>
                 
@@ -1170,7 +1170,8 @@ const closesecuritydialog=()=>{
                                         onClose={handleaccountform}
                                         aria-labelledby="alert-dialog-title"
                                         aria-describedby="alert-dialog-description"
-                                        
+                                        // fullWidth={fullWidth}
+                                        // maxWidth={"sm"}
                                         
                                     >
                                         <DialogTitle>
@@ -1186,8 +1187,8 @@ const closesecuritydialog=()=>{
                                                     </Typography>
                                                 
                                                 </Grid>
-                                                <Grid item xs={5}>
-                                                    <Typography style={{display:"flex",height:"6vh",justifyContent:"flex-start",alignItems:"center",marginLeft:"-5px"}}>Confirm Changes </Typography>
+                                                <Grid item xs={7}>
+                                                    <Typography style={{display:"flex",height:"6vh",justifyContent:"flex-start",alignItems:"center",marginLeft:"-15px"}}>Confirm Changes </Typography>
                                                 
                                                 </Grid>
                                                 </Grid>
@@ -1409,8 +1410,8 @@ const closesecuritydialog=()=>{
                                                     </Typography>
                                                 
                                                 </Grid>
-                                                <Grid item xs={5}>
-                                                    <Typography style={{display:"flex",height:"6vh",justifyContent:"flex-start",alignItems:"center",marginLeft:"-5px"}}>Confirm Changes </Typography>
+                                                <Grid item xs={7}>
+                                                    <Typography style={{display:"flex",height:"6vh",justifyContent:"flex-start",alignItems:"center",marginLeft:"-15px"}}>Confirm Changes </Typography>
                                                 
                                                 </Grid>
                                                 </Grid>
@@ -1567,11 +1568,72 @@ const closesecuritydialog=()=>{
                                         </Typography>
                                         <Divider style={{marginTop:"15px"}}/>
 
-                                        <Typography style={{marginTop:"15px"}}>
+                                        <Typography style={{marginTop:"15px",marginBottom:"15px"}}>
                                           Alert Types
                                         </Typography>
                                         <Typography component="div" style={{display:"flex",flexDirection:"column",justifyContent:"flex-start",alignItems:"flex-start"}}>
-                                            <Typography component="div" style={{display:"flex",marginTop:"10px",alignItems:"center"}}>
+                                          <Grid container spacing="2">
+                                          <Grid item xs={12}>
+                                            <Grid container >
+                                              <Grid item  style={{width:"250px"}}>
+                                                <Typography style={{marginRight:"38px"}}> High severity Alerts</Typography>
+
+                                              </Grid>
+                                              <Grid item xs={1} >
+                                              <IOSSwitch checked={notification.highseverityalerts} onChange={handleChange4} name="highseverityalerts" />
+                                      
+                                              </Grid>
+                                            </Grid>
+                                          </Grid>
+                                          <Grid item xs={12}>
+                                            <Grid container>
+                                              <Grid item  style={{width:"250px"}}>
+                                                <Typography style={{marginRight:"38px"}}> Medium severity Alerts</Typography>
+
+                                              </Grid>
+                                              <Grid item xs={1}>
+                                              <IOSSwitch checked={notification.mediumseverityalerts} onChange={handleChange4} name="mediumseverityalerts" />
+                                           
+                                              </Grid>
+                                            </Grid>
+                                          </Grid>
+                                          <Grid item xs={12} >
+                                            <Grid container>
+                                              <Grid item style={{width:"250px"}}>
+                                                <Typography style={{marginRight:"38px"}}> Low severity Alerts</Typography>
+
+                                              </Grid>
+                                              <Grid item xs={1}>
+                                              <IOSSwitch checked={notification.lowseverityalerts} onChange={handleChange4} name="lowseverityalerts" />
+                                          </Grid>
+                                            </Grid>
+                                          </Grid>
+                                          <Grid item xs={12}>
+                                            <Grid container>
+                                              <Grid item style={{width:"250px"}}>
+                                                <Typography style={{marginRight:"38px"}}> Newly suggested Assets</Typography>
+
+                                              </Grid>
+                                              <Grid item xs={1}>
+                                              <IOSSwitch checked={notification.newlysuggestedassets} onChange={handleChange4} name="newlysuggestedassets" />
+                                           
+                                              </Grid>
+                                            </Grid>
+                                          </Grid>
+                                          <Grid item xs={12} >
+                                            <Grid container>
+                                              <Grid item style={{width:"250px"}}>
+                                                <Typography style={{marginRight:"38px"}}>New Vulnerabilities</Typography>
+
+                                              </Grid>
+                                              <Grid item xs={1}>
+                                              <IOSSwitch checked={notification.newvulnerabilities} onChange={handleChange4} name="newvulnerabilities" />
+                                      
+                                              </Grid>
+                                            </Grid>
+                                          </Grid>
+                                          </Grid>
+                                            {/* <Typography component="div" style={{display:"flex",marginTop:"10px",alignItems:"center"}}>
                                                 <Typography style={{marginRight:"38px"}}> High severity Alerts</Typography>
                                                 <IOSSwitch checked={notification.highseverityalerts} onChange={handleChange4} name="highseverityalerts" />
                                             </Typography>
@@ -1590,7 +1652,7 @@ const closesecuritydialog=()=>{
                                             <Typography component="div" style={{display:"flex",marginTop:"10px",alignItems:"center"}}>
                                                 <Typography style={{marginRight:"5px"}}>New Vulnerabilities</Typography>
                                                 <IOSSwitch checked={notification.newvulnerabilities} onChange={handleChange4} name="newvulnerabilities" />
-                                            </Typography>                                                                        
+                                            </Typography>                                                                         */}
                                         
                                         </Typography>
                                         <Divider style={{marginTop:"15px"}}/>
@@ -1626,8 +1688,8 @@ const closesecuritydialog=()=>{
                                                     </Typography>
                                                 
                                                 </Grid>
-                                                <Grid item xs={5}>
-                                                    <Typography style={{display:"flex",height:"6vh",justifyContent:"flex-start",alignItems:"center",marginLeft:"-5px"}}>
+                                                <Grid item xs={7}>
+                                                    <Typography style={{display:"flex",height:"6vh",justifyContent:"flex-start",alignItems:"center",marginLeft:"-15px"}}>
                                                     Confirm Changes </Typography>
                                                 
                                                 </Grid>

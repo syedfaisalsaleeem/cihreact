@@ -2,12 +2,13 @@
   margin-left: 1rem;
 }
 .People input {
-  width: 96%;
-  padding: 0.2rem;
+  padding: 0.35rem;
 }
 
 .input {
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .ListItemsWarper {
@@ -28,4 +29,14 @@
 .play button:disabled {
   cursor: not-allowed;
   opacity: 0.8;
+}
+.titleInput {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  margin-left: 1.5rem;
+}
+
+.titleInput > *:last-child {
+  margin-left: 0.5rem;
 }
