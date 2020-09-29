@@ -12,6 +12,7 @@ import { MuiThemeProvider } from '@material-ui/core';
 import theme from './theme';
 import Contact1 from './Links/Contact/Contact.js';
 import MainDashboard from './Links/MainDashboard/index.js';
+import DiscoverPage from './components/Discover1/DiscoverContent';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <Route path="/SupportUpdates" component={SupportUpdates} exact/>
         
         <Route path="/MDashBoard/" component={MainDashboard} />
+        <Route path="/DiscoverPage" component={DiscoverPage} />
         {/* <Route path="/DashBoard" component={Home} exact/>
         <Route path="/Discover" component={Discover} exact/>
         {/* <Route path="/Settings" component={Setting} exact/>

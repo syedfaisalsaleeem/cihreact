@@ -1,54 +1,45 @@
-import React from 'react'
+import React, { useEffect, useContext } from "react";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import MobileStepper from "@material-ui/core/MobileStepper";
+import { ItemsListContext } from "./context/itemsContext";
 
-class Progressbar extends React.Component{
-    constructor(props){
-        super()
-        this.state={
-            numberComplete:10
-        }
-    }    
-    
-render(props){
-    return(
-        <div className="progress">
-            <div className="progress-bar" style={{width:this.props.values}}>
-                
-            </div>
-        <style jsx>
-            {`
-            .progress {
-                display:flex;
-                background: rgba(0, 0, 0, 0.3);
-                
-                width: 80%;;
-                height: 26px;
-                
-                margin-bottom: 3rem;
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 550,
+    flexGrow: 1,
+  },
+});
 
-            }
-            .progress-bar {
-                display:flex;
-                background: #53B53A;
-                width:0%;
-                height: 100%;
-                
-                color: #fff;
-                
-                opacity: 1;
-                transition: width 1s ease-in-out;
-                
-                
-                justify-content: flex-end;
-                align-items: center;
-            }
-            
-            
-            
-            `}
-        </style>
-        
-        </div>
-    )
+export default function ProgressMobileStepper() {
+  const general = useContext(ItemsListContext);
+
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+  useEffect(() => {
+    if (general.progressGeneral) {
+      handleNext();
+      handleNext();
+    }else {
+      handleBack();
+    }
+  }, [general.progressGeneral]);
+
+  const classes = useStyles();
+  const theme = useTheme();
+  const [activeStep, setActiveStep] = React.useState(0);
+
+  return (
+    <MobileStepper
+      variant="progress"
+      steps={5}
+      position="static"
+      activeStep={activeStep}
+      className={classes.root}
+    />
+  );
 }
-}
-export default Progressbar

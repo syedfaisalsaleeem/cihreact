@@ -26,9 +26,10 @@
 }
 
 .inputWarper {
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
 .inputWarper input {
-  width: 100%;
+  margin-right: 0.1rem;
 }

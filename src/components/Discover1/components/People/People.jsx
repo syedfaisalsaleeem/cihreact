@@ -1,17 +1,17 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import Structure from "../Structure/Structure";
 import { PeopleContext } from "../../context/peopleContext";
 import classes from "./People.module.css";
 import ListItems from "../ListItems/ListItems";
-import { withStyles } from '@material-ui/core/styles';
-import Tooltip from '@material-ui/core/Tooltip';
+import { withStyles } from "@material-ui/core/styles";
+import Tooltip from "@material-ui/core/Tooltip";
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
     backgroundColor: theme.palette.common.white,
-    color: 'rgba(0, 0, 0, 0.87)',
+    color: "rgba(0, 0, 0, 0.87)",
     boxShadow: theme.shadows[1],
     fontSize: 11,
   },
@@ -24,6 +24,7 @@ const People = () => {
 
   const inputFields = [
     {
+      title: "Personal names",
       placeholder: "[first name and last name]",
       value: newBrandName,
       onChange: setNewBrandName,
@@ -31,14 +32,12 @@ const People = () => {
       fetchItems: values.brandNames,
       setFetchItems: values.setBrandNames,
       removeItems: values.removeBrandName,
-      findItem: values.findItem,
-      onEdit: values.editItem,
-      fetchEditItem: values.editBrandName,
-      setFetchEditItem: values.setEditBrandName,
+      alertMessage: "Personal name Added.",
       tooltip:
         " Brand and product names owned by your company. Unique names consisting of 5 or more characters work best. Add your company’s name to your product name, that works for us: Cyber Intelligence House Exposure Monitor.",
     },
     {
+      title: "Personal emails",
       placeholder: "Personal email",
       value: newInternalKeyword,
       onChange: setNewInternalKeyword,
@@ -46,10 +45,7 @@ const People = () => {
       fetchItems: values.internalKeyword,
       setFetchItems: values.setInternalKeyword,
       removeItems: values.removeInternalKeyword,
-      findItem: values.findItem,
-      onEdit: values.editItem,
-      fetchEditItem: values.editInternalKeyword,
-      setFetchEditItem: values.setEditInternalKeyword,
+      alertMessage: "Personal email Added.",
       tooltip:
         "Confidential terms only used within your company, that are impossible to know from the outside. Think of a project code name or a hash value in your internal database, servername, or embedded in office documents metadata. A hash value is a numeric code that uniquely identifies data.",
     },
@@ -60,10 +56,13 @@ const People = () => {
     setNewFunction(e.target.value);
   };
 
-  const handleSubmit = (e, setFunction, newItem, setValue) => {
+  const handleSubmit = (e, setFunction, newItem, setValue,alertMessage) => {
     e.preventDefault();
     setFunction(newItem);
     setValue("");
+    setTimeout(() => {
+      window.alert(alertMessage);
+    }, 2);
   };
 
   const handleRemove = (e, removeFunction, id) => {
@@ -71,33 +70,18 @@ const People = () => {
     removeFunction(id);
   };
 
-  useEffect(() => {
-    if (newBrandName && newInternalKeyword) {
-      setValid(true);
-    } else {
-      setValid(false);
-    }
-  }, [valid, newBrandName, newInternalKeyword]);
-
-  useEffect(() => {
-    if (values.editBrandName !== null) {
-      setNewBrandName(values.editBrandName.title);
-    }
-  }, [values.editBrandName]);
-
-  useEffect(() => {
-    if (values.editInternalKeyword !== null) {
-      setNewInternalKeyword(values.editInternalKeyword.title);
-    }
-  }, [values.editInternalKeyword]);
-
+ 
   return (
     <Structure titleText="People">
       <Grid container className={classes.People}>
         <Grid item md="10" container>
           {inputFields.map((field) => {
             return (
-              <Grid item md="5">
+              <Grid item  md="6">
+                <div className={classes.titleInput}>
+                  <Typography variant="subtitle1">{field.title}</Typography>
+                  <InfoOutlinedIcon />
+                </div>
                 <div className={classes.input}>
                   <input
                     type="text"
@@ -105,6 +89,25 @@ const People = () => {
                     value={field.value}
                     onChange={(e) => handleChange(e, field.onChange)}
                   />
+                  <div
+                    style={{
+                      border: "1px solid #000",
+                      cursor: "pointer",
+                      marginLeft: "0.2rem",
+                    }}
+                  >
+                    <PlayArrowIcon
+                      onClick={(e) =>
+                        handleSubmit(
+                          e,
+                          field.onSubmit,
+                          field.value,
+                          field.onChange,
+                          field.alertMessage
+                        )
+                      }
+                    />
+                  </div>
                 </div>
                 <div className={classes.ListItemsWarper}>
                   <ListItems
@@ -116,39 +119,6 @@ const People = () => {
               </Grid>
             );
           })}
-          <Grid item xs="1" className={classes.play}>
-            <button
-              disabled={!valid}
-              onClick={(e) => {
-                inputFields.forEach((field) => {
-                  if (field.fetchEditItem) {
-                    field.onEdit(
-                      field.value,
-                      field.fetchEditItem.id,
-                      field.fetchItems,
-                      field.setFetchItems,
-                      field.setFetchEditItem
-                    );
-                  } else if (field.value) {
-                    handleSubmit(
-                      e,
-                      field.onSubmit,
-                      field.value,
-                      field.onChange
-                    );
-                  }
-                });
-              }}
-            >
-              <PlayArrowIcon />
-            </button>
-          </Grid>
-        </Grid>
-        <Grid item md="2">
-          <LightTooltip title={"The names and personal email addresses of key personnel in your company. The people who may be interesting for outsiders, because of their position or level of access to your assets. For example your CEO, top managers and system administrators. Add only email addresses that are not owned by your company. Email addresses under your company’s domain name are monitored automatically."}>
-            <InfoOutlinedIcon />
-          </LightTooltip>
-          
         </Grid>
       </Grid>
     </Structure>

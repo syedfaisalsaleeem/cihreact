@@ -1,18 +1,32 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import { v4 as uuid } from "uuid";
 
 export const ItemsListContext = createContext();
 
 const ItemsContextProvider = (props) => {
-  const [brandNames, setBrandNames] = useState([{}]);
+  const [brandNames, setBrandNames] = useState([]);
 
-  const [internalKeyword, setInternalKeyword] = useState([{}]);
+  const [internalKeyword, setInternalKeyword] = useState([]);
 
-  const [otherKeyword, setOtherKeyword] = useState([{}]);
+  const [otherKeyword, setOtherKeyword] = useState([]);
 
   const [editBrandName, setEditBrandName] = useState(null);
   const [editInternalKeyword, setEditInternalKeyword] = useState(null);
   const [editOtherKeyword, setEditOtherKeyword] = useState(null);
+
+  const [progress, setProgress] = useState(false);
+
+  useEffect(() => {
+    if (
+      brandNames.length > 0 &&
+      internalKeyword.length > 0 &&
+      otherKeyword.length > 0
+    ) {
+      setProgress(true);
+    } else {
+      setProgress(false);
+    }
+  }, [progress, brandNames, internalKeyword, otherKeyword]);
 
   //Add Brand Name
   const addBrandName = (brandTitle) => {
@@ -94,6 +108,7 @@ const ItemsContextProvider = (props) => {
         setEditInternalKeyword,
         setEditOtherKeyword,
         editItem,
+        progress,
       }}
     >
       {props.children}

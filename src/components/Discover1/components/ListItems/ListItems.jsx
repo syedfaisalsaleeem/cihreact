@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import classes from "./ListItems.module.css";
 
@@ -13,16 +13,6 @@ const ListItems = (props) => {
               {value.title}
               {value.title && (
                 <div>
-                  <i
-                    class="fas fa-edit"
-                    onClick={() =>
-                      field.findItem(
-                        value.id,
-                        field.fetchItems,
-                        field.setFetchEditItem
-                      )
-                    }
-                  ></i>
                   <i
                     class="fas fa-times-circle"
                     onClick={(e) =>
