@@ -4,11 +4,14 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import FetchDataProvider from "./context/FetchDataContext";
+import FetchRemediationProvider from "./context/FetchRemidiation";
 
 ReactDOM.render(
   <React.StrictMode>
     <FetchDataProvider>
-      <App />
+      <FetchRemediationProvider>
+        <App />
+      </FetchRemediationProvider>
     </FetchDataProvider>
   </React.StrictMode>,
   document.getElementById("root")

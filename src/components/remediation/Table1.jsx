@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Grid, Button } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
@@ -19,6 +19,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 
 import controlImg from "../../assets/images/CIS-controls.png";
+import { FetchRemediationContext } from "../../context/FetchRemidiation";
 
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
@@ -41,7 +42,8 @@ function createData(
   affects,
   risk,
   cisControl,
-  timeToExploit
+  timeToExploit,
+  description
 ) {
   return {
     remediationAction,
@@ -79,7 +81,7 @@ function Row(props) {
         <TableCell align="left">
           {" "}
           <div className={customClasses.foldable}>
-            <p style={{ color: "red" }}>Ready to exploit</p>
+            <p style={{ color: "red" }}>{row.timeToExploit}</p>
             <IconButton
               aria-label="expand row"
               size="small"
@@ -125,18 +127,10 @@ function Row(props) {
                     variant="subtitle1"
                     style={{ fontWeight: "bold" }}
                   >
-                    Lorem ipsum dolor sit.
+                    {row.remediationAction}
                   </Typography>
                   <br />
-                  <div>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Numquam magni laboriosam ipsa suscipit doloribus, nam
-                    corporis consectetur et fuga eos reiciendis quaerat ratione
-                    minus odio quos ex natus impedit ducimus! Numquam magni
-                    laboriosam ipsa suscipit doloribus, nam corporis consectetur
-                    et fuga eos reiciendis quaerat ratione minus odio quos ex
-                    natus impedit ducimus!
-                  </div>
+                  <div>{row.description}</div>
                 </Grid>
                 <Grid item xs="4" className={customClasses.downImg}>
                   <img src={controlImg} alt="" />
@@ -154,18 +148,27 @@ function Row(props) {
   );
 }
 
-const rows = [
-  createData("Change password of a user", 159, 6.0, "4,6,24,3"),
-  createData(
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque!",
-    237,
-    9.0,
-    "4,6,24,3"
-  ),
-  createData("Lorem ipsum dolor sit amet consectetur", 262, 15, 17),
-];
-
 export default function FContent() {
+  const value = useContext(FetchRemediationContext);
+  const { table1State } = value;
+  const rows = [];
+
+  for (const key in table1State) {
+    const obj = table1State[key];
+    const date = new Date(obj.readyToExploit);
+    const rte = `${date.getHours()} : ${date.getMinutes()} : ${date.getSeconds()}`; 
+    rows.push(
+      createData(
+        obj.title,
+        obj.affects,
+        obj.risks,
+        [...obj.cisControls].join(" , "),
+        rte,
+        obj.description
+      )
+    );
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table>

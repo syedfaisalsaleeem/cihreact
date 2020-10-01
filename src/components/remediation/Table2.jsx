@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Grid } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -21,6 +21,8 @@ import {
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import LatestCard from "../ExposedCredentials/LatestCard";
+import { FetchRemediationContext } from "../../context/FetchRemidiation";
+
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
     backgroundColor: theme.palette.common.white,
@@ -137,46 +139,27 @@ function Row(props) {
   );
 }
 
-const rows = [
-  createData("Change password of a user", 159, 6.0, "21/06/2020", "Rose"),
-  createData(
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque!",
-    237,
-    9.0,
-    "21/06/2020",
-    "Rose"
-  ),
-  createData(
-    "Lorem ipsum dolor sit amet consectetur",
-    262,
-    15,
-    "21/06/2020",
-    "Rose"
-  ),
-  createData(
-    "Lorem ipsum dolor sit amet consectetur",
-    262,
-    15,
-    "21/06/2020",
-    "Rose"
-  ),
-  createData(
-    "Lorem ipsum dolor sit amet consectetur",
-    262,
-    15,
-    "21/06/2020",
-    "Rose"
-  ),
-  createData(
-    "Lorem ipsum dolor sit amet consectetur",
-    262,
-    15,
-    "21/06/2020",
-    "Rose"
-  ),
-];
-
 export default function FContent() {
+  const value = useContext(FetchRemediationContext);
+  const { table1State } = value;
+  const rows = [];
+
+  for (const key in table1State) {
+    const obj = table1State[key];
+    const date = new Date(obj.readyToExploit);
+    const rte = `${date.getHours()} : ${date.getMinutes()} : ${date.getSeconds()}`;
+    rows.push(
+      createData(
+        obj.title,
+        obj.affects,
+        obj.risks,
+        [...obj.cisControls].join(" , "),
+        rte,
+        obj.description
+      )
+    );
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table>
