@@ -5,12 +5,15 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import FetchDataProvider from "./context/FetchDataContext";
 import FetchRemediationProvider from "./context/FetchRemidiation";
+import ExposedCredentialsProvider from "./context/ExposedCredentials";
 
 ReactDOM.render(
   <React.StrictMode>
     <FetchDataProvider>
       <FetchRemediationProvider>
-        <App />
+        <ExposedCredentialsProvider>
+          <App />
+        </ExposedCredentialsProvider>
       </FetchRemediationProvider>
     </FetchDataProvider>
   </React.StrictMode>,

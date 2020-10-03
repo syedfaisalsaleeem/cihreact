@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -24,6 +24,8 @@ import {
   DialogTitle,
   Divider,
 } from "@material-ui/core";
+import { ExposedCredentialContext } from "../../../context/ExposedCredentials";
+
 function createData(name, calories, fat, carbs, protein, found) {
   return { name, calories, fat, carbs, protein, found };
 }
@@ -35,40 +37,6 @@ const LightTooltip = withStyles((theme) => ({
     fontSize: 11,
   },
 }))(Tooltip);
-const rows = [
-  createData(
-    "Medium",
-    "abc1245abc1245",
-    "Password1",
-    "14/02/2020",
-    "18/02/2020",
-    "1 findings"
-  ),
-  createData(
-    "Medium",
-    "abc1245abc1245",
-    "Password2",
-    "21/03/2020",
-    "11/04/2020",
-    "1 findings"
-  ),
-  createData(
-    "Medium",
-    "abc1245abc1245",
-    "Password3",
-    "23/07/2020",
-    "07/03/2020",
-    "1 findings"
-  ),
-  createData(
-    "Medium",
-    "abc1245abc1245",
-    "Password4",
-    "04/05/2020",
-    "12/06/2020",
-    "1 findings"
-  ),
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -208,6 +176,90 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function EnhancedTable() {
+  const [tableData, setTableData] = useState();
+  const value = React.useContext(ExposedCredentialContext);
+  const { tableState } = value;
+
+  const rows = [];
+  React.useEffect(() => {
+    const preData = [];
+    for (const key in tableState) {
+      let severity;
+      let username;
+      let firstFound;
+      let lastFound;
+      let password;
+      const obj = tableState[key];
+      for (const k in obj) {
+        if (k === "username") {
+          username = obj[k];
+        } else if (k === "severity") {
+          severity = obj[k].find((el) => {
+            if (el === "severityhigh") {
+              return el;
+            } else if ("severitymedium") {
+              return el;
+            } else {
+              return el;
+            }
+          });
+          switch (severity) {
+            case "severityhigh":
+              severity = "High";
+              break;
+            case "severitymedium":
+              severity = "Medium";
+              break;
+            case "severitylow":
+              severity = "Low";
+              break;
+            default:
+              return null;
+          }
+        } else if (k === "timeStamp") {
+          firstFound = obj[k].reduce((acc, cur) => {
+            acc = new Date(acc);
+            cur = new Date(cur);
+            return acc < cur
+              ? `${acc.getHours()}:${acc.getMinutes()}:${acc.getSeconds()}`
+              : `${cur.getHours()}:${cur.getMinutes()}:${cur.getSeconds()}`;
+          }, 0);
+          lastFound = obj[k].reduce((acc, cur) => {
+            acc = new Date(acc);
+            cur = new Date(cur);
+            return acc > cur
+              ? `${acc.getHours()}:${acc.getMinutes()}:${acc.getSeconds()}`
+              : `${cur.getHours()}:${cur.getMinutes()}:${cur.getSeconds()}`;
+          }, 0);
+        } else if (k === "password") {
+          password = [...obj[k]];
+        }
+      }
+      preData.push({
+        username: username,
+        severity: severity,
+        firstFound: firstFound,
+        lastFound: lastFound,
+        password: password,
+      });
+    }
+    setTableData(preData);
+  }, [tableState]);
+
+  for (const key in tableData) {
+    const obj = tableData[key];
+    rows.push(
+      createData(
+        obj.severity,
+        obj.username,
+        obj.password,
+        obj.firstFound,
+        obj.lastFound,
+        "1 findings"
+      )
+    );
+  }
+
   const classes = useStyles();
   const [show, setShow] = React.useState(false);
   const [order, setOrder] = React.useState("asc");
@@ -264,28 +316,60 @@ export default function EnhancedTable() {
                       </TableCell>
                       <TableCell
                         align="center"
-                        style={{ border: "1px solid #aaa", width: "20%" }}
+                        style={{
+                          border: "1px solid #aaa",
+                          width: "20%",
+                          paddingRight: "2rem",
+                        }}
                       >
-                        <Typography>
-                          {show ? (
-                            row.fat
-                          ) : (
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "center",
-                              }}
-                            >
-                              <MoreHorizIcon style={{ fontSize: "2rem" }} />
-                              <MoreHorizIcon
-                                style={{ marginLeft: "-8px", fontSize: "2rem" }}
-                              />
-                              <MoreHorizIcon
-                                style={{ marginLeft: "-8px", fontSize: "2rem" }}
-                              />
-                            </div>
-                          )}
-                        </Typography>
+                        <ul
+                          style={{
+                            maxHeight: "100px",
+                            overflow: "auto",
+                            listStyleType: "none",
+                          }}
+                        >
+                          {row.fat.map((el) => {
+                            return (
+                              <li
+                                key={el}
+                                style={{
+                                  marginBottom: "1rem",
+                                }}
+                              >
+                                {show ? (
+                                  <Typography style={{ fontSize: "12px" }}>
+                                    {el}
+                                  </Typography>
+                                ) : (
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      justifyContent: "center",
+                                      marginRight: "1rem",
+                                    }}
+                                  >
+                                    <MoreHorizIcon
+                                      style={{ fontSize: "2rem" }}
+                                    />
+                                    <MoreHorizIcon
+                                      style={{
+                                        marginLeft: "-8px",
+                                        fontSize: "2rem",
+                                      }}
+                                    />
+                                    <MoreHorizIcon
+                                      style={{
+                                        marginLeft: "-8px",
+                                        fontSize: "2rem",
+                                      }}
+                                    />
+                                  </div>
+                                )}
+                              </li>
+                            );
+                          })}
+                        </ul>
                       </TableCell>
                       <TableCell
                         align="center"

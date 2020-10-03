@@ -15,7 +15,7 @@ const getBarChartData = (object, setFunc1, setFunc2, endpoint) => {
       totalRemediated = loadedData.reduce((acc, curr) => {
         return acc + curr;
       }, 0);
-      console.log("total Remidiated = ", totalRemediated);
+
       break;
     case "residual":
       for (const key in object) {
@@ -29,7 +29,7 @@ const getBarChartData = (object, setFunc1, setFunc2, endpoint) => {
       return null;
   }
   const total = totalResidual + totalRemediated;
-  console.log("total", total);
+
   setFunc1(loadedData);
   switch (endpoint) {
     case "remediated":
@@ -67,7 +67,6 @@ const FetchRemediation = (props) => {
         }
       );
       const res = result.data;
-      console.log("Remediation = ", res);
       getBarChartData(
         res.trend_12m,
         setRiskRemediated,
@@ -97,10 +96,6 @@ const FetchRemediation = (props) => {
 
     fetchRemediationData();
   }, []);
-
-  useEffect(() => {
-    console.log("table1State", table1State);
-  }, [table1State]);
 
   return (
     <FetchRemediationContext.Provider
