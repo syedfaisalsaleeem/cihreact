@@ -26,7 +26,7 @@ import {
 } from "@material-ui/core";
 import { ExposedCredentialContext } from "../../../context/ExposedCredentials";
 import Dialogtable from "./Dialogtable.js";
-import axios from 'axios';
+import axios from "axios";
 function createData(name, calories, fat, carbs, protein, found) {
   return { name, calories, fat, carbs, protein, found };
 }
@@ -133,14 +133,13 @@ function EnhancedTableHead(props) {
               }}
             >
               <Typography align="center">{headCell.label}</Typography>
-              {headCell.info===""?
-              <div>
-
-              </div>:
-              <LightTooltip title={headCell.info}>
-              <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
-            </LightTooltip>
-              }
+              {headCell.info === "" ? (
+                <div></div>
+              ) : (
+                <LightTooltip title={headCell.info}>
+                  <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
+                </LightTooltip>
+              )}
 
               {headCell.label === "Password" && (
                 <Checkbox
@@ -186,7 +185,7 @@ export default function EnhancedTable() {
   const [tableData, setTableData] = useState();
   const value = React.useContext(ExposedCredentialContext);
   const { tableState } = value;
-  console.log(tableState,"tableState")
+  console.log(tableState, "tableState");
   const rows = [];
   React.useEffect(() => {
     const preData = [];
@@ -196,7 +195,8 @@ export default function EnhancedTable() {
       let firstFound;
       let lastFound;
       let password;
-      
+      let passCodes;
+
       const obj = tableState[key];
       for (const k in obj) {
         if (k === "username") {
@@ -241,6 +241,8 @@ export default function EnhancedTable() {
           }, 0);
         } else if (k === "password") {
           password = [...obj[k]];
+        } else if (k === "passCodes") {
+          passCodes = [...obj[k]];
         }
       }
       preData.push({
@@ -248,7 +250,7 @@ export default function EnhancedTable() {
         severity: severity,
         firstFound: firstFound,
         lastFound: lastFound,
-        password: password,
+        password: passCodes,
       });
     }
     setTableData(preData);
@@ -264,10 +266,6 @@ export default function EnhancedTable() {
         obj.firstFound,
         obj.lastFound,
         obj.password.length
-
-        
-        
-        
       )
     );
   }
@@ -282,42 +280,42 @@ export default function EnhancedTable() {
     setOrderBy(property);
   };
   const [open, changeopen1] = React.useState(false);
-  const [alertstate,changealertstate]=React.useState([]);
-  const [alertdatalist,setalertdatalist]=React.useState([]);
-  const handle1=()=>{
+  const [alertstate, changealertstate] = React.useState([]);
+  const [alertdatalist, setalertdatalist] = React.useState([]);
+  const handle1 = () => {
     changeopen1(false);
-  }
+  };
   const handle = (list) => {
-    console.log(list,"lsit")
-    let alertstate1=[];
-    let alertdata=[];
-    alertstate1.push(list)
-    changealertstate(alertstate1[0])
-    console.log(alertstate)
+    console.log(list, "lsit");
+    let alertstate1 = [];
+    let alertdata = [];
+    alertstate1.push(list);
+    changealertstate(alertstate1[0]);
+    console.log(alertstate);
     changeopen1(true);
 
-  const fetchRemediationData = async () => {
-      const token=localStorage.getItem("token")
-      for (const i in list){            
-
-      const result= await fetch("https://if.cyberdevelopment.house/api/alerts/"+list[i], {
-          headers: {
-              'accept': 'application/json',
-              'Authorization': token
-          }
+    const fetchRemediationData = async () => {
+      const token = localStorage.getItem("token");
+      for (const i in list) {
+        const result = await fetch(
+          "https://if.cyberdevelopment.house/api/alerts/" + list[i],
+          {
+            headers: {
+              accept: "application/json",
+              Authorization: token,
+            },
           }
         );
-        const y=await result.json()
+        const y = await result.json();
         // console.log(y,"result")
         // console.log(result,"result")
-        alertdata.push(y)
+        alertdata.push(y);
       }
-      console.log(alertdata,"alertdata")
-      setalertdatalist(alertdata)
+      console.log(alertdata, "alertdata");
+      setalertdatalist(alertdata);
+    };
+    fetchRemediationData();
   };
-  fetchRemediationData()
-
-}
 
   return (
     <div className={classes.root}>
@@ -372,6 +370,7 @@ export default function EnhancedTable() {
                             maxHeight: "100px",
                             overflow: "auto",
                             listStyleType: "none",
+                            maxWidth: "200px",
                           }}
                         >
                           {row.fat.map((el) => {
@@ -434,17 +433,13 @@ export default function EnhancedTable() {
                       >
                         <Button
                           style={{ textTransform: "lowercase" }}
-
-                          onClick={()=>handle(row.fat)}
+                          onClick={() => handle(row.fat)}
                         >
-                          {row.found===1?
-                          <div>
-                            {row.found+ " finding"}
-                          </div>:
-                          <div>
-                            {row.found+ " findings"}
-                          </div>
-                          }
+                          {row.found === 1 ? (
+                            <div>{row.found + " finding"}</div>
+                          ) : (
+                            <div>{row.found + " findings"}</div>
+                          )}
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -455,7 +450,13 @@ export default function EnhancedTable() {
           </Table>
         </TableContainer>
       </Paper>
-              <Dialogtable open={open} alertdatalist={alertdatalist} alertstate={alertstate} handle={handle} handle1={handle1}/>
+      <Dialogtable
+        open={open}
+        alertdatalist={alertdatalist}
+        alertstate={alertstate}
+        handle={handle}
+        handle1={handle1}
+      />
     </div>
   );
 }

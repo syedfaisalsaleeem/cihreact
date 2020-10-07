@@ -8,22 +8,24 @@ const ExposedCredentials = (props) => {
   useEffect(() => {
     let result = null;
     const fetchRemediationData = async () => {
-      const token=localStorage.getItem("token")
-     
+      const token = localStorage.getItem("token");
+
       const result = await fetch(
         "https://if.cyberdevelopment.house/api/alerts/stats",
         {
           headers: {
-            'accept': 'application/json',
-            'Authorization': token
-        }
+            accept: "application/json",
+            Authorization: token,
+          },
         }
       );
-      const y=await result.json()
-      console.log(y,"result")
-      const obj =await y.exposedcredentials;
+      const y = await result.json();
+      console.log("result = ", y);
+      const obj = await y.exposedcredentials;
+      console.log("obj length = ", Object.keys(obj).length);
       // const obj=[]
       const username = [];
+      const passCode = [];
       const f1 = [];
       const innerF = [];
       let count = -1;
@@ -32,22 +34,28 @@ const ExposedCredentials = (props) => {
         count = count + 1;
         for (const key1 in obj[key]) {
           for (const key2 in obj[key][key1]) {
-            obj[key][key1][key2].forEach((el) => innerF.push(el));
+            passCode.push(key2);
+            obj[key][key1][key2].forEach((el) => {
+              innerF.push(el);
+            });
           }
         }
         f1.push({
           [username[count]]: {
+            passCode: [...passCode],
             ...innerF,
           },
         });
         innerF.splice(0, innerF.length);
+        passCode.splice(0, passCode.length);
       }
+      console.log("f1 = ", f1);
       const loadedData = [];
       f1.forEach((el) => {
         const loadedTime = [];
         const loadedPassword = [];
         const loadedSeverity = [];
-        const loadedalertsid=[];
+        const loadedalertsid = [];
         for (const key in el) {
           for (const key1 in el[key]) {
             loadedTime.push(el[key][key1]["timestamp"]);
@@ -59,13 +67,15 @@ const ExposedCredentials = (props) => {
             timeStamp: [...loadedTime],
             password: [...loadedPassword],
             severity: [...loadedSeverity],
+            passCodes: [...el[key].passCode],
           });
           loadedTime.splice(0, loadedTime.length);
           loadedPassword.splice(0, loadedPassword.length);
           loadedSeverity.splice(0, loadedSeverity.length);
         }
       });
-      setTableState(loadedData.splice(0,10));
+      console.log("loadedData = ", loadedData);
+      setTableState(loadedData);
     };
     fetchRemediationData();
   }, [setTableState]);
