@@ -226,19 +226,11 @@ export default function EnhancedTable() {
           }
         } else if (k === "timeStamp") {
           firstFound = obj[k].reduce((acc, cur) => {
-            acc = new Date(acc);
-            cur = new Date(cur);
-            return acc < cur
-              ? `${acc.getHours()}:${acc.getMinutes()}:${acc.getSeconds()}`
-              : `${cur.getHours()}:${cur.getMinutes()}:${cur.getSeconds()}`;
-          }, 0);
+            return acc < cur ? `${acc}` : `${cur}`;
+          });
           lastFound = obj[k].reduce((acc, cur) => {
-            acc = new Date(acc);
-            cur = new Date(cur);
-            return acc > cur
-              ? `${acc.getHours()}:${acc.getMinutes()}:${acc.getSeconds()}`
-              : `${cur.getHours()}:${cur.getMinutes()}:${cur.getSeconds()}`;
-          }, 0);
+            return acc > cur ? `${acc}` : `${cur}`;
+          });
         } else if (k === "password") {
           password = [...obj[k]];
         } else if (k === "passCodes") {
@@ -362,7 +354,7 @@ export default function EnhancedTable() {
                         align="center"
                         style={{
                           border: "1px solid #aaa",
-                          width: "20%",
+                          width: "10px",
                           paddingRight: "2rem",
                         }}
                       >

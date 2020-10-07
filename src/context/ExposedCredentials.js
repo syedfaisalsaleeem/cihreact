@@ -58,10 +58,17 @@ const ExposedCredentials = (props) => {
         const loadedalertsid = [];
         for (const key in el) {
           for (const key1 in el[key]) {
-            loadedTime.push(el[key][key1]["timestamp"]);
-            loadedPassword.push(el[key][key1]["id"]);
-            loadedSeverity.push(el[key][key1]["severity"]);
+            if (
+              el[key][key1]["timestamp"] &&
+              el[key][key1]["id"] &&
+              el[key][key1]["severity"]
+            ) {
+              loadedTime.push(el[key][key1]["timestamp"]);
+              loadedPassword.push(el[key][key1]["id"]);
+              loadedSeverity.push(el[key][key1]["severity"]);
+            }
           }
+
           loadedData.push({
             username: key,
             timeStamp: [...loadedTime],
