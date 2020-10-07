@@ -250,7 +250,8 @@ export default function EnhancedTable() {
         severity: severity,
         firstFound: firstFound,
         lastFound: lastFound,
-        password: passCodes,
+        password: password,
+        passCodes: passCodes,
       });
     }
     setTableData(preData);
@@ -262,7 +263,7 @@ export default function EnhancedTable() {
       createData(
         obj.severity,
         obj.username,
-        obj.password,
+        obj.passCodes,
         obj.firstFound,
         obj.lastFound,
         obj.password.length
@@ -370,7 +371,7 @@ export default function EnhancedTable() {
                             maxHeight: "100px",
                             overflow: "auto",
                             listStyleType: "none",
-                            maxWidth: "200px",
+                            // maxWidth: "200px",
                           }}
                         >
                           {row.fat.map((el) => {
@@ -382,7 +383,12 @@ export default function EnhancedTable() {
                                 }}
                               >
                                 {show ? (
-                                  <Typography style={{ fontSize: "12px" }}>
+                                  <Typography
+                                    style={{
+                                      fontSize: "12px",
+                                      textAlign: "center",
+                                    }}
+                                  >
                                     {el}
                                   </Typography>
                                 ) : (
