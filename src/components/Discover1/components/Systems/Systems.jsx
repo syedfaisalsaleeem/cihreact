@@ -7,6 +7,7 @@ import classes from "./Systems.module.css";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import ListItems from "../ListItems/ListItems";
 import { withStyles } from "@material-ui/core/styles";
+import PopUp from "../UI/popUp";
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
     backgroundColor: theme.palette.common.white,
@@ -21,6 +22,15 @@ const Systems = () => {
   const [newIpAddress, setNewIpAddress] = useState("");
   const [newUrl, setNewUrl] = useState("");
 
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const [msg, setMsg] = useState();
+
   const inputFields = [
     {
       label: "Domain Name",
@@ -32,7 +42,7 @@ const Systems = () => {
       fetchItems: values.domainNames,
       setFetchItems: values.setDomainNames,
       removeItems: values.removeDomainName,
-      alertMessage: "Domain Added.",
+      alertMessage: "Domain",
       tooltip:
         "Add your company’s domain name(s). Our domain name is cyberintelligencehouse.com. Only add the parent domain, we automatically monitor the subdomains for you",
     },
@@ -46,7 +56,7 @@ const Systems = () => {
       fetchItems: values.ipAddress,
       setFetchItems: values.setIpAddress,
       removeItems: values.removeIpAddress,
-      alertMessage: "IP Address Added.",
+      alertMessage: "IP Address",
       tooltip:
         "Add your company’s IP addresses. You can add individual IP addresses or use a wildcard to monitor all IP addresses within a netblock. For example, adding 12.34.56.* as a keyword would monitor all IP addresses within 12.34.56.1-255 range.",
     },
@@ -60,7 +70,7 @@ const Systems = () => {
       fetchItems: values.url,
       setFetchItems: values.setUrl,
       removeItems: values.removeUrl,
-      alertMessage: "URL Added.",
+      alertMessage: "URL",
       tooltip:
         "Add your company’s URL. Our URL is https://cyberintelligencehouse.com/",
     },
@@ -71,27 +81,33 @@ const Systems = () => {
     setNewFunction(e.target.value);
   };
 
-  const handleSubmit = (e, setFunction, newItem, setValue, alertMessage) => {
+  const handleSubmit = (e, setFunction, newItem, setValue, alert) => {
     e.preventDefault();
     setFunction(newItem);
     setValue("");
-    setTimeout(() => {
-      window.alert(alertMessage);
-    }, 2);
+    handleClickOpen();
+    setMsg(alert);
   };
 
-  const handleRemove = (e, removeFunction, id) => {
-    e.preventDefault();
+  const handleRemove = (removeFunction, id, setFunc) => {
     removeFunction(id);
+    setFunc(false);
   };
 
   return (
     <Structure titleText="Systems">
+      <PopUp
+        event="add"
+        modalTitle=" Discover Updated"
+        handleClose={handleClose}
+        open={open}
+        keyword={msg}
+      />
       <Grid container justify="space-around" className={classes.Systems}>
         {inputFields.map((field) => {
           return (
             <>
-              <Grid item lg="3">
+              <Grid item xl="3" xs="10">
                 <div className={classes.title}>
                   <Typography>{field.label}</Typography>
                   <LightTooltip title={field.tooltip}>
@@ -134,6 +150,10 @@ const Systems = () => {
                     field={field}
                     handleRemove={handleRemove}
                     columns="12"
+                    open={open}
+                    handleClose={handleClose}
+                    handleClickOpen={handleClickOpen}
+                    msg={field.alertMessage}
                   />
                 </Grid>
               </Grid>

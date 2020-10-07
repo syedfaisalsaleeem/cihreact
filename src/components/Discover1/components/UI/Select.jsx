@@ -54,8 +54,9 @@ const BootstrapInput = withStyles((theme) => ({
 }))(InputBase);
 
 const useStyles = makeStyles((theme) => ({
-  margin: {
+  formControl: {
     margin: theme.spacing(1),
+    width: "100%",
   },
 }));
 
@@ -67,7 +68,7 @@ export default function CustomizedSelects(props) {
     setAge(event.target.value);
   };
   return (
-    <FormControl style={{ width: "100%" }} className={classes.margin}>
+    <FormControl style={{ width: "100%" }} className={classes.formControl}>
       <NativeSelect
         id="demo-customized-select-native"
         value={age}

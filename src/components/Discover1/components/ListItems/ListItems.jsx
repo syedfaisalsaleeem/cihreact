@@ -1,27 +1,45 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Grid } from "@material-ui/core";
 import classes from "./ListItems.module.css";
+import PopUp from "../UI/popUp";
 
 const ListItems = (props) => {
-  const { field, handleRemove, columns } = props;
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const { field, handleRemove, columns, msg } = props;
   return (
     <Grid item xs={columns} className={classes.list}>
       <ul style={{ maxHeight: "100px", overflowY: "auto" }}>
         {field.fetchItems.map((value) => {
           return (
-            <li>
-              {value.title}
-              {value.title && (
-                <div>
-                  <i
-                    class="fas fa-times-circle"
-                    onClick={(e) =>
-                      handleRemove(e, field.removeItems, value.id)
-                    }
-                  ></i>
-                </div>
-              )}
-            </li>
+            <>
+              <PopUp
+                event="delete"
+                modalTitle="Confirm Deletion"
+                handleClose={handleClose}
+                handleContinue={() =>
+                  handleRemove(field.removeItems, value.id, setOpen)
+                }
+                open={open}
+                keyword={msg}
+              />
+              <li>
+                {value.title}
+                {value.title && (
+                  <div>
+                    <i
+                      class="fas fa-times-circle"
+                      onClick={(e) => handleClickOpen()}
+                    ></i>
+                  </div>
+                )}
+              </li>
+            </>
           );
         })}
       </ul>

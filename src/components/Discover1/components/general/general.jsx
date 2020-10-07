@@ -7,6 +7,7 @@ import Structure from "../Structure/Structure";
 import ListItems from "../ListItems/ListItems";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import { withStyles } from "@material-ui/core/styles";
+import PopUp from "../UI/popUp";
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
     backgroundColor: theme.palette.common.white,
@@ -21,6 +22,15 @@ export default function General() {
   const [newInternalKeyword, setNewInternalKeyword] = useState("");
   const [newOtherKeyword, setNewOtherKeyword] = useState("");
 
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const [msg, setMsg] = useState();
+
   const inputFields = [
     {
       label: "Brand Name",
@@ -33,7 +43,7 @@ export default function General() {
       removeItems: values.removeBrandName,
       tooltip:
         " Brand and product names owned by your company. Unique names consisting of 5 or more characters work best. Add your company’s name to your product name, that works for us: Cyber Intelligence House Exposure Monitor.",
-      alertMessage: "Brand Name Added.",
+      alertMessage: "Brand Name",
     },
     {
       label: "Internal keywords",
@@ -46,7 +56,7 @@ export default function General() {
       removeItems: values.removeInternalKeyword,
       tooltip:
         "Confidential terms only used within your company, that are impossible to know from the outside. Think of a project code name or a hash value in your internal database, servername, or embedded in office documents metadata. A hash value is a numeric code that uniquely identifies data.",
-      alertMessage: "Internal Keyword Added.",
+      alertMessage: "Internal Keyword",
     },
     {
       label: "Other keywords",
@@ -59,7 +69,7 @@ export default function General() {
       removeItems: values.removeOtherKeyword,
       tooltip:
         "Other keywords you want to monitor. Looking for malware? Add the malware hash, not the malware name. Want to monitor a Hacker group? Add group member names, instead of their group name. A hash value is numeric code that uniquely identifies data.",
-      alertMessage: "Other Keyword Added.",
+      alertMessage: "Other Keyword",
     },
   ];
 
@@ -68,34 +78,44 @@ export default function General() {
     setNewFunction(e.target.value);
   };
 
-  const handleSubmit = (e, setFunction, newItem, setValue, alertMessage) => {
+  const handleSubmit = (e, setFunction, newItem, setValue, alert) => {
     e.preventDefault();
     setFunction(newItem);
     setValue("");
-    setTimeout(() => {
-      window.alert(alertMessage);
-    }, 2);
+    handleClickOpen();
+    setMsg(alert);
   };
 
-  const handleRemove = (e, removeFunction, id) => {
-    e.preventDefault();
+  const handleRemove = (removeFunction, id, setFunc) => {
     removeFunction(id);
+    setFunc(false);
   };
 
   return (
     <Structure titleText="General">
-      <div className={classes.formControl}>
-        <Grid item xs="6">
+      <PopUp
+        event="add"
+        modalTitle=" Discover Updated"
+        handleClose={handleClose}
+        open={open}
+        keyword={msg}
+      />
+      <Grid
+        container
+        justify="space-between"
+        style={{ marginBottom: "1.5rem" }}
+      >
+        <Grid item xs="6" style={{ marginLeft: "0.5rem" }}>
           <label htmlFor="">Company Name</label>
         </Grid>
-        <Grid item xs="6">
-          <input type="text" />
+        <Grid item xs="5">
+          <input type="text" style={{ width: "90%" }} />
         </Grid>
-      </div>
+      </Grid>
       {inputFields.map((field) => {
         return (
           <>
-            <Grid className={classes.formControl} key={field.label}>
+            <Grid container className={classes.formControl} key={field.label}>
               <Grid item container xs="6" className={classes.labelWarper}>
                 <label htmlFor="">{field.label}</label>
                 <LightTooltip title={field.tooltip}>
@@ -140,6 +160,10 @@ export default function General() {
                 field={field}
                 handleRemove={handleRemove}
                 columns="5"
+                open={open}
+                handleClose={handleClose}
+                handleClickOpen={handleClickOpen}
+                msg={field.alertMessage}
               />
             </Grid>
           </>

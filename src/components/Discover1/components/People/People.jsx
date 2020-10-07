@@ -8,6 +8,8 @@ import classes from "./People.module.css";
 import ListItems from "../ListItems/ListItems";
 import { withStyles } from "@material-ui/core/styles";
 import Tooltip from "@material-ui/core/Tooltip";
+import PopUp from "../UI/popUp";
+
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
     backgroundColor: theme.palette.common.white,
@@ -20,7 +22,15 @@ const People = () => {
   const values = useContext(PeopleContext);
   const [newBrandName, setNewBrandName] = useState("");
   const [newInternalKeyword, setNewInternalKeyword] = useState("");
-  const [valid, setValid] = useState(false);
+
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const [msg, setMsg] = useState();
 
   const inputFields = [
     {
@@ -32,9 +42,9 @@ const People = () => {
       fetchItems: values.brandNames,
       setFetchItems: values.setBrandNames,
       removeItems: values.removeBrandName,
-      alertMessage: "Personal name Added.",
+      alertMessage: "Personal name",
       tooltip:
-        " Brand and product names owned by your company. Unique names consisting of 5 or more characters work best. Add your company’s name to your product name, that works for us: Cyber Intelligence House Exposure Monitor.",
+        " The names of key personnel in your company. The people who may be interesting for outsiders, because of their position or level of access to your assets. For example your CEO, top managers and system administrators.",
     },
     {
       title: "Personal emails",
@@ -45,9 +55,9 @@ const People = () => {
       fetchItems: values.internalKeyword,
       setFetchItems: values.setInternalKeyword,
       removeItems: values.removeInternalKeyword,
-      alertMessage: "Personal email Added.",
+      alertMessage: "Personal email",
       tooltip:
-        "Confidential terms only used within your company, that are impossible to know from the outside. Think of a project code name or a hash value in your internal database, servername, or embedded in office documents metadata. A hash value is a numeric code that uniquely identifies data.",
+        "The personal email addresses of key personnel in your company. Add only email addresses that are not owned by your company. Email addresses under your company’s domain name are monitored automatically.",
     },
   ];
 
@@ -56,77 +66,88 @@ const People = () => {
     setNewFunction(e.target.value);
   };
 
-  const handleSubmit = (e, setFunction, newItem, setValue, alertMessage) => {
+  const handleSubmit = (e, setFunction, newItem, setValue, alert) => {
     e.preventDefault();
     setFunction(newItem);
     setValue("");
-    setTimeout(() => {
-      window.alert(alertMessage);
-    }, 2);
+    handleClickOpen();
+    setMsg(alert);
   };
 
-  const handleRemove = (e, removeFunction, id) => {
-    e.preventDefault();
+  const handleRemove = (removeFunction, id, setFunc) => {
     removeFunction(id);
+    setFunc(false);
   };
 
   return (
     <Structure titleText="People">
-      <Grid container className={classes.People}>
-        <Grid item md="10" container>
-          {inputFields.map((field) => {
-            return (
-              <Grid item lg="6">
-                <div className={classes.titleInput}>
-                  <Typography variant="subtitle1">{field.title}</Typography>
+      <PopUp
+        event="add"
+        modalTitle=" Discover Updated"
+        handleClose={handleClose}
+        open={open}
+        keyword={msg}
+      />
+      <Grid container justify="space-around" className={classes.People}>
+        {/* <Grid item md="10" container> */}
+        {inputFields.map((field) => {
+          return (
+            <Grid item xl="5" xs="10">
+              <div className={classes.titleInput}>
+                <Typography variant="subtitle1">{field.title}</Typography>
+                <LightTooltip title={field.tooltip}>
                   <InfoOutlinedIcon />
-                </div>
-                <div>
-                  <form
-                    className={classes.input}
-                    onSubmit={(e) =>
-                      handleSubmit(
-                        e,
-                        field.onSubmit,
-                        field.value,
-                        field.onChange,
-                        field.alertMessage
-                      )
-                    }
-                  >
-                    <input
-                      type="text"
-                      placeholder={field.placeholder}
-                      value={field.value}
-                      onChange={(e) => handleChange(e, field.onChange)}
-                    />
-                    <button
-                      type="submit"
-                      style={{
-                        border: "1px solid #000",
-                        cursor: "pointer",
-                        marginLeft: "0.2rem",
-                        background: "none",
-                        padding: "0",
-                      }}
-                    >
-                      <PlayArrowIcon />
-                    </button>
-                  </form>
-                </div>
-
-                <div className={classes.ListItemsWarper}>
-                  <ListItems
-                    field={field}
-                    columns="12"
-                    handleRemove={handleRemove}
+                </LightTooltip>
+              </div>
+              <div>
+                <form
+                  className={classes.input}
+                  onSubmit={(e) =>
+                    handleSubmit(
+                      e,
+                      field.onSubmit,
+                      field.value,
+                      field.onChange,
+                      field.alertMessage
+                    )
+                  }
+                >
+                  <input
+                    type="text"
+                    placeholder={field.placeholder}
+                    value={field.value}
+                    onChange={(e) => handleChange(e, field.onChange)}
                   />
-                </div>
-              </Grid>
-            );
-          })}
-        </Grid>
+                  <button
+                    type="submit"
+                    style={{
+                      border: "1px solid #000",
+                      cursor: "pointer",
+                      marginLeft: "0.2rem",
+                      background: "none",
+                      padding: "0",
+                    }}
+                  >
+                    <PlayArrowIcon />
+                  </button>
+                </form>
+              </div>
+              <div className={classes.ListItemsWarper}>
+                <ListItems
+                  field={field}
+                  handleRemove={handleRemove}
+                  columns="12"
+                  open={open}
+                  handleClose={handleClose}
+                  handleClickOpen={handleClickOpen}
+                  msg={field.alertMessage}
+                />
+              </div>
+            </Grid>
+          );
+        })}
       </Grid>
+      {/* </Grid> */}
     </Structure>
   );
 };

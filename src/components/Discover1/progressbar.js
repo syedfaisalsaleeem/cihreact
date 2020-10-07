@@ -1,26 +1,29 @@
 import React, { useEffect, useContext, useState } from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import MobileStepper from "@material-ui/core/MobileStepper";
 import { ItemsListContext } from "./context/itemsContext";
 import { SystemContext } from "./context/systemContext";
 import { PeopleContext } from "./context/peopleContext";
 import { Typography } from "@material-ui/core";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 550,
     flexGrow: 1,
-    background: "none",
+    maxWidth: "100%",
+    marginLeft: '20%',
     "& .MuiLinearProgress-root": {
       background: "#bbb",
       height: "35px",
-      width: "60rem",
+      width: "20rem",
+      [theme.breakpoints.down('md')]: {
+        width: '15rem'
+      }
     },
     "& .MuiLinearProgress-barColorPrimary": {
       background: "green",
     },
   },
-});
+}));
 
 export default function ProgressMobileStepper() {
   const general = useContext(ItemsListContext);
@@ -63,7 +66,6 @@ export default function ProgressMobileStepper() {
   }, [people.progress]);
 
   const classes = useStyles();
-  const theme = useTheme();
   const [generalStep, setGeneralStep] = React.useState(0);
   const [systemStep, setSystemStep] = React.useState(0);
   const [peopleStep, setPeopleStep] = React.useState(0);

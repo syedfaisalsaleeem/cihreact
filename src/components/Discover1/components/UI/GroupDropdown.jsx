@@ -9,7 +9,7 @@ import InputBase from "@material-ui/core/InputBase";
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    width: '100%'
   },
 }));
 
@@ -34,7 +34,6 @@ const BootstrapInput = withStyles((theme) => ({
     },
   },
   input: {
-    width: "7rem",
     borderRadius: 4,
     position: "relative",
     backgroundColor: theme.palette.background.paper,
