@@ -687,13 +687,25 @@ function reducer(state, action) {
                 }
 
         case 'alertgroup':
-            
+            if(action.payload===true){
+                const listi=Object.assign([],state.query);
+                for( var i = 0; i < listi.length; i++){ if ( listi[i] === "highlightedalerts") { listi.splice(i, 1); }}          
              return {
-                ...state,
+                ...state,query:listi,
                 alertgroup:{...state.alertgroup,
                     value:{...state.other.value,highlightedalerts:!action.payload}
                     }
             }
+        }
+        else{
+            return {
+                ...state,query:[...state.query,"highlightedalerts"],
+                alertgroup:{...state.alertgroup,
+                    value:{...state.other.value,highlightedalerts:!action.payload}
+                    }
+                }
+            
+        }
         case 'sensitiveinformation':
             if(action.payload===true){
                 const listi=Object.assign([],state.query);
@@ -1327,9 +1339,11 @@ function  Dropup(props){
     const [dropc,setdrop]=useState(true);
     const handleview=()=>{
             setview(true)
+            listview()
     }
     const handleview1=()=>{
         setview(false)
+        gridview()
 }
     const handledrop=()=>{
             setdrop(true)
@@ -1367,6 +1381,7 @@ function  Dropup(props){
           }
         const [usestate1,setstate1]=React.useState({})
         const [commenting,setcommenting]=React.useState([]);
+        const [view1,setview1]=React.useState(false);
         const handlecall=(sq)=>{
             // console.log(sq)
             let array=[];
@@ -1386,9 +1401,8 @@ function  Dropup(props){
             setcommenting(array)
             // setcommenting1("1")
         }
-        useDeepCompareEffect(()=>{
-            let result = null;
-            // console.log(state.query,"very valuable")
+        const gridview=()=>{
+            console.log("grid view")
             const token=localStorage.getItem("token")
             if(state.query.length===0){
  
@@ -1411,7 +1425,8 @@ function  Dropup(props){
                             }
                             else{
                                 setstate1(y.alerts.slice(0,6))
-                                handlecall(y.alerts.slice(0,6))
+                                setview1(true)
+                                // handlecall(y.alerts.slice(0,6))
                             }
                             
                         }
@@ -1444,7 +1459,8 @@ function  Dropup(props){
                         }
                         else{
                             setstate1(y1.alerts.slice(0,6))
-                            handlecall(y1.alerts.slice(0,6))
+                            setview1(true)
+                            // handlecall(y1.alerts.slice(0,6))
                         }
                         
                     }
@@ -1488,7 +1504,264 @@ function  Dropup(props){
                         }
                         else{
                             setstate1(y1.alerts.slice(0,6))
-                            handlecall(y1.alerts.slice(0,6))
+                            setview1(true)
+                            // handlecall(y1.alerts.slice(0,6))
+                        }
+                        
+                    }
+                    // console.log(y,"typefaisal")
+                    // setstate1(y.alerts)
+                }
+                x()
+                // const y=state.query
+                // const fetchData = async () => {
+                //     result = await axios.get(
+                //       "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+y.join("%2C")+"&filter_op="+select,
+                //       {
+                //         headers: {
+                //           "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
+                //         },
+                //       }
+                //     );
+                //     // console.log(result.data,"faisal")
+                //     setstate1(result.data.alerts)
+                //   }
+                //   fetchData()
+            }
+ 
+        }
+        const listview=()=>{
+            console.log("list view")
+            const token=localStorage.getItem("token")
+            if(state.query.length===0){
+ 
+                    const  x= async()=>{
+                        const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+select, {
+                            headers: {
+                                'accept': 'application/json',
+                                'Authorization': token
+                            }
+                        });
+                        const y=await response.json()
+                        if(y.message==="Invalid access token"){
+                            console.log(y,"typefaisal")
+                            loggedout()
+                        }
+                        else{
+                            console.log(y,"typefaisal")
+                            if(y.length===0){
+                                setstate1({})
+                            }
+                            else{
+                                setstate1(y.alerts.slice(0,6))
+                                setview1(false)
+                                // handlecall(y.alerts.slice(0,6))
+                            }
+                            
+                        }
+                        // console.log(y,"typefaisal")
+                        // setstate1(y.alerts)
+                    }
+                    x() 
+
+
+           
+            
+            }
+            else if(state.query.length===1){
+                const  x= async()=>{
+                    const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+state.query[0]+"&filter_op="+select, {
+                        headers: {
+                            'accept': 'application/json',
+                            'Authorization': token
+                        }
+                    });
+                    const y1=await response.json()
+                    if(y1.message==="Invalid access token"){
+                        console.log(y1,"typefaisal")
+                        loggedout()
+                    }
+                    else{
+                        console.log(y1,"typefaisal")
+                        if(y1.length===0){
+                            setstate1({})
+                        }
+                        else{
+                            setstate1(y1.alerts.slice(0,6))
+                            setview1(false)
+                            // handlecall(y1.alerts.slice(0,6))
+                        }
+                        
+                    }
+                    // console.log(y,"typefaisal")
+                    // setstate1(y.alerts)
+                }
+                x() 
+                // const fetchData = async () => {
+                //     result = await axios.get(
+                //       "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+state.query[0]+"&filter_op="+select,
+                //       {
+                //         headers: {
+                //           "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
+                //         },
+                //       }
+                //     );
+                //     // console.log(result.data,"faisal")
+                //     setstate1(result.data.alerts)
+                //   }
+                //   fetchData()
+            }
+            else{
+                const y=state.query
+                const  x= async()=>{
+                    const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+y.join("%2C")+"&filter_op="+select, {
+                        headers: {
+                            'accept': 'application/json',
+                            'Authorization': token
+                        }
+                    });
+                    const y1=await response.json()
+                    if(y1.message==="Invalid access token"){
+                        console.log(y1,"typefaisal")
+                        loggedout()
+                    }
+                    else{
+                        console.log(y1,"typefaisal")
+                        if(y1.length===0){
+                            setstate1({})
+                            
+                        }
+                        else{
+                            setstate1(y1.alerts.slice(0,6))
+                            setview1(false)
+                            // handlecall(y1.alerts.slice(0,6))
+                        }
+                        
+                    }
+                    // console.log(y,"typefaisal")
+                    // setstate1(y.alerts)
+                }
+                x()
+                // const y=state.query
+                // const fetchData = async () => {
+                //     result = await axios.get(
+                //       "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+y.join("%2C")+"&filter_op="+select,
+                //       {
+                //         headers: {
+                //           "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
+                //         },
+                //       }
+                //     );
+                //     // console.log(result.data,"faisal")
+                //     setstate1(result.data.alerts)
+                //   }
+                //   fetchData()
+            }
+ 
+        }
+        useDeepCompareEffect(()=>{
+            let result = null;
+            // console.log(state.query,"very valuable")
+            const token=localStorage.getItem("token")
+            if(state.query.length===0){
+ 
+                    const  x= async()=>{
+                        const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+select, {
+                            headers: {
+                                'accept': 'application/json',
+                                'Authorization': token
+                            }
+                        });
+                        const y=await response.json()
+                        if(y.message==="Invalid access token"){
+                            console.log(y,"typefaisal")
+                            loggedout()
+                        }
+                        else{
+                            console.log(y,"typefaisal")
+                            if(y.length===0){
+                                setstate1({})
+                            }
+                            else{
+                                setstate1(y.alerts.slice(0,6))
+                                // handlecall(y.alerts.slice(0,6))
+                            }
+                            
+                        }
+                        // console.log(y,"typefaisal")
+                        // setstate1(y.alerts)
+                    }
+                    x() 
+
+
+           
+            
+            }
+            else if(state.query.length===1){
+                const  x= async()=>{
+                    const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+state.query[0]+"&filter_op="+select, {
+                        headers: {
+                            'accept': 'application/json',
+                            'Authorization': token
+                        }
+                    });
+                    const y1=await response.json()
+                    if(y1.message==="Invalid access token"){
+                        console.log(y1,"typefaisal")
+                        loggedout()
+                    }
+                    else{
+                        console.log(y1,"typefaisal")
+                        if(y1.length===0){
+                            setstate1({})
+                        }
+                        else{
+                            setstate1(y1.alerts.slice(0,6))
+                            // handlecall(y1.alerts.slice(0,6))
+                        }
+                        
+                    }
+                    // console.log(y,"typefaisal")
+                    // setstate1(y.alerts)
+                }
+                x() 
+                // const fetchData = async () => {
+                //     result = await axios.get(
+                //       "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+state.query[0]+"&filter_op="+select,
+                //       {
+                //         headers: {
+                //           "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
+                //         },
+                //       }
+                //     );
+                //     // console.log(result.data,"faisal")
+                //     setstate1(result.data.alerts)
+                //   }
+                //   fetchData()
+            }
+            else{
+                const y=state.query
+                const  x= async()=>{
+                    const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+y.join("%2C")+"&filter_op="+select, {
+                        headers: {
+                            'accept': 'application/json',
+                            'Authorization': token
+                        }
+                    });
+                    const y1=await response.json()
+                    if(y1.message==="Invalid access token"){
+                        console.log(y1,"typefaisal")
+                        loggedout()
+                    }
+                    else{
+                        console.log(y1,"typefaisal")
+                        if(y1.length===0){
+                            setstate1({})
+                            
+                        }
+                        else{
+                            setstate1(y1.alerts.slice(0,6))
+                            // handlecall(y1.alerts.slice(0,6))
                         }
                         
                     }
@@ -1512,7 +1785,7 @@ function  Dropup(props){
                 //   fetchData()
             }
 
-        },[state,select])
+        },[state,select,view1])
      return(
         <div style={{marginBottom:"30px"}}>
             {console.log(commenting,"commenting") }
@@ -2243,8 +2516,8 @@ function  Dropup(props){
                                 id2={index}
                                 comments={usestate1[index]['comments']}
                                 changeflag={props.changeflag} 
-                                commenting1={commenting[index]}
-                                setcommenting={setcommenting}
+                                // commenting1={commenting[index]}
+                                // setcommenting={setcommenting}
                                 addcount={props.addcount}
                                 />
                                 
@@ -2286,8 +2559,8 @@ function  Dropup(props){
                                 id2={index}
                                 comments={usestate1[index]['comments']}
                                 changeflag={props.changeflag} 
-                                commenting1={commenting[index]}
-                                setcommenting={setcommenting}
+                                // commenting1={commenting[index]}
+                                // setcommenting={setcommenting}
                                 addcount={props.addcount}
             />
 

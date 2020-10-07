@@ -13,6 +13,7 @@ import theme from '../../../theme';
 import Tooltip from '@material-ui/core/Tooltip';
 import axios from 'axios';
 import {Redirect,useHistory, withRouter} from 'react-router-dom';
+import { HighlightStarsContext } from "./context/highlightstars.js";
 const LightTooltip = withStyles((theme) => ({
     tooltip: {
       backgroundColor: theme.palette.common.white,
@@ -158,10 +159,15 @@ export default function LatestCard(props){
         alertcreated,severity,
         title,source,keyword,
         remediation,tags,comments,id}=props
-        const [tags1,settags1]=React.useState(tags.some(tag=>tag==="highlightedalerts"))
+        
         // const tags1=tags.filter(tag=>tag==="highlightedalerts")
-        console.log(tags1)
-    if(severity!==""){
+        // console.log(tags1)
+        const barChartUAInfoData = React.useContext(HighlightStarsContext);
+        console.log(barChartUAInfoData)
+        const {addcount,changeflag,count}=barChartUAInfoData;
+        console.log(count)
+        const [tags1,settags1]=React.useState(tags.some(tag=>tag==="highlightedalerts"))
+        if(severity!==""){
         // console.log(severity)
         const newStr = severity.split('');
         newStr.splice(0,8);
@@ -176,20 +182,20 @@ export default function LatestCard(props){
     const [st1,set]=React.useState([""]);
     const [click,setclick]=React.useState(true);
 
-    const [star,selectstar]=React.useState(false)
+    const [star,selectstar]=React.useState(tags1)
     const [open, setOpen] = React.useState(false);
-    const addcount=()=>{
-        selectstar(!star)
-        if(star===false){
-            props.addcount()
-        }
-        else if(star===true){
-            props.changeflag()
-        }
+    // const addcount=()=>{
+    //     selectstar(!star)
+    //     if(star===false){
+    //         props.addcount()
+    //     }
+    //     else if(star===true){
+    //         props.changeflag()
+    //     }
         
         
-        // console.log(props.changeflag)
-    }
+    //     // console.log(props.changeflag)
+    // }
     const handleClickOpen = () => {
       setOpen(true);
     };
@@ -277,6 +283,51 @@ export default function LatestCard(props){
         }
 
 }
+const controlhighlight=(e)=>{
+    selectstar(!star)
+    if(star===false){
+        addcount()
+        const pushcomment=async()=>{
+            const token=localStorage.getItem("token")
+            const response= await fetch('https://if.cyberdevelopment.house/api/alerts/'+id+'/tags', {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'Authorization': token,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'tag=highlightedalerts'
+            });
+            
+            const y=await response.json()
+            if(y.message==="Invalid access token"){
+                console.log(y,"typefaisal")
+                loggedout()
+            }
+        }
+        pushcomment()
+    }
+    else if(star===true){
+        changeflag()
+
+            const pushcomment=async()=>{
+            const token=localStorage.getItem("token")
+            const response= await fetch('https://if.cyberdevelopment.house/api/alerts/'+id+'/tags/highlightedalerts', {
+                method: 'DELETE',
+                headers: {
+                    'accept': 'application/json',
+                    'Authorization': token,
+                }
+            });
+        const y=await response.json()
+        if(y.message==="Invalid access token"){
+            console.log(y,"typefaisal")
+            loggedout()
+        }
+        }
+        pushcomment()
+    }
+}
 const handlecommenting=(e)=>{
     setcommenting(e.target.value)
 }
@@ -294,8 +345,8 @@ React.useEffect(()=>{
     return(
         <div>
             {/* {console.log("keyword",keyword[0]['value'])} */}
-            <Grid item xs={12}  style={{marginBottom:"20px"}}>
-            <Box className={classes.f5} height="100%"  >
+            <Grid item xs={12}  style={{marginBottom:"10px"}}>
+            <Box className={classes.f5}  >
                 <Grid item    xs={12}>
                     <Grid container  justify="flex-start" spacing={1}>
                         <Grid item xs={2} lg={2}  >
@@ -433,7 +484,7 @@ React.useEffect(()=>{
                                         
                                         <Grid item xs={12} >
                                                     <LightTooltip title="Highlight alert">
-                                                        <IconButton aria-label="settings" disabled="true" onClick={addcount} >
+                                                        <IconButton aria-label="settings" disabled={props.disabled}  onClick={controlhighlight} >
                                                             <GradeIcon style={{fontSize:'32px',color:star?"yellow":"gray"}}/>
 
                                                         </IconButton>   
@@ -586,7 +637,7 @@ React.useEffect(()=>{
                                                 <Grid container justify="flex-end" alignItems="center" style={{height:"70px"}}>
                                                     <Grid item>
                                                     <LightTooltip title="Highlight alert">
-                                                        <IconButton aria-label="settings" onClick={addcount} >
+                                                        <IconButton aria-label="settings" disabled={props.disabled}  onClick={controlhighlight} >
                                                             <GradeIcon style={{fontSize:'32px',color:star?"yellow":"gray"}}/>
 
                                                         </IconButton>   

@@ -410,16 +410,27 @@ const closesecuritydialog=()=>{
     // const addprimaryemail=(event)=>{
       
     // };
+    const [checkingcontactperson,setcheckingcontactperson]=React.useState(false);
     const checkaccount=()=>{
       console.log("working",account.companyname,account.contactpersonemail)
         if(account.companyname==="" ){
           setcheckingcompanyname(true)
+          setcheckingcontactperson(false)
           setaccountauthenticate(false)
+          setcontactpersonposition(false)
+        }
+        else if(account.contactperson===""){
+            setcheckingcompanyname(false)
+            setaccountauthenticate(false)
+            setcheckingcontactperson(true)
+            setcontactpersonposition(false)
+            
         }
         else if(account.contactpersonemail===""){
           setcontactpersonposition(true)
           setcheckingcompanyname(false)
           setaccountauthenticate(false)
+          setcheckingcontactperson(false)
         }
         else if (account.contactpersonemail!==""){
           console.log("working",account.companyname,account.contactpersonemail)
@@ -438,6 +449,7 @@ const closesecuritydialog=()=>{
             setaccountauthenticate(true)
             setcontactpersonposition(false)
             setcheckingcompanyname(false)
+            setcheckingcontactperson(false)
           }
           
           // var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
@@ -451,6 +463,7 @@ const closesecuritydialog=()=>{
           setaccountauthenticate(true)
           setcontactpersonposition(false)
           setcheckingcompanyname(false)
+          setcheckingcontactperson(false)
         }
     }
     const handleaccountform=()=>{
@@ -1088,7 +1101,10 @@ const closesecuritydialog=()=>{
                                     <Typography style={{marginTop:"15px"}}>
                                         Contact Person
                                     </Typography>
-                                    <TextField
+                                    <Grid item>
+                                      <Grid container  alignItems="center" spacing={1}>
+                                        <Grid item>
+                                        <TextField
                                           placeholder="Contact Person"
                                           id="contactperson"
                                           value={account.contactperson}
@@ -1098,6 +1114,18 @@ const closesecuritydialog=()=>{
                                           variant="outlined"
                                           inputProps={{ 'aria-label': 'naked' }}
                                           />
+                                        </Grid>
+                                        <Grid item>
+            
+                                        <div className={classes.email1} style={{display:checkingcontactperson?"flex":"none"}}>
+                                            
+                                            <p> Required Field</p>
+                                                          
+                                          </div>
+                                        </Grid>
+                                      </Grid>
+                                    </Grid>
+
                                     <Typography style={{marginTop:"15px"}}>
                                         Contact Person's Position
                                     </Typography>

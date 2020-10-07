@@ -18,7 +18,8 @@ import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
 import Chip from '@material-ui/core/Chip';
 import LatestCard from "./LatestCard.jsx";
-import React from 'react'
+import React,{useEffect} from 'react';
+
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -117,6 +118,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 export default function Latest(props){
     const classes = useStyles();
+    
     const [st1,set]=React.useState([""]);
     const [click,setclick]=React.useState(true);
     const addcount=()=>{
@@ -127,13 +129,39 @@ export default function Latest(props){
         console.log(st1)
         
       }
-    
-    
+
+    const {usestate1}=props
     return(
         <div >
-            {
-            [...Array(props.count)].map((e, i) => <span className="busterCards" key={i}><LatestCard addcount={props.addcount}  changeflag={props.changeflag}/></span>)}
-            <Grid container style={{height:'500px'}}>
+            {/* {
+            [...Array(props.count)].map((e, i) => <span className="busterCards" key={i}><LatestCard addcount={props.addcount}  changeflag={props.changeflag}/></span>)} */}
+            {usestate1.length===0?
+            <div></div>:
+            Object.keys(usestate1).map((index)=>(
+              <div>
+                            {console.log(usestate1[index],"print")}
+            <LatestCard
+            date={usestate1[index]['timestamp']}
+            alertcreated={usestate1[index]['created']}
+            severity={usestate1[index]['severity']} 
+            title={usestate1[index]['source_title']} 
+            source={usestate1[index]['source_url']}
+            keyword={usestate1[index]['keywords']}
+            tags={usestate1[index]['tags']}
+            remediation={usestate1[index]['remediation']}
+            id={usestate1[index]['id']}
+            comments={usestate1[index]['comments']}
+            disabled={true}
+        
+            
+            // changeflag={props.changeflag} addcount={props.addcount}
+            />
+            
+              </div>
+
+            ))
+            }
+            <Grid container style={{minHeight:'50px'}}>
 
             </Grid>
       

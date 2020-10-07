@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Grid, Button } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
@@ -25,7 +25,7 @@ import {
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import controlImg from "../../Links/images/CIS-controls.png";
-
+import { FetchRemediationContext } from "../../context/FetchRemidiation";
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
     backgroundColor: theme.palette.common.white,
@@ -53,7 +53,9 @@ function createData(
   affects,
   risk,
   cisControl,
-  timeToExploit
+  timeToExploit,
+  description,
+  alertsIds
 ) {
   return {
     remediationAction,
@@ -61,6 +63,7 @@ function createData(
     risk,
     cisControl,
     timeToExploit,
+    alertsIds,
     history: [
       { date: "2020-01-05", customerId: "11091700", amount: 3 },
       { date: "2020-01-02", customerId: "Anonymous", amount: 1 },
@@ -71,7 +74,45 @@ function createData(
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
-  
+  const [open2, changeopen2] = React.useState(false);
+  const [alertstate,changealertstate]=React.useState([]);
+  const [alertdatalist,setalertdatalist]=React.useState([]);
+  const handle2f=()=>{
+    changeopen2(false);
+  }
+  const handle2 = (list) => {
+    console.log(list,"lsit")
+    let alertstate1=[];
+    let alertdata=[];
+    alertstate1.push(list)
+    changealertstate(alertstate1[0])
+    console.log(alertstate)
+    changeopen2(true);
+
+    const fetchRemediationData = async () => {
+      const token=localStorage.getItem("token")
+      for (const i in list){            
+
+
+
+      const result= await fetch("https://if.cyberdevelopment.house/api/alerts/"+list[i], {
+          headers: {
+              'accept': 'application/json',
+              'Authorization': token
+          }
+          }
+        );
+        const y=await result.json()
+        // console.log(y,"result")
+        // console.log(result,"result")
+        alertdata.push(y)
+      }
+      console.log(alertdata,"alertdata")
+      setalertdatalist(alertdata)
+  };
+  fetchRemediationData()
+
+}
   const classes = useRowStyles();
 
   return (
@@ -79,27 +120,27 @@ function Row(props) {
       <TableRow className={classes.root}>
         <TableCell align="left" component="th" scope="row" width="30%" 
         style={{
-                          border: "1px solid #aaa",
+          borderTop: "1px solid #aaa",borderBottom: "1px solid #aaa",
                          
                           
                         }}>
           {row.remediationAction}
         </TableCell>
-        <TableCell align="left" style={{                          border: "1px solid #aaa",
+        <TableCell align="left" style={{                         borderTop: "1px solid #aaa",borderBottom: "1px solid #aaa",
                           
                          paddingLeft: "2rem" }}>
           {row.affects}
         </TableCell>
-        <TableCell align="left" style={{ border: "1px solid #aaa", paddingLeft: "2rem" }}>
+        <TableCell align="left" style={{ borderTop: "1px solid #aaa",borderBottom: "1px solid #aaa", paddingLeft: "2rem" }}>
           {row.risk}
         </TableCell>
-        <TableCell align="left" style={{ border: "1px solid #aaa", paddingLeft: "2rem" }}>
+        <TableCell align="left" style={{ borderTop: "1px solid #aaa",borderBottom: "1px solid #aaa", paddingLeft: "2rem" }}>
           {row.cisControl}
         </TableCell>
-        <TableCell style={{ border: "1px solid #aaa"}} align="left">
+        <TableCell style={{ borderTop: "1px solid #aaa",borderBottom: "1px solid #aaa"}} align="left">
           {" "}
           <div className={styles.foldable}>
-            <p style={{ color: "red" }}>Ready to exploit</p>
+          <p style={{ color: "red" }}>{row.timeToExploit}</p>
             <IconButton
               aria-label="expand row"
               size="small"
@@ -145,18 +186,10 @@ function Row(props) {
                     variant="subtitle1"
                     style={{ fontWeight: "bold" }}
                   >
-                    Lorem ipsum dolor sit.
+                     {row.remediationAction}
                   </Typography>
                   <br />
-                  <div>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Numquam magni laboriosam ipsa suscipit doloribus, nam
-                    corporis consectetur et fuga eos reiciendis quaerat ratione
-                    minus odio quos ex natus impedit ducimus! Numquam magni
-                    laboriosam ipsa suscipit doloribus, nam corporis consectetur
-                    et fuga eos reiciendis quaerat ratione minus odio quos ex
-                    natus impedit ducimus!
-                  </div>
+                  <div>{row.description}</div>
                 </Grid>
 
                 <Grid item xs="2" className={styles.downloadBtns}>
@@ -192,6 +225,28 @@ export default function FContent() {
   const handle1=()=>{
     setopen1(false)
   }
+  
+  const value = useContext(FetchRemediationContext);
+  const { table1State } = value;
+  const rows = [];
+console.log(table1State,"table1State")
+  for (const key in table1State) {
+    const obj = table1State[key];
+    const date = new Date(obj.readyToExploit);
+    const rte = `${date.getHours()} : ${date.getMinutes()} : ${date.getSeconds()}`; 
+    rows.push(
+      createData(
+        obj.title,
+        obj.affects,
+        obj.risks,
+        [...obj.cisControls].join(" , "),
+        rte,
+        obj.alertsIds,
+        [...obj.alertsIds]
+      )
+    );
+  }
+
   const classes = useRowStyles();
   return (
     <>
@@ -199,7 +254,7 @@ export default function FContent() {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell align="center" style={{border: "1px solid #aaa"}}>
+            <TableCell align="center" style={{borderTop: "1px solid #aaa",borderBottom: "1px solid #aaa"}}>
               <div className={styles.thDiv}>
                 Remediated action
                 <div className={styles.i}>
@@ -209,7 +264,7 @@ export default function FContent() {
                 </div>
               </div>
             </TableCell>
-            <TableCell align="center" style={{border: "1px solid #aaa"}}>
+            <TableCell align="center" style={{borderTop: "1px solid #aaa",borderBottom: "1px solid #aaa"}}>
               <div className={styles.thDiv}>
                 Affects
                 <div className={styles.i}>
@@ -219,7 +274,7 @@ export default function FContent() {
                 </div>
               </div>
             </TableCell>
-            <TableCell align="center" style={{border: "1px solid #aaa"}}>
+            <TableCell align="center" style={{borderTop: "1px solid #aaa",borderBottom: "1px solid #aaa"}}>
               <div className={styles.thDiv}>
                 Risk
                 <div className={styles.i}>
@@ -229,7 +284,7 @@ export default function FContent() {
                 </div>
               </div>
             </TableCell>
-            <TableCell align="center" style={{ width: "10rem",border: "1px solid #aaa" }}>
+            <TableCell align="center" style={{ width: "10rem",borderTop: "1px solid #aaa",borderBottom: "1px solid #aaa" }}>
               <div className={styles.thDiv}>
                 CIS Control
                 <div className={styles.i}>
@@ -250,7 +305,7 @@ export default function FContent() {
                 </div>
               </div>
             </TableCell>
-            <TableCell align="center" style={{ width: "15rem",border: "1px solid #aaa" }}>
+            <TableCell align="center" style={{ width: "15rem",borderTop: "1px solid #aaa",borderBottom: "1px solid #aaa" }}>
               <div className={styles.thDiv}>
                 Time to Exploit
                 <div className={styles.i}>
@@ -260,12 +315,13 @@ export default function FContent() {
                 </div>
               </div>
             </TableCell>
-            <TableCell style={{border: "1px solid #aaa"}}/>
+            <TableCell style={{borderTop: "1px solid #aaa",borderBottom: "1px solid #aaa"}}/>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <Row key={row.name} row={row} />
+           <div>{console.log(row)}</div>
+            // <Row key={row.name} row={row} />
           ))}
         </TableBody>
       </Table>

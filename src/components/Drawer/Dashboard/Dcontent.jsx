@@ -31,6 +31,8 @@ import TabPanel from '@material-ui/lab/TabPanel';
 import A from './Tabs';
 import Highlight from './Highlight.js'
 import {Badge} from "@material-ui/core"
+import HighlightStarsContextProvider from './context/highlightstars.js';
+import HighlightTab from './HighlightTab.js';
 const LightTooltip = withStyles((theme) => ({
     tooltip: {
       backgroundColor: theme.palette.common.white,
@@ -186,7 +188,7 @@ export default function Dcontent (){
     return(
 
         <div>
-            
+            <HighlightStarsContextProvider>
             <main>
             
             <Grid container className={classes.root} spacing={3}>
@@ -311,6 +313,9 @@ export default function Dcontent (){
 
                 </Grid>
                 <Grid item xs={12} md={12}>
+                    <HighlightTab/>
+                </Grid>
+                {/* <Grid item xs={12} md={12}>
                     <Grid container justify="center" style={{background:"transparent"}}>
                         <Grid items md={11}>
                         <Card className={classes.f2}>
@@ -339,12 +344,12 @@ export default function Dcontent (){
 
                                         <A.TabContent value={index1.index} index={0}>
                                         <Grid item>
-                                            <Latest changeflag={changeflag} addcount={addcount}/>
+                                            <Latest/>
                                         </Grid>
                                         </A.TabContent>
                                         <A.TabContent value={index1.index}  index={1}>
                                         <Grid item >
-                                            <Highlight count={count} changeflag={changeflag} addcount={addcount}/>
+                                            <Highlight />
                                         </Grid>
                                         </A.TabContent>
                                        
@@ -363,12 +368,13 @@ export default function Dcontent (){
                         
                     </Grid>
 
-                </Grid>
+                </Grid> */}
 
 
             </Grid>
                 
-            </main>            
+            </main>     
+            </HighlightStarsContextProvider>       
         </div>
     )
 }

@@ -11,8 +11,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import NotificationsNoneRoundedIcon from '@material-ui/icons/NotificationsNoneRounded';
 import { grey } from '@material-ui/core/colors';
-import NotificationBadge from 'react-notification-badge';
-import {Effect} from 'react-notification-badge';
+
+
 import styles from "./Header.module.css"
 
 import {Avatar} from "@material-ui/core"
@@ -114,14 +114,14 @@ function Header(props) {
           </Typography>
             <div className={classes.ic1}>
                 <div className={classes.ic}>
-                <Link to="/Notification">
+                <Link >
                   <IconButton>
                   
                   
                   <NotificationsNoneRoundedIcon style={{ color: grey[700],fontSize:"30px" }}/>
                   </IconButton>
                   </Link>
-                  <NotificationBadge style={{position:"absolute",marginTop:"-50px"}} count={count} effect={Effect.SCALE}/>
+                  {/* <NotificationBadge style={{position:"absolute",marginTop:"-50px"}} count={count} effect={Effect.SCALE}/> */}
                   </div>
                 
             <div className={classes.user}>

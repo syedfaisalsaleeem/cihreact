@@ -142,6 +142,8 @@ export default function CardGrid(props){
         alertcreated,severity,
         title,source,keyword,
         remediation,tags,comments}=props
+
+    const [tags1,settags1]=React.useState(tags.some(tag=>tag==="highlightedalerts"))
     if(severity!==""){
         // console.log(severity)
         const newStr = severity.split('');
@@ -157,20 +159,65 @@ export default function CardGrid(props){
     const [st1,set]=React.useState([""]);
     const [click,setclick]=React.useState(true);
 
-    const [star,selectstar]=React.useState(false)
+    const [star,selectstar]=React.useState(tags1);
     const [open, setOpen] = React.useState(false);
-    const addcount=()=>{
+    const controlhighlight=(e)=>{
         selectstar(!star)
         if(star===false){
-            props.addcount()
+            // addcount()
+            const pushcomment=async()=>{
+                const token=localStorage.getItem("token")
+                const response= await fetch('https://if.cyberdevelopment.house/api/alerts/'+props.id+'/tags', {
+                    method: 'POST',
+                    headers: {
+                        'accept': 'application/json',
+                        'Authorization': token,
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: 'tag=highlightedalerts'
+                });
+                
+                const y=await response.json()
+                if(y.message==="Invalid access token"){
+                    console.log(y,"typefaisal")
+                    loggedout()
+                }
+            }
+            pushcomment()
         }
         else if(star===true){
-            props.changeflag()
+            // changeflag()
+    
+                const pushcomment=async()=>{
+                const token=localStorage.getItem("token")
+                const response= await fetch('https://if.cyberdevelopment.house/api/alerts/'+props.id+'/tags/highlightedalerts', {
+                    method: 'DELETE',
+                    headers: {
+                        'accept': 'application/json',
+                        'Authorization': token,
+                    }
+                });
+            const y=await response.json()
+            if(y.message==="Invalid access token"){
+                console.log(y,"typefaisal")
+                loggedout()
+            }
+            }
+            pushcomment()
         }
-        
-        
-        // console.log(props.changeflag)
     }
+    // const addcount=()=>{
+    //     selectstar(!star)
+    //     if(star===false){
+    //         props.addcount()
+    //     }
+    //     else if(star===true){
+    //         props.changeflag()
+    //     }
+        
+        
+    //     // console.log(props.changeflag)
+    // }
     const handleClickOpen = () => {
       setOpen(true);
     };
@@ -189,12 +236,12 @@ export default function CardGrid(props){
     const handlecomment=async(e)=>{
             const {id , value} = e.target
             console.log(id,value)   
-    props.setcommenting(prevState => ({
-        ...prevState,
-        [id] : value
-    }))
+    // props.setcommenting(prevState => ({
+    //     ...prevState,
+    //     [id] : value
+    // }))
         if(comments.length>0){
-            console.log("faisal2",commenting,comments[0]['id'])
+            // console.log("faisal2",commenting,comments[0]['id'])
             const token=localStorage.getItem("token")
             const  x= async()=>{
                 const response= await fetch('https://if.cyberdevelopment.house/api/alerts/'+props.id+'/comments/'+comments[0]['id'], {
@@ -275,15 +322,25 @@ const handlecommenting=(e)=>{
     setcommenting(e.target.value)
 }
 React.useEffect(()=>{
-    if( props.commenting1!==undefined){
-        console.log("worked",props.commenting1)
-        setcommenting(props.commenting1)
+    selectstar(tags.some(tag=>tag==="highlightedalerts"))
+    if(comments.length>0){
+        setcommenting(comments[0]['text'])
     }
     else{
-        // setcommenting('')
+        setcommenting('')
     }
     
-},[props.commenting1])
+},[tags])
+// React.useEffect(()=>{
+//     if( props.commenting1!==undefined){
+//         console.log("worked",props.commenting1)
+//         setcommenting(props.commenting1)
+//     }
+//     else{
+//         // setcommenting('')
+//     }
+    
+// },[props.commenting1])
     // https://if.cyberintelligencehouse.com/api/alerts/39412cec-8a69-4254-9a81-3cf21a83ba09/comments
      const classes=useStyles()
     return(
@@ -309,7 +366,7 @@ React.useEffect(()=>{
                     </div>
                     <div>
                     <LightTooltip title="Highlight alert">
-                                                        <IconButton aria-label="settings" onClick={addcount} >
+                                                        <IconButton aria-label="settings" onClick={controlhighlight} >
                                                             <GradeIcon style={{fontSize:'32px',color:star?"yellow":"gray"}}/>
 
                                                         </IconButton>   
@@ -433,7 +490,7 @@ React.useEffect(()=>{
                                         
                                         <Grid item xs={12}>
                                         <TextField
-                                            id={props.id2}
+                                            id="comments"
                                             // label="Add notes here"
                                             multiline
                                             variant="outlined"
@@ -526,7 +583,7 @@ React.useEffect(()=>{
                                                 <Grid container justify="flex-end" alignItems="center" style={{height:"70px"}}>
                                                     <Grid item>
                                                     <LightTooltip title="Highlight alert">
-                                                        <IconButton aria-label="settings" disabled="true" onClick={addcount} >
+                                                        <IconButton aria-label="settings" disabled="true" onClick={controlhighlight} >
                                                             <GradeIcon style={{fontSize:'32px',color:star?"yellow":"gray"}}/>
 
                                                         </IconButton>   
@@ -635,7 +692,7 @@ React.useEffect(()=>{
                                         
                                         <Grid item xs={12}>
                                         <TextField
-                                            id={props.id2}
+                                            id="comments"
                                             // label="Add notes here"
                                             multiline
                                             variant="outlined"

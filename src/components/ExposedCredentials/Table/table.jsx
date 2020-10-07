@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -24,6 +24,9 @@ import {
   DialogTitle,
   Divider,
 } from "@material-ui/core";
+import { ExposedCredentialContext } from "../../../context/ExposedCredentials";
+import Dialogtable from "./Dialogtable.js";
+import axios from 'axios';
 function createData(name, calories, fat, carbs, protein, found) {
   return { name, calories, fat, carbs, protein, found };
 }
@@ -35,40 +38,6 @@ const LightTooltip = withStyles((theme) => ({
     fontSize: 11,
   },
 }))(Tooltip);
-const rows = [
-  createData(
-    "Medium",
-    "abc1245abc1245",
-    "Password1",
-    "14/02/2020",
-    "18/02/2020",
-    "1 findings"
-  ),
-  createData(
-    "Medium",
-    "abc1245abc1245",
-    "Password2",
-    "21/03/2020",
-    "11/04/2020",
-    "1 findings"
-  ),
-  createData(
-    "Medium",
-    "abc1245abc1245",
-    "Password3",
-    "23/07/2020",
-    "07/03/2020",
-    "1 findings"
-  ),
-  createData(
-    "Medium",
-    "abc1245abc1245",
-    "Password4",
-    "04/05/2020",
-    "12/06/2020",
-    "1 findings"
-  ),
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -164,14 +133,13 @@ function EnhancedTableHead(props) {
               }}
             >
               <Typography align="center">{headCell.label}</Typography>
-              {headCell.info.length===0?
+              {headCell.info===""?
               <div>
-                
-              </div>
-              :
+
+              </div>:
               <LightTooltip title={headCell.info}>
-                <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
-              </LightTooltip>
+              <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
+            </LightTooltip>
               }
 
               {headCell.label === "Password" && (
@@ -215,23 +183,142 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function EnhancedTable() {
+  const [tableData, setTableData] = useState();
+  const value = React.useContext(ExposedCredentialContext);
+  const { tableState } = value;
+  console.log(tableState,"tableState")
+  const rows = [];
+  React.useEffect(() => {
+    const preData = [];
+    for (const key in tableState) {
+      let severity;
+      let username;
+      let firstFound;
+      let lastFound;
+      let password;
+      
+      const obj = tableState[key];
+      for (const k in obj) {
+        if (k === "username") {
+          username = obj[k];
+        } else if (k === "severity") {
+          severity = obj[k].find((el) => {
+            if (el === "severityhigh") {
+              return el;
+            } else if ("severitymedium") {
+              return el;
+            } else {
+              return el;
+            }
+          });
+          switch (severity) {
+            case "severityhigh":
+              severity = "High";
+              break;
+            case "severitymedium":
+              severity = "Medium";
+              break;
+            case "severitylow":
+              severity = "Low";
+              break;
+            default:
+              return null;
+          }
+        } else if (k === "timeStamp") {
+          firstFound = obj[k].reduce((acc, cur) => {
+            acc = new Date(acc);
+            cur = new Date(cur);
+            return acc < cur
+              ? `${acc.getHours()}:${acc.getMinutes()}:${acc.getSeconds()}`
+              : `${cur.getHours()}:${cur.getMinutes()}:${cur.getSeconds()}`;
+          }, 0);
+          lastFound = obj[k].reduce((acc, cur) => {
+            acc = new Date(acc);
+            cur = new Date(cur);
+            return acc > cur
+              ? `${acc.getHours()}:${acc.getMinutes()}:${acc.getSeconds()}`
+              : `${cur.getHours()}:${cur.getMinutes()}:${cur.getSeconds()}`;
+          }, 0);
+        } else if (k === "password") {
+          password = [...obj[k]];
+        }
+      }
+      preData.push({
+        username: username,
+        severity: severity,
+        firstFound: firstFound,
+        lastFound: lastFound,
+        password: password,
+      });
+    }
+    setTableData(preData);
+  }, [tableState]);
+
+  for (const key in tableData) {
+    const obj = tableData[key];
+    rows.push(
+      createData(
+        obj.severity,
+        obj.username,
+        obj.password,
+        obj.firstFound,
+        obj.lastFound,
+        obj.password.length
+
+        
+        
+        
+      )
+    );
+  }
+
   const classes = useStyles();
   const [show, setShow] = React.useState(false);
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
-  const [count,setcount]=React.useState(1);
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
   const [open, changeopen1] = React.useState(false);
-  const handle = (e) => {
-    console.log(e)
-    setcount(e)
-    changeopen1(!open);
+  const [alertstate,changealertstate]=React.useState([]);
+  const [alertdatalist,setalertdatalist]=React.useState([]);
+  const handle1=()=>{
+    changeopen1(false);
+  }
+  const handle = (list) => {
+    console.log(list,"lsit")
+    let alertstate1=[];
+    let alertdata=[];
+    alertstate1.push(list)
+    changealertstate(alertstate1[0])
+    console.log(alertstate)
+    changeopen1(true);
+
+  const fetchRemediationData = async () => {
+      const token=localStorage.getItem("token")
+      for (const i in list){            
+
+      const result= await fetch("https://if.cyberdevelopment.house/api/alerts/"+list[i], {
+          headers: {
+              'accept': 'application/json',
+              'Authorization': token
+          }
+          }
+        );
+        const y=await result.json()
+        // console.log(y,"result")
+        // console.log(result,"result")
+        alertdata.push(y)
+      }
+      console.log(alertdata,"alertdata")
+      setalertdatalist(alertdata)
   };
-  const findings=[1,2,2,1]
+  fetchRemediationData()
+
+}
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -250,7 +337,10 @@ export default function EnhancedTable() {
               handleChange={() => setShow((prevShow) => !prevShow)}
             />
             <TableBody>
-            <TableRow>
+              {stableSort(rows, getComparator(order, orderBy)).map(
+                (row, index) => {
+                  return (
+                    <TableRow key={row.name}>
                       <TableCell
                         component="th"
                         scope="row"
@@ -261,55 +351,82 @@ export default function EnhancedTable() {
                           textAlign: "center",
                         }}
                       >
-                        <Typography> Medium</Typography>
+                        <Typography>{row.name}</Typography>
                       </TableCell>
                       <TableCell
                         align="center"
                         style={{ border: "1px solid #aaa" }}
                       >
-                        <p>   abc1245abc1245</p>
+                        <p>{row.calories}</p>
                       </TableCell>
                       <TableCell
-                      
                         align="center"
-                        style={{ border: "1px solid #aaa", width: "20%" }}
+                        style={{
+                          border: "1px solid #aaa",
+                          width: "20%",
+                          paddingRight: "2rem",
+                        }}
                       >
-                        <Typography>
-                          {show ? (
-                            <div>
-                           Password1
-                            </div>
-                            
-                            
-                          ) : (
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "center",
-                              }}
-                            >
-                              <MoreHorizIcon style={{ fontSize: "2rem" }} />
-                              <MoreHorizIcon
-                                style={{ marginLeft: "-8px", fontSize: "2rem" }}
-                              />
-                              <MoreHorizIcon
-                                style={{ marginLeft: "-8px", fontSize: "2rem" }}
-                              />
-                            </div>
-                          )}
-                        </Typography>
+                        <ul
+                          style={{
+                            maxHeight: "100px",
+                            overflow: "auto",
+                            listStyleType: "none",
+                          }}
+                        >
+                          {row.fat.map((el) => {
+                            return (
+                              <li
+                                key={el}
+                                style={{
+                                  marginBottom: "1rem",
+                                }}
+                              >
+                                {show ? (
+                                  <Typography style={{ fontSize: "12px" }}>
+                                    {el}
+                                  </Typography>
+                                ) : (
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      justifyContent: "center",
+                                      marginRight: "1rem",
+                                    }}
+                                  >
+                                    <MoreHorizIcon
+                                      style={{ fontSize: "2rem" }}
+                                    />
+                                    <MoreHorizIcon
+                                      style={{
+                                        marginLeft: "-8px",
+                                        fontSize: "2rem",
+                                      }}
+                                    />
+                                    <MoreHorizIcon
+                                      style={{
+                                        marginLeft: "-8px",
+                                        fontSize: "2rem",
+                                      }}
+                                    />
+                                  </div>
+                                )}
+                              </li>
+                            );
+                          })}
+                        </ul>
                       </TableCell>
                       <TableCell
                         align="center"
                         style={{ border: "1px solid #aaa" }}
                       >
-                   14/02/2020
+                        {row.carbs}
                       </TableCell>
                       <TableCell
                         align="center"
                         style={{ border: "1px solid #aaa" }}
                       >
-                    18/02/2020
+                        {row.protein}
                       </TableCell>
                       <TableCell
                         align="center"
@@ -317,282 +434,28 @@ export default function EnhancedTable() {
                       >
                         <Button
                           style={{ textTransform: "lowercase" }}
-                          onClick={()=>handle(1)}
-                        >
-                        1 finding
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell
-                        component="th"
-                        scope="row"
-                        padding="none"
-                        style={{
-                          border: "1px solid #aaa",
-                          width: "20%",
-                          textAlign: "center",
-                        }}
-                      >
-                        <Typography> Medium</Typography>
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        style={{ border: "1px solid #aaa" }}
-                      >
-                        <p>   abc1245abc1245</p>
-                      </TableCell>
-                      <TableCell
-                      
-                        align="center"
-                        style={{ border: "1px solid #aaa", width: "20%" }}
-                      >
-                        <Typography>
-                          {show ? (
-                            <div>
-                           Password
 
-                            </div>
-                            
-                            
-                          ) : (
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "center",
-                              }}
-                            >
-                              <MoreHorizIcon style={{ fontSize: "2rem" }} />
-                              <MoreHorizIcon
-                                style={{ marginLeft: "-8px", fontSize: "2rem" }}
-                              />
-                              <MoreHorizIcon
-                                style={{ marginLeft: "-8px", fontSize: "2rem" }}
-                              />
-                            </div>
-                          )}
-                        </Typography>
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        style={{ border: "1px solid #aaa" }}
-                      >
-                   14/02/2020
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        style={{ border: "1px solid #aaa" }}
-                      >
-                    18/02/2020
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        style={{ border: "1px solid #aaa" }}
-                      >
-                        <Button
-                          style={{ textTransform: "lowercase" }}
-                          onClick={()=>handle(2)}
+                          onClick={()=>handle(row.fat)}
                         >
-                        2 finding
+                          {row.found===1?
+                          <div>
+                            {row.found+ " finding"}
+                          </div>:
+                          <div>
+                            {row.found+ " findings"}
+                          </div>
+                          }
                         </Button>
                       </TableCell>
                     </TableRow>
-                    <TableRow>
-                      <TableCell
-                        component="th"
-                        scope="row"
-                        padding="none"
-                        style={{
-                          border: "1px solid #aaa",
-                          width: "20%",
-                          textAlign: "center",
-                        }}
-                      >
-                        <Typography> Medium</Typography>
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        style={{ border: "1px solid #aaa" }}
-                      >
-                        <p>   abc1245abc1245</p>
-                      </TableCell>
-                      <TableCell
-                      
-                        align="center"
-                        style={{ border: "1px solid #aaa", width: "20%" }}
-                      >
-                        <Typography>
-                          {show ? (
-                            <div>
-                           Password1
-                            <br/>
-                            Password2
-                            </div>
-                            
-                            
-                          ) : (
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "center",
-                              }}
-                            >
-                              <MoreHorizIcon style={{ fontSize: "2rem" }} />
-                              <MoreHorizIcon
-                                style={{ marginLeft: "-8px", fontSize: "2rem" }}
-                              />
-                              <MoreHorizIcon
-                                style={{ marginLeft: "-8px", fontSize: "2rem" }}
-                              />
-                            </div>
-                          )}
-                        </Typography>
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        style={{ border: "1px solid #aaa" }}
-                      >
-                   14/02/2020
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        style={{ border: "1px solid #aaa" }}
-                      >
-                    18/02/2020
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        style={{ border: "1px solid #aaa" }}
-                      >
-                        <Button
-                          style={{ textTransform: "lowercase" }}
-                          onClick={()=>handle(2)}
-                        >
-                        2 findings
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-            <TableRow>
-                      <TableCell
-                        component="th"
-                        scope="row"
-                        padding="none"
-                        style={{
-                          border: "1px solid #aaa",
-                          width: "20%",
-                          textAlign: "center",
-                        }}
-                      >
-                        <Typography> Medium</Typography>
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        style={{ border: "1px solid #aaa" }}
-                      >
-                        <p>   abc1245abc1245</p>
-                      </TableCell>
-                      <TableCell
-                      
-                        align="center"
-                        style={{ border: "1px solid #aaa", width: "20%" }}
-                      >
-                        <Typography>
-                          {show ? (
-                            <div>
-                           Password1
-                            <br/>
-                            Password2
-                            </div>
-                            
-                            
-                          ) : (
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "center",
-                              }}
-                            >
-                              <MoreHorizIcon style={{ fontSize: "2rem" }} />
-                              <MoreHorizIcon
-                                style={{ marginLeft: "-8px", fontSize: "2rem" }}
-                              />
-                              <MoreHorizIcon
-                                style={{ marginLeft: "-8px", fontSize: "2rem" }}
-                              />
-                            </div>
-                          )}
-                        </Typography>
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        style={{ border: "1px solid #aaa" }}
-                      >
-                   14/02/2020
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        style={{ border: "1px solid #aaa" }}
-                      >
-                    18/02/2020
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        style={{ border: "1px solid #aaa" }}
-                      >
-                        <Button
-                          
-                          style={{ textTransform: "lowercase" }}
-                          onClick={()=>handle(1)}
-                        >
-                        1 finding
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-            
+                  );
+                }
+              )}
             </TableBody>
           </Table>
         </TableContainer>
       </Paper>
-      <Dialog
-        open={open}
-        onClose={handle}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        maxWidth={"xl"}
-      >
-        <DialogTitle>
-          <Grid item xs={12}>
-            <Grid container justify="center">
-              <Grid item xs={11}>
-                <Grid container>
-                  <Grid item xs={11}>
-                    Alert(s)
-                  </Grid>
-                  <Grid item xs={1}>
-                    <Grid container justify="flex-end">
-                      <CloseIcon onClick={handle} />
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </DialogTitle>
-        <Divider />
-        <DialogContent>
-            {count===2?
-            <div>
-          <LatestCard />
-          <LatestCard />
-            </div>:
-            <div>
-<LatestCard />
-            </div>
-
-            }
-
-        </DialogContent>
-      </Dialog>
+              <Dialogtable open={open} alertdatalist={alertdatalist} alertstate={alertstate} handle={handle} handle1={handle1}/>
     </div>
   );
 }

@@ -5,6 +5,8 @@ import Footer from "../../components/Footer/Footer.jsx";
 import MainDrawer from "../../components/Discover/Drawer.js";
 import {BrowserRouter,Link,Switch,Route,Redirect,useHistory,withRouter} from 'react-router-dom';
 import FetchDataProvider from "../../context/FetchDataContext";
+import FetchRemediationProvider from "../../context/FetchRemidiation";
+import ExposedCredentialsProvider from "../../context/ExposedCredentials";
 export default function MainDashboard(){
   let history = useHistory();
 const [drawer,setdrawer]=React.useState(true)
@@ -19,6 +21,8 @@ if(token===null){
 else{
   return(
     <FetchDataProvider>
+            <FetchRemediationProvider>
+        <ExposedCredentialsProvider>
     <React.Fragment >
       <div >
       <Header call={handledrawer}/>
@@ -57,6 +61,9 @@ else{
           }
         `}</style>  
     </React.Fragment>
+    </ExposedCredentialsProvider>
+    </FetchRemediationProvider>
+    
     </FetchDataProvider>
   )
 }

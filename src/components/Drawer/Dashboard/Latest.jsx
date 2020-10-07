@@ -20,6 +20,7 @@ import Chip from '@material-ui/core/Chip';
 import LatestCard from "./LatestCard.jsx";
 import React,{useEffect} from 'react'
 import {useHistory} from 'react-router-dom';
+
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -121,9 +122,10 @@ export default function Latest(props){
     const history = useHistory();
     const [st1,set]=React.useState([""]);
     const [click,setclick]=React.useState(true);
-    const addcount=()=>{
-        setclick(!click)
-    }
+
+    // const addcount=()=>{
+    //     setclick(!click)
+    // }
     const addcount1=()=>{
         set([...st1,""])
         console.log(st1)
@@ -141,70 +143,27 @@ export default function Latest(props){
       window.location.reload();
       
     }
-    const [usestate1,setstate1]=React.useState({})
-    useEffect(() => {
-        let result = null;
-        const token=localStorage.getItem("token")
-            
-        const  x= async()=>{
-          const response= await fetch('https://if.cyberdevelopment.house/api/alerts?filter_op=AND', {
-              headers: {
-                  'accept': 'application/json',
-                  'Authorization': token
-              }
-          });
-          const y=await response.json()
-          if(y.message==="Invalid access token"){
-              console.log(y,"typefaisal")
-              loggedout()
-          }
-          else{
-              console.log(y,"typefaisal")
-              if(y.length===0){
-                  setstate1({})
-              }
-              else{
-                  setstate1(y.alerts.slice(0,5))
-              }
-              
-          }
-          // console.log(y,"typefaisal")
-          // setstate1(y.alerts)
-      }
-      x() 
-        // const fetchData = async () => {
-        //   result = await axios.get(
-        //     "https://if.cyberintelligencehouse.com/api/alerts?filter_op=AND",
-        //     {
-        //       headers: {
-        //         "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
-        //       },
-        //     }
-        //   );
-        //   console.log(result.data,"faisal")
-        //   setstate1(result.data.alerts.slice(0,5))
-        // }
-        // fetchData()
-    },[])
+    const {usestate2}=props
+
     return(
         <div>
-            {usestate1.length===0?
+            {usestate2.length===0?
             <div></div>:
-            Object.keys(usestate1).map((index)=>(
+            Object.keys(usestate2).map((index)=>(
               <div>
-                            {console.log(usestate1[index],"print")}
+                            {console.log(usestate2[index],"print")}
             <LatestCard
-            date={usestate1[index]['timestamp']}
-            alertcreated={usestate1[index]['created']}
-            severity={usestate1[index]['severity']} 
-            title={usestate1[index]['source_title']} 
-            source={usestate1[index]['source_url']}
-            keyword={usestate1[index]['keywords']}
-            tags={usestate1[index]['tags']}
-            remediation={usestate1[index]['remediation']}
-            id={usestate1[index]['id']}
-            comments={usestate1[index]['comments']}
-            
+            date={usestate2[index]['timestamp']}
+            alertcreated={usestate2[index]['created']}
+            severity={usestate2[index]['severity']} 
+            title={usestate2[index]['source_title']} 
+            source={usestate2[index]['source_url']}
+            keyword={usestate2[index]['keywords']}
+            tags={usestate2[index]['tags']}
+            remediation={usestate2[index]['remediation']}
+            id={usestate2[index]['id']}
+            comments={usestate2[index]['comments']}
+            disabled={false}
             // changeflag={props.changeflag} addcount={props.addcount}
             />
             

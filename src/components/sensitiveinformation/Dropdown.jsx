@@ -179,6 +179,7 @@ export default function Dropdown(props){
     const classes=useStyles();
     const history = useHistory();
     const {state,dispatch}=props
+    // const [state, dispatch] = useReducer(reducer, initialState);
     const [select,changeselect]=React.useState('AND')
     const handleselect=(e)=>{
         changeselect(e.target.value)
@@ -195,10 +196,12 @@ export default function Dropdown(props){
     const [view,setview]=useState(true);
     const [dropc,setdrop]=useState(true);
     const handleview=()=>{
-            setview(true)
-    }
-    const handleview1=()=>{
-        setview(false)
+        setview(true)
+        listview()
+}
+const handleview1=()=>{
+    setview(false)
+    gridview()
 }
     const handledrop=()=>{
             setdrop(true)
@@ -236,152 +239,411 @@ export default function Dropdown(props){
           }
           const [usestate1,setstate1]=React.useState({})
           const [commenting,setcommenting]=React.useState([]);
-          const handlecall=(sq)=>{
-              // console.log(sq)
-              let array=[];
-              for (let i in sq){
-                  // console.log(i)
-                  if(sq[i]['comments'].length>0){
-                      // console.log(commenting)
-                      array.push(sq[i]['comments'][0]["text"])
-                      // setcommenting(commenting => [...commenting, sq[i]['comments'][0]["text"]])
-                  }
-                  else{
-                      array.push("")
-                      // console.log(commenting)
-                      // setcommenting(commenting => [...commenting, ""])
-                  }
-              }
-              setcommenting(array)
-              // setcommenting1("1")
-          }
-          useDeepCompareEffect(()=>{
-              let result = null;
-              // console.log(state.query,"very valuable")
-              const token=localStorage.getItem("token")
-              if(state.query.length===0){
-   
-                      const  x= async()=>{
-                          const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+select, {
-                              headers: {
-                                  'accept': 'application/json',
-                                  'Authorization': token
-                              }
-                          });
-                          const y=await response.json()
-                          if(y.message==="Invalid access token"){
-                              console.log(y,"typefaisal")
-                              loggedout()
-                          }
-                          else{
-                              console.log(y,"typefaisal")
-                              if(y.length===0){
-                                  setstate1({})
-                              }
-                              else{
-                                  setstate1(y.alerts.slice(0,6))
-                                  handlecall(y.alerts.slice(0,6))
-                              }
-                              
-                          }
-                          // console.log(y,"typefaisal")
-                          // setstate1(y.alerts)
-                      }
-                      x() 
-  
-  
-             
-              
-              }
-              else if(state.query.length===1){
-                  const  x= async()=>{
-                      const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+state.query[0]+"&filter_op="+select, {
-                          headers: {
-                              'accept': 'application/json',
-                              'Authorization': token
-                          }
-                      });
-                      const y1=await response.json()
-                      if(y1.message==="Invalid access token"){
-                          console.log(y1,"typefaisal")
-                          loggedout()
-                      }
-                      else{
-                          console.log(y1,"typefaisal")
-                          if(y1.length===0){
-                              setstate1({})
-                          }
-                          else{
-                              setstate1(y1.alerts.slice(0,6))
-                              handlecall(y1.alerts.slice(0,6))
-                          }
-                          
-                      }
-                      // console.log(y,"typefaisal")
-                      // setstate1(y.alerts)
-                  }
-                  x() 
-                  // const fetchData = async () => {
-                  //     result = await axios.get(
-                  //       "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+state.query[0]+"&filter_op="+select,
-                  //       {
-                  //         headers: {
-                  //           "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
-                  //         },
-                  //       }
-                  //     );
-                  //     // console.log(result.data,"faisal")
-                  //     setstate1(result.data.alerts)
-                  //   }
-                  //   fetchData()
-              }
-              else{
-                  const y=state.query
-                  const  x= async()=>{
-                      const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+y.join("%2C")+"&filter_op="+select, {
-                          headers: {
-                              'accept': 'application/json',
-                              'Authorization': token
-                          }
-                      });
-                      const y1=await response.json()
-                      if(y1.message==="Invalid access token"){
-                          console.log(y1,"typefaisal")
-                          loggedout()
-                      }
-                      else{
-                          console.log(y1,"typefaisal")
-                          if(y1.length===0){
-                              setstate1({})
-                              
-                          }
-                          else{
-                              setstate1(y1.alerts.slice(0,6))
-                              handlecall(y1.alerts.slice(0,6))
-                          }
-                          
-                      }
-                      // console.log(y,"typefaisal")
-                      // setstate1(y.alerts)
-                  }
-                  x()
-                  // const y=state.query
-                  // const fetchData = async () => {
-                  //     result = await axios.get(
-                  //       "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+y.join("%2C")+"&filter_op="+select,
-                  //       {
-                  //         headers: {
-                  //           "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
-                  //         },
-                  //       }
-                  //     );
-                  //     // console.log(result.data,"faisal")
-                  //     setstate1(result.data.alerts)
-                  //   }
-                  //   fetchData()
-              }
-  
-          },[state,select])
+          const [view1,setview1]=React.useState(false);
+        const handlecall=(sq)=>{
+            // console.log(sq)
+            let array=[];
+            for (let i in sq){
+                // console.log(i)
+                if(sq[i]['comments'].length>0){
+                    // console.log(commenting)
+                    array.push(sq[i]['comments'][0]["text"])
+                    // setcommenting(commenting => [...commenting, sq[i]['comments'][0]["text"]])
+                }
+                else{
+                    array.push("")
+                    // console.log(commenting)
+                    // setcommenting(commenting => [...commenting, ""])
+                }
+            }
+            setcommenting(array)
+            // setcommenting1("1")
+        }
+        const gridview=()=>{
+            console.log("grid view")
+            const token=localStorage.getItem("token")
+            if(state.query.length===0){
+ 
+                    const  x= async()=>{
+                        const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+select, {
+                            headers: {
+                                'accept': 'application/json',
+                                'Authorization': token
+                            }
+                        });
+                        const y=await response.json()
+                        if(y.message==="Invalid access token"){
+                            console.log(y,"typefaisal")
+                            loggedout()
+                        }
+                        else{
+                            console.log(y,"typefaisal")
+                            if(y.length===0){
+                                setstate1({})
+                            }
+                            else{
+                                setstate1(y.alerts.slice(0,6))
+                                setview1(true)
+                                // handlecall(y.alerts.slice(0,6))
+                            }
+                            
+                        }
+                        // console.log(y,"typefaisal")
+                        // setstate1(y.alerts)
+                    }
+                    x() 
+
+
+           
+            
+            }
+            else if(state.query.length===1){
+                const  x= async()=>{
+                    const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+state.query[0]+"&filter_op="+select, {
+                        headers: {
+                            'accept': 'application/json',
+                            'Authorization': token
+                        }
+                    });
+                    const y1=await response.json()
+                    if(y1.message==="Invalid access token"){
+                        console.log(y1,"typefaisal")
+                        loggedout()
+                    }
+                    else{
+                        console.log(y1,"typefaisal")
+                        if(y1.length===0){
+                            setstate1({})
+                        }
+                        else{
+                            setstate1(y1.alerts.slice(0,6))
+                            setview1(true)
+                            // handlecall(y1.alerts.slice(0,6))
+                        }
+                        
+                    }
+                    // console.log(y,"typefaisal")
+                    // setstate1(y.alerts)
+                }
+                x() 
+                // const fetchData = async () => {
+                //     result = await axios.get(
+                //       "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+state.query[0]+"&filter_op="+select,
+                //       {
+                //         headers: {
+                //           "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
+                //         },
+                //       }
+                //     );
+                //     // console.log(result.data,"faisal")
+                //     setstate1(result.data.alerts)
+                //   }
+                //   fetchData()
+            }
+            else{
+                const y=state.query
+                const  x= async()=>{
+                    const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+y.join("%2C")+"&filter_op="+select, {
+                        headers: {
+                            'accept': 'application/json',
+                            'Authorization': token
+                        }
+                    });
+                    const y1=await response.json()
+                    if(y1.message==="Invalid access token"){
+                        console.log(y1,"typefaisal")
+                        loggedout()
+                    }
+                    else{
+                        console.log(y1,"typefaisal")
+                        if(y1.length===0){
+                            setstate1({})
+                            
+                        }
+                        else{
+                            setstate1(y1.alerts.slice(0,6))
+                            setview1(true)
+                            // handlecall(y1.alerts.slice(0,6))
+                        }
+                        
+                    }
+                    // console.log(y,"typefaisal")
+                    // setstate1(y.alerts)
+                }
+                x()
+                // const y=state.query
+                // const fetchData = async () => {
+                //     result = await axios.get(
+                //       "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+y.join("%2C")+"&filter_op="+select,
+                //       {
+                //         headers: {
+                //           "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
+                //         },
+                //       }
+                //     );
+                //     // console.log(result.data,"faisal")
+                //     setstate1(result.data.alerts)
+                //   }
+                //   fetchData()
+            }
+ 
+        }
+        const listview=()=>{
+            console.log("list view")
+            const token=localStorage.getItem("token")
+            if(state.query.length===0){
+ 
+                    const  x= async()=>{
+                        const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+select, {
+                            headers: {
+                                'accept': 'application/json',
+                                'Authorization': token
+                            }
+                        });
+                        const y=await response.json()
+                        if(y.message==="Invalid access token"){
+                            console.log(y,"typefaisal")
+                            loggedout()
+                        }
+                        else{
+                            console.log(y,"typefaisal")
+                            if(y.length===0){
+                                setstate1({})
+                            }
+                            else{
+                                setstate1(y.alerts.slice(0,6))
+                                setview1(false)
+                                // handlecall(y.alerts.slice(0,6))
+                            }
+                            
+                        }
+                        // console.log(y,"typefaisal")
+                        // setstate1(y.alerts)
+                    }
+                    x() 
+
+
+           
+            
+            }
+            else if(state.query.length===1){
+                const  x= async()=>{
+                    const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+state.query[0]+"&filter_op="+select, {
+                        headers: {
+                            'accept': 'application/json',
+                            'Authorization': token
+                        }
+                    });
+                    const y1=await response.json()
+                    if(y1.message==="Invalid access token"){
+                        console.log(y1,"typefaisal")
+                        loggedout()
+                    }
+                    else{
+                        console.log(y1,"typefaisal")
+                        if(y1.length===0){
+                            setstate1({})
+                        }
+                        else{
+                            setstate1(y1.alerts.slice(0,6))
+                            setview1(false)
+                            // handlecall(y1.alerts.slice(0,6))
+                        }
+                        
+                    }
+                    // console.log(y,"typefaisal")
+                    // setstate1(y.alerts)
+                }
+                x() 
+                // const fetchData = async () => {
+                //     result = await axios.get(
+                //       "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+state.query[0]+"&filter_op="+select,
+                //       {
+                //         headers: {
+                //           "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
+                //         },
+                //       }
+                //     );
+                //     // console.log(result.data,"faisal")
+                //     setstate1(result.data.alerts)
+                //   }
+                //   fetchData()
+            }
+            else{
+                const y=state.query
+                const  x= async()=>{
+                    const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+y.join("%2C")+"&filter_op="+select, {
+                        headers: {
+                            'accept': 'application/json',
+                            'Authorization': token
+                        }
+                    });
+                    const y1=await response.json()
+                    if(y1.message==="Invalid access token"){
+                        console.log(y1,"typefaisal")
+                        loggedout()
+                    }
+                    else{
+                        console.log(y1,"typefaisal")
+                        if(y1.length===0){
+                            setstate1({})
+                            
+                        }
+                        else{
+                            setstate1(y1.alerts.slice(0,6))
+                            setview1(false)
+                            // handlecall(y1.alerts.slice(0,6))
+                        }
+                        
+                    }
+                    // console.log(y,"typefaisal")
+                    // setstate1(y.alerts)
+                }
+                x()
+                // const y=state.query
+                // const fetchData = async () => {
+                //     result = await axios.get(
+                //       "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+y.join("%2C")+"&filter_op="+select,
+                //       {
+                //         headers: {
+                //           "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
+                //         },
+                //       }
+                //     );
+                //     // console.log(result.data,"faisal")
+                //     setstate1(result.data.alerts)
+                //   }
+                //   fetchData()
+            }
+ 
+        }
+        useDeepCompareEffect(()=>{
+            let result = null;
+            // console.log(state.query,"very valuable")
+            const token=localStorage.getItem("token")
+            if(state.query.length===0){
+ 
+                    const  x= async()=>{
+                        const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+select, {
+                            headers: {
+                                'accept': 'application/json',
+                                'Authorization': token
+                            }
+                        });
+                        const y=await response.json()
+                        if(y.message==="Invalid access token"){
+                            console.log(y,"typefaisal")
+                            loggedout()
+                        }
+                        else{
+                            console.log(y,"typefaisal")
+                            if(y.length===0){
+                                setstate1({})
+                            }
+                            else{
+                                setstate1(y.alerts.slice(0,6))
+                                // handlecall(y.alerts.slice(0,6))
+                            }
+                            
+                        }
+                        // console.log(y,"typefaisal")
+                        // setstate1(y.alerts)
+                    }
+                    x() 
+
+
+           
+            
+            }
+            else if(state.query.length===1){
+                const  x= async()=>{
+                    const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+state.query[0]+"&filter_op="+select, {
+                        headers: {
+                            'accept': 'application/json',
+                            'Authorization': token
+                        }
+                    });
+                    const y1=await response.json()
+                    if(y1.message==="Invalid access token"){
+                        console.log(y1,"typefaisal")
+                        loggedout()
+                    }
+                    else{
+                        console.log(y1,"typefaisal")
+                        if(y1.length===0){
+                            setstate1({})
+                        }
+                        else{
+                            setstate1(y1.alerts.slice(0,6))
+                            // handlecall(y1.alerts.slice(0,6))
+                        }
+                        
+                    }
+                    // console.log(y,"typefaisal")
+                    // setstate1(y.alerts)
+                }
+                x() 
+                // const fetchData = async () => {
+                //     result = await axios.get(
+                //       "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+state.query[0]+"&filter_op="+select,
+                //       {
+                //         headers: {
+                //           "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
+                //         },
+                //       }
+                //     );
+                //     // console.log(result.data,"faisal")
+                //     setstate1(result.data.alerts)
+                //   }
+                //   fetchData()
+            }
+            else{
+                const y=state.query
+                const  x= async()=>{
+                    const response= await fetch('https://if.cyberdevelopment.house/api/alerts?page=1&filter='+y.join("%2C")+"&filter_op="+select, {
+                        headers: {
+                            'accept': 'application/json',
+                            'Authorization': token
+                        }
+                    });
+                    const y1=await response.json()
+                    if(y1.message==="Invalid access token"){
+                        console.log(y1,"typefaisal")
+                        loggedout()
+                    }
+                    else{
+                        console.log(y1,"typefaisal")
+                        if(y1.length===0){
+                            setstate1({})
+                            
+                        }
+                        else{
+                            setstate1(y1.alerts.slice(0,6))
+                            // handlecall(y1.alerts.slice(0,6))
+                        }
+                        
+                    }
+                    // console.log(y,"typefaisal")
+                    // setstate1(y.alerts)
+                }
+                x()
+                // const y=state.query
+                // const fetchData = async () => {
+                //     result = await axios.get(
+                //       "https://if.cyberintelligencehouse.com/api/alerts?page=1&filter="+y.join("%2C")+"&filter_op="+select,
+                //       {
+                //         headers: {
+                //           "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
+                //         },
+                //       }
+                //     );
+                //     // console.log(result.data,"faisal")
+                //     setstate1(result.data.alerts)
+                //   }
+                //   fetchData()
+            }
+
+        },[state,select,view1])
      return(
          
         <div style={{width:"100%",marginTop:"-30px",marginBottom:"30px",padding:"-15px"}}>
@@ -1123,8 +1385,8 @@ export default function Dropdown(props){
                                 id2={index}
                                 comments={usestate1[index]['comments']}
                                 changeflag={props.changeflag} 
-                                commenting1={commenting[index]}
-                                setcommenting={setcommenting}
+                                // commenting1={commenting[index]}
+                                // setcommenting={setcommenting}
                                 addcount={props.addcount}
                                 />
                                 
@@ -1166,8 +1428,8 @@ export default function Dropdown(props){
                                 id2={index}
                                 comments={usestate1[index]['comments']}
                                 changeflag={props.changeflag} 
-                                commenting1={commenting[index]}
-                                setcommenting={setcommenting}
+                                // commenting1={commenting[index]}
+                                // setcommenting={setcommenting}
                                 addcount={props.addcount}
             />
 

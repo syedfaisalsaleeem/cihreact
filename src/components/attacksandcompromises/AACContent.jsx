@@ -506,13 +506,25 @@ function reducer(state, action) {
                 }
 
         case 'alertgroup':
-            
-             return {
-                ...state,
-                alertgroup:{...state.alertgroup,
-                    value:{...state.other.value,highlightedalerts:!action.payload}
+                    if(action.payload===true){
+                        const listi=Object.assign([],state.query);
+                        for( var i = 0; i < listi.length; i++){ if ( listi[i] === "highlightedalerts") { listi.splice(i, 1); }}          
+                     return {
+                        ...state,query:listi,
+                        alertgroup:{...state.alertgroup,
+                            value:{...state.other.value,highlightedalerts:!action.payload}
+                            }
                     }
-            }
+                }
+                else{
+                    return {
+                        ...state,query:[...state.query,"highlightedalerts"],
+                        alertgroup:{...state.alertgroup,
+                            value:{...state.other.value,highlightedalerts:!action.payload}
+                            }
+                        }
+                    
+                }
         case 'sensitiveinformation':
             if(action.payload===true){
                 const listi=Object.assign([],state.query);
