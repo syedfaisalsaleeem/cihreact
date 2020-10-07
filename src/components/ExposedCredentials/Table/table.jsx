@@ -27,8 +27,8 @@ import {
 import { ExposedCredentialContext } from "../../../context/ExposedCredentials";
 import Dialogtable from "./Dialogtable.js";
 import axios from "axios";
-function createData(name, calories, fat, carbs, protein, found) {
-  return { name, calories, fat, carbs, protein, found };
+function createData(name, calories, fat, carbs, protein, found, passPin) {
+  return { name, calories, fat, carbs, protein, found, passPin };
 }
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
@@ -267,10 +267,11 @@ export default function EnhancedTable() {
       createData(
         obj.severity,
         obj.username,
-        obj.passCodes,
+        obj.password,
         obj.firstFound,
         obj.lastFound,
-        obj.password.length
+        obj.password.length,
+        obj.passCodes
       )
     );
   }
@@ -378,7 +379,7 @@ export default function EnhancedTable() {
                             // maxWidth: "200px",
                           }}
                         >
-                          {row.fat.map((el) => {
+                          {row.passPin.map((el) => {
                             return (
                               <li
                                 key={el}
