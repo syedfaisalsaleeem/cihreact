@@ -225,12 +225,24 @@ export default function EnhancedTable() {
               return null;
           }
         } else if (k === "timeStamp") {
-          firstFound = obj[k].reduce((acc, cur) => {
-            return acc < cur ? `${acc}` : `${cur}`;
-          });
-          lastFound = obj[k].reduce((acc, cur) => {
-            return acc > cur ? `${acc}` : `${cur}`;
-          });
+          if (obj[k].length === 1) {
+            firstFound = new Date(obj[k]).getFullYear();
+          } else {
+            firstFound = obj[k].reduce((acc, cur) => {
+              return acc < cur
+                ? `${new Date(acc).getFullYear()}`
+                : `${new Date(cur).getFullYear()}`;
+            });
+          }
+          if (obj[k].length === 1) {
+            lastFound = new Date(obj[k]).getFullYear();
+          } else {
+            lastFound = obj[k].reduce((acc, cur) => {
+              return acc > cur
+                ? `${new Date(acc).getFullYear()}`
+                : `${new Date(cur).getFullYear()}`;
+            });
+          }
         } else if (k === "password") {
           password = [...obj[k]];
         } else if (k === "passCodes") {
