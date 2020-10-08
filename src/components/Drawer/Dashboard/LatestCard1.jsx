@@ -13,6 +13,7 @@ import theme from '../../../theme';
 import Tooltip from '@material-ui/core/Tooltip';
 import axios from 'axios';
 import {Redirect,useHistory, withRouter} from 'react-router-dom';
+import Analystsupportmodal1 from './Analystsupportmodal1';
 const LightTooltip = withStyles((theme) => ({
     tooltip: {
       backgroundColor: theme.palette.common.white,
@@ -159,7 +160,7 @@ export default function LatestCard(props){
         title,source,keyword,
         remediation,tags,comments}=props
 
-    const [tags1,settags1]=React.useState(tags.some(tag=>tag==="highlightedalerts"))
+    const [tags1,settags1]=React.useState(tags.some(tag=>tag==="highlighted"))
     if(severity!==""){
         // console.log(severity)
         const newStr = severity.split('');
@@ -190,7 +191,7 @@ export default function LatestCard(props){
                         'Authorization': token,
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
-                    body: 'tag=highlightedalerts'
+                    body: 'tag=highlighted'
                 });
                 
                 const y=await response.json()
@@ -206,7 +207,7 @@ export default function LatestCard(props){
     
                 const pushcomment=async()=>{
                 const token=localStorage.getItem("token")
-                const response= await fetch('https://if.cyberdevelopment.house/api/alerts/'+props.id+'/tags/highlightedalerts', {
+                const response= await fetch('https://if.cyberdevelopment.house/api/alerts/'+props.id+'/tags/highlighted', {
                     method: 'DELETE',
                     headers: {
                         'accept': 'application/json',
@@ -338,7 +339,7 @@ const handlecommenting=(e)=>{
     setcommenting(e.target.value)
 }
 React.useEffect(()=>{
-    selectstar(tags.some(tag=>tag==="highlightedalerts"))
+    selectstar(tags.some(tag=>tag==="highlighted"))
     if(comments.length>0){
         setcommenting(comments[0]['text'])
     }
@@ -358,12 +359,19 @@ React.useEffect(()=>{
     
 // },[props.commenting1])
     // https://if.cyberintelligencehouse.com/api/alerts/39412cec-8a69-4254-9a81-3cf21a83ba09/comments
-     const classes=useStyles()
+     const classes=useStyles();
+     const [open1,setopen1]=React.useState(false);
+     const handle1=()=>{
+         setopen1(true)
+     }
+     const handle2=()=>{
+         setopen1(false)
+     }
     return(
         <div>
             {console.log("keyword",props.commenting1,"commenting",commenting)}
-            <Grid item xs={12}  style={{marginBottom:"20px"}}>
-            <Box className={classes.f5} height="100%"  >
+            <Grid item xs={12}  style={{marginBottom:"10px"}}>
+            <Box className={classes.f5}   >
                 <Grid item    xs={12}>
                     <Grid container  justify="flex-start" spacing={1}>
                         <Grid item xs={2} lg={2}  >
@@ -836,11 +844,12 @@ React.useEffect(()=>{
           <Button onClick={handleClose} color="primary" style={{border:"0.8px solid #000000",color:"black",padding:"12px",marginRight:"10px",fontSize:"15px"}}>
             Track Remedition
           </Button>
-          <Button onClick={handleClose} color="primary" variant="contained" style={{padding:"12px",fontSize:"15px"}} autoFocus>
+          <Button onClick={handle1}  color="primary" variant="contained" style={{padding:"12px",fontSize:"15px"}} autoFocus>
             Analyst Support
           </Button>
         </DialogActions>
       </Dialog>
+      <Analystsupportmodal1 open={open1} handle1={handle2} alertdata={props} />
         </div>
     )
 }

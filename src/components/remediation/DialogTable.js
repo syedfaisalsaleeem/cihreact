@@ -1,7 +1,7 @@
 import React ,{useState,useEffect} from 'react';
 import {Dialog,DialogTitle,DialogContent,Grid,Divider} from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import LatestCard from "../../Drawer/Dashboard/LatestCard1.jsx"
+import LatestCard from "../Drawer/Dashboard/LatestCard1.jsx"
 export default function Dialogtable(props){
     useEffect(()=>{
         console.log("pushed")
@@ -18,6 +18,7 @@ export default function Dialogtable(props){
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         maxWidth={"xl"}
+       
         >
         <DialogTitle>
         <Grid item xs={12}>
@@ -25,7 +26,7 @@ export default function Dialogtable(props){
             <Grid item xs={11}>
                 <Grid container>
                 <Grid item xs={11}>
-                    Alert(s)
+                Remediated Alert(s)
                 </Grid>
                 <Grid item xs={1}>
                     <Grid container justify="flex-end">
@@ -38,7 +39,7 @@ export default function Dialogtable(props){
         </Grid>
         </DialogTitle>
         <Divider />
-        <DialogContent >
+        <DialogContent  style={{minHeight:"80vh",minWidth:"90vw"}}>
             {/* {props.alertstate.length} */}
             {props.alertdatalist.map((index)=>{
                 return(

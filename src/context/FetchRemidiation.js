@@ -54,19 +54,23 @@ const FetchRemediation = (props) => {
   const [riskResidualPer, setRiskResidualPer] = useState();
 
   const [table1State, setTable1Sate] = useState();
-
+  const [table2State, setTable2Sate] = useState();
   useEffect(() => {
     let result = null;
+    
     const fetchRemediationData = async () => {
-      result = await axios.get(
-        "https://if.cyberintelligencehouse.com/api/remediation",
+      const token=localStorage.getItem("token")
+      result = await fetch(
+        "https://if.cyberdevelopment.house/api/remediation",
         {
           headers: {
-            "X-Api-Key": "1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2",
-          },
+            'accept': 'application/json',
+            'Authorization': token
+        }
         }
       );
-      const res = result.data;
+      const y= await result.json()
+      const res = y;
       getBarChartData(
         res.trend_12m,
         setRiskRemediated,
@@ -95,6 +99,47 @@ const FetchRemediation = (props) => {
     };
 
     fetchRemediationData();
+    const fetchRemediationData1 = async () => {
+      const token=localStorage.getItem("token")
+      result = await fetch(
+        "https://if.cyberdevelopment.house/api/remediation",
+        {
+          headers: {
+            'accept': 'application/json',
+            'Authorization': token
+        }
+        }
+      );
+      const y= await result.json()
+      const res = y;
+      getBarChartData(
+        res.trend_12m,
+        setRiskRemediated,
+        setRiskRemediatedPer,
+        "remediated"
+      );
+      getBarChartData(
+        res.trend_12m,
+        setRiskResidual,
+        setRiskResidualPer,
+        "residual"
+      );
+      const loadedData = [];
+      res.remediations.forEach((el) => {
+        loadedData.push({
+          title: el.title,
+          description: el.description,
+          affects: el.total_alerts,
+          risks: el.total_risk,
+          cisControls: [...el.cis_controls],
+          readyToExploit: el.ready_to_exploit,
+          alertsIds: [...el.alert_ids],
+        });
+      });
+      setTable2Sate(loadedData.splice(0,10));
+    };
+
+    fetchRemediationData1();
   }, []);
 
   return (
@@ -105,6 +150,7 @@ const FetchRemediation = (props) => {
         riskRemediatedPer,
         riskResidualPer,
         table1State,
+        table2State
       }}
     >
       {props.children}

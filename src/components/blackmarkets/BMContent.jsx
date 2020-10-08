@@ -508,7 +508,7 @@ function reducer(state, action) {
                 case 'alertgroup':
                     if(action.payload===true){
                         const listi=Object.assign([],state.query);
-                        for( var i = 0; i < listi.length; i++){ if ( listi[i] === "highlightedalerts") { listi.splice(i, 1); }}          
+                        for( var i = 0; i < listi.length; i++){ if ( listi[i] === "highlighted") { listi.splice(i, 1); }}          
                      return {
                         ...state,query:listi,
                         alertgroup:{...state.alertgroup,
@@ -518,7 +518,7 @@ function reducer(state, action) {
                 }
                 else{
                     return {
-                        ...state,query:[...state.query,"highlightedalerts"],
+                        ...state,query:[...state.query,"highlighted"],
                         alertgroup:{...state.alertgroup,
                             value:{...state.other.value,highlightedalerts:!action.payload}
                             }

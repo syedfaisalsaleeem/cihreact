@@ -23,7 +23,7 @@ React.useEffect(()=>{
             
     const  x= async()=>{
         
-        const response= await fetch("https://if.cyberdevelopment.house/api/alerts?page=1&filter=highlightedalerts&filter_op=AND", {
+        const response= await fetch("https://if.cyberdevelopment.house/api/alerts?page=1&filter=highlighted&filter_op=AND", {
           headers: {
               'accept': 'application/json',
               'Authorization': token
@@ -49,7 +49,7 @@ React.useEffect(()=>{
       // setstate1(y.alerts)
   }
   x()
-},[])
+},[count])
 return(
    <HighlightStarsContext.Provider
     value={{

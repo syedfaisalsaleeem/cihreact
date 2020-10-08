@@ -151,7 +151,7 @@ export default function Latest(props){
             remediation={usestate1[index]['remediation']}
             id={usestate1[index]['id']}
             comments={usestate1[index]['comments']}
-            disabled={true}
+            disabled={false}
         
             
             // changeflag={props.changeflag} addcount={props.addcount}
@@ -165,39 +165,7 @@ export default function Latest(props){
 
             </Grid>
       
-            <Grid container className={classes.root1} spacing={2}>
-                <Grid item xs={12} >
-                    
-                        <Card className={classes.f2} >
-                            <CardContent>
-                            <Grid container justify="center" maxWidth="xl"  alignContent="center" >
-                                    <Grid item xs={5} xl={2} >
-                                        
 
-                                        
-                                        <Container maxWidth="sm" style={{display:"flex", flexDirection:"column",justifyContent:"center",background:"white",alignItems:"center"}}>
-                                    
-                                        <Typography component="div" >
-                                                    View More
-                                        </Typography>
-                                        <Typography component="div">
-                                            <ExpandMoreOutlinedIcon/>
-                                        </Typography>
-                                        </Container>
-                                        
-                                    </Grid>
-                            </Grid>
-                            </CardContent>
-                        </Card>
-                    
-
-
-
-                </Grid>
-
-
-
-            </Grid>
         </div>
     )
 }

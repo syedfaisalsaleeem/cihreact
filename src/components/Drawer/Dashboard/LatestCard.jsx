@@ -14,6 +14,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import axios from 'axios';
 import {Redirect,useHistory, withRouter} from 'react-router-dom';
 import { HighlightStarsContext } from "./context/highlightstars.js";
+import Analystsupportmodal from './Analystsupportmodal';
 const LightTooltip = withStyles((theme) => ({
     tooltip: {
       backgroundColor: theme.palette.common.white,
@@ -166,7 +167,7 @@ export default function LatestCard(props){
         console.log(barChartUAInfoData)
         const {addcount,changeflag,count}=barChartUAInfoData;
         console.log(count)
-        const [tags1,settags1]=React.useState(tags.some(tag=>tag==="highlightedalerts"))
+        const [tags1,settags1]=React.useState(tags.some(tag=>tag==="highlighted"))
         if(severity!==""){
         // console.log(severity)
         const newStr = severity.split('');
@@ -296,7 +297,7 @@ const controlhighlight=(e)=>{
                     'Authorization': token,
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: 'tag=highlightedalerts'
+                body: 'tag=highlighted'
             });
             
             const y=await response.json()
@@ -312,7 +313,7 @@ const controlhighlight=(e)=>{
 
             const pushcomment=async()=>{
             const token=localStorage.getItem("token")
-            const response= await fetch('https://if.cyberdevelopment.house/api/alerts/'+id+'/tags/highlightedalerts', {
+            const response= await fetch('https://if.cyberdevelopment.house/api/alerts/'+id+'/tags/highlighted', {
                 method: 'DELETE',
                 headers: {
                     'accept': 'application/json',
@@ -342,6 +343,13 @@ React.useEffect(()=>{
 },[])
     // https://if.cyberintelligencehouse.com/api/alerts/39412cec-8a69-4254-9a81-3cf21a83ba09/comments
      const classes=useStyles()
+     const [open1,setopen1]=React.useState(false);
+     const handle1=()=>{
+         setopen1(true)
+     }
+     const handle2=()=>{
+         setopen1(false)
+     }
     return(
         <div>
             {/* {console.log("keyword",keyword[0]['value'])} */}
@@ -819,11 +827,12 @@ React.useEffect(()=>{
           <Button onClick={handleClose} color="primary" style={{border:"0.8px solid #000000",color:"black",padding:"12px",marginRight:"10px",fontSize:"15px"}}>
             Track Remedition
           </Button>
-          <Button onClick={handleClose} color="primary" variant="contained" style={{padding:"12px",fontSize:"15px"}} autoFocus>
+          <Button onClick={handle1} color="primary" variant="contained" style={{padding:"12px",fontSize:"15px"}} autoFocus>
             Analyst Support
           </Button>
         </DialogActions>
       </Dialog>
+      <Analystsupportmodal open={open1} handle1={handle2} alertdata={props} />
         </div>
     )
 }
