@@ -17,6 +17,8 @@ import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 import LatestCard from "../LatestCard.jsx";
 import CloseIcon from "@material-ui/icons/Close";
 import Tooltip from "@material-ui/core/Tooltip";
+import Loader from "../loader";
+import Modal from "../Modal";
 import {
   Grid,
   Dialog,
@@ -288,6 +290,8 @@ export default function EnhancedTable() {
   const [open, changeopen1] = React.useState(false);
   const [alertstate, changealertstate] = React.useState([]);
   const [alertdatalist, setalertdatalist] = React.useState([]);
+  const [loading, setLoading] = useState(false);
+
   const handle1 = () => {
     changeopen1(false);
   };
@@ -298,11 +302,11 @@ export default function EnhancedTable() {
     alertstate1.push(list);
     changealertstate(alertstate1[0]);
     console.log(alertstate);
-    changeopen1(true);
 
     const fetchRemediationData = async () => {
       const token = localStorage.getItem("token");
       for (const i in list) {
+        setLoading(true);
         const result = await fetch(
           "https://if.cyberdevelopment.house/api/alerts/" + list[i],
           {
@@ -313,6 +317,8 @@ export default function EnhancedTable() {
           }
         );
         const y = await result.json();
+        setLoading(false);
+        changeopen1(true);
         // console.log(y,"result")
         // console.log(result,"result")
         alertdata.push(y);
@@ -325,6 +331,19 @@ export default function EnhancedTable() {
 
   return (
     <div className={classes.root}>
+      {!loading ? (
+        <Dialogtable
+          open={open}
+          alertdatalist={alertdatalist}
+          alertstate={alertstate}
+          handle={handle}
+          handle1={handle1}
+        />
+      ) : (
+        <Modal>
+          <Loader />
+        </Modal>
+      )}
       <Paper className={classes.paper}>
         <TableContainer>
           <Table
@@ -461,13 +480,6 @@ export default function EnhancedTable() {
           </Table>
         </TableContainer>
       </Paper>
-      <Dialogtable
-        open={open}
-        alertdatalist={alertdatalist}
-        alertstate={alertstate}
-        handle={handle}
-        handle1={handle1}
-      />
     </div>
   );
 }
