@@ -97,7 +97,7 @@ export default function CustomizedDialogs(props) {
         <DialogActions>
           {props.event === "add" ? (
             <Button
-              onClick={props.handleClose}
+              onClick={props.handleContinue}
               variant="contained"
               color="primary"
             >
@@ -125,3 +125,4 @@ export default function CustomizedDialogs(props) {
     </div>
   );
 }
+

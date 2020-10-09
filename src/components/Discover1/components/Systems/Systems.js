@@ -22,14 +22,19 @@ const Systems = () => {
   const [newIpAddress, setNewIpAddress] = useState("");
   const [newUrl, setNewUrl] = useState("");
 
+  const [submitObj, setSubmitObj] = useState({});
+  const [msg, setMsg] = useState();
   const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
+  const handleClickOpen = (e, obj, alert) => {
+    e.preventDefault();
     setOpen(true);
+    setSubmitObj(obj);
+    setMsg(alert);
   };
+
   const handleClose = () => {
     setOpen(false);
   };
-  const [msg, setMsg] = useState();
 
   const inputFields = [
     {
@@ -81,12 +86,10 @@ const Systems = () => {
     setNewFunction(e.target.value);
   };
 
-  const handleSubmit = (e, setFunction, newItem, setValue, alert) => {
-    e.preventDefault();
+  const handleSubmit = (setFunction, newItem, setValue) => {
     setFunction(newItem);
     setValue("");
-    handleClickOpen();
-    setMsg(alert);
+    handleClose();
   };
 
   const handleRemove = (removeFunction, id, setFunc) => {
@@ -96,13 +99,22 @@ const Systems = () => {
 
   return (
     <Structure titleText="Systems">
-      <PopUp
-        event="add"
-        modalTitle=" Discover Updated"
-        handleClose={handleClose}
-        open={open}
-        keyword={msg}
-      />
+      {submitObj.value && (
+        <PopUp
+          event="add"
+          modalTitle=" Discover Updated"
+          handleClose={handleClose}
+          handleContinue={() =>
+            handleSubmit(
+              submitObj.onSubmit,
+              submitObj.value,
+              submitObj.onChange
+            )
+          }
+          open={open}
+          keyword={msg}
+        />
+      )}
       <Grid container justify="space-around" className={classes.Systems}>
         {inputFields.map((field) => {
           return (
@@ -117,13 +129,7 @@ const Systems = () => {
                 <form
                   className={classes.input}
                   onSubmit={(e) =>
-                    handleSubmit(
-                      e,
-                      field.onSubmit,
-                      field.value,
-                      field.onChange,
-                      field.alertMessage
-                    )
+                    handleClickOpen(e, field, field.alertMessage)
                   }
                 >
                   <input
