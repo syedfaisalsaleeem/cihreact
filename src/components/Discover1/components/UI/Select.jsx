@@ -21,7 +21,7 @@ const BootstrapInput = withStyles((theme) => ({
       marginTop: "-10px",
       marginRight: "1px",
       borderRadius: "2px",
-      width: "1rem",
+      width: "1.5rem",
     },
   },
   input: {

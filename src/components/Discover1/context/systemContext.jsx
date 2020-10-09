@@ -9,9 +9,7 @@ const ItemsContextProvider = (props) => {
   const [ipAddress, setIpAddress] = useState([]);
   const [url, setUrl] = useState([]);
 
-  const [editDomainName, setEditDomainName] = useState(null);
-  const [editIpAddress, setEditIpAddress] = useState(null);
-  const [editUrl, setEditUrl] = useState(null);
+  
 
   const [progress, setProgress] = useState(false);
 
@@ -80,9 +78,6 @@ const ItemsContextProvider = (props) => {
         domainNames,
         ipAddress,
         url,
-        editDomainName,
-        editIpAddress,
-        editUrl,
         setDomainNames,
         setIpAddress,
         setUrl,
@@ -93,9 +88,6 @@ const ItemsContextProvider = (props) => {
         removeIpAddress,
         removeUrl,
         findItem,
-        setEditDomainName,
-        setEditIpAddress,
-        setEditUrl,
         editItem,
         progress
       }}

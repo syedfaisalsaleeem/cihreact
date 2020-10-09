@@ -35,7 +35,7 @@ const People = () => {
   const inputFields = [
     {
       title: "Personal names",
-      placeholder: "[first name and last name]",
+      placeholder: "Add first name and last name",
       value: newBrandName,
       onChange: setNewBrandName,
       onSubmit: values.addBrandName,

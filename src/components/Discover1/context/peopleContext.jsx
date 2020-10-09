@@ -7,9 +7,6 @@ const ItemsContextProvider = (props) => {
   const [brandNames, setBrandNames] = useState([]);
   const [internalKeyword, setInternalKeyword] = useState([]);
 
-  const [editBrandName, setEditBrandName] = useState(null);
-  const [editInternalKeyword, setEditInternalKeyword] = useState(null);
-
   const [progress, setProgress] = useState(false);
   useEffect(() => {
     if (brandNames.length > 0 && internalKeyword.length > 0) {
@@ -68,8 +65,7 @@ const ItemsContextProvider = (props) => {
       value={{
         brandNames,
         internalKeyword,
-        editBrandName,
-        editInternalKeyword,
+        
         setBrandNames,
         setInternalKeyword,
         addBrandName,
@@ -77,8 +73,7 @@ const ItemsContextProvider = (props) => {
         removeBrandName,
         removeInternalKeyword,
         findItem,
-        setEditBrandName,
-        setEditInternalKeyword,
+        
         editItem,
         progress,
       }}

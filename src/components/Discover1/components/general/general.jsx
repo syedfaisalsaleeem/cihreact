@@ -18,6 +18,8 @@ const LightTooltip = withStyles((theme) => ({
 }))(Tooltip);
 export default function General() {
   const values = useContext(ItemsListContext);
+
+  const [newCompanyName, setNewCompanyName] = useState("");
   const [newBrandName, setNewBrandName] = useState("");
   const [newInternalKeyword, setNewInternalKeyword] = useState("");
   const [newOtherKeyword, setNewOtherKeyword] = useState("");
@@ -33,8 +35,19 @@ export default function General() {
 
   const inputFields = [
     {
-      label: "Brand Name",
-      helperText: "add a brand name",
+      label: "Company Names",
+      value: newCompanyName,
+      onChange: setNewCompanyName,
+      onSubmit: values.addCompanyName,
+      fetchItems: values.companyNames,
+      setFetchItems: values.setCompanyNames,
+      removeItems: values.removeCompanyName,
+      tooltip:
+        "Company Names",
+      alertMessage: "Company Name",
+    },
+    {
+      label: "Brand Names",
       value: newBrandName,
       onChange: setNewBrandName,
       onSubmit: values.addBrandName,
@@ -47,7 +60,6 @@ export default function General() {
     },
     {
       label: "Internal keywords",
-      helperText: "add an internal keyword",
       value: newInternalKeyword,
       onChange: setNewInternalKeyword,
       onSubmit: values.addInternalKeyword,
@@ -60,7 +72,6 @@ export default function General() {
     },
     {
       label: "Other keywords",
-      helperText: "add an other keyword",
       value: newOtherKeyword,
       onChange: setNewOtherKeyword,
       onSubmit: values.addOtherKeyword,
@@ -99,19 +110,7 @@ export default function General() {
         handleClose={handleClose}
         open={open}
         keyword={msg}
-      />
-      <Grid
-        container
-        justify="space-between"
-        style={{ marginBottom: "1.5rem" }}
-      >
-        <Grid item xs="6" style={{ marginLeft: "0.5rem" }}>
-          <label htmlFor="">Company Name</label>
-        </Grid>
-        <Grid item xs="5">
-          <input type="text" style={{ width: "90%" }} />
-        </Grid>
-      </Grid>
+      />  
       {inputFields.map((field) => {
         return (
           <>
