@@ -10,14 +10,15 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     maxWidth: "100%",
-    marginLeft: '20%',
+    marginLeft: "20%",
+    background: "none",
     "& .MuiLinearProgress-root": {
       background: "#bbb",
       height: "35px",
       width: "20rem",
-      [theme.breakpoints.down('md')]: {
-        width: '15rem'
-      }
+      [theme.breakpoints.down("md")]: {
+        width: "15rem",
+      },
     },
     "& .MuiLinearProgress-barColorPrimary": {
       background: "green",
