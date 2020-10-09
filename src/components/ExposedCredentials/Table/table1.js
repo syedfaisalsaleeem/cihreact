@@ -317,10 +317,8 @@ export default function EnhancedTable() {
           }
         );
         const y = await result.json();
-
         setLoading(false);
         changeopen1(true);
-
         // console.log(y,"result")
         // console.log(result,"result")
         alertdata.push(y);

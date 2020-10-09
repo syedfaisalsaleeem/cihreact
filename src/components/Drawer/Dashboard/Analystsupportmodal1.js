@@ -1,16 +1,18 @@
 import React ,{useState,useEffect} from 'react';
 import {Dialog,DialogTitle,DialogContent,Grid,Divider} from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import LatestCard from "../../Drawer/Dashboard/LatestCard1.jsx"
-export default function Dialogtable(props){
+import analyst from "../../../Links/images/analyst.png";
+import LatestCard1 from "./LatestCard1.jsx";
+import ContactForm from "../../Support/ContactForm.jsx"
+export default function Analystsupportmodal (props){
     useEffect(()=>{
         console.log("pushed")
 
     },[])
-    var i;
-    for(i=0; i<=props.alertstate.length;i++){
-        console.log(props.alertstate[i],"ii")
-    }
+    // var i;
+    // for(i=0; i<=props.alertstate.length;i++){
+    //     console.log(props.alertstate[i],"ii")
+    // }
     return(
         <Dialog
         open={props.open}
@@ -19,17 +21,20 @@ export default function Dialogtable(props){
         aria-describedby="alert-dialog-description"
         maxWidth={"xl"}
         >
-        <DialogTitle>
+        <DialogTitle style={{background:"#8950FC"}}>
         <Grid item xs={12}>
             <Grid container justify="center">
             <Grid item xs={11}>
                 <Grid container>
-                <Grid item xs={11}>
-                    Alert(s)
+                <Grid item xs={1} style={{paddingTop:"5px"}}>
+                    <img src={analyst} />
+                </Grid>
+                <Grid item xs={10} style={{color:"white"}}>
+                    Analyst Support
                 </Grid>
                 <Grid item xs={1}>
                     <Grid container justify="flex-end">
-                    <CloseIcon onClick={props.handle1} />
+                    <CloseIcon onClick={props.handle1} style={{color:"white"}} />
                     </Grid>
                 </Grid>
                 </Grid>
@@ -39,11 +44,34 @@ export default function Dialogtable(props){
         </DialogTitle>
         <Divider />
         <DialogContent >
+            {console.log(props.alertdata,"alerts datas")}
+            <Grid item xs={12}>
+                <Grid container style={{paddingLeft:"20px",paddingTop:"20px",paddingBottom:"20px",fontSize:"18px",fontWeight:"600"}}>
+                    Selected Alert
+                </Grid>
+            </Grid>
+            <LatestCard1
+            date={props.alertdata.date}
+            alertcreated={props.alertdata.alertcreated}
+            severity={props.alertdata.severity} 
+            title={props.alertdata.title} 
+            source={props.alertdata.source}
+            keyword={props.alertdata.keyword}
+            tags={props.alertdata.tags}
+            remediation={props.alertdata.remediation}
+            id={props.alertdata.id}
+            id2={props.alertdata.id2}
+            comments={props.alertdata.comments}
+            changeflag={props.alertdata.changeflag} 
+            // commenting1={commenting[index]}
+            // setcommenting={setcommenting}
+            addcount={props.alertdata.addcount}
+            />
+            <ContactForm/>
             {/* {props.alertstate.length} */}
-            {props.alertdatalist.map((index)=>{
-                return(
+
                     <div>
-                                <LatestCard
+                                {/* <LatestCard
                                 date={index['timestamp']}
                                 alertcreated={index['created']}
                                 severity={index['severity']} 
@@ -55,18 +83,10 @@ export default function Dialogtable(props){
                                 id={index['id']}
                                 id2={index}
                                 comments={index['comments']}
-                                // changeflag={props.changeflag} 
-                                // commenting1={commenting[index]}
-                                // setcommenting={setcommenting}
-                                // addcount={props.addcount}
-                                />
+                                /> */}
                     {/* {console.log(props.alertdatalist,index,"consoling")} */}
                     </div>
-                )
 
-            }
-
-            )}
             {/* {props.alertdatalist} */}
         {/* <LatestCard />
         <LatestCard /> */}

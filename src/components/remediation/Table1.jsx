@@ -26,6 +26,8 @@ import {
 import CloseIcon from "@material-ui/icons/Close";
 import controlImg from "../../Links/images/CIS-controls.png";
 import { FetchRemediationContext } from "../../context/FetchRemidiation";
+import Dialogtable from "./DialogTable";
+import { trackPromise } from 'react-promise-tracker';
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
     backgroundColor: theme.palette.common.white,
@@ -82,34 +84,79 @@ function Row(props) {
   }
   const handle2 = (list) => {
     console.log(list,"lsit")
+    
+    
     let alertstate1=[];
     let alertdata=[];
-    alertstate1.push(list)
-    changealertstate(alertstate1[0])
+
     console.log(alertstate)
     changeopen2(true);
-
+    
     const fetchRemediationData = async () => {
+      try{
       const token=localStorage.getItem("token")
-      for (const i in list){            
+      if(list.length>5){
+        alertstate1.push(list.splice(0,5))
+        changealertstate(alertstate1[0])
+        for (const i in list.splice(0,5)){            
 
 
 
-      const result= await fetch("https://if.cyberdevelopment.house/api/alerts/"+list[i], {
-          headers: {
-              'accept': 'application/json',
-              'Authorization': token
+          const result= await trackPromise( fetch("https://if.cyberdevelopment.house/api/alerts/"+list[i], {
+              headers: {
+                  'accept': 'application/json',
+                  'Authorization': token
+              }
+              }
+            ))
+            const y=await trackPromise( result.json())
+            // console.log(y,"result")
+            // console.log(result,"result")
+            alertdata.push(y)
           }
-          }
-        );
-        const y=await result.json()
-        // console.log(y,"result")
-        // console.log(result,"result")
-        alertdata.push(y)
       }
+      else{
+        alertstate1.push(list)
+        changealertstate(alertstate1[0])
+        for (const i in list){            
+
+
+
+          const result= await trackPromise( fetch("https://if.cyberdevelopment.house/api/alerts/"+list[i], {
+              headers: {
+                  'accept': 'application/json',
+                  'Authorization': token
+              }
+              }
+            ))
+            const y=await trackPromise( result.json())
+            // console.log(y,"result")
+            // console.log(result,"result")
+            alertdata.push(y)
+          }
+      }
+
+
       console.log(alertdata,"alertdata")
-      setalertdatalist(alertdata)
-  };
+      if(alertdata[0]["message"]==="Internal Server Error")
+      { console.log("what is error working")   
+        alertdata.length=0
+        setalertdatalist(alertdata)}
+        else{
+          setalertdatalist(alertdata)
+        }
+      
+  }
+  catch(error){
+    console.log(error,"what is error")
+    // alertdata.push([])
+    // setalertdatalist(alertdata)
+  }
+}
+
+    
+  
+
   fetchRemediationData()
 
 }
@@ -198,13 +245,20 @@ function Row(props) {
                 </Grid>
                 <Grid item xs="2" className={styles.downloadBtns}>
                   <button style={{width:"150px"}}>Analyst Support</button>
-                  <button style={{width:"150px"}}>Show Alerts</button>
+                  <button style={{width:"150px"}} onClick={()=>handle2(row.alertsIds)}>Show Alerts</button>
                 </Grid>
               </Grid>
             </Box>
           </Collapse>
         </TableCell>
       </TableRow>
+      {alertdatalist.length==="0"?<div></div>:
+      <Dialogtable  open={open2} alertdatalist={alertdatalist} alertstate={alertstate} handle={handle2} handle1={handle2f}/>
+      }
+        
+      
+      
+  
     </React.Fragment>
   );
 }
@@ -222,10 +276,22 @@ const rows = [
 
 export default function FContent() {
   const [open1, setopen1] = React.useState(false);
+  const [open3,setopen3]=React.useState(false);
   const handle1=()=>{
     setopen1(false)
+    
   }
-  
+  const handle3=()=>{
+    setopen1(true)
+    setopen3(false)
+  }
+  const handleClose = () => {
+    setopen3(false);
+  };
+
+  const handleOpen = () => {
+    setopen3(true);
+  };
   const value = useContext(FetchRemediationContext);
   const { table1State } = value;
   const rows = [];
@@ -242,6 +308,7 @@ console.log(table1State,"table1State")
         [...obj.cisControls].join(" , "),
         rte,
         obj.alertsIds,
+        
         [...obj.alertsIds]
       )
     );
@@ -289,13 +356,18 @@ console.log(table1State,"table1State")
                 CIS Control
                 <div className={styles.i}>
                   <LightTooltip             
-
-                interactive
+                  open={open3}
+                  // onMouseEnter={()=>setopen3(true)}
+                  onMouseEnter={()=>setopen3(true)}
+                  onClose={handleClose} 
+                  onOpen={handleOpen}
+                  onMouseLeave={()=>handleClose}
+                 interactive
                 
                   title={
                     <div style={{display:"flex"}}  >
                       <p>A set of 20 best practises making up the critical security controls, 
-                  published by the Center for Internet Security (CIS).<p className={classes.b} onClick={()=>setopen1(true)}>Show more</p>
+                  published by the Center for Internet Security (CIS).<p className={classes.b} onClick={handle3}>Show more</p>
                   </p>
                     </div>
 }
@@ -320,8 +392,8 @@ console.log(table1State,"table1State")
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-           <div>{console.log(row)}</div>
-            // <Row key={row.name} row={row} />
+          //  <div>{console.log(row)}</div>
+            <Row key={row.name} row={row} />
           ))}
         </TableBody>
       </Table>

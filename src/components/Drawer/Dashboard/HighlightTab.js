@@ -17,6 +17,15 @@ import {Badge} from "@material-ui/core";
 import Latest from "./Latest.jsx";
 import { HighlightStarsContext } from "./context/highlightstars.js";
 import {useHistory} from 'react-router-dom';
+const StyledBadge = withStyles((theme) => ({
+    badge: {
+      right: -15,
+      top: 14,
+      border: `4px solid ${theme.secondary}`,
+      
+      borderRadius:"20px",
+    },
+  }))(Badge);
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -146,7 +155,7 @@ export default function HighlightTab(){
             
         const  x= async()=>{
             
-            const response= await fetch("https://if.cyberdevelopment.house/api/alerts?page=1&filter=highlightedalerts&filter_op=AND", {
+            const response= await fetch("https://if.cyberdevelopment.house/api/alerts?page=1&filter=highlighted&filter_op=AND", {
               headers: {
                   'accept': 'application/json',
                   'Authorization': token
@@ -203,7 +212,36 @@ export default function HighlightTab(){
           // console.log(y,"typefaisal")
           // setstate1(y.alerts)
       }
-      x() 
+      x()
+      const  y1= async()=>{
+            
+        const response= await fetch("https://if.cyberdevelopment.house/api/alerts?page=1&filter=highlighted&filter_op=AND", {
+          headers: {
+              'accept': 'application/json',
+              'Authorization': token
+          }
+      });
+      const y=await response.json()
+      if(y.message==="Invalid access token"){
+          console.log(y,"typefaisal")
+          loggedout()
+      }
+      else{
+          console.log(y,"typefaisal")
+          if(y.length===0){
+              setstate1({})
+          }
+          else{
+            setstate1({})
+              setstate1(y.alerts)
+              setview(true)
+          }
+          
+      }
+      // console.log(y,"typefaisal")
+      // setstate1(y.alerts)
+  }
+  y1() 
         // const fetchData = async () => {
         //   result = await axios.get(
         //     "https://if.cyberintelligencehouse.com/api/alerts?filter_op=AND",
@@ -217,7 +255,7 @@ export default function HighlightTab(){
         //   setstate1(result.data.alerts.slice(0,5))
         // }
         // fetchData()
-    },[view])
+    },[view,count])
     return(
         <Grid item xs={12} md={12}>
         <Grid container justify="center" style={{background:"transparent"}}>
@@ -235,9 +273,9 @@ export default function HighlightTab(){
                                 <A.Tab title="Latest Alerts" onClick={handleclick1} />
                                 <A.Tab title=
                                 {
-                                <Badge color="secondary" badgeContent={count}>
+                                <StyledBadge color="secondary" badgeContent={count}>
                                             Highlighted Alerts
-                                            </Badge>
+                                            </StyledBadge>
                                 
 
                                     } onClick={handleclick}
