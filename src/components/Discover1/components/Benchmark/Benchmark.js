@@ -108,7 +108,7 @@ const Systems = () => {
               <InfoOutlinedIcon style={{ marginLeft: "1rem" }} />
             </LightTooltip>
           </div>
-          <Select selectData={employeeCount} placeholder="Select Employee..." />
+          <Select selectData={employeeCount} placeholder="Select Employee Count" />
         </Grid>
       </Grid>
     </Structure>

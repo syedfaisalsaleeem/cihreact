@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Grid, Typography, Tooltip } from "@material-ui/core";
 import Structure from "../Structure/Structure";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
@@ -22,14 +22,10 @@ const Systems = () => {
   const [newIpAddress, setNewIpAddress] = useState("");
   const [newUrl, setNewUrl] = useState("");
 
-  const [submitObj, setSubmitObj] = useState({});
   const [msg, setMsg] = useState();
   const [open, setOpen] = React.useState(false);
-  const handleClickOpen = (e, obj, alert) => {
-    e.preventDefault();
+  const handleClickOpen = () => {
     setOpen(true);
-    setSubmitObj(obj);
-    setMsg(alert);
   };
 
   const handleClose = () => {
@@ -86,10 +82,14 @@ const Systems = () => {
     setNewFunction(e.target.value);
   };
 
-  const handleSubmit = (setFunction, newItem, setValue) => {
-    setFunction(newItem);
-    setValue("");
-    handleClose();
+  const handleSubmit = (e, setFunction, newItem, setValue, alert) => {
+    e.preventDefault();
+    if (newItem) {
+      setFunction(newItem);
+      setValue("");
+      handleClickOpen();
+      setMsg(alert);
+    }
   };
 
   const handleRemove = (removeFunction, id, setFunc) => {
@@ -99,29 +99,23 @@ const Systems = () => {
 
   return (
     <Structure titleText="Systems">
-      {submitObj.value && (
-        <PopUp
-          event="add"
-          modalTitle=" Discover Updated"
-          handleClose={handleClose}
-          handleContinue={() =>
-            handleSubmit(
-              submitObj.onSubmit,
-              submitObj.value,
-              submitObj.onChange
-            )
-          }
-          open={open}
-          keyword={msg}
-        />
-      )}
+      <PopUp
+        event="add"
+        modalTitle=" Discover Updated"
+        handleClose={handleClose}
+        open={open}
+        keyword={msg}
+      />
+
       <Grid container justify="space-around" className={classes.Systems}>
         {inputFields.map((field) => {
           return (
             <>
               <Grid item xl="3" xs="10">
                 <div className={classes.title}>
-                  <Typography>{field.label}</Typography>
+                  <Typography style={{ marginLeft: "-1rem" }}>
+                    {field.label}
+                  </Typography>
                   <LightTooltip title={field.tooltip}>
                     <InfoOutlinedIcon />
                   </LightTooltip>
@@ -129,7 +123,13 @@ const Systems = () => {
                 <form
                   className={classes.input}
                   onSubmit={(e) =>
-                    handleClickOpen(e, field, field.alertMessage)
+                    handleSubmit(
+                      e,
+                      field.onSubmit,
+                      field.value,
+                      field.onChange,
+                      field.alertMessage
+                    )
                   }
                 >
                   <input
@@ -153,9 +153,9 @@ const Systems = () => {
                 </form>
                 <Grid container className={classes.ListItemsWarper}>
                   <ListItems
+                    columns="12"
                     field={field}
                     handleRemove={handleRemove}
-                    columns="12"
                     open={open}
                     handleClose={handleClose}
                     handleClickOpen={handleClickOpen}

@@ -14,7 +14,7 @@ const ListItems = (props) => {
   const { field, handleRemove, columns, msg } = props;
   return (
     <Grid item xs={columns} className={classes.list}>
-      <ul style={{ maxHeight: "100px", overflowY: "auto" }}>
+      <ul>
         {field.fetchItems.map((value) => {
           return (
             <>

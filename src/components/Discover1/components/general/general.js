@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { ItemsListContext } from "../../context/itemsContext";
 import classes from "./general.module.css";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
@@ -24,14 +24,10 @@ export default function General() {
   const [newInternalKeyword, setNewInternalKeyword] = useState("");
   const [newOtherKeyword, setNewOtherKeyword] = useState("");
 
-  const [submitObj, setSubmitObj] = useState({});
   const [msg, setMsg] = useState();
   const [open, setOpen] = React.useState(false);
-  const handleClickOpen = (e, obj, alert) => {
-    e.preventDefault();
+  const handleClickOpen = () => {
     setOpen(true);
-    setSubmitObj(obj);
-    setMsg(alert);
   };
 
   const handleClose = () => {
@@ -41,6 +37,7 @@ export default function General() {
   const inputFields = [
     {
       label: "Company Names",
+      placeholder: "Add company name",
       value: newCompanyName,
       onChange: setNewCompanyName,
       onSubmit: values.addCompanyName,
@@ -52,6 +49,7 @@ export default function General() {
     },
     {
       label: "Brand Names",
+      placeholder: "Add brand name",
       value: newBrandName,
       onChange: setNewBrandName,
       onSubmit: values.addBrandName,
@@ -64,6 +62,7 @@ export default function General() {
     },
     {
       label: "Internal keywords",
+      placeholder: "Add intrenal keyword",
       value: newInternalKeyword,
       onChange: setNewInternalKeyword,
       onSubmit: values.addInternalKeyword,
@@ -76,6 +75,7 @@ export default function General() {
     },
     {
       label: "Other keywords",
+      placeholder: "Add other keyword",
       value: newOtherKeyword,
       onChange: setNewOtherKeyword,
       onSubmit: values.addOtherKeyword,
@@ -93,10 +93,14 @@ export default function General() {
     setNewFunction(e.target.value);
   };
 
-  const handleSubmit = (setFunction, newItem, setValue) => {
-    setFunction(newItem);
-    setValue("");
-    handleClose();
+  const handleSubmit = (e, setFunction, newItem, setValue, alert) => {
+    e.preventDefault();
+    if (newItem) {
+      setFunction(newItem);
+      setValue("");
+      handleClickOpen();
+      setMsg(alert);
+    }
   };
 
   const handleRemove = (removeFunction, id, setFunc) => {
@@ -106,40 +110,38 @@ export default function General() {
 
   return (
     <Structure titleText="General">
-      {submitObj.value && (
-        <PopUp
-          event="add"
-          modalTitle=" Discover Updated"
-          handleClose={handleClose}
-          handleContinue={() =>
-            handleSubmit(
-              submitObj.onSubmit,
-              submitObj.value,
-              submitObj.onChange
-            )
-          }
-          open={open}
-          keyword={msg}
-        />
-      )}
+      <PopUp
+        event="add"
+        modalTitle=" Discover Updated"
+        handleClose={handleClose}
+        open={open}
+        keyword={msg}
+      />
       {inputFields.map((field) => {
         return (
           <>
             <Grid container className={classes.formControl} key={field.label}>
-              <Grid item container xs="6" className={classes.labelWarper}>
+              <Grid item container xs="5" className={classes.labelWarper}>
                 <label htmlFor="">{field.label}</label>
                 <LightTooltip title={field.tooltip}>
                   <InfoOutlinedIcon style={{ marginLeft: "1rem" }} />
                 </LightTooltip>
               </Grid>
-              <Grid item container xs="6">
+              <Grid item container xs="7">
                 <form
                   onSubmit={(e) =>
-                    handleClickOpen(e, field, field.alertMessage)
+                    handleSubmit(
+                      e,
+                      field.onSubmit,
+                      field.value,
+                      field.onChange,
+                      field.alertMessage
+                    )
                   }
                   className={classes.inputWarper}
                 >
                   <input
+                    placeholder={field.placeholder}
                     type="text"
                     value={field.value}
                     onChange={(e) => handleChange(e, field.onChange)}
@@ -158,12 +160,11 @@ export default function General() {
                 </form>
               </Grid>
             </Grid>
-            <Grid container>
-              <Grid item xs="7"></Grid>
+            <Grid container justify="flex-end" className={classes.ItemsListWarper}>
               <ListItems
                 field={field}
                 handleRemove={handleRemove}
-                columns="5"
+                columns="7"
                 open={open}
                 handleClose={handleClose}
                 handleClickOpen={handleClickOpen}

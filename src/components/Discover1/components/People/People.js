@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Grid, Typography } from "@material-ui/core";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
@@ -23,14 +23,10 @@ const People = () => {
   const [newBrandName, setNewBrandName] = useState("");
   const [newInternalKeyword, setNewInternalKeyword] = useState("");
 
-  const [submitObj, setSubmitObj] = useState({});
   const [msg, setMsg] = useState();
   const [open, setOpen] = React.useState(false);
-  const handleClickOpen = (e, obj, alert) => {
-    e.preventDefault();
+  const handleClickOpen = () => {
     setOpen(true);
-    setSubmitObj(obj);
-    setMsg(alert);
   };
 
   const handleClose = () => {
@@ -71,10 +67,14 @@ const People = () => {
     setNewFunction(e.target.value);
   };
 
-  const handleSubmit = (setFunction, newItem, setValue) => {
-    setFunction(newItem);
-    setValue("");
-    handleClose();
+  const handleSubmit = (e, setFunction, newItem, setValue, alert) => {
+    e.preventDefault();
+    if (newItem) {
+      setFunction(newItem);
+      setValue("");
+      handleClickOpen();
+      setMsg(alert);
+    }
   };
 
   const handleRemove = (removeFunction, id, setFunc) => {
@@ -84,22 +84,13 @@ const People = () => {
 
   return (
     <Structure titleText="People">
-      {submitObj.value && (
-        <PopUp
-          event="add"
-          modalTitle=" Discover Updated"
-          handleClose={handleClose}
-          handleContinue={() =>
-            handleSubmit(
-              submitObj.onSubmit,
-              submitObj.value,
-              submitObj.onChange
-            )
-          }
-          open={open}
-          keyword={msg}
-        />
-      )}
+      <PopUp
+        event="add"
+        modalTitle=" Discover Updated"
+        handleClose={handleClose}
+        open={open}
+        keyword={msg}
+      />
       <Grid container justify="space-around" className={classes.People}>
         {inputFields.map((field) => {
           return (
@@ -114,7 +105,13 @@ const People = () => {
                 <form
                   className={classes.input}
                   onSubmit={(e) =>
-                    handleClickOpen(e, field, field.alertMessage)
+                    handleSubmit(
+                      e,
+                      field.onSubmit,
+                      field.value,
+                      field.onChange,
+                      field.alertMessage
+                    )
                   }
                 >
                   <input

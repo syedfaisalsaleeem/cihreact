@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -54,21 +54,6 @@ const DialogActions = withStyles((theme) => ({
 }))(MuiDialogActions);
 
 export default function CustomizedDialogs(props) {
-  // const [open, setOpen] = React.useState(false);
-
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
-
-  // useEffect(() => {
-  //   if (props.show) {
-  //     handleClickOpen();
-  //   }
-  // }, [props.show]);
-
   let content = null;
   switch (props.event) {
     case "add":
@@ -97,11 +82,11 @@ export default function CustomizedDialogs(props) {
         <DialogActions>
           {props.event === "add" ? (
             <Button
-              onClick={props.handleContinue}
+              onClick={props.handleClose}
               variant="contained"
               color="primary"
             >
-              Continue
+              OK
             </Button>
           ) : (
             <Button
@@ -113,16 +98,17 @@ export default function CustomizedDialogs(props) {
             </Button>
           )}
 
-          <Button
-            onClick={props.handleClose}
-            variant="outlined"
-            color="primary"
-          >
-            Cancel
-          </Button>
+          {props.event === "delete" && (
+            <Button
+              onClick={props.handleClose}
+              variant="contained"
+              color="primary"
+            >
+              Cancel
+            </Button>
+          )}
         </DialogActions>
       </Dialog>
     </div>
   );
 }
-
