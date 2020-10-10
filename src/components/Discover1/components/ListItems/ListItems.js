@@ -1,4 +1,4 @@
-import React from "react";
+import React , { useState } from "react";
 import { Grid } from "@material-ui/core";
 import classes from "./ListItems.module.css";
 import PopUp from "../UI/popUp";
@@ -12,10 +12,19 @@ const ListItems = (props) => {
     setOpen(false);
   };
   const { field, handleRemove, columns, msg } = props;
+  const [items, setItems] = useState([]);
+
+  React.useEffect(() => {
+    var ret = [];
+    for (var i = field.fetchItems.length - 1; i >= 0; i--) {
+      ret.push(field.fetchItems[i]);
+    }
+    setItems(ret);
+  }, [field.fetchItems]);
   return (
     <Grid item xs={columns} className={classes.list}>
       <ul>
-        {field.fetchItems.map((value) => {
+        {items.map((value) => {
           return (
             <>
               <PopUp

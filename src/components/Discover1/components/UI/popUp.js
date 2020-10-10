@@ -101,7 +101,7 @@ export default function CustomizedDialogs(props) {
           {props.event === "delete" && (
             <Button
               onClick={props.handleClose}
-              variant="contained"
+              variant="outlined"
               color="primary"
             >
               Cancel
