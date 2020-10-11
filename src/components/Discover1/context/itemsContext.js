@@ -4,22 +4,15 @@ import { v4 as uuid } from "uuid";
 export const ItemsListContext = createContext();
 
 const ItemsContextProvider = (props) => {
-  const [companynames,setcompanynames]=useState([])
+  const [companyNames, setCompanyNames] = useState([]);
   const [brandNames, setBrandNames] = useState([]);
-
   const [internalKeyword, setInternalKeyword] = useState([]);
-
   const [otherKeyword, setOtherKeyword] = useState([]);
 
-  const [editBrandName, setEditBrandName] = useState(null);
-  const [editInternalKeyword, setEditInternalKeyword] = useState(null);
-  const [editOtherKeyword, setEditOtherKeyword] = useState(null);
-
   const [progress, setProgress] = useState(false);
-
   useEffect(() => {
     if (
-      companynames.length>0 &&
+      companyNames.length > 0 &&
       brandNames.length > 0 &&
       internalKeyword.length > 0 &&
       otherKeyword.length > 0
@@ -28,14 +21,20 @@ const ItemsContextProvider = (props) => {
     } else {
       setProgress(false);
     }
-  }, [progress, brandNames, internalKeyword, otherKeyword]);
+  }, [progress, companyNames, brandNames, internalKeyword, otherKeyword]);
 
-  const addCompanyName=(companyTitle)=>{
-    setcompanynames([...companynames, { title: companyTitle, id: uuid() }]);
-  }
-  const removeCompanyName = (id) => {
-    setcompanynames(companynames.filter((companynames) => companynames.id !== id));
+  //Add Company Name
+  const addCompanyName = (companyTitle) => {
+    setCompanyNames([...companyNames, { title: companyTitle, id: uuid() }]);
   };
+
+  //Remove Company Name
+  const removeCompanyName = (id) => {
+    setCompanyNames(
+      companyNames.filter((companyName) => companyName.id !== id)
+    );
+  };
+
   //Add Brand Name
   const addBrandName = (brandTitle) => {
     setBrandNames([...brandNames, { title: brandTitle, id: uuid() }]);
@@ -79,31 +78,28 @@ const ItemsContextProvider = (props) => {
   };
 
   //Edit Item
-  const editItem = (
-    title,
-    id,
-    initialItemsArray,
-    setInitialItemsArray,
-    setEditFunction
-  ) => {
-    const newItems = initialItemsArray.map((initialItem) =>
-      initialItem.id === id ? { title, id } : initialItem
-    );
-    setInitialItemsArray(newItems);
-    setEditFunction(null);
-  };
+  // const editItem = (
+  //   title,
+  //   id,
+  //   initialItemsArray,
+  //   setInitialItemsArray,
+  //   setEditFunction
+  // ) => {
+  //   const newItems = initialItemsArray.map((initialItem) =>
+  //     initialItem.id === id ? { title, id } : initialItem
+  //   );
+  //   setInitialItemsArray(newItems);
+  //   setEditFunction(null);
+  // };
 
   return (
     <ItemsListContext.Provider
       value={{
-        companynames,
+        companyNames,
         brandNames,
         internalKeyword,
         otherKeyword,
-        editBrandName,
-        editInternalKeyword,
-        editOtherKeyword,
-        setcompanynames,
+        setCompanyNames,
         setBrandNames,
         setInternalKeyword,
         setOtherKeyword,
@@ -111,15 +107,11 @@ const ItemsContextProvider = (props) => {
         addBrandName,
         addInternalKeyword,
         addOtherKeyword,
+        removeCompanyName,
         removeBrandName,
         removeInternalKeyword,
         removeOtherKeyword,
-        removeCompanyName,
         findItem,
-        setEditBrandName,
-        setEditInternalKeyword,
-        setEditOtherKeyword,
-        editItem,
         progress,
       }}
     >

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { ItemsListContext } from "../../context/itemsContext";
 import classes from "./general.module.css";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
@@ -7,7 +7,7 @@ import Structure from "../Structure/Structure";
 import ListItems from "../ListItems/ListItems";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import { withStyles } from "@material-ui/core/styles";
-import {TextField} from "@material-ui/core";
+import PopUp from "../UI/popUp";
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
     backgroundColor: theme.palette.common.white,
@@ -18,28 +18,38 @@ const LightTooltip = withStyles((theme) => ({
 }))(Tooltip);
 export default function General() {
   const values = useContext(ItemsListContext);
+
+  const [newCompanyName, setNewCompanyName] = useState("");
   const [newBrandName, setNewBrandName] = useState("");
   const [newInternalKeyword, setNewInternalKeyword] = useState("");
   const [newOtherKeyword, setNewOtherKeyword] = useState("");
-  
+
+  const [msg, setMsg] = useState();
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const inputFields = [
     {
-      label: "Company Name",
-      helperText: "add a company name",
-      value: newBrandName,
-      onChange: setNewBrandName,
-      onSubmit: values.addBrandName,
-      fetchItems: values.brandNames,
-      setFetchItems: values.setBrandNames,
-      removeItems: values.removeBrandName,
-      tooltip:
-        "",
-      alertMessage: "Brand Name Added.",
+      label: "Company Names",
+      placeholder: "Add company name",
+      value: newCompanyName,
+      onChange: setNewCompanyName,
+      onSubmit: values.addCompanyName,
+      fetchItems: values.companyNames,
+      setFetchItems: values.setCompanyNames,
+      removeItems: values.removeCompanyName,
+      tooltip: "Company Names",
+      alertMessage: "Company Name",
     },
     {
-      label: "Brand Name",
-      helperText: "add a brand name",
+      label: "Brand Names",
+      placeholder: "Add brand name",
       value: newBrandName,
       onChange: setNewBrandName,
       onSubmit: values.addBrandName,
@@ -48,11 +58,11 @@ export default function General() {
       removeItems: values.removeBrandName,
       tooltip:
         " Brand and product names owned by your company. Unique names consisting of 5 or more characters work best. Add your company’s name to your product name, that works for us: Cyber Intelligence House Exposure Monitor.",
-      alertMessage: "Brand Name Added.",
+      alertMessage: "Brand Name",
     },
     {
       label: "Internal keywords",
-      helperText: "add an internal keyword",
+      placeholder: "Add intrenal keyword",
       value: newInternalKeyword,
       onChange: setNewInternalKeyword,
       onSubmit: values.addInternalKeyword,
@@ -61,11 +71,11 @@ export default function General() {
       removeItems: values.removeInternalKeyword,
       tooltip:
         "Confidential terms only used within your company, that are impossible to know from the outside. Think of a project code name or a hash value in your internal database, servername, or embedded in office documents metadata. A hash value is a numeric code that uniquely identifies data.",
-      alertMessage: "Internal Keyword Added.",
+      alertMessage: "Internal Keyword",
     },
     {
       label: "Other keywords",
-      helperText: "add an other keyword",
+      placeholder: "Add other keyword",
       value: newOtherKeyword,
       onChange: setNewOtherKeyword,
       onSubmit: values.addOtherKeyword,
@@ -74,7 +84,7 @@ export default function General() {
       removeItems: values.removeOtherKeyword,
       tooltip:
         "Other keywords you want to monitor. Looking for malware? Add the malware hash, not the malware name. Want to monitor a Hacker group? Add group member names, instead of their group name. A hash value is numeric code that uniquely identifies data.",
-      alertMessage: "Other Keyword Added.",
+      alertMessage: "Other Keyword",
     },
   ];
 
@@ -83,78 +93,82 @@ export default function General() {
     setNewFunction(e.target.value);
   };
 
-  const handleSubmit = (e, setFunction, newItem, setValue, alertMessage) => {
+  const handleSubmit = (e, setFunction, newItem, setValue, alert) => {
     e.preventDefault();
-    setFunction(newItem);
-    setValue("");
-    setTimeout(() => {
-      window.alert(alertMessage);
-    }, 2);
+    if (newItem) {
+      setFunction(newItem);
+      setValue("");
+      handleClickOpen();
+      setMsg(alert);
+    }
   };
 
-  const handleRemove = (e, removeFunction, id) => {
-    e.preventDefault();
+  const handleRemove = (removeFunction, id, setFunc) => {
     removeFunction(id);
+    setFunc(false);
   };
 
   return (
     <Structure titleText="General">
-      <div className={classes.formControl}>
-        <Grid item xs="6">
-          <label htmlFor="">Company Name</label>
-        </Grid>
-        <Grid item xs="6">
-          <TextField type="text" variant="outlined" placeholder="Company Name" />
-        </Grid>
-      </div>
+      <PopUp
+        event="add"
+        modalTitle=" Discover Updated"
+        handleClose={handleClose}
+        open={open}
+        keyword={msg}
+      />
       {inputFields.map((field) => {
         return (
           <>
-            <Grid className={classes.formControl} key={field.label}>
-              <Grid item container xs="6" className={classes.labelWarper}>
+            <Grid container className={classes.formControl} key={field.label}>
+              <Grid item container xs="5" className={classes.labelWarper}>
                 <label htmlFor="">{field.label}</label>
                 <LightTooltip title={field.tooltip}>
                   <InfoOutlinedIcon style={{ marginLeft: "1rem" }} />
                 </LightTooltip>
               </Grid>
-              <Grid item container  xs="6">
-                <div className={classes.inputWarper}>
-                  <TextField
+              <Grid item container xs="7">
+                <form
+                  onSubmit={(e) =>
+                    handleSubmit(
+                      e,
+                      field.onSubmit,
+                      field.value,
+                      field.onChange,
+                      field.alertMessage
+                    )
+                  }
+                  className={classes.inputWarper}
+                >
+                  <input
+                    placeholder={field.placeholder}
                     type="text"
-                    variant="outlined"
                     value={field.value}
                     onChange={(e) => handleChange(e, field.onChange)}
                   />
-                  <div
+                  <button
+                    type="submit"
                     style={{
-                      
+                      border: "1px solid #000",
                       cursor: "pointer",
-                      marginLeft:"5px",
-                     
+                      padding: 0,
+                      background: "none",
                     }}
                   >
-                    <PlayArrowIcon 
-                      style={{fontSize:"30px",border: "1px solid #000",marginTop:"5px",height:"30px"}}
-                      onClick={(e) =>
-                        handleSubmit(
-                          e,
-                          field.onSubmit,
-                          field.value,
-                          field.onChange,
-                          field.alertMessage
-                        )
-                      }
-                    />
-                  </div>
-                </div>
+                    <PlayArrowIcon />
+                  </button>
+                </form>
               </Grid>
             </Grid>
-            <Grid container>
-              <Grid item xs="7"></Grid>
+            <Grid container justify="flex-end" className={classes.ItemsListWarper}>
               <ListItems
                 field={field}
                 handleRemove={handleRemove}
-                columns="5"
+                columns="7"
+                open={open}
+                handleClose={handleClose}
+                handleClickOpen={handleClickOpen}
+                msg={field.alertMessage}
               />
             </Grid>
           </>

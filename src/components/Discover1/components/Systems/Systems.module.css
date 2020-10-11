@@ -1,8 +1,8 @@
+
 .input {
   display: flex;
-  align-items: center;
-  justify-content: space-around;
   margin-top: 1rem;
+  margin-left: -1rem;
 }
 
 .title {
@@ -15,11 +15,16 @@
 }
 
 .Systems input {
-  height: 2rem;
-  padding-left: 0.5rem;
-  width: 9rem;
+  width: 100%;
 }
 
 .ListItemsWarper {
-  margin-top: 1rem;
+  margin-top: 2rem;
+  margin-left: -4rem;
+}
+
+@media(max-width: 2077px) {
+  .ListItemsWarper {
+    margin-left: -3rem;
+  }
 }

@@ -8,18 +8,13 @@
   margin-bottom: 1rem;
 }
 .formControl {
-  display: flex;
-  align-items: center;
   padding: 0.5rem;
   margin-bottom: 1rem;
 }
 
 .formControl input {
-  border: 1px solid #000;
-  padding-top: 0.3rem;
-  padding-bottom: 0.3rem;
-  width: 100%;
-  
+  margin: 0 2rem;
+  padding: 0.3rem;
 }
 
 .labelWarper {
@@ -31,7 +26,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 .inputWarper input {
   margin-right: 0.1rem;
+  width: 80%;
+}
+
+.ItemsListWarper {
+  margin-left: 0rem;
+}
+
+@media(min-width: 1837px) {
+  .ItemsListWarper {
+    margin-left: 1rem;
+  } 
 }

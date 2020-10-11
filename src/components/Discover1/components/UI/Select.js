@@ -1,17 +1,8 @@
 import React from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-
 import FormControl from "@material-ui/core/FormControl";
-
 import NativeSelect from "@material-ui/core/NativeSelect";
 import InputBase from "@material-ui/core/InputBase";
-
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-}));
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -19,27 +10,26 @@ const BootstrapInput = withStyles((theme) => ({
       marginTop: theme.spacing(3),
     },
     "& .MuiNativeSelect-root": {
-      height: "2rem",
-      paddingTop: "2px",
+      height: "1.5rem",
+      paddingTop: "7px",
       border: "1px solid #000",
     },
     "& .MuiSvgIcon-root": {
-      background: "#035aa6",
-      color: "#fff",
+      background: "none",
+      color: "#aaa",
       height: "96%",
-      marginTop: "-10px",
+      marginTop: "-8px",
       marginRight: "1px",
       borderRadius: "2px",
-      width: "1rem",
+      width: "1.5rem",
     },
   },
   input: {
-    width: "7rem",
     borderRadius: 4,
     position: "relative",
     backgroundColor: theme.palette.background.paper,
     border: "1px solid #ced4da",
-    fontSize: 16,
+    fontSize: 14,
     padding: "10px 26px 10px 12px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     // Use the system font instead of the default Roboto font.
@@ -63,34 +53,37 @@ const BootstrapInput = withStyles((theme) => ({
   },
 }))(InputBase);
 
-export default function GroupedSelect(props) {
-  const { dropdownData } = props;
-  const classes = useStyles();
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    width: "100%",
+  },
+}));
 
+export default function CustomizedSelects(props) {
+  const { selectData } = props;
+  const classes = useStyles();
+  const [age, setAge] = React.useState("");
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
   return (
-    <div>
-      <FormControl className={classes.formControl}>
-        <NativeSelect
-          id="demo-customized-select-native"
-          // value={age}
-          // onChange={handleChange}
-          input={<BootstrapInput />}
-        >
-          {dropdownData.map((dt, i) => {
-            return (
-              <optgroup key={i} label={dt.label}>
-                {dt.array.map((el, i) => {
-                  return (
-                    <option key={i} value={el}>
-                      {el}
-                    </option>
-                  );
-                })}
-              </optgroup>
-            );
-          })}
-        </NativeSelect>
-      </FormControl>
-    </div>
+    <FormControl style={{ width: "100%" }} className={classes.formControl}>
+      <NativeSelect
+        id="demo-customized-select-native"
+        value={age}
+        onChange={handleChange}
+        input={<BootstrapInput />}
+      >
+        <option>{props.placeholder}</option>
+        {selectData.map((dt, i) => {
+          return (
+            <option key={i} value={dt}>
+              {dt}
+            </option>
+          );
+        })}
+      </NativeSelect>
+    </FormControl>
   );
 }

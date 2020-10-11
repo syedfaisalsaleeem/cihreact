@@ -255,7 +255,7 @@ export default function HighlightTab(){
         //   setstate1(result.data.alerts.slice(0,5))
         // }
         // fetchData()
-    },[view,count])
+    },[view])
     return(
         <Grid item xs={12} md={12}>
         <Grid container justify="center" style={{background:"transparent"}}>

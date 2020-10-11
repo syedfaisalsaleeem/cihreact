@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Typography } from "@material-ui/core";
 import classes from "./App.module.css";
-import General from "./components/general/general.jsx";
-import Benchmark from "./components/Benchmark/Benchmark.jsx";
-import Systems from "./components/Systems/Systems.jsx";
-import People from "./components/People/People.jsx";
-import ItemsContextProvider from "./context/itemsContext.jsx";
-import SystemContextProvider from "./context/systemContext.jsx";
-import PeopleContextProvider from "./context/peopleContext.jsx";
+import General from "./components/general/general";
+import Benchmark from "./components/Benchmark/Benchmark";
+import Systems from "./components/Systems/Systems";
+import People from "./components/People/People";
+import ItemsContextProvider from "./context/itemsContext";
+import SystemContextProvider from "./context/systemContext";
+import PeopleContextProvider from "./context/peopleContext";
 import { withStyles } from "@material-ui/core/styles";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -47,9 +47,7 @@ export default function DiscoverContent() {
                 <Grid item xs={12}>
                   <Grid container>
                     <Grid item xs={12}>
-                      <Grid container>
-                        <Grid item xs={8}>
-                        <div
+                      <div
                         style={{
                           display: "flex",
                           justifyContent: "space-between",
@@ -71,48 +69,30 @@ export default function DiscoverContent() {
                             </LightTooltip>
                           </Grid>
                         </div>
-                        
+                        <Progressbar />
                       </div>
-                        </Grid>
-                        <Grid item xs={4} style={{}}>
-                          <Grid container>
-                            <Grid item style={{fontSize:"13px"}}>
-                              Setup 0% Complete
-                              
-                            </Grid>
-                            <Grid item xs={12}>
-                            <Progressbar />
-                            </Grid>
-                          </Grid>
-                        
-                        </Grid>
-                      </Grid>
-
                     </Grid>
                     <Grid item></Grid>
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={12}>
               <Grid item container spacing="2">
-                <Grid item xs="12" md="6" lg="6">
+                <Grid item xs="12" md="6">
                   <General />
                 </Grid>
-                <Grid item xs="12" md="6" lg="6">
+                <Grid item xs="12" md="6">
                   <Benchmark />
                 </Grid>
               </Grid>
               <br />
               <Grid item container spacing="2">
-                <Grid item xs="12" md="6" lg="6">
+                <Grid item xs="12" md="6">
                   <Systems />
                 </Grid>
-                <Grid item xs="12" md="6" lg="6">
+                <Grid item xs="12" md="6">
                   <People />
                 </Grid>
               </Grid>
-              
-            </Grid>
             </Grid>
           </PeopleContextProvider>
         </SystemContextProvider>

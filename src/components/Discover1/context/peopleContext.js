@@ -1,14 +1,20 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import { v4 as uuid } from "uuid";
 
 export const PeopleContext = createContext();
 
 const ItemsContextProvider = (props) => {
-  const [brandNames, setBrandNames] = useState([{}]);
-  const [internalKeyword, setInternalKeyword] = useState([{}]);
+  const [brandNames, setBrandNames] = useState([]);
+  const [internalKeyword, setInternalKeyword] = useState([]);
 
-  const [editBrandName, setEditBrandName] = useState(null);
-  const [editInternalKeyword, setEditInternalKeyword] = useState(null);
+  const [progress, setProgress] = useState(false);
+  useEffect(() => {
+    if (brandNames.length > 0 && internalKeyword.length > 0) {
+      setProgress(true);
+    } else {
+      setProgress(false);
+    }
+  }, [progress, brandNames, internalKeyword]);
 
   //Add Brand Name
   const addBrandName = (brandTitle) => {
@@ -54,15 +60,12 @@ const ItemsContextProvider = (props) => {
     setEditFunction(null);
   };
 
-
-  
   return (
     <PeopleContext.Provider
       value={{
         brandNames,
         internalKeyword,
-        editBrandName,
-        editInternalKeyword,
+        
         setBrandNames,
         setInternalKeyword,
         addBrandName,
@@ -70,9 +73,9 @@ const ItemsContextProvider = (props) => {
         removeBrandName,
         removeInternalKeyword,
         findItem,
-        setEditBrandName,
-        setEditInternalKeyword,
+        
         editItem,
+        progress,
       }}
     >
       {props.children}
