@@ -72,7 +72,7 @@ export default function CustomizedDialogs(props) {
   let content = null;
   switch (props.event) {
     case "add":
-      content = `Your new ${props.keyword} was added successfully.`;
+      content = `Your comment was added successfully.`;
       break;
     case "delete":
       content = `You are about to delete this note. Deleted notes 

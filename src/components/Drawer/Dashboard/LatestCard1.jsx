@@ -184,7 +184,8 @@ export default function LatestCard(props) {
   const [userComment, setUserComment] = React.useState([]);
   const [commentText, setCommentText] = useState("");
   const [popOpen, setPopOpen] = React.useState(false);
-  const [upload, setUpload] = useState();
+  const [isPop, setIsPop] = useState(false);
+
   const handlePopOpen = () => {
     setPopOpen(true);
   };
@@ -453,6 +454,15 @@ export default function LatestCard(props) {
 
   return (
     <div>
+      {isPop && commentText ? (
+        <Popup
+          event="add"
+          open={popOpen}
+          handleClose={handlePopClose}
+          modalTitle="Add a note"
+          handleContinue={() => adComment(commentText)}
+        />
+      ) : null}
       <Grid item xs={12} style={{ marginBottom: "10px" }}>
         <Box className={classes.f5}>
           <Grid item xs={12}>
@@ -789,13 +799,7 @@ export default function LatestCard(props) {
                               fullWidth
                             />
                           </Grid>
-                          <Popup
-                            event="add"
-                            open={popOpen}
-                            handleClose={handlePopClose}
-                            modalTitle="Add a note"
-                            handleContinue={() => adComment(commentText)}
-                          />
+
                           <Grid item xs={1}>
                             <div onClick={handlePopOpen}>
                               {/* () => adComment(commentText)} */}
