@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   Grid,
@@ -150,6 +150,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function LatestCard(props) {
+  useEffect(() => {
+    console.log("props = ", props);
+  });
+
   const {
     date,
     alertcreated,
@@ -274,32 +278,70 @@ export default function LatestCard(props) {
     if (comments.length > 0) {
       const token = localStorage.getItem("token");
       const x = async () => {
-        const response = await fetch(
-          "https://if.cyberdevelopment.house/api/alerts/" +
-            props.id +
-            "/comments/" +
-            comments[0]["id"],
-          {
-            method: "PUT",
-            headers: {
-              accept: "application/json",
-              "Content-Type": "application/x-www-form-urlencoded",
-              Authorization: token,
-            },
-            body: "text=" + commenting,
-          }
-        );
-        const y = await response.json();
-
-        if (y.message === "Invalid access token") {
-          loggedout();
-        }
+        // const response = await fetch(
+        //   "https://if.cyberdevelopment.house/api/alerts/" +
+        //     props.id +
+        //     "/comments/" +
+        //     comments[0]["id"],
+        //   {
+        //     method: "PUT",
+        //     headers: {
+        //       accept: "application/json",
+        //       "Content-Type": "application/x-www-form-urlencoded",
+        //       Authorization: token,
+        //     },
+        //     body: "text=" + commenting,
+        //   }
+        // );
+        // const y = await response.json();
+        // if (y.message === "Invalid access token") {
+        //   loggedout();
+        // }
       };
       x();
     } else {
       const token = localStorage.getItem("token");
       const x = async () => {
-        const response = await fetch(
+        // const response = await fetch(
+        //   "https://if.cyberdevelopment.house/api/alerts/" +
+        //     props.id +
+        //     "/comments",
+        //   {
+        //     method: "POST",
+        //     headers: {
+        //       accept: "application/json",
+        //       "Content-Type": "application/x-www-form-urlencoded",
+        //       Authorization: token,
+        //     },
+        //     body: "nick=dsadasdsasd&text=" + commenting,
+        //   }
+        // );
+        // const y = await response.json();
+        // if (y.message === "Invalid access token") {
+        //   loggedout();
+        // }
+      };
+      x();
+    }
+  };
+
+  useEffect(() => {
+    setUserComment(props.comments);
+  }, [props.comments]);
+
+  const adComment = (comment) => {
+    if (isEdit) {
+      editComment(id, commentText);
+      setIsEdit(false);
+    } else {
+      if (commentText) {
+        const token = localStorage.getItem("token");
+        const commentObj = {
+          nick: "Khuzaima",
+          created: `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}:${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
+          text: comment,
+        };
+        fetch(
           "https://if.cyberdevelopment.house/api/alerts/" +
             props.id +
             "/comments",
@@ -310,46 +352,13 @@ export default function LatestCard(props) {
               "Content-Type": "application/x-www-form-urlencoded",
               Authorization: token,
             },
-            body: "nick=dsadasdsasd&text=" + commenting,
+            body: `nick=${commentObj.nick}&text=${commentObj.text}`,
           }
-        );
-        const y = await response.json();
-        if (y.message === "Invalid access token") {
-          loggedout();
-        }
-      };
-      x();
-    }
-  };
-
-  const adComment = (comment) => {
-    if (isEdit) {
-      editComment(id, commentText);
-    } else {
-      const token = localStorage.getItem("token");
-      const commentObj = {
-        id: Math.random().toFixed(2).toString() * 10,
-        timeStamp: `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}:${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
-        comment: comment,
-        name: "Khuzaima",
-      };
-      fetch(
-        "https://if.cyberdevelopment.house/api/alerts/" +
-          commentObj.id +
-          "/comments",
-        {
-          method: "POST",
-          headers: {
-            accept: "application/json",
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: token,
-          },
-          body: `nick=${commentObj.name}&text=${commentObj.comment}`,
-        }
-      ).then((res) => {
-        console.log('res = ' , res);
-        setUserComment((prevComments) => [...prevComments, commentObj]);
-      });
+        ).then((res) => {
+          console.log("res = ", res);
+          setUserComment((prevComments) => [...prevComments, commentObj]);
+        });
+      }
     }
     setCommentText("");
     handlePopClose();
@@ -357,14 +366,27 @@ export default function LatestCard(props) {
   //2020-09-22T10:19:37.682886
 
   const deleteComment = (commentId) => {
-    setUserComment((prevComments) =>
-      prevComments.filter((comment) => comment.id !== commentId)
-    );
+    const token = localStorage.getItem("token");
+    fetch(
+      `https://if.cyberdevelopment.house/api/alerts/${props.id}/comments/${commentId}`,
+      {
+        method: "DELETE",
+        headers: {
+          accept: "application/json",
+          Authorization: token,
+        },
+      }
+    ).then((res) => {
+      console.log("deleteRes = ", res);
+      setUserComment((prevComments) =>
+        prevComments.filter((comment) => comment.id !== commentId)
+      );
+    });
   };
 
   const findComment = (commentId) => {
     const comment = userComment.find((comment) => comment.id === commentId);
-    const message = comment.comment;
+    const message = comment.text;
     setCommentText(message);
     setId(comment.id);
     setIsEdit(true);
@@ -376,28 +398,30 @@ export default function LatestCard(props) {
       if (com.id === id) {
         return {
           ...com,
-          comment: comment,
+          text: comment,
         };
       } else {
         return { ...com };
       }
     });
-    // fetch(
-    //   "https://if.cyberdevelopment.house/api/alerts/" +
-    //     props.id +
-    //     "/comments/" +
-    //     comments[0]["id"],
-    //   {
-    //     method: "PUT",
-    //     headers: {
-    //       accept: "application/json",
-    //       "Content-Type": "application/x-www-form-urlencoded",
-    //       Authorization: token,
-    //     },
-    //     body: "text=" + commenting,
-    //   }
-    // );
-    setUserComment(newComments);
+    fetch(
+      "https://if.cyberdevelopment.house/api/alerts/" +
+        props.id +
+        "/comments/" +
+        id,
+      {
+        method: "PUT",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: token,
+        },
+        body: "text=" + comment,
+      }
+    ).then((res) => {
+      console.log("Edit Res =", res);
+      setUserComment(newComments);
+    });
   };
 
   const handlecommenting = (e) => {
@@ -429,13 +453,6 @@ export default function LatestCard(props) {
 
   return (
     <div>
-      {/* <Popup
-        event="add"
-        open={popOpen}
-        handleClose={handlePopClose}
-        modaelTitle="Add"
-        handleContinue={() => adComment(commentText)}
-      /> */}
       <Grid item xs={12} style={{ marginBottom: "10px" }}>
         <Box className={classes.f5}>
           <Grid item xs={12}>
@@ -772,9 +789,16 @@ export default function LatestCard(props) {
                               fullWidth
                             />
                           </Grid>
-
+                          <Popup
+                            event="add"
+                            open={popOpen}
+                            handleClose={handlePopClose}
+                            modalTitle="Add a note"
+                            handleContinue={() => adComment(commentText)}
+                          />
                           <Grid item xs={1}>
-                            <div onClick={() => adComment(commentText)}>
+                            <div onClick={handlePopOpen}>
+                              {/* () => adComment(commentText)} */}
                               <PlayArrowTwoToneIcon
                                 color="primary"
                                 style={{

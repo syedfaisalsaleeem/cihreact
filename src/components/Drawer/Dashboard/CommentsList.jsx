@@ -56,13 +56,25 @@ const CommentsList = (props) => {
                   <div
                     style={{
                       display: "flex",
-                      width: "13rem",
-                      justifyContent: "space-around",
+                      minWidth: "13rem",
+                      justifyContent: "space-between",
                       alignItems: "center",
                     }}
                   >
-                    <p>{comment.name}</p>
-                    <p>{comment.timeStamp}</p>
+                    <p>{comment.nick}</p>
+                    <p
+                      style={{ marginLeft: "1rem" }}
+                    >{`${new Date().getFullYear(comment.created)}-${new Date(
+                      comment.created
+                    ).getMonth()}-${new Date(
+                      comment.created
+                    ).getDate()}:${new Date(
+                      comment.created
+                    ).getHours()}:${new Date(
+                      comment.created
+                    ).getMinutes()}:${new Date(
+                      comment.created
+                    ).getSeconds()}`}</p>
                   </div>
                   <div
                     style={{
@@ -84,7 +96,7 @@ const CommentsList = (props) => {
                   </div>
                 </li>
                 <li>
-                  <p>{comment.comment}</p>
+                  <p>{comment.text}</p>
                 </li>
               </ul>
             </div>
