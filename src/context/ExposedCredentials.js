@@ -22,7 +22,6 @@ const ExposedCredentials = (props) => {
       const y = await result.json();
       console.log("result = ", y);
       const obj = await y.exposedcredentials;
-      console.log("obj length = ", Object.keys(obj).length);
       // const obj=[]
       const username = [];
       const passCode = [];

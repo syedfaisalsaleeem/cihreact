@@ -1,5 +1,4 @@
 import React, { createContext, useEffect, useState } from "react";
-import axios from "axios";
 
 export const FetchRemediationContext = createContext();
 
@@ -57,19 +56,18 @@ const FetchRemediation = (props) => {
   const [table2State, setTable2Sate] = useState();
   useEffect(() => {
     let result = null;
-    
     const fetchRemediationData = async () => {
-      const token=localStorage.getItem("token")
+      const token = localStorage.getItem("token");
       result = await fetch(
         "https://if.cyberdevelopment.house/api/remediation",
         {
           headers: {
-            'accept': 'application/json',
-            'Authorization': token
-        }
+            accept: "application/json",
+            Authorization: token,
+          },
         }
       );
-      const y= await result.json()
+      const y = await result.json();
       const res = y;
       getBarChartData(
         res.trend_12m,
@@ -86,6 +84,7 @@ const FetchRemediation = (props) => {
       const loadedData = [];
       res.remediations.forEach((el) => {
         loadedData.push({
+          rowid: el.id,
           title: el.title,
           description: el.description,
           affects: el.total_alerts,
@@ -95,22 +94,22 @@ const FetchRemediation = (props) => {
           alertsIds: [...el.alert_ids],
         });
       });
-      setTable1Sate(loadedData.splice(0,10));
+      setTable1Sate(loadedData.splice(0, 10));
     };
 
     fetchRemediationData();
     const fetchRemediationData1 = async () => {
-      const token=localStorage.getItem("token")
+      const token = localStorage.getItem("token");
       result = await fetch(
         "https://if.cyberdevelopment.house/api/remediation",
         {
           headers: {
-            'accept': 'application/json',
-            'Authorization': token
-        }
+            accept: "application/json",
+            Authorization: token,
+          },
         }
       );
-      const y= await result.json()
+      const y = await result.json();
       const res = y;
       getBarChartData(
         res.trend_12m,
@@ -124,22 +123,38 @@ const FetchRemediation = (props) => {
         setRiskResidualPer,
         "residual"
       );
-      const loadedData = [];
-      res.remediations.forEach((el) => {
-        loadedData.push({
-          title: el.title,
-          description: el.description,
-          affects: el.total_alerts,
-          risks: el.total_risk,
-          cisControls: [...el.cis_controls],
-          readyToExploit: el.ready_to_exploit,
-          alertsIds: [...el.alert_ids],
-        });
-      });
-      setTable2Sate(loadedData.splice(0,10));
     };
 
     fetchRemediationData1();
+
+    const fetchRemediationData2 = async () => {
+      const token = localStorage.getItem("token");
+      result = await fetch(
+        "https://if.cyberdevelopment.house/api/remediation/log",
+        {
+          headers: {
+            accept: "application/json",
+            Authorization: token,
+          },
+        }
+      );
+      const res = await result.json();
+      console.log("LOG Data = ", res);
+      const loadedData = [];
+      res.remediations.forEach((el) => {
+        loadedData.push({
+          username: el.username,
+          title: el.title,
+          risks: el.total_risk,
+          remediated: el.comment,
+          affects: "",
+          alertsIds: el.alert_ids,
+        });
+      });
+      setTable2Sate(loadedData.splice(0, 10));
+    };
+
+    fetchRemediationData2();
   }, []);
 
   return (
@@ -150,7 +165,7 @@ const FetchRemediation = (props) => {
         riskRemediatedPer,
         riskResidualPer,
         table1State,
-        table2State
+        table2State,
       }}
     >
       {props.children}

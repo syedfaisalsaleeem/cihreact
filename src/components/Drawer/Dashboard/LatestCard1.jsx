@@ -151,7 +151,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function LatestCard(props) {
   useEffect(() => {
-    console.log("props = ", props);
+    // console.log("props = ", props);
   });
 
   const {
@@ -177,14 +177,12 @@ export default function LatestCard(props) {
     var nseverity = severity;
   }
 
-  const [fullWidth, setFullWidth] = React.useState(true);
   const [commenting, setcommenting] = React.useState();
 
   //=======================================================================
   const [userComment, setUserComment] = React.useState([]);
   const [commentText, setCommentText] = useState("");
   const [popOpen, setPopOpen] = React.useState(false);
-  const [isPop, setIsPop] = useState(false);
 
   const handlePopOpen = () => {
     setPopOpen(true);
@@ -196,7 +194,6 @@ export default function LatestCard(props) {
   const [id, setId] = useState();
   //=======================================================================
 
-  const [st1, set] = React.useState([""]);
   const [click, setclick] = React.useState(true);
 
   const [star, selectstar] = React.useState(tags1);
@@ -356,7 +353,7 @@ export default function LatestCard(props) {
             body: `nick=${commentObj.nick}&text=${commentObj.text}`,
           }
         ).then((res) => {
-          console.log("res = ", res);
+          // console.log("res = ", res);
           setUserComment((prevComments) => [...prevComments, commentObj]);
         });
       }
@@ -378,7 +375,7 @@ export default function LatestCard(props) {
         },
       }
     ).then((res) => {
-      console.log("deleteRes = ", res);
+      // console.log("deleteRes = ", res);
       setUserComment((prevComments) =>
         prevComments.filter((comment) => comment.id !== commentId)
       );
@@ -420,7 +417,7 @@ export default function LatestCard(props) {
         body: "text=" + comment,
       }
     ).then((res) => {
-      console.log("Edit Res =", res);
+      // console.log("Edit Res =", res);
       setUserComment(newComments);
     });
   };
@@ -431,7 +428,7 @@ export default function LatestCard(props) {
   };
 
   React.useEffect(() => {
-    console.log("User-Comment = ", userComment);
+    // console.log("User-Comment = ", userComment);
   });
 
   React.useEffect(() => {
@@ -454,15 +451,13 @@ export default function LatestCard(props) {
 
   return (
     <div>
-      {isPop && commentText ? (
-        <Popup
-          event="add"
-          open={popOpen}
-          handleClose={handlePopClose}
-          modalTitle="Add a note"
-          handleContinue={() => adComment(commentText)}
-        />
-      ) : null}
+      <Popup
+        event="add"
+        open={popOpen}
+        handleClose={handlePopClose}
+        modalTitle="Add a note"
+        handleContinue={() => adComment(commentText)}
+      />
       <Grid item xs={12} style={{ marginBottom: "10px" }}>
         <Box className={classes.f5}>
           <Grid item xs={12}>
