@@ -84,7 +84,8 @@ function Header(props) {
   let history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const [drawer,opendrawer]=React.useState(false)
+  const [drawer,opendrawer]=React.useState(false);
+  const [name,setname]=React.useState("");
   console.log(props)
   const handledrawer =()=>{
     opendrawer(!open)
@@ -98,9 +99,15 @@ function Header(props) {
   };
   const loggedout=()=>{
     localStorage.removeItem("token")
+    localStorage.removeItem("id")
+    localStorage.removeItem("user")
     history.push("/");
   }
   const count=16;
+  React.useEffect(()=>{
+    const user=localStorage.getItem("user")
+    setname(user)
+  },[])
   return (
     <div className={classes.root}>
 
@@ -125,7 +132,7 @@ function Header(props) {
                   </div>
                 
             <div className={classes.user}>
-                <p style={{fontSize:"16px"}}> Hi, User Name</p>
+              <p style={{fontSize:"16px"}}> Hi, {name} </p>
             </div>
             
             

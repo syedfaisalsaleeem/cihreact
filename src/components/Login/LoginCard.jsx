@@ -51,6 +51,7 @@ function LoginCard(){
         else{
         changeauthenticate(true)
         localStorage.setItem("token",y)
+        localStorage.setItem("user",name)
         const getdata=await fetch('https://if.cyberdevelopment.house/api/account', {
                 headers: {
                     'accept': 'application/json',
@@ -63,6 +64,7 @@ function LoginCard(){
             "email": getdata1.id,
             "password": name,
         })
+        
         localStorage.setItem("id",getdata1.id)
         history.push("/MDashboard/");
         }

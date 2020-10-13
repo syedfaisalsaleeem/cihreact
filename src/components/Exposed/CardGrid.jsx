@@ -1,17 +1,30 @@
-import React from "react";
-import {Card,Grid,Button,Chip,Dialog,DialogTitle,IconButton,Typography,Divider,DialogContent,DialogActions, CardHeader} from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import {
+  Card,
+  Grid,
+  Button,
+  Chip,
+  Dialog,
+  DialogTitle,
+  IconButton,
+  Typography,
+  Divider,
+  DialogContent,
+  DialogActions,
+  Box,
+} from "@material-ui/core";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import styles from "./EContent.module.css";
-import { makeStyles,withStyles } from '@material-ui/core/styles';
-import CloseIcon from '@material-ui/icons/Close';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
-import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
-import GradeIcon from '@material-ui/icons/Grade';
-import TextField from '@material-ui/core/TextField';
-import Tooltip from '@material-ui/core/Tooltip';
+import CloseIcon from "@material-ui/icons/Close";
+import GradeIcon from "@material-ui/icons/Grade";
+import TextField from "@material-ui/core/TextField";
+import theme from "../../theme";
+import Tooltip from "@material-ui/core/Tooltip";
 import {Redirect,useHistory, withRouter} from 'react-router-dom';
 import Analystsupportmodal1 from '../Drawer/Dashboard/Analystsupportmodal1';
+import CommentList from "../Drawer/Dashboard/CommentsList.jsx";
+import enter from "../../Links/images/enter.png";
+import Popup from "../Drawer/Dashboard/PopUp.jsx";
 const LightTooltip = withStyles((theme) => ({
     tooltip: {
       backgroundColor: theme.palette.common.white,
@@ -138,218 +151,303 @@ chip: {
     }
 }))
 export default function CardGrid(props){
-    const {date,
-        alertcreated,severity,
-        title,source,keyword,
-        remediation,tags,comments}=props
-
-    const [tags1,settags1]=React.useState(tags.some(tag=>tag==="highlighted"))
-    if(severity!==""){
-        // console.log(severity)
-        const newStr = severity.split('');
-        newStr.splice(0,8);
-       var nseverity = newStr.join('');
-    }
-    else{
-        var nseverity=severity
-    }
-
-    const [fullWidth, setFullWidth] = React.useState(true);
-    const [commenting,setcommenting]=React.useState();
-    const [st1,set]=React.useState([""]);
-    const [click,setclick]=React.useState(true);
-
-    const [star,selectstar]=React.useState(tags1);
-    const [open, setOpen] = React.useState(false);
-    const controlhighlight=(e)=>{
-        selectstar(!star)
-        if(star===false){
-            // addcount()
-            const pushcomment=async()=>{
-                const token=localStorage.getItem("token")
-                const response= await fetch('https://if.cyberdevelopment.house/api/alerts/'+props.id+'/tags', {
-                    method: 'POST',
-                    headers: {
-                        'accept': 'application/json',
-                        'Authorization': token,
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: 'tag=highlighted'
-                });
-                
-                const y=await response.json()
-                if(y.message==="Invalid access token"){
-                    console.log(y,"typefaisal")
-                    loggedout()
-                }
-            }
-            pushcomment()
-        }
-        else if(star===true){
-            // changeflag()
+    const {
+        date,
+        alertcreated,
+        severity,
+        title,
+        source,
+        keyword,
+        remediation,
+        tags,
+        comments,
+      } = props;
     
-                const pushcomment=async()=>{
-                const token=localStorage.getItem("token")
-                const response= await fetch('https://if.cyberdevelopment.house/api/alerts/'+props.id+'/tags/highlighted', {
-                    method: 'DELETE',
-                    headers: {
-                        'accept': 'application/json',
-                        'Authorization': token,
-                    }
-                });
-            const y=await response.json()
-            if(y.message==="Invalid access token"){
-                console.log(y,"typefaisal")
-                loggedout()
+      const [tags1, settags1] = React.useState(
+        tags.some((tag) => tag === "highlighted")
+      );
+      if (severity !== "") {
+        const newStr = severity.split("");
+        newStr.splice(0, 8);
+        var nseverity = newStr.join("");
+      } else {
+        var nseverity = severity;
+      }
+    
+      const [fullWidth, setFullWidth] = React.useState(true);
+      const [commenting, setcommenting] = React.useState();
+    
+      //=======================================================================
+      const [userComment, setUserComment] = React.useState([]);
+      const [commentText, setCommentText] = useState("");
+      const [popOpen, setPopOpen] = React.useState(false);
+      const [upload, setUpload] = useState();
+      const handlePopOpen = () => {
+        setPopOpen(true);
+      };
+      const handlePopClose = () => {
+        setPopOpen(false);
+      };
+      const [isEdit, setIsEdit] = useState(false);
+      const [id, setId] = useState();
+      //=======================================================================
+    
+      const [st1, set] = React.useState([""]);
+      const [click, setclick] = React.useState(true);
+    
+      const [star, selectstar] = React.useState(tags1);
+      const [open, setOpen] = React.useState(false);
+      const controlhighlight = (e) => {
+        selectstar(!star);
+        if (star === false) {
+          // addcount()
+          const pushcomment = async () => {
+            const token = localStorage.getItem("token");
+            const response = await fetch(
+              "https://if.cyberdevelopment.house/api/alerts/" + props.id + "/tags",
+              {
+                method: "POST",
+                headers: {
+                  accept: "application/json",
+                  Authorization: token,
+                  "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: "tag=highlighted",
+              }
+            );
+    
+            const y = await response.json();
+            if (y.message === "Invalid access token") {
+              loggedout();
             }
+          };
+          pushcomment();
+        } else if (star === true) {
+          // changeflag()
+          const pushcomment = async () => {
+            const token = localStorage.getItem("token");
+            const response = await fetch(
+              "https://if.cyberdevelopment.house/api/alerts/" +
+                props.id +
+                "/tags/highlighted",
+              {
+                method: "DELETE",
+                headers: {
+                  accept: "application/json",
+                  Authorization: token,
+                },
+              }
+            );
+            const y = await response.json();
+            if (y.message === "Invalid access token") {
+              loggedout();
             }
-            pushcomment()
+          };
+          pushcomment();
         }
-    }
-    // const addcount=()=>{
-    //     selectstar(!star)
-    //     if(star===false){
-    //         props.addcount()
-    //     }
-    //     else if(star===true){
-    //         props.changeflag()
-    //     }
-        
-        
-    //     // console.log(props.changeflag)
-    // }
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleClose = () => {
-      setOpen(false);
-    };
-    const history = useHistory();
-    const loggedout=()=>{
-        localStorage.removeItem("token")
-        
+      };
+      const handleClickOpen = () => {
+        setOpen(true);
+      };
+    
+      const handleClose = () => {
+        setOpen(false);
+      };
+      const history = useHistory();
+      const loggedout = () => {
+        localStorage.removeItem("token");
+    
         history.push("/");
         window.location.reload();
-        
-      }
-    const handlecomment=async(e)=>{
-            const {id , value} = e.target
-            console.log(id,value)   
-    // props.setcommenting(prevState => ({
-    //     ...prevState,
-    //     [id] : value
-    // }))
-        if(comments.length>0){
-            // console.log("faisal2",commenting,comments[0]['id'])
-            const token=localStorage.getItem("token")
-            const  x= async()=>{
-                const response= await fetch('https://if.cyberdevelopment.house/api/alerts/'+props.id+'/comments/'+comments[0]['id'], {
-                    method: 'PUT',
-                    headers: {
-                        'accept': 'application/json',
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': token
-                    },
-                    body: 'text='+commenting
-                });
-                const y=await response.json()
-
-                if(y.message==="Invalid access token"){
-                    console.log(y,"typefaisal")
-                    loggedout()
-                }
-
-                // console.log(y,"typefaisal")
-                // setstate1(y.alerts)
-            }
-            x() 
-            // const response= await fetch('https://if.cyberintelligencehouse.com/api/alerts/'+id+'/comments/'+comments[0]['id'], {
-            //     method: 'PUT',
-            //     headers: {
-            //         'accept': 'application/json',
-            //         'X-Api-Key': '1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2',
-            //         'Content-Type': 'application/x-www-form-urlencoded'
-            //     },
-            //     body: 'text='+commenting
-            // });
-            // let data = await response.json()
-            // console.log(data)
-        }
-        else{
-            const token=localStorage.getItem("token")
-            const  x= async()=>{
-                const response= await fetch('https://if.cyberdevelopment.house/api/alerts/'+props.id+'/comments', {
-                    method: 'POST',
-                    headers: {
-                        'accept': 'application/json',
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': token
-                    },
-                    body: 'nick=dsadasdsasd&text='+commenting
-                });
-                const y=await response.json()
-                if(y.message==="Invalid access token"){
-                    console.log(y,"typefaisal")
-                    loggedout()
-                }
-
-                // console.log(y,"typefaisal")
-                // setstate1(y.alerts)
-            }
-            x() 
-            // const response=await fetch('https://if.cyberintelligencehouse.com/api/alerts/'+id+'/comments', {
-            //     method: 'POST',
-            //     headers: {
-            //         'accept': 'application/json',
-            //         'X-Api-Key': '1XOBDqYMo276NMNHL6bxO4VBuAOv4Mz2',
-            //         'Content-Type': 'application/x-www-form-urlencoded'
-            //     },
-            //     body: 'nick=dsadasdsasd&text='+commenting
-            // });
-            // let data = await response.json()
-            // console.log(data)
-        }
-
-}
-const handlecommenting=(e)=>{
-    console.log("doing work",e.target.value)
-    const {id , value} = e.target   
-    // props.setcommenting(prevState => ({
-    //     ...prevState,
-    //     [id] : value
-    // }))
-    setcommenting(e.target.value)
-}
-React.useEffect(()=>{
-    selectstar(tags.some(tag=>tag==="highlighted"))
-    if(comments.length>0){
-        setcommenting(comments[0]['text'])
-    }
-    else{
-        setcommenting('')
-    }
+      };
+      const handlecomment = async (e) => {
+        const { id, value } = e.target;
     
-},[tags])
-// React.useEffect(()=>{
-//     if( props.commenting1!==undefined){
-//         console.log("worked",props.commenting1)
-//         setcommenting(props.commenting1)
-//     }
-//     else{
-//         // setcommenting('')
-//     }
+        //===============================================================================================
+        //===============================================================================================
+        //===============================================================================================
+        //===============================================================================================
+        //===============================================================================================
+        //===============================================================================================
+        //===============================================================================================
+        //===============================================================================================
     
-// },[props.commenting1])
-    // https://if.cyberintelligencehouse.com/api/alerts/39412cec-8a69-4254-9a81-3cf21a83ba09/comments
-     const classes=useStyles();
-     const [open1,setopen1]=React.useState(false);
-     const handle1=()=>{
-         setopen1(true)
-     }
-     const handle2=()=>{
-         setopen1(false)
-     }
+        if (comments.length > 0) {
+          const token = localStorage.getItem("token");
+          const x = async () => {
+            // const response = await fetch(
+            //   "https://if.cyberdevelopment.house/api/alerts/" +
+            //     props.id +
+            //     "/comments/" +
+            //     comments[0]["id"],
+            //   {
+            //     method: "PUT",
+            //     headers: {
+            //       accept: "application/json",
+            //       "Content-Type": "application/x-www-form-urlencoded",
+            //       Authorization: token,
+            //     },
+            //     body: "text=" + commenting,
+            //   }
+            // );
+            // const y = await response.json();
+            // if (y.message === "Invalid access token") {
+            //   loggedout();
+            // }
+          };
+          x();
+        } else {
+          const token = localStorage.getItem("token");
+          const x = async () => {
+            // const response = await fetch(
+            //   "https://if.cyberdevelopment.house/api/alerts/" +
+            //     props.id +
+            //     "/comments",
+            //   {
+            //     method: "POST",
+            //     headers: {
+            //       accept: "application/json",
+            //       "Content-Type": "application/x-www-form-urlencoded",
+            //       Authorization: token,
+            //     },
+            //     body: "nick=dsadasdsasd&text=" + commenting,
+            //   }
+            // );
+            // const y = await response.json();
+            // if (y.message === "Invalid access token") {
+            //   loggedout();
+            // }
+          };
+          x();
+        }
+      };
+    
+      useEffect(() => {
+        setUserComment(props.comments);
+      }, [props.comments]);
+    
+      const adComment = (comment) => {
+        if (isEdit) {
+          editComment(id, commentText);
+          setIsEdit(false);
+        } else {
+          if (commentText) {
+            const token = localStorage.getItem("token");
+            const user = localStorage.getItem("user");
+            const commentObj = {
+              nick: user,
+              created: `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}:${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
+              text: comment,
+            };
+            fetch(
+              "https://if.cyberdevelopment.house/api/alerts/" +
+                props.id +
+                "/comments",
+              {
+                method: "POST",
+                headers: {
+                  accept: "application/json",
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  Authorization: token,
+                },
+                body: `nick=${commentObj.nick}&text=${commentObj.text}`,
+              }
+            ).then((res) => {
+              console.log("res = ", res);
+              setUserComment((prevComments) => [...prevComments, commentObj]);
+            });
+          }
+        }
+        setCommentText("");
+        handlePopClose();
+      };
+      //2020-09-22T10:19:37.682886
+    
+      const deleteComment = (commentId) => {
+        const token = localStorage.getItem("token");
+        fetch(
+          `https://if.cyberdevelopment.house/api/alerts/${props.id}/comments/${commentId}`,
+          {
+            method: "DELETE",
+            headers: {
+              accept: "application/json",
+              Authorization: token,
+            },
+          }
+        ).then((res) => {
+          console.log("deleteRes = ", res);
+          setUserComment((prevComments) =>
+            prevComments.filter((comment) => comment.id !== commentId)
+          );
+        });
+      };
+    
+      const findComment = (commentId) => {
+        const comment = userComment.find((comment) => comment.id === commentId);
+        const message = comment.text;
+        setCommentText(message);
+        setId(comment.id);
+        setIsEdit(true);
+      };
+    
+      const editComment = (id, comment) => {
+        const token = localStorage.getItem("token");
+        const newComments = userComment.map((com) => {
+          if (com.id === id) {
+            return {
+              ...com,
+              text: comment,
+            };
+          } else {
+            return { ...com };
+          }
+        });
+        fetch(
+          "https://if.cyberdevelopment.house/api/alerts/" +
+            props.id +
+            "/comments/" +
+            id,
+          {
+            method: "PUT",
+            headers: {
+              accept: "application/json",
+              "Content-Type": "application/x-www-form-urlencoded",
+              Authorization: token,
+            },
+            body: "text=" + comment,
+          }
+        ).then((res) => {
+          console.log("Edit Res =", res);
+          setUserComment(newComments);
+        });
+      };
+    
+      const handlecommenting = (e) => {
+        const { id, value } = e.target;
+        setcommenting(e.target.value);
+      };
+    
+      React.useEffect(() => {
+        console.log("User-Comment = ", userComment);
+      });
+    
+      React.useEffect(() => {
+        selectstar(tags.some((tag) => tag === "highlighted"));
+        if (comments.length > 0) {
+          setcommenting(comments[0]["text"]);
+        } else {
+          setcommenting("");
+        }
+      }, [tags]);
+    
+      const classes = useStyles();
+      const [open1, setopen1] = React.useState(false);
+      const handle1 = () => {
+        setopen1(true);
+      };
+      const handle2 = () => {
+        setopen1(false);
+      };
     return(
         <div>
             <Grid item style={{marginTop:"20px"}} >
@@ -493,24 +591,53 @@ React.useEffect(()=>{
                                     <Grid item xs={12}>
                                     <div  >
                                     
-                                    <Grid container alignItems="center" direction="row" style={{padding:"5px"}} >
+                                    <Grid container alignItems="center" direction="row" style={{padding:theme.spacing(2)}} >
                                         
-                                        <Grid item xs={12}>
-                                        <TextField
-                                            id="comments"
-                                            // label="Add notes here"
-                                            multiline
-                                            variant="outlined"
-                                            value={commenting}
-                                            onChange={handlecommenting}
-                                            onBlur={handlecomment}
-                                            placeholder="Add notes here"
-                                            fullWidth
-
-                                            />
-                                        </Grid>
-
-                                    </Grid>
+                                    <Grid item xs={11}>
+                            <TextField
+                              id="comments"
+                              multiline
+                              variant="outlined"
+                              value={commentText}
+                              onChange={(event) =>
+                                setCommentText(event.target.value)
+                              }
+                            //   onBlur={handlecomment}
+                              placeholder="Add notes here"
+                              fullWidth
+                            />
+                          </Grid>
+                          <Popup
+                            event="add"
+                            open={popOpen}
+                            handleClose={handlePopClose}
+                            modalTitle="Add a note"
+                            handleContinue={() => adComment(commentText)}
+                          />
+                          <Grid item xs={1}>
+                              <Grid container justify="center">
+                                  <Grid item >
+                            <div onClick={handlePopOpen}>
+                                <img src={enter} style={{width:"50px",height:"60px",cursor: "pointer",}}/>
+                              {/* () => adComment(commentText)}
+                              <PlayArrowTwoToneIcon
+                                color="primary"
+                                style={{
+                                  width: "100%",
+                                  cursor: "pointer",
+                                  fontSize: "2rem",
+                                }}
+                              /> */}
+                            </div>
+                            </Grid>
+                            </Grid>
+                          </Grid>
+                          <CommentList
+                            comments={userComment}
+                            onDeleteComment={deleteComment}
+                            onFindComment={findComment}
+                          />
+                        </Grid>
                                     
                                     </div>
                                     </Grid>
@@ -695,24 +822,53 @@ React.useEffect(()=>{
                                     <Grid item xs={12}>
                                     <div  >
                                     
-                                    <Grid container alignItems="center" direction="row" style={{padding:"5px"}} >
+                                    <Grid container alignItems="center" direction="row" style={{padding:theme.spacing(2)}} >
                                         
-                                        <Grid item xs={12}>
-                                        <TextField
-                                            id="comments"
-                                            // label="Add notes here"
-                                            multiline
-                                            variant="outlined"
-                                            value={commenting}
-                                            onChange={handlecommenting}
-                                            onBlur={handlecomment}
-                                            placeholder="Add notes here"
-                                            fullWidth
-
-                                            />
-                                        </Grid>
-
-                                    </Grid>
+                                    <Grid item xs={11}>
+                            <TextField
+                              id="comments"
+                              multiline
+                              variant="outlined"
+                              value={commentText}
+                              onChange={(event) =>
+                                setCommentText(event.target.value)
+                              }
+                            //   onBlur={handlecomment}
+                              placeholder="Add notes here"
+                              fullWidth
+                            />
+                          </Grid>
+                          <Popup
+                            event="add"
+                            open={popOpen}
+                            handleClose={handlePopClose}
+                            modalTitle="Add a note"
+                            handleContinue={() => adComment(commentText)}
+                          />
+                          <Grid item xs={1}>
+                              <Grid container justify="center">
+                                  <Grid item >
+                            <div onClick={handlePopOpen}>
+                                <img src={enter} style={{width:"50px",height:"60px",cursor: "pointer",}}/>
+                              {/* () => adComment(commentText)}
+                              <PlayArrowTwoToneIcon
+                                color="primary"
+                                style={{
+                                  width: "100%",
+                                  cursor: "pointer",
+                                  fontSize: "2rem",
+                                }}
+                              /> */}
+                            </div>
+                            </Grid>
+                            </Grid>
+                          </Grid>
+                          <CommentList
+                            comments={userComment}
+                            onDeleteComment={deleteComment}
+                            onFindComment={findComment}
+                          />
+                        </Grid>
                                     
                                     </div>
                                     </Grid>

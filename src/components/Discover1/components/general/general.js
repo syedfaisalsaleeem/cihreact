@@ -44,7 +44,7 @@ export default function General() {
       fetchItems: values.companyNames,
       setFetchItems: values.setCompanyNames,
       removeItems: values.removeCompanyName,
-      tooltip: "Company Names",
+      tooltip: "",
       alertMessage: "Company Name",
     },
     {
@@ -123,9 +123,10 @@ export default function General() {
             <Grid container className={classes.formControl} key={field.label}>
               <Grid item container xs="5" className={classes.labelWarper}>
                 <label htmlFor="">{field.label}</label>
+                {field.tooltip===""?<div></div>:
                 <LightTooltip title={field.tooltip}>
                   <InfoOutlinedIcon style={{ marginLeft: "1rem" }} />
-                </LightTooltip>
+                </LightTooltip>}
               </Grid>
               <Grid item container xs="7">
                 <form

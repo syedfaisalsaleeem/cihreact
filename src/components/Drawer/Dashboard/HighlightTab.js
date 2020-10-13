@@ -140,6 +140,7 @@ export default function HighlightTab(){
                   setstate2({})
               }
               else{
+                setstate2({})
                   setstate2(y.alerts.slice(0,5))
                   setview(false)
               }
