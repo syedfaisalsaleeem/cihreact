@@ -82,7 +82,7 @@ function Row(props) {
     console.log(list, "lsit");
 
     console.log(alertstate);
-    // changeopen2(true);
+    changeopen2(true);
 
     const fetchRemediationData = async () => {
       let alertstate1 = [];
@@ -231,7 +231,7 @@ function Row(props) {
             borderTop: "1px solid #aaa",
             borderBottom: "1px solid #aaa",
 
-            paddingLeft: "2rem",
+            paddingLeft: "1.5rem",
           }}
         >
           {row.affects}
@@ -241,7 +241,7 @@ function Row(props) {
           style={{
             borderTop: "1px solid #aaa",
             borderBottom: "1px solid #aaa",
-            paddingLeft: "2rem",
+            paddingLeft: "1.5rem",
           }}
         >
           {row.risk}
@@ -251,7 +251,7 @@ function Row(props) {
           style={{
             borderTop: "1px solid #aaa",
             borderBottom: "1px solid #aaa",
-            paddingLeft: "2rem",
+            paddingLeft: "1rem",
           }}
         >
           {row.cisControl}
@@ -406,12 +406,11 @@ export default function FContent() {
     <>
       <TableContainer component={Paper}>
         <Table>
-          <TableHead>
+          <TableHead >
             <TableRow>
               <TableCell
                 align="center"
                 style={{
-                  borderTop: "1px solid #aaa",
                   borderBottom: "1px solid #aaa",
                 }}
               >
@@ -427,7 +426,7 @@ export default function FContent() {
               <TableCell
                 align="center"
                 style={{
-                  borderTop: "1px solid #aaa",
+                 
                   borderBottom: "1px solid #aaa",
                 }}
               >
@@ -443,7 +442,7 @@ export default function FContent() {
               <TableCell
                 align="center"
                 style={{
-                  borderTop: "1px solid #aaa",
+                  
                   borderBottom: "1px solid #aaa",
                 }}
               >
@@ -460,7 +459,7 @@ export default function FContent() {
                 align="center"
                 style={{
                   width: "10rem",
-                  borderTop: "1px solid #aaa",
+                  
                   borderBottom: "1px solid #aaa",
                 }}
               >
@@ -497,7 +496,7 @@ export default function FContent() {
                 align="center"
                 style={{
                   width: "15rem",
-                  borderTop: "1px solid #aaa",
+                  
                   borderBottom: "1px solid #aaa",
                 }}
               >
@@ -512,7 +511,7 @@ export default function FContent() {
               </TableCell>
               <TableCell
                 style={{
-                  borderTop: "1px solid #aaa",
+                 
                   borderBottom: "1px solid #aaa",
                 }}
               />

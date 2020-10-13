@@ -164,12 +164,11 @@ function Row(props) {
           style={{
             borderTop: "1px solid #aaa",
             borderBottom: "1px solid #aaa",
+            paddingLeft: "5rem !important",
           }}
         >
-          {" "}
           <Typography
             variant="subtitle1"
-            style={{ fontWeight: "bold" }}
           ></Typography>{" "}
           {row.risk}
         </TableCell>
@@ -187,6 +186,7 @@ function Row(props) {
           style={{
             borderTop: "1px solid #aaa",
             borderBottom: "1px solid #aaa",
+            width: "10rem",
           }}
         >
           {row.username}
