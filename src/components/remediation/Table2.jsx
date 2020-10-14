@@ -23,7 +23,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import LatestCard from "../ExposedCredentials/LatestCard.jsx";
 import { FetchRemediationContext } from "../../context/FetchRemidiation";
 import Dialogtable from "./DialogTable.js";
-import { trackPromise } from 'react-promise-tracker';
+import { trackPromise } from "react-promise-tracker";
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
     backgroundColor: theme.palette.common.white,
@@ -34,9 +34,7 @@ const LightTooltip = withStyles((theme) => ({
 }))(Tooltip);
 const useRowStyles = makeStyles({
   root: {
-    "& > *": {
-      
-    },
+    "& > *": {},
   },
 });
 
@@ -44,16 +42,16 @@ function createData(
   remediationAction,
   affects,
   risk,
-  cisControl,
-  timeToExploit,
-  alertsIds,
+  remediated,
+  username,
+  alertsIds
 ) {
   return {
     remediationAction,
     affects,
     risk,
-    cisControl,
-    timeToExploit,
+    remediated,
+    username,
     alertsIds,
   };
 }
@@ -66,118 +64,134 @@ function Row(props) {
     changeopen1(!open);
   };
   const [open2, changeopen2] = React.useState(false);
-  const [alertstate,changealertstate]=React.useState([]);
-  const [alertdatalist,setalertdatalist]=React.useState([]);
-  const handle2f=()=>{
+  const [alertstate, changealertstate] = React.useState([]);
+  const [alertdatalist, setalertdatalist] = React.useState([]);
+  const handle2f = () => {
     changeopen2(false);
-  }
+  };
   const handle2 = (list) => {
-    console.log(list,"lsit")
+    console.log(list, "lsit");
+
     
-    list.splice(0,10)
-    let alertstate1=[];
-    let alertdata=[];
-    alertstate1.push(list)
-    changealertstate(alertstate1[0])
-    console.log(alertstate)
-    changeopen2(true);
+    let alertstate1 = [];
+    let alertdata = [];
+    alertstate1.push(list);
+    changealertstate(alertstate1[0]);
+    console.log(alertstate);
    
 
-
     const fetchRemediationData = async () => {
-      try{
-      const token=localStorage.getItem("token")
-      if(list.length>5){
-        alertstate1.push(list.splice(0,5))
-        changealertstate(alertstate1[0])
-        for (const i in list.splice(0,5)){            
-
-
-
-          const result= await trackPromise( fetch("https://if.cyberdevelopment.house/api/alerts/"+list[i], {
-              headers: {
-                  'accept': 'application/json',
-                  'Authorization': token
-              }
-              }
-            ))
-            const y=await trackPromise( result.json())
+      try {
+        const token = localStorage.getItem("token");
+        if (list.length > 5) {
+          alertstate1.push(list);
+          changealertstate(alertstate1[0]);
+          for (const i in list) {
+            const result = await trackPromise(
+              fetch("https://if.cyberdevelopment.house/api/alerts/" + list[i], {
+                headers: {
+                  accept: "application/json",
+                  Authorization: token,
+                },
+              })
+            );
+            const y = await trackPromise(result.json());
             // console.log(y,"result")
             // console.log(result,"result")
-            alertdata.push(y)
+            alertdata.push(y);
           }
-      }
-      else{
-        alertstate1.push(list)
-        changealertstate(alertstate1[0])
-        for (const i in list){            
-
-
-
-          const result= await trackPromise( fetch("https://if.cyberdevelopment.house/api/alerts/"+list[i], {
-              headers: {
-                  'accept': 'application/json',
-                  'Authorization': token
-              }
-              }
-            ))
-            const y=await trackPromise( result.json())
+        } else {
+          alertstate1.push(list);
+          changealertstate(alertstate1[0]);
+          for (const i in list) {
+            const result = await trackPromise(
+              fetch("https://if.cyberdevelopment.house/api/alerts/" + list[i], {
+                headers: {
+                  accept: "application/json",
+                  Authorization: token,
+                },
+              })
+            );
+            const y = await trackPromise(result.json());
             // console.log(y,"result")
             // console.log(result,"result")
-            alertdata.push(y)
+            alertdata.push(y);
           }
-      }
-
-
-      console.log(alertdata,"alertdata")
-      if(alertdata[0]["message"]==="Internal Server Error")
-      { console.log("what is error working")   
-        alertdata.length=0
-        setalertdatalist(alertdata)}
-        else{
-          setalertdatalist(alertdata)
         }
-      
-  }
-  catch(error){
-    console.log(error,"what is error")
-    // alertdata.push([])
-    // setalertdatalist(alertdata)
-  }
-} 
-    
-  fetchRemediationData()
-  
-}
+        changeopen2(true);
+        console.log(alertdata, "alertdata");
+        if (alertdata[0]["message"] === "Internal Server Error") {
+          console.log("what is error working");
+          alertdata.length = 0;
+          setalertdatalist(alertdata);
+        } else {
+          setalertdatalist(alertdata);
+        }
+      } catch (error) {
+        console.log(error, "what is error");
+        // alertdata.push([])
+        // setalertdatalist(alertdata)
+      }
+    };
+
+    fetchRemediationData();
+  };
   return (
     <React.Fragment>
       <TableRow className={classes.root}>
         <TableCell
           align="left"
-          component="th" 
+          component="th"
           scope="row"
-          style={{ width: "30%",borderTop: "1px solid #aaa", borderBottom:"1px solid #aaa" }}
+          style={{
+            borderTop: "1px solid #aaa",
+            borderBottom: "1px solid #aaa",
+          }}
         >
           {row.remediationAction}
         </TableCell>
-        <TableCell align="left" style={{ width: "10%", paddingLeft: "2rem",borderTop: "1px solid #aaa", borderBottom:"1px solid #aaa"}}>
+        <TableCell
+          align="left"
+          style={{
+            borderTop: "1px solid #aaa",
+            borderBottom: "1px solid #aaa",
+          }}
+        >
           {row.affects}
         </TableCell>
-        <TableCell align="left" style={{ width: "10%", paddingLeft: "2rem",borderTop: "1px solid #aaa", borderBottom:"1px solid #aaa"}}>
-          {" "}
+        <TableCell
+          align="left"
+          style={{
+            borderTop: "1px solid #aaa",
+            borderBottom: "1px solid #aaa",
+            paddingLeft: "5rem !important",
+          }}
+        >
           <Typography
             variant="subtitle1"
-            style={{ fontWeight: "bold" }}
           ></Typography>{" "}
           {row.risk}
         </TableCell>
-        <TableCell align="left" style={{ width: "10%",borderTop: "1px solid #aaa", borderBottom:"1px solid #aaa" }}>
-          {row.cisControl}
+        <TableCell
+          align="left"
+          style={{
+            borderTop: "1px solid #aaa",
+            borderBottom: "1px solid #aaa",
+          }}
+        >
+          {row.remediated}
         </TableCell>
-        <TableCell align="left" style={{ width: "10%", paddingLeft: "2rem",borderTop: "1px solid #aaa", borderBottom:"1px solid #aaa" }}>
-          {row.timeToExploit}
+        <TableCell
+          align="left"
+          style={{
+            borderTop: "1px solid #aaa",
+            borderBottom: "1px solid #aaa",
+            width: "10rem",
+          }}
+        >
+          {row.username}
         </TableCell>
-        <TableCell align="center" style={{ width: "20%",borderBottom: "1px solid #aaa" }}>
+        <TableCell align="center" style={{ borderBottom: "1px solid #aaa" }}>
           <Button
             style={{
               textTransform: "capitalize",
@@ -185,76 +199,41 @@ function Row(props) {
               color: "white",
             }}
             size="small"
-            onClick={()=>handle2(row.alertsIds)}
+            onClick={() => handle2(row.alertsIds)}
           >
             Show Alerts
           </Button>
         </TableCell>
       </TableRow>
-      {alertdatalist.length==="0"?<div></div>:
-      <Dialogtable  open={open2} alertdatalist={alertdatalist} alertstate={alertstate} handle={handle2} handle1={handle2f}/>
-      }
+      {alertdatalist.length === "0" ? (
+        <div></div>
+      ) : (
+        <Dialogtable
+          open={open2}
+          alertdatalist={alertdatalist}
+          alertstate={alertstate}
+          handle={handle2}
+          handle1={handle2f}
+        />
+      )}
     </React.Fragment>
   );
 }
 
-const rows = [
-  createData("Change password of a user", 159, 6.0, "21/06/2020", "Rose"),
-  createData(
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque!",
-    237,
-    9.0,
-    "21/06/2020",
-    "Rose"
-  ),
-  createData(
-    "Lorem ipsum dolor sit amet consectetur",
-    262,
-    15,
-    "21/06/2020",
-    "Rose"
-  ),
-  createData(
-    "Lorem ipsum dolor sit amet consectetur",
-    262,
-    15,
-    "21/06/2020",
-    "Rose"
-  ),
-  createData(
-    "Lorem ipsum dolor sit amet consectetur",
-    262,
-    15,
-    "21/06/2020",
-    "Rose"
-  ),
-  createData(
-    "Lorem ipsum dolor sit amet consectetur",
-    262,
-    15,
-    "21/06/2020",
-    "Rose"
-  ),
-];
-
 export default function FContent() {
   const value = useContext(FetchRemediationContext);
   const { table2State } = value;
+  console.log("table2State = ", table2State);
   const rows = [];
-
   for (const key in table2State) {
     const obj = table2State[key];
-    const date = new Date(obj.readyToExploit);
-    const rte = `${date.getHours()} : ${date.getMinutes()} : ${date.getSeconds()}`;
     rows.push(
       createData(
         obj.title,
         obj.affects,
         obj.risks,
-        [...obj.cisControls].join(" , "),
-        rte,
-        
-        
+        obj.remediated,
+        obj.username,
         [...obj.alertsIds]
       )
     );
@@ -264,21 +243,39 @@ export default function FContent() {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell align="left" style={{borderTop: "1px solid #aaa", borderBottom:"1px solid #aaa"}}>
+            <TableCell
+              align="left"
+              style={{
+                borderTop: "1px solid #aaa",
+                borderBottom: "1px solid #aaa",
+              }}
+            >
               <div className={customClasses.thDiv}>Remediated action</div>
             </TableCell>
-            <TableCell align="left" style={{borderTop: "1px solid #aaa", borderBottom:"1px solid #aaa"}}>
+            <TableCell
+              align="left"
+              style={{
+                borderTop: "1px solid #aaa",
+                borderBottom: "1px solid #aaa",
+              }}
+            >
               <div className={customClasses.thDiv}>
                 Affects
-                <div className={customClasses.i} >
+                <div className={customClasses.i}>
                   <LightTooltip title=" Number of alerts affected by this remediation.">
                     <InfoOutlinedIcon style={{ marginLeft: "0.5rem" }} />
                   </LightTooltip>
                 </div>
               </div>
             </TableCell>
-            <TableCell align="left" style={{borderTop: "1px solid #aaa", borderBottom:"1px solid #aaa"}}>
-              <div className={customClasses.thDiv} >
+            <TableCell
+              align="left"
+              style={{
+                borderTop: "1px solid #aaa",
+                borderBottom: "1px solid #aaa",
+              }}
+            >
+              <div className={customClasses.thDiv}>
                 Risks
                 <div className={customClasses.i}>
                   <LightTooltip title=" The risk level is calculated as the weighted sum of high, medium and low severity alerts.">
@@ -287,7 +284,13 @@ export default function FContent() {
                 </div>
               </div>
             </TableCell>
-            <TableCell align="left" style={{ width: "10rem",borderTop: "1px solid #aaa", borderBottom:"1px solid #aaa" }}>
+            <TableCell
+              align="left"
+              style={{
+                borderTop: "1px solid #aaa",
+                borderBottom: "1px solid #aaa",
+              }}
+            >
               <div className={customClasses.thDiv}>
                 Remediated
                 <div className={customClasses.i}>
@@ -297,7 +300,13 @@ export default function FContent() {
                 </div>
               </div>
             </TableCell>
-            <TableCell align="left" style={{ width: "15rem",borderTop: "1px solid #aaa", borderBottom:"1px solid #aaa"}}>
+            <TableCell
+              align="left"
+              style={{
+                borderTop: "1px solid #aaa",
+                borderBottom: "1px solid #aaa",
+              }}
+            >
               <div className={customClasses.thDiv}>
                 Username
                 <div className={customClasses.i}>
@@ -307,7 +316,12 @@ export default function FContent() {
                 </div>
               </div>
             </TableCell>
-            <TableCell style={{borderTop: "1px solid #aaa", borderBottom:"1px solid #aaa"}} />
+            <TableCell
+              style={{
+                borderTop: "1px solid #aaa",
+                borderBottom: "1px solid #aaa",
+              }}
+            />
           </TableRow>
         </TableHead>
         <TableBody>

@@ -210,17 +210,7 @@ export default function SIContent() {
                         </Grid>
                       </Grid>
                     </Grid>
-                    <Grid item xs={6}>
-                      <Grid container justify="flex-end">
-                        <Grid item xs={6}>
-                          <Grid container justify="flex-end">
-                            <IconButton>
-                              <GetAppIcon />
-                            </IconButton>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
+
                   </Grid>
                 </Grid>
               </Grid>

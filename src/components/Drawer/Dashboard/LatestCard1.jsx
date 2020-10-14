@@ -167,7 +167,7 @@ export default function LatestCard(props) {
   } = props;
 
   const [tags1, settags1] = React.useState(
-    tags.some((tag) => tag === "highlighted")
+
   );
   if (severity !== "") {
     const newStr = severity.split("");

@@ -188,7 +188,7 @@ export default function DDContent1(){
                 <div>
 <Grid container className={classes.root} spacing={3}>
 
-<Grid item xs={12} md={12}>
+<Grid item xs={12} md={12} style={{marginBottom:"36px"}}>
     <Grid container justify="center">
         <Grid item xs={11} lg={10}>
         <Grid container>
@@ -206,21 +206,7 @@ export default function DDContent1(){
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid item xs={6}>
-                <Grid container justify="flex-end" >
-                    <Grid item xs={6}>
-                    <Grid container justify="flex-end">
-                    <IconButton>
-                        <GetAppIcon/>
-                    </IconButton>
-                    </Grid>
 
-                    </Grid>
-
-                    
-                </Grid>
-
-            </Grid>
         </Grid>
         
         </Grid>                    
