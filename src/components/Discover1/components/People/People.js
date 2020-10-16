@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import Structure from "../Structure/Structure";
@@ -9,6 +9,7 @@ import ListItems from "../ListItems/ListItems";
 import { withStyles } from "@material-ui/core/styles";
 import Tooltip from "@material-ui/core/Tooltip";
 import PopUp from "../UI/popUp";
+import enterImg from "../assets/images/enter.png";
 
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
@@ -94,58 +95,58 @@ const People = () => {
       <Grid container justify="space-around" className={classes.People}>
         {inputFields.map((field) => {
           return (
-            <Grid item xl="5" xs="10">
-              <div className={classes.titleInput}>
-                <Typography variant="subtitle1">{field.title}</Typography>
-                <LightTooltip title={field.tooltip}>
-                  <InfoOutlinedIcon />
-                </LightTooltip>
-              </div>
-              <div>
-                <form
-                  className={classes.input}
-                  onSubmit={(e) =>
-                    handleSubmit(
-                      e,
-                      field.onSubmit,
-                      field.value,
-                      field.onChange,
-                      field.alertMessage
-                    )
-                  }
-                >
-                  <input
-                    type="text"
-                    placeholder={field.placeholder}
-                    value={field.value}
-                    onChange={(e) => handleChange(e, field.onChange)}
-                  />
-                  <button
-                    type="submit"
-                    style={{
-                      border: "1px solid #000",
-                      cursor: "pointer",
-                      marginLeft: "0.2rem",
-                      background: "none",
-                      padding: "0",
-                    }}
+            <>
+              <Grid container className={classes.formControl} key={field.label}>
+                <Grid item container xs="5" className={classes.labelWarper}>
+                  <label htmlFor="">{field.title}</label>
+                  {field.tooltip === "" ? (
+                    <div></div>
+                  ) : (
+                    <LightTooltip title={field.tooltip}>
+                      <InfoOutlinedIcon style={{ marginLeft: "1rem" }} />
+                    </LightTooltip>
+                  )}
+                </Grid>
+                <Grid item container xs="7">
+                  <form
+                    onSubmit={(e) =>
+                      handleSubmit(
+                        e,
+                        field.onSubmit,
+                        field.value,
+                        field.onChange,
+                        field.alertMessage
+                      )
+                    }
+                    className={classes.inputWarper}
                   >
-                    <PlayArrowIcon />
-                  </button>
-                </form>
-              </div>
-              <div className={classes.ListItemsWarper}>
+                    <input
+                      placeholder={field.placeholder}
+                      type="text"
+                      value={field.value}
+                      onChange={(e) => handleChange(e, field.onChange)}
+                    />
+                    <button type="submit">
+                      <img src={enterImg} alt="" />
+                    </button>
+                  </form>
+                </Grid>
+              </Grid>
+              <Grid
+                container
+
+              >
                 <ListItems
                   field={field}
                   handleRemove={handleRemove}
-                  columns="12"
+                  columns="7"
                   open={open}
                   handleClose={handleClose}
                   handleClickOpen={handleClickOpen}
                   msg={field.alertMessage}
                 />
-              </div>
-            </Grid>
+              </Grid>
+            </>
           );
         })}
       </Grid>

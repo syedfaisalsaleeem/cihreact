@@ -13,8 +13,26 @@
 }
 
 .formControl input {
-  margin: 0 2rem;
-  padding: 0.3rem;
+  margin-right: 0.1rem;
+  width: 80%;
+  padding: 0.9rem;
+  border: 1px solid #000;
+  border-radius: 4px;
+  outline: none;
+}
+
+.formControl button {
+  background-color: #8950fc;
+  height: 100%;
+  width: 2rem;
+  border: none;
+  outline: none;
+  padding-right: 5px;
+  margin-left: 2px;
+}
+
+.formControl button img {
+  width: 100%;
 }
 
 .labelWarper {
@@ -28,17 +46,13 @@
   align-items: center;
   width: 100%;
 }
-.inputWarper input {
-  margin-right: 0.1rem;
-  width: 80%;
-}
 
 .ItemsListWarper {
-  margin-left: 0rem;
+  margin-left: 1.5rem;
 }
 
-@media(min-width: 1837px) {
+@media (min-width: 1837px) {
   .ItemsListWarper {
-    margin-left: 1rem;
-  } 
+    margin-left: 2.3rem;
+  }
 }

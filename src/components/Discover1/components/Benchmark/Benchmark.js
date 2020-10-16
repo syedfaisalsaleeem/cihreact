@@ -16,51 +16,55 @@ const LightTooltip = withStyles((theme) => ({
 }))(Tooltip);
 
 const industry = [
-  { label: "Energy", array: ["Energy"] },
-  { label: "Materials", array: ["Materials"] },
+  { value: "Energy", space: true },
+  { value: "Materials", space: true },
   {
-    label: "Industrials",
-    array: [
-      "Capital Goods",
-      "Commercial & Professional services",
-      "Transportation",
-    ],
+    value: "Industrials",
+    space: true,
   },
+  { value: "Capital Goods" },
+  { value: "Commercial & Professional services" },
+  { value: "Transportation" },
   {
-    label: "Consumer Discretionary",
-    array: [
-      "Automobiles & Components",
-      "Consumer durables & Apparel",
-      "Consumer services",
-      "Media",
-      "Retailing",
-    ],
+    value: "Consumer Discretionary",
+    space: true,
   },
+  { value: "Automobiles & Components" },
+  { value: "Consumer durables & Apparel" },
+  { value: "Consumer services" },
+  { value: "Media" },
+  { value: "Retailing" },
   {
-    label: "Consumer Staples",
-    array: [
-      "Food & Staples Retailing",
-      "Food",
-      "Beverages & Tobacco",
-      "Households & Personal products",
-    ],
+    value: "Consumer Staples",
+    space: true,
   },
+  { value: "Food & Staples Retailing" },
+  { value: "Food" },
+  { value: "Beverages & Tobacco" },
+  { value: "Households & Personal products" },
   {
-    label: "Health Care",
-    array: [
-      "Health Care Equipment & Services",
-      "Pharmaceuticals",
-      "Biotechnology & Life Sciences",
-    ],
+    value: "Health Care",
+    space: true,
   },
+  { value: "Health Care Equipment & Services" },
+  { value: "Pharmaceuticals" },
+  { value: "Biotechnology & Life Sciences" },
   {
-    label: "Financial",
-    array: ["Banks", "Diversified Financial", "Insurance"],
+    value: "Financial",
+    space: true,
   },
-  { label: "Telecommunication Services", array: [] },
-  { label: "Utilities", array: [] },
-  { label: "Real Estate", array: [] },
+  { value: "Banks" },
+  { value: "Diversified Financial" },
+  { value: "Insurance" },
+  { value: "Information Technology", space: true },
+  { value: "Software & Services" },
+  { value: "Technology Hardware & Equipment" },
+  { value: "Semiconductors & Semiconductor Equipment" },
+  { value: "Telecommunication Services", space: true },
+  { value: "Utilities", space: true },
+  { value: "Real Estate", space: true },
 ];
+
 const continent = [
   "Africa",
   "Asia",
@@ -82,8 +86,8 @@ const employeeCount = [
 const Systems = () => {
   return (
     <Structure titleText="Benchmark">
-      <Grid container justify="space-evenly">
-        <Grid item xl="3" xs="10">
+      <Grid container justify="space-between" spacing={2}>
+        <Grid item xl="4" xs="10">
           <div style={{ display: "flex", marginLeft: "1rem" }}>
             <Typography variant="subtitle1">Continent</Typography>
             <LightTooltip title="Benchmark your company against other companies within a continent.">
@@ -92,7 +96,7 @@ const Systems = () => {
           </div>
           <Select selectData={continent} placeholder="Select Continent" />
         </Grid>
-        <Grid item xl="3" xs="10">
+        <Grid item xl="4" xs="10">
           <div style={{ display: "flex", marginLeft: "1rem" }}>
             <Typography variant="subtitle1">Industry</Typography>
             <LightTooltip title="Benchmark your company against other companies in your industry.">
@@ -101,14 +105,17 @@ const Systems = () => {
           </div>
           <GroupDropdown dropdownData={industry} />
         </Grid>
-        <Grid item xl="3" xs="10">
+        <Grid item xl="4" xs="10">
           <div style={{ display: "flex", marginLeft: "1rem" }}>
             <Typography variant="subtitle1">Employee Count</Typography>
             <LightTooltip title="Benchmark your company against other companies of similar size. Keep the information up-to-date for accurate benchmarking.">
               <InfoOutlinedIcon style={{ marginLeft: "1rem" }} />
             </LightTooltip>
           </div>
-          <Select selectData={employeeCount} placeholder="Select Employee Count" />
+          <Select
+            selectData={employeeCount}
+            placeholder="Select Employee Count"
+          />
         </Grid>
       </Grid>
     </Structure>

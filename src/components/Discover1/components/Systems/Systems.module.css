@@ -1,30 +1,56 @@
-
-.input {
-  display: flex;
-  margin-top: 1rem;
-  margin-left: -1rem;
+.title {
+  padding: 0.5rem;
+  border-bottom: 1px solid #000;
+  margin-bottom: 1rem;
+}
+.formControl {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-.title {
+.formControl input {
+  margin-right: 0.1rem;
+  width: 80%;   
+  padding: 0.9rem;
+  border: 1px solid #000;
+  border-radius: 4px;
+  outline: none;
+}
+
+.formControl button {
+  background-color: #8950fc;
+  height: 100%;
+  width: 2rem;
+  border: none;
+  outline: none;
+  padding-right: 5px;
+  margin-left: 2px;
+}
+
+.formControl button img {
+  width: 100%;
+}
+
+
+
+.labelWarper {
   display: flex;
   align-items: center;
 }
 
-.title > *:last-child {
-  margin-left: 0.5rem;
-}
-
-.Systems input {
+.inputWarper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
 }
 
-.ListItemsWarper {
-  margin-top: 2rem;
-  margin-left: -4rem;
+.ItemsListWarper {
+  margin-left: 2.5rem;
 }
 
-@media(max-width: 2077px) {
-  .ListItemsWarper {
-    margin-left: -3rem;
+@media (min-width: 1837px) {
+  .ItemsListWarper {
+    margin-left: 3.3rem;
   }
 }

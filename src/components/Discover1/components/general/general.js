@@ -5,9 +5,10 @@ import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { Grid, Tooltip } from "@material-ui/core";
 import Structure from "../Structure/Structure";
 import ListItems from "../ListItems/ListItems";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import { withStyles } from "@material-ui/core/styles";
 import PopUp from "../UI/popUp";
+import enterImg from "../assets/images/enter.png";
+
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
     backgroundColor: theme.palette.common.white,
@@ -62,7 +63,7 @@ export default function General() {
     },
     {
       label: "Internal keywords",
-      placeholder: "Add intrenal keyword",
+      placeholder: "Add internal keyword",
       value: newInternalKeyword,
       onChange: setNewInternalKeyword,
       onSubmit: values.addInternalKeyword,
@@ -108,6 +109,10 @@ export default function General() {
     setFunc(false);
   };
 
+  React.useEffect(() => {
+    console.log("company name = ", newCompanyName);
+  },[newCompanyName]);
+
   return (
     <Structure titleText="General">
       <PopUp
@@ -123,10 +128,13 @@ export default function General() {
             <Grid container className={classes.formControl} key={field.label}>
               <Grid item container xs="5" className={classes.labelWarper}>
                 <label htmlFor="">{field.label}</label>
-                {field.tooltip===""?<div></div>:
-                <LightTooltip title={field.tooltip}>
-                  <InfoOutlinedIcon style={{ marginLeft: "1rem" }} />
-                </LightTooltip>}
+                {field.tooltip === "" ? (
+                  <div></div>
+                ) : (
+                  <LightTooltip title={field.tooltip}>
+                    <InfoOutlinedIcon style={{ marginLeft: "1rem" }} />
+                  </LightTooltip>
+                )}
               </Grid>
               <Grid item container xs="7">
                 <form
@@ -147,21 +155,15 @@ export default function General() {
                     value={field.value}
                     onChange={(e) => handleChange(e, field.onChange)}
                   />
-                  <button
-                    type="submit"
-                    style={{
-                      border: "1px solid #000",
-                      cursor: "pointer",
-                      padding: 0,
-                      background: "none",
-                    }}
-                  >
-                    <PlayArrowIcon />
+                  <button type="submit">
+                    <img src={enterImg} alt="" />
                   </button>
                 </form>
               </Grid>
             </Grid>
-            <Grid container justify="flex-end" className={classes.ItemsListWarper}>
+            <Grid
+              container 
+            >
               <ListItems
                 field={field}
                 handleRemove={handleRemove}

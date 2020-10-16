@@ -130,7 +130,7 @@ function EnhancedTableHead(props) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                width: "90%",
+
                 margin: "auto",
               }}
             >
@@ -181,6 +181,24 @@ const useStyles = makeStyles((theme) => ({
     top: 20,
     width: 1,
   },
+  password: {
+    listStyleType: "none",
+    [theme.breakpoints.down("lg")]: {
+      margin: "auto",
+      maxWidth: "200px",
+      overflowX: "auto",
+      "&::-webkit-scrollbar": {
+        height: "0.5rem",
+      },
+      "&::-webkit-scrollbar-track": {
+        "-webkit-box-shadow": "inset 0 0 6px rgba(0,0,0,0.00)",
+      },
+      "&::-webkit-scrollbar-thumb": {
+        backgroundColor: "rgba(0,0,0,.5)",
+        outline: "1px solid slategrey",
+      },
+    },
+  },
 }));
 
 export default function EnhancedTable() {
@@ -228,21 +246,41 @@ export default function EnhancedTable() {
           }
         } else if (k === "timeStamp") {
           if (obj[k].length === 1) {
-            firstFound = new Date(obj[k]).getFullYear();
+            const date = new Date(obj[k]);
+            firstFound = `${("0" + date.getDate()).slice(-2)}-${(
+              "0" +
+              (date.getMonth() + 1)
+            ).slice(-2)}-${date.getFullYear()}`;
           } else {
             firstFound = obj[k].reduce((acc, cur) => {
               return acc < cur
-                ? `${new Date(acc).getFullYear()}`
-                : `${new Date(cur).getFullYear()}`;
+                ? `${("0" + new Date(acc).getDate()).slice(-2)}-${(
+                    "0" +
+                    (new Date(acc).getMonth() + 1)
+                  ).slice(-2)}-${new Date(acc).getFullYear()}`
+                : `${("0" + new Date(cur).getDate()).slice(-2)}-${(
+                    "0" +
+                    (new Date(cur).getMonth() + 1)
+                  ).slice(-2)}-${new Date(cur).getFullYear()}`;
             });
           }
           if (obj[k].length === 1) {
-            lastFound = new Date(obj[k]).getFullYear();
+            const date = new Date(obj[k]);
+            lastFound = `${("0" + date.getDate()).slice(-2)}-${(
+              "0" +
+              (date.getMonth() + 1)
+            ).slice(-2)}-${date.getFullYear()}`;
           } else {
             lastFound = obj[k].reduce((acc, cur) => {
               return acc > cur
-                ? `${new Date(acc).getFullYear()}`
-                : `${new Date(cur).getFullYear()}`;
+                ? `${("0" + new Date(acc).getDate()).slice(-2)}-${(
+                    "0" +
+                    (new Date(acc).getMonth() + 1)
+                  ).slice(-2)}-${new Date(cur).getFullYear()}`
+                : `${("0" + new Date(cur).getDate()).slice(-2)}-${(
+                    "0" +
+                    (new Date(cur).getMonth() + 1)
+                  ).slice(-2)}-${new Date(cur).getFullYear()}`;
             });
           }
         } else if (k === "password") {
@@ -365,12 +403,13 @@ export default function EnhancedTable() {
                   return (
                     <TableRow key={row.name}>
                       <TableCell
+                        width="15%"
                         component="th"
                         scope="row"
                         padding="none"
                         style={{
                           border: "1px solid #aaa",
-                          width: "20%",
+
                           textAlign: "center",
                         }}
                       >
@@ -383,27 +422,20 @@ export default function EnhancedTable() {
                         <p>{row.calories}</p>
                       </TableCell>
                       <TableCell
+                        width="30%"
                         align="center"
                         style={{
                           border: "1px solid #aaa",
-                          width: "10px",
                           paddingRight: "2rem",
                         }}
                       >
-                        <ul
-                          style={{
-                            maxHeight: "100px",
-                            overflow: "auto",
-                            listStyleType: "none",
-                            // maxWidth: "200px",
-                          }}
-                        >
+                        <ul className={classes.password}>
                           {row.passPin.map((el) => {
                             return (
                               <li
                                 key={el}
                                 style={{
-                                  marginBottom: "1rem",
+                                  marginBottom: "0.5rem",
                                 }}
                               >
                                 {show ? (
@@ -420,7 +452,7 @@ export default function EnhancedTable() {
                                     style={{
                                       display: "flex",
                                       justifyContent: "center",
-                                      marginRight: "1rem",
+                                      marginLeft: "1rem",
                                     }}
                                   >
                                     <MoreHorizIcon
@@ -446,23 +478,28 @@ export default function EnhancedTable() {
                         </ul>
                       </TableCell>
                       <TableCell
+                        width="12%"
                         align="center"
                         style={{ border: "1px solid #aaa" }}
                       >
                         {row.carbs}
                       </TableCell>
                       <TableCell
+                        width="12%"
                         align="center"
                         style={{ border: "1px solid #aaa" }}
                       >
                         {row.protein}
                       </TableCell>
                       <TableCell
+                        width="13%"
                         align="center"
                         style={{ border: "1px solid #aaa" }}
                       >
                         <Button
-                          style={{ textTransform: "lowercase" }}
+                          style={{
+                            textTransform: "capatalize",
+                          }}
                           onClick={() => handle(row.fat)}
                         >
                           {row.found === 1 ? (

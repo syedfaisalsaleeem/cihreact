@@ -17,6 +17,7 @@ import {Badge} from "@material-ui/core";
 import Latest from "./Latest.jsx";
 import { HighlightStarsContext } from "./context/highlightstars.js";
 import {useHistory} from 'react-router-dom';
+import { trackPromise } from "react-promise-tracker";
 const StyledBadge = withStyles((theme) => ({
     badge: {
       right: -15,
@@ -123,13 +124,13 @@ export default function HighlightTab(){
         const token=localStorage.getItem("token")
             
         const  x= async()=>{
-          const response= await fetch('https://if.cyberdevelopment.house/api/alerts?filter_op=AND', {
+          const response= await trackPromise(fetch('https://if.cyberdevelopment.house/api/alerts?filter_op=AND', {
               headers: {
                   'accept': 'application/json',
                   'Authorization': token
               }
-          });
-          const y=await response.json()
+          }));
+          const y=await trackPromise(response.json());
           if(y.message==="Invalid access token"){
               console.log(y,"typefaisal")
               loggedout()
@@ -156,13 +157,13 @@ export default function HighlightTab(){
             
         const  x= async()=>{
             
-            const response= await fetch("https://if.cyberdevelopment.house/api/alerts?page=1&filter=highlighted&filter_op=AND", {
+            const response= await trackPromise(fetch("https://if.cyberdevelopment.house/api/alerts?page=1&filter=highlighted&filter_op=AND", {
               headers: {
                   'accept': 'application/json',
                   'Authorization': token
               }
-          });
-          const y=await response.json()
+          }));
+          const y=await trackPromise(response.json())
           if(y.message==="Invalid access token"){
               console.log(y,"typefaisal")
               loggedout()
@@ -189,13 +190,13 @@ export default function HighlightTab(){
         const token=localStorage.getItem("token")
             
         const  x= async()=>{
-          const response= await fetch('https://if.cyberdevelopment.house/api/alerts?filter_op=AND', {
+          const response= await trackPromise(fetch('https://if.cyberdevelopment.house/api/alerts?filter_op=AND', {
               headers: {
                   'accept': 'application/json',
                   'Authorization': token
               }
-          });
-          const y=await response.json()
+          }));
+          const y=await trackPromise(response.json());
           if(y.message==="Invalid access token"){
               console.log(y,"typefaisal")
               loggedout()
@@ -216,13 +217,13 @@ export default function HighlightTab(){
       x()
       const  y1= async()=>{
             
-        const response= await fetch("https://if.cyberdevelopment.house/api/alerts?page=1&filter=highlighted&filter_op=AND", {
+        const response= await trackPromise(fetch("https://if.cyberdevelopment.house/api/alerts?page=1&filter=highlighted&filter_op=AND", {
           headers: {
               'accept': 'application/json',
               'Authorization': token
           }
-      });
-      const y=await response.json()
+      }));
+      const y=await trackPromise(response.json());
       if(y.message==="Invalid access token"){
           console.log(y,"typefaisal")
           loggedout()
@@ -256,7 +257,7 @@ export default function HighlightTab(){
         //   setstate1(result.data.alerts.slice(0,5))
         // }
         // fetchData()
-    },[view])
+    },[])
     return(
         <Grid item xs={12} md={12}>
         <Grid container justify="center" style={{background:"transparent"}}>

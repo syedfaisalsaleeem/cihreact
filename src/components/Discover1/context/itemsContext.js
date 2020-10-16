@@ -9,6 +9,10 @@ const ItemsContextProvider = (props) => {
   const [internalKeyword, setInternalKeyword] = useState([]);
   const [otherKeyword, setOtherKeyword] = useState([]);
 
+  useEffect(() => {
+    console.log("Store Comapany Name = ", companyNames);
+  }, [companyNames]);
+
   const [progress, setProgress] = useState(false);
   useEffect(() => {
     if (

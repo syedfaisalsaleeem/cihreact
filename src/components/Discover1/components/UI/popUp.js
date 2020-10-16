@@ -68,6 +68,7 @@ export default function CustomizedDialogs(props) {
   }
   return (
     <div>
+      {console.log(props,"modal props")}
       <Dialog
         onClose={props.handleClose}
         aria-labelledby="customized-dialog-title"

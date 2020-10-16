@@ -9,7 +9,7 @@ import InputBase from "@material-ui/core/InputBase";
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    width: '100%'
+    width: "100%",
   },
 }));
 
@@ -28,7 +28,7 @@ const BootstrapInput = withStyles((theme) => ({
       color: "#aaa",
       height: "96%",
       marginTop: "-8px",
-      marginRight: "1px",
+      marginRight: "1rem",
       borderRadius: "2px",
       width: "1.5rem",
     },
@@ -59,6 +59,7 @@ const BootstrapInput = withStyles((theme) => ({
       borderColor: "#80bdff",
       boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
     },
+    marginRight: '1rem'
   },
 }))(InputBase);
 
@@ -75,19 +76,17 @@ export default function GroupedSelect(props) {
           // onChange={handleChange}
           input={<BootstrapInput />}
         >
-         <option value="">Select Industry</option>
+          <option value="">Select Industry</option>
           {dropdownData.map((dt, i) => {
-            return (
-              <optgroup key={i} label={dt.label}>
-                {dt.array.map((el, i) => {
-                  return (
-                    <option key={i} value={el}>
-                      {el}
-                    </option>
-                  );
-                })}
-              </optgroup>
-            );
+            if (!dt.space) {
+              return (
+                <option key={i}>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{dt.value}
+                </option>
+              );
+            } else {
+              return <option key={i}>{dt.value}</option>;
+            }
           })}
         </NativeSelect>
       </FormControl>

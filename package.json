@@ -23,6 +23,7 @@
     "react-gauge-chart": "^0.2.5",
     "react-hooks-global-state": "^1.0.1",
     "react-instantsearch": "^6.6.0",
+    "react-loader-spinner": "^3.1.14",
     "react-multi-select-component": "^3.0.1",
     "react-notification-badge": "^1.5.1",
     "react-phone-input-2": "^2.13.8",

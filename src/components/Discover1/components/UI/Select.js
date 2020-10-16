@@ -19,7 +19,7 @@ const BootstrapInput = withStyles((theme) => ({
       color: "#aaa",
       height: "96%",
       marginTop: "-8px",
-      marginRight: "1px",
+      marginRight: "1rem",
       borderRadius: "2px",
       width: "1.5rem",
     },
@@ -50,6 +50,7 @@ const BootstrapInput = withStyles((theme) => ({
       borderColor: "#80bdff",
       boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
     },
+    marginRight: '1rem'
   },
 }))(InputBase);
 

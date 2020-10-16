@@ -15,6 +15,7 @@ import Analystsupportmodal from './Analystsupportmodal';
 import CommentList from "./CommentsList.jsx";
 import enter from "../../../Links/images/enter.png";
 import Popup from "./PopUp.jsx";
+import { trackPromise } from "react-promise-tracker";
 const LightTooltip = withStyles((theme) => ({
     tooltip: {
       backgroundColor: theme.palette.common.white,
@@ -398,10 +399,10 @@ useEffect(() => {
 const controlhighlight=(e)=>{
     selectstar(!star)
     if(star===false){
-        addcount()
+        
         const pushcomment=async()=>{
             const token=localStorage.getItem("token")
-            const response= await fetch('https://if.cyberdevelopment.house/api/alerts/'+props.id+'/tags', {
+            const response= await trackPromise( fetch('https://if.cyberdevelopment.house/api/alerts/'+props.id+'/tags', {
                 method: 'POST',
                 headers: {
                     'accept': 'application/json',
@@ -409,36 +410,43 @@ const controlhighlight=(e)=>{
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
                 body: 'tag=highlighted'
-            });
+            }));
             
-            const y=await response.json()
+            const y=await trackPromise( response.json());
+            await (addcount())
+            
             if(y.message==="Invalid access token"){
                 console.log(y,"typefaisal")
                 loggedout()
             }
         }
         pushcomment()
+        
     }
     else if(star===true){
-        changeflag()
+        
 
             const pushcomment=async()=>{
             const token=localStorage.getItem("token")
-            const response= await fetch('https://if.cyberdevelopment.house/api/alerts/'+props.id+'/tags/highlighted', {
+            const response= await trackPromise( fetch('https://if.cyberdevelopment.house/api/alerts/'+props.id+'/tags/highlighted', {
                 method: 'DELETE',
                 headers: {
                     'accept': 'application/json',
                     'Authorization': token,
                 }
-            });
-        const y=await response.json()
+            }));
+        const y=await trackPromise(response.json());
+        await (changeflag());
+        
         if(y.message==="Invalid access token"){
             console.log(y,"typefaisal")
             loggedout()
         }
         }
         pushcomment()
+        
     }
+    
 }
 const handlecommenting=(e)=>{
     setcommenting(e.target.value)
